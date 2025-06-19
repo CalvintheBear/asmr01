@@ -31,7 +31,7 @@ export default function TermsOfService() {
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-lg overflow-hidden">
                 <img 
-                  src="/logo.png" 
+                  src="/logo.svg" 
                   alt="CuttingASMR Logo" 
                   className="w-full h-full object-cover"
                 />

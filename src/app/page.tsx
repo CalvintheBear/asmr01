@@ -257,7 +257,7 @@ export default function ASMRVideoStudio() {
     }
     
     try {
-      // 直接使用用户编辑的提示词（用户可以修改ASMR类型的默认提示词）
+      // 直接使用用户编辑的提示词（用户可以修改ASMR类型的默认提示词�?
       await generateVideo({
         prompt: prompt,
         aspectRatio: '16:9',
@@ -283,7 +283,7 @@ export default function ASMRVideoStudio() {
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden">
                 <img 
-                  src="/logo.png" 
+                  src="/logo.svg" 
                   alt="CuttingASMR Logo" 
                   className="w-full h-full object-cover"
                 />
@@ -355,7 +355,7 @@ export default function ASMRVideoStudio() {
                 </div>
                 
                 {!showAllTypes ? (
-                  // 简化视图 - 显示每个分类的第一个选项 + All按钮
+                  // 简化视�?- 显示每个分类的第一个选项 + All按钮
                   <div className="grid grid-cols-2 gap-3">
                     {asmrCategories.map((category) => (
                       <button
@@ -494,10 +494,10 @@ export default function ASMRVideoStudio() {
                     ></div>
                   </div>
                   <p className="text-gray-600">
-                    AI 视频生成需要 2-5 分钟，请不要关闭此页面
+                    AI 视频生成需�?2-5 分钟，请不要关闭此页�?
                     {generationStatus.estimatedTime && (
                       <span className="text-purple-600 font-medium">
-                        （预计 {Math.ceil(generationStatus.estimatedTime / 60)} 分钟）
+                        （预�?{Math.ceil(generationStatus.estimatedTime / 60)} 分钟�?
                       </span>
                     )}
                   </p>
@@ -740,7 +740,7 @@ export default function ASMRVideoStudio() {
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 rounded-lg overflow-hidden">
                   <img 
-                    src="/logo.png" 
+                    src="/logo.svg" 
                     alt="CuttingASMR Logo" 
                     className="w-full h-full object-cover"
                   />

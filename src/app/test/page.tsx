@@ -5,8 +5,8 @@ export default function TestPage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-4">Railway部署测试</h1>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-600">状态:</span>
-            <span className="text-green-600 font-medium">✅ 正常运行</span>
+            <span className="text-gray-600">状�?</span>
+            <span className="text-green-600 font-medium">�?正常运行</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">时间:</span>

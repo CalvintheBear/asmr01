@@ -18,7 +18,7 @@ export default function UserDashboard() {
         redirect: true
       })
     } catch (error) {
-      console.error('‚ùå Sign in error:', error)
+      console.error('‚ù?Sign in error:', error)
       setIsLoading(false)
     }
   }
@@ -28,7 +28,7 @@ export default function UserDashboard() {
       console.log('üëã Signing out...')
       await signOut({ callbackUrl: '/' })
     } catch (error) {
-      console.error('‚ùå Sign out error:', error)
+      console.error('‚ù?Sign out error:', error)
     }
   }
 
@@ -113,7 +113,7 @@ export default function UserDashboard() {
         <div className="text-center">
           <div className="flex justify-center mb-6">
             <div className="w-16 h-16 rounded-xl overflow-hidden">
-              <img src="/logo.png" alt="CuttingASMR Logo" className="w-full h-full object-cover" />
+                              <img src="/logo.svg" alt="CuttingASMR Logo" className="w-full h-full object-cover" />
             </div>
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h2>
@@ -144,7 +144,7 @@ export default function UserDashboard() {
               href="/"
               className="text-purple-600 hover:text-purple-700 text-sm font-medium"
             >
-              ‚Üê Back to Home
+              ‚Ü?Back to Home
             </Link>
           </div>
         </div>
