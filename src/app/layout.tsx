@@ -27,6 +27,11 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <head>
+        {/* 网站图标设置 */}
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        
         {/* 结构化数据标记 - 提升SEO和防AI检测 */}
         <script
           type="application/ld+json"
@@ -162,7 +167,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+      </body>
     </html>
   )
 } 
