@@ -19,7 +19,10 @@ const nextConfig = {
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
   },
   // 确保支持API路由和服务器端渲染
-  // 移除任何会导致静态导出的配置
+  // Railway特定配置 - 使用Next.js 15正确的配置项
+  serverExternalPackages: [],
+  // 确保正确的输出配置
+  output: undefined, // 确保不是 'export'（静态导出）
 }
 
 module.exports = nextConfig 
