@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Railway deployment configuration
+  // Cloudflare Pages optimization
   images: {
     unoptimized: true,
   },
@@ -18,11 +18,47 @@ const nextConfig = {
     VEO3_API_KEY: process.env.VEO3_API_KEY || '',
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
   },
-  // 确保支持API路由和服务器端渲染
-  // Railway特定配置 - 使用Next.js 15正确的配置项
+  
+  // 优化构建输出 - 减少包大小
+  webpack: (config, { isServer }) => {
+    // 减少包大小
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    
+    // 优化chunk分割以减少单个文件大小
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 20000000, // 20MB max chunk size
+        cacheGroups: {
+          default: {
+            minChunks: 1,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            priority: -10,
+            chunks: 'all',
+            maxSize: 15000000, // 15MB max for vendor chunks
+          },
+        },
+      },
+    };
+    
+    return config;
+  },
+  
+  // 确保支持API路由
   serverExternalPackages: [],
-  // 确保正确的输出配置
-  output: undefined, // 确保不是 'export'（静态导出）
 }
 
 module.exports = nextConfig 
