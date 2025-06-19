@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cloudflare": "next build && npm run optimize:cloudflare",
+    "build:cloudflare": "next build && node scripts/optimize-for-cloudflare.js",
     "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "start": "next start",
     "lint": "next lint"
