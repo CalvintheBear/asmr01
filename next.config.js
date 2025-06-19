@@ -1,14 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 移除 output: 'export' 以支持 API 路由
+  // Build optimization for Cloudflare Pages deployment
+  output: 'standalone',
   images: {
     unoptimized: true,
   },
   eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true
+    // Warning: This allows production builds to successfully complete even if
+    // your project has type errors.
+    ignoreDuringBuilds: true,
   },
   basePath: '',
   assetPrefix: '',
@@ -16,7 +21,8 @@ const nextConfig = {
   env: {
     VEO3_API_KEY: process.env.VEO3_API_KEY || '',
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
-  }
+  },
+  // Force clean build - updated for latest deployment
 }
 
 module.exports = nextConfig 
