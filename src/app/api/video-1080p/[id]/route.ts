@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+type Params = {
+  params: Promise<{ id: string }>
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: Params
 ) {
   try {
-    const videoId = params.id;
+    const { id: videoId } = await context.params;
 
     if (!videoId) {
       return NextResponse.json(
