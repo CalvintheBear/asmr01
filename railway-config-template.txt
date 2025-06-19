@@ -1,0 +1,24 @@
+# Railway 环境变量配置模板
+# 请将占位符替换为您的真实值
+
+# OAuth配置
+NEXTAUTH_URL=https://your-app-name.up.railway.app
+NEXTAUTH_SECRET=your-generated-secret-key
+
+# Google OAuth凭据 - 从Google Cloud Console获取
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# 数据库配置 - 从Railway PostgreSQL服务获取
+DATABASE_URL=your-database-connection-string
+
+# 应用配置
+NODE_ENV=production
+PORT=8080
+ALLOW_ENV_CHECK=true
+
+# 配置步骤：
+# 1. 在Railway项目的Variables选项卡中设置这些变量
+# 2. 将占位符替换为真实值
+# 3. 重启Railway服务
+# 4. 访问 https://your-app-name.up.railway.app/api/env-check 验证配置 
