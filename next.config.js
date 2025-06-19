@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Cloudflare Pages with API routes support
+  // Railway deployment configuration
   images: {
     unoptimized: true,
   },
@@ -18,7 +18,8 @@ const nextConfig = {
     VEO3_API_KEY: process.env.VEO3_API_KEY || '',
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
   },
-  // Force clean build - bypass TypeScript errors for deployment
+  // 确保支持API路由和服务器端渲染
+  // 移除任何会导致静态导出的配置
 }
 
 module.exports = nextConfig 
