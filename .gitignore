@@ -1,66 +1,99 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# 核心排除 - 依赖包和安装文件（避免大文件上传）
 /node_modules
 /.pnp
 .pnp.js
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
-# testing
-/coverage
-
-# next.js
+# Next.js构建文件（部署时重新生成）
 /.next/
 /out/
-
-# production
 /build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# typescript
 *.tsbuildinfo
 next-env.d.ts
 
-# Cloudflare
-.wrangler/
+# 环境变量和敏感配置
+.env*.local
+.env
+.env.production
+.env.development
 
-# Cache and temp files
+# 缓存和临时文件
 /.cache/
 /tmp/
 *.tmp
 *.temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Package manager files
-yarn.lock
-pnpm-lock.yaml
+# 测试覆盖率
+/coverage
 
-# IDE files
+# 部署平台文件
+.vercel
+.wrangler/
+
+# IDE和编辑器文件
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
 
-# OS files
-Thumbs.db
+# 操作系统文件
+.DS_Store
 .DS_Store?
 ._*
+Thumbs.db
+ehthumbs.db
 .Spotlight-V100
 .Trashes
-ehthumbs.db
+desktop.ini
 
-# Log files
-*.log 
+# 安全文件
+*.pem
+*.key
+*.cert
+*.crt
+
+# 大型依赖包（避免25MB限制）
+**/swc-*
+**/sharp-*
+**/@next/swc-*
+**/@img/sharp-*
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 文档草稿
+**/draft-*
+**/temp-*
+**/*-backup.*
+
+# 媒体文件（避免仓库过大）
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.wav
+*.mp3
+
+# ===========================================
+# ✅ 只上传以下必需文件：
+# ✅ src/ - 核心应用代码
+# ✅ public/ - 静态资源（logo等小文件）
+# ✅ package.json - 依赖定义
+# ✅ next.config.js - Next.js配置
+# ✅ tailwind.config.ts - 样式配置
+# ✅ tsconfig.json - TypeScript配置
+# ✅ postcss.config.js - PostCSS配置
+# ✅ README.md - 项目文档
+# ✅ scripts/ - 部署脚本
+# =========================================== 
