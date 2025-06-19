@@ -18,7 +18,7 @@ export default function UserDashboard() {
         redirect: true
       })
     } catch (error) {
-      console.error('‚ù?Sign in error:', error)
+      console.error('‚ùå Sign in error:', error)
       setIsLoading(false)
     }
   }
@@ -28,7 +28,7 @@ export default function UserDashboard() {
       console.log('üëã Signing out...')
       await signOut({ callbackUrl: '/' })
     } catch (error) {
-      console.error('‚ù?Sign out error:', error)
+      console.error('‚ùå Sign out error:', error)
     }
   }
 
@@ -144,7 +144,7 @@ export default function UserDashboard() {
               href="/"
               className="text-purple-600 hover:text-purple-700 text-sm font-medium"
             >
-              ‚Ü?Back to Home
+              ‚Üê Back to Home
             </Link>
           </div>
         </div>

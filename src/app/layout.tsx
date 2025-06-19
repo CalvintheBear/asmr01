@@ -33,7 +33,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/logo.svg" />
         
-        {/* 结构化数据标�?- 提升SEO和防AI检�?*/}
+        {/* 结构化数据标记 - 提升SEO和防AI检测 */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -71,25 +71,25 @@ export default function RootLayout({
           }}
         />
         
-        {/* 安全SEO监控系统 - 防止关键词过度优�?*/}
+        {/* 安全SEO监控系统 - 防止关键词过度优化 */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // 页面加载后初始化SEO安全检�?
+              // 页面加载后初始化SEO安全检查
               window.addEventListener('DOMContentLoaded', function() {
-                console.log('🔍 SEO安全监控已启�?);
+                console.log('🔍 SEO安全监控已启动');
                 
-                // 关键词密度安全检�?
+                // 关键词密度安全检查
                 const checkKeywordDensity = () => {
                   const text = document.body.innerText || '';
                   const words = text.toLowerCase().split(/\\s+/);
                   const totalWords = words.length;
                   
                   const safeThresholds = {
-                    'asmr': 3.5,    // 主关键词安全阈�?
-                    '视频': 3.0,    // 次要关键�?
+                    'asmr': 3.5,    // 主关键词安全阈值
+                    '视频': 3.0,    // 次要关键词
                     '制作': 2.5,    // 动作词汇
-                    'ai': 2.0       // 技术词�?
+                    'ai': 2.0       // 技术词汇
                   };
                   
                   const densities = {};
@@ -104,20 +104,20 @@ export default function RootLayout({
                     
                     // 超过安全阈值时警告
                     if (density > safeThresholds[keyword]) {
-                      console.warn('⚠️ SEO风险: "' + keyword + '" 密度' + density.toFixed(2) + '%超过安全�? + safeThresholds[keyword] + '%');
+                      console.warn('⚠️ SEO风险: "' + keyword + '" 密度' + density.toFixed(2) + '%超过安全值' + safeThresholds[keyword] + '%');
                     }
                   });
                   
                   return densities;
                 };
                 
-                // 检查重复短语（防止过度重复�?
+                // 检查重复短语（防止过度重复）
                 const checkRepetitivePatterns = () => {
                   const text = document.body.innerText || '';
                   const phrases = [];
                   const words = text.split(/\\s+/);
                   
-                  // 检�?词组合重�?
+                  // 检查3词组合重复
                   for (let i = 0; i < words.length - 2; i++) {
                     const phrase = words.slice(i, i + 3).join(' ').toLowerCase();
                     phrases.push(phrase);
@@ -134,7 +134,7 @@ export default function RootLayout({
                     .sort((a, b) => b[1] - a[1]);
                     
                   if (repetitive.length > 0) {
-                    console.warn('⚠️ 重复短语检�?', repetitive.slice(0, 5));
+                    console.warn('⚠️ 重复短语检测:', repetitive.slice(0, 5));
                   }
                   
                   return repetitive;
@@ -146,20 +146,20 @@ export default function RootLayout({
                   const repetitive = checkRepetitivePatterns();
                   
                   if (window.location.hostname === 'localhost') {
-                    console.log('📊 关键词密度分�?', densities);
+                    console.log('📊 关键词密度分析:', densities);
                     if (repetitive.length > 0) {
                       console.log('🔄 重复短语分析:', repetitive.slice(0, 3));
                     }
                   }
                 }, 1000);
                 
-                // 开发环境定期监控（�?0秒）
+                // 开发环境定期监控（每30秒）
                 if (window.location.hostname === 'localhost') {
                   setInterval(() => {
                     const densities = checkKeywordDensity();
                     const hasRisk = Object.values(densities).some(d => !d.safe);
                     if (hasRisk) {
-                      console.log('⚠️ SEO风险检测更�?', densities);
+                      console.log('⚠️ SEO风险检测更新:', densities);
                     }
                   }, 30000);
                 }

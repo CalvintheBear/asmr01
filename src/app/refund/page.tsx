@@ -178,11 +178,11 @@ export default function RefundPolicy() {
              <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
                <p className="text-red-800 mb-4 font-medium">The following situations are not eligible for refunds:</p>
                <ul className="space-y-2 text-red-700">
-                 <li>â€?Requesting refund after 3 days from purchase</li>
-                 <li>â€?Having used more than 10 video generation credits</li>
-                 <li>â€?Change of mind for personal reasons (after normal service usage)</li>
-                 <li>â€?Requesting refund after violating our terms of service</li>
-                 <li>â€?Requesting refund after malicious use or abuse of service</li>
+                 <li>â€¢ Requesting refund after 3 days from purchase</li>
+                 <li>â€¢ Having used more than 10 video generation credits</li>
+                 <li>â€¢ Change of mind for personal reasons (after normal service usage)</li>
+                 <li>â€¢ Requesting refund after violating our terms of service</li>
+                 <li>â€¢ Requesting refund after malicious use or abuse of service</li>
                </ul>
              </div>
 
