@@ -71,7 +71,7 @@ desktop.ini
 *.sqlite
 *.sqlite3
 
-# 文档草稿
+# 文档草稿和临时文件
 **/draft-*
 **/temp-*
 **/*-backup.*
@@ -85,6 +85,21 @@ desktop.ini
 *.wav
 *.mp3
 
+# 大型文档文件（保留核心文档，删除详细指南）
+ASMR_Video_Result_集成总结.md
+ASMR用户系统架构设计.md
+ASMR类型编辑指南.md
+SEO关键词策略报告.md
+VEO3_API_集成指南.md
+
+# 配置文件（在部署时可以重新生成）
+.eslintrc.json
+railway.json
+railway-config-template.txt
+
+# CI/CD文件（Cloudflare不需要）
+.github/
+
 # ===========================================
 # ✅ 只上传以下必需文件：
 # ✅ src/ - 核心应用代码
@@ -96,4 +111,7 @@ desktop.ini
 # ✅ postcss.config.js - PostCSS配置
 # ✅ README.md - 项目文档
 # ✅ scripts/ - 部署脚本
+# ✅ CLOUDFLARE_DEPLOY.md - 部署指南
+# ✅ privacy-policy.md - 隐私政策
+# ✅ Refund Policy.md - 退款政策
 # =========================================== 
