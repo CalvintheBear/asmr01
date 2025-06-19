@@ -3,10 +3,11 @@ import https from 'https';
 
 export async function GET(
   request: NextRequest,
-  { params }: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const videoId = params.id;
+    const resolvedParams = await params;
+    const videoId = resolvedParams.id;
 
     if (!videoId) {
       return NextResponse.json(

@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones } from 'lucide-react'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
-import VideoHistory from '@/components/VideoHistory'
-
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
 
 export default function ASMRVideoStudio() {
+  const { data: session, status } = useSession()
   const [selectedASMRType, setSelectedASMRType] = useState('keyboard')
   const [prompt, setPrompt] = useState('Professional close-up of fingers typing on premium mechanical keyboard with individual key switches. Camera: Side and overhead angles capturing finger precision and key movement. Lighting: Clean desk lighting highlighting keyboard details. Audio: Satisfying tactile clicks, key depression sounds, typing rhythm patterns.')
   const [showAllTypes, setShowAllTypes] = useState(false)
@@ -297,9 +297,23 @@ export default function ASMRVideoStudio() {
               <button className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                 Blog
               </button>
-              <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-                Sign In
-              </button>
+              {session ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-gray-600">
+                    Welcome, {session.user.name || session.user.email}
+                  </span>
+                  <button 
+                    onClick={() => signOut()}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <Link href="/dashboard" className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -564,10 +578,7 @@ export default function ASMRVideoStudio() {
         </div>
       </section>
 
-      {/* History Videos Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <VideoHistory />
-      </section>
+
 
       {/* Examples Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
