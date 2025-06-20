@@ -190,3 +190,7 @@ railway-config-template.txt
 # ✅ privacy-policy.md - 隐私政策
 # ✅ Refund Policy.md - 退款政策
 # =========================================== 
+# clerk configuration (can include secrets)
+/.clerk/
+
+/generated/prisma

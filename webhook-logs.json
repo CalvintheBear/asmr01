@@ -1,0 +1,85 @@
+[
+  {
+    "timestamp": "2025-06-20T21:06:31.263Z",
+    "headers": {
+      "accept": "application/json, text/plain, */*",
+      "accept-encoding": "gzip, compress, deflate, br",
+      "baggage": "sentry-environment=test,sentry-public_key=4a37b7aabe26550cc5def0fbbd8b0487,sentry-trace_id=e30ce24a224ae69092245ea673a1a187,sentry-transaction=POST%20%2Fwebhook%2Fstripe%2Fplatform,sentry-sampled=true,sentry-sample_rand=0.32205578124501666,sentry-sample_rate=1",
+      "content-length": "1327",
+      "content-type": "application/json",
+      "creem-signature": "068b1a8011bfce7b45e41d72487e4edfddc29b586d9de336612ece1524b0af79",
+      "host": "f95b-2409-8a28-7275-ac80-f0ac-e0ce-3fb0-c794.ngrok-free.app",
+      "sentry-trace": "e30ce24a224ae69092245ea673a1a187-dbba74205615cac0-1",
+      "user-agent": "axios/1.9.0",
+      "x-clerk-auth-message": "",
+      "x-clerk-auth-reason": "dev-browser-missing",
+      "x-clerk-auth-signature": "",
+      "x-clerk-auth-status": "signed-out",
+      "x-clerk-auth-token": "",
+      "x-clerk-clerk-url": "https://f95b-2409-8a28-7275-ac80-f0ac-e0ce-3fb0-c794.ngrok-free.app/api/webhook-test",
+      "x-forwarded-for": "3.74.66.138",
+      "x-forwarded-host": "f95b-2409-8a28-7275-ac80-f0ac-e0ce-3fb0-c794.ngrok-free.app",
+      "x-forwarded-port": "3003",
+      "x-forwarded-proto": "https"
+    },
+    "rawBody": "{\"id\":\"evt_43rqZ6eFhC4c5vtRjnJrgD\",\"eventType\":\"checkout.completed\",\"created_at\":1750453590049,\"object\":{\"id\":\"ch_5S84qLoOAq67B8jOMLREAS\",\"object\":\"checkout\",\"order\":{\"object\":\"order\",\"id\":\"ord_4VnfBhl3USjodH74AQfX5x\",\"customer\":\"cust_4UqdHJbMBJyfRlHxUnkaYO\",\"product\":\"prod_5AkdzTWba2cogt75cngOhu\",\"amount\":9900,\"currency\":\"USD\",\"sub_total\":9900,\"tax_amount\":0,\"amount_due\":9900,\"amount_paid\":9900,\"status\":\"paid\",\"type\":\"onetime\",\"transaction\":\"tran_54Zrqs4PLfryBzw2tEW0hw\",\"created_at\":\"2025-06-20T21:06:00.842Z\",\"updated_at\":\"2025-06-20T21:06:00.842Z\",\"mode\":\"test\"},\"product\":{\"id\":\"prod_5AkdzTWba2cogt75cngOhu\",\"object\":\"product\",\"name\":\"premium\",\"description\":\"450 credits: Can create 145+ videos, with priority processing and advanced support.\",\"price\":9900,\"currency\":\"USD\",\"billing_type\":\"onetime\",\"billing_period\":\"once\",\"status\":\"active\",\"tax_mode\":\"exclusive\",\"tax_category\":\"saas\",\"default_success_url\":\"http://localhost:3000/payment/success\",\"created_at\":\"2025-06-20T15:25:16.258Z\",\"updated_at\":\"2025-06-20T15:25:16.258Z\",\"mode\":\"test\"},\"units\":1,\"customer\":{\"id\":\"cust_4UqdHJbMBJyfRlHxUnkaYO\",\"object\":\"customer\",\"email\":\"y2983236233@gmail.com\",\"name\":\"Sophia Joy\",\"country\":\"US\",\"created_at\":\"2025-06-20T20:15:14.957Z\",\"updated_at\":\"2025-06-20T20:15:14.957Z\",\"mode\":\"test\"},\"status\":\"completed\",\"mode\":\"test\"}}",
+    "parsedBody": {
+      "id": "evt_43rqZ6eFhC4c5vtRjnJrgD",
+      "eventType": "checkout.completed",
+      "created_at": 1750453590049,
+      "object": {
+        "id": "ch_5S84qLoOAq67B8jOMLREAS",
+        "object": "checkout",
+        "order": {
+          "object": "order",
+          "id": "ord_4VnfBhl3USjodH74AQfX5x",
+          "customer": "cust_4UqdHJbMBJyfRlHxUnkaYO",
+          "product": "prod_5AkdzTWba2cogt75cngOhu",
+          "amount": 9900,
+          "currency": "USD",
+          "sub_total": 9900,
+          "tax_amount": 0,
+          "amount_due": 9900,
+          "amount_paid": 9900,
+          "status": "paid",
+          "type": "onetime",
+          "transaction": "tran_54Zrqs4PLfryBzw2tEW0hw",
+          "created_at": "2025-06-20T21:06:00.842Z",
+          "updated_at": "2025-06-20T21:06:00.842Z",
+          "mode": "test"
+        },
+        "product": {
+          "id": "prod_5AkdzTWba2cogt75cngOhu",
+          "object": "product",
+          "name": "premium",
+          "description": "450 credits: Can create 145+ videos, with priority processing and advanced support.",
+          "price": 9900,
+          "currency": "USD",
+          "billing_type": "onetime",
+          "billing_period": "once",
+          "status": "active",
+          "tax_mode": "exclusive",
+          "tax_category": "saas",
+          "default_success_url": "http://localhost:3000/payment/success",
+          "created_at": "2025-06-20T15:25:16.258Z",
+          "updated_at": "2025-06-20T15:25:16.258Z",
+          "mode": "test"
+        },
+        "units": 1,
+        "customer": {
+          "id": "cust_4UqdHJbMBJyfRlHxUnkaYO",
+          "object": "customer",
+          "email": "y2983236233@gmail.com",
+          "name": "Sophia Joy",
+          "country": "US",
+          "created_at": "2025-06-20T20:15:14.957Z",
+          "updated_at": "2025-06-20T20:15:14.957Z",
+          "mode": "test"
+        },
+        "status": "completed",
+        "mode": "test"
+      }
+    },
+    "userAgent": "axios/1.9.0"
+  }
+]

@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 图片优化配置 - Cloudflare Pages兼容性
+  // 图片优化配置
   images: {
-    unoptimized: true, // Cloudflare Pages需要关闭Next.js图片优化
+    unoptimized: true,
   },
   
-  // TypeScript和ESLint配置 - 加快构建速度
+  // TypeScript和ESLint配置
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -13,55 +13,28 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // 编译优化 - 减少缓存文件大小
-  webpack: (config, { isServer }) => {
-    // 禁用可能产生大缓存文件的功能
-    if (isServer) {
-      config.cache = {
-        type: 'memory', // 使用内存缓存而不是文件缓存
-      };
-    }
-    
-    // 优化chunk分割，确保单个文件不超过25MB
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
-        chunks: 'all',
-        maxSize: 20000000, // 20MB限制，留5MB缓冲
-        cacheGroups: {
-          default: {
-            minChunks: 1,
-            priority: -20,
-            reuseExistingChunk: true,
-            maxSize: 15000000, // 15MB限制
-          },
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            priority: -10,
-            chunks: 'all',
-            maxSize: 15000000, // 15MB限制
-          },
-        },
-      },
-    };
-    
-    return config;
-  },
-  
-  // 环境变量配置
-  env: {
-    VEO3_API_KEY: process.env.VEO3_API_KEY || '',
-    VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
-  },
-  
   // 性能优化
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
   
-  // 确保API路由正常工作
-  serverExternalPackages: [],
+  // 环境变量配置 - 统一使用3000端口
+  env: {
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_cGxlYXNlZC1jbGFtLTc5LmNsZXJrLmFjY291bnRzLmRldiQ',
+    CLERK_SECRET_KEY: 'sk_test_T8He2nKmyV1okMkk8lZcbIh66KSFWoxr3s0lLMyO36',
+          NEXT_PUBLIC_CLERK_SIGN_IN_URL: '/',
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: '/',
+      NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: '/',
+      NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: '/',
+    VEO3_API_KEY: process.env.VEO3_API_KEY || 'c98268b5c693894dd721ed1d576edb',
+    VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
+    DOMAIN: 'http://localhost:3000',
+    // 确保所有内部API调用都使用3000端口
+    NEXT_PUBLIC_API_URL: 'http://localhost:3000/api',
+    NEXT_PUBLIC_APP_URL: 'http://localhost:3000',
+    // Railway PostgreSQL 数据库连接 - 用户实际数据库
+    DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway',
+  },
 };
 
 module.exports = nextConfig; 

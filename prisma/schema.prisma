@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户基础信息模型
+model User {
+  id                String   @id @default(cuid())
+  clerkUserId       String   @unique  // Clerk用户ID
+  
+  // === Google OAuth数据 ===
+  email             String   @unique  // Google邮箱
+  googleFullName    String?             // Google提供的姓名
+  googleImageUrl    String?             // Google头像
+  googleVerifiedAt  DateTime @default(now()) // Google验证时间
+  
+  // === 可编辑的业务数据 ===
+  customDisplayName String?             // 用户自定义显示名
+  isActive          Boolean  @default(true)   // 账户状态
+  preferences       Json?                     // 用户偏好设置
+  
+  // === 积分字段 - 简单直接 ===
+  totalCredits      Int      @default(8)     // 总积分（累计购买的积分）
+  usedCredits       Int      @default(0)     // 已使用积分
+  
+  // === 系统时间戳 ===
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  lastLoginAt       DateTime @default(now())
+  
+  // === 关联数据 ===
+  videos            Video[]
+  purchases         Purchase[]  // 购买记录
+  adminLogs         AdminLog[]  // 管理员操作日志
+  auditLogs         AuditLog[]  // 审计日志
+  
+  @@map("users")
+}
+
+// 购买记录模型 - 记录所有积分包购买
+model Purchase {
+  id           String   @id @default(cuid())
+  userId       String?  // 可选字段 - 支持先创建订单再匹配用户
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // 购买信息
+  packageType  String   // starter, standard, premium
+  packageName  String   // 套餐包名称显示
+  amount       Float    // 支付金额
+  currency     String   @default("USD") // 货币
+  creditsAdded Int      // 本次购买增加的积分数量
+  
+  // 第三方支付信息
+  productId    String?  // Creem产品ID
+  orderId      String?  @unique // 订单ID - 设置为唯一约束
+  customerId   String?  // 客户ID
+  paymentEmail String?  // 支付时使用的邮箱 - 新增字段
+  provider     String   @default("creem") // 支付提供商
+  status       String   @default("completed") // 支付状态
+  
+  // 时间戳
+  createdAt    DateTime @default(now())
+  completedAt  DateTime @default(now()) // 完成时间
+  
+  @@map("purchases")
+}
+
+// ASMR视频创作历史模型
+model Video {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title       String
+  type        String   // ASMR类型
+  prompt      String
+  status      String   @default("processing") // processing, completed, failed
+  
+  // 视频文件信息
+  videoUrl    String?  // 生成的视频URL
+  thumbnailUrl String? // 缩略图URL
+  duration    Int?     // 视频时长(秒)
+  resolution  String?  // 分辨率
+  
+  // 生成参数
+  creditsUsed Int      @default(10) // 本视频消耗的积分
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  completedAt DateTime?
+  
+  @@map("videos")
+}
+
+// 审计日志模型 - 记录重要操作
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?  // 相关用户ID
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  action      String   // 操作类型
+  details     Json?    // 操作详情
+  
+  // 请求信息
+  ipAddress   String?  // IP地址
+  userAgent   String?  // 用户代理
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("audit_logs")
+}
+
+// 管理员操作日志 - 记录所有数据修改
+model AdminLog {
+  id          String   @id @default(cuid())
+  userId      String?  // 被操作的用户ID
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  adminEmail  String   // 管理员邮箱
+  action      String   // 操作类型：credit_add, credit_deduct等
+  
+  // 操作详情
+  oldValues   Json?    // 修改前的值
+  newValues   Json?    // 修改后的值
+  reason      String?  // 操作原因
+  
+  // 安全信息
+  ipAddress   String?  // 操作IP地址
+  userAgent   String?  // 浏览器信息
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("admin_logs")
+}
+
+// 系统设置模型
+model Settings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("settings")
+}

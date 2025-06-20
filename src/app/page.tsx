@@ -1,14 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
 import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones } from 'lucide-react'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
+import CreemPaymentButton from '@/components/CreemPaymentButton'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
 
 export default function ASMRVideoStudio() {
-  const { data: session, status } = useSession()
+  const { user, isLoaded } = useUser()
   const [selectedASMRType, setSelectedASMRType] = useState('keyboard')
   const [prompt, setPrompt] = useState('Professional close-up of fingers typing on premium mechanical keyboard with individual key switches. Camera: Side and overhead angles capturing finger precision and key movement. Lighting: Clean desk lighting highlighting keyboard details. Audio: Satisfying tactile clicks, key depression sounds, typing rhythm patterns.')
   const [showAllTypes, setShowAllTypes] = useState(false)
@@ -291,28 +292,32 @@ export default function ASMRVideoStudio() {
               <h1 className="text-xl font-bold text-gray-900">CuttingASMR.org</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="#pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
-                Pricing
-              </Link>
+                              <Link href="/pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+                  Pricing
+                </Link>
               <button className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                 Blog
               </button>
-              {session ? (
+              {user ? (
                 <div className="flex items-center space-x-4">
+                  <Link href="/profile" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                    个人信息
+                  </Link>
                   <span className="text-sm text-gray-600">
-                    Welcome, {session.user.name || session.user.email}
+                    Welcome, {user.fullName || user.primaryEmailAddress?.emailAddress}
                   </span>
-                  <button 
-                    onClick={() => signOut()}
-                    className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    Sign Out
-                  </button>
+                  <SignOutButton>
+                    <button className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+                      Sign Out
+                    </button>
+                  </SignOutButton>
                 </div>
               ) : (
-                <Link href="/dashboard" className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-                  Sign In
-                </Link>
+                <SignInButton mode="modal" fallbackRedirectUrl="/">
+                  <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                    Sign In
+                  </button>
+                </SignInButton>
               )}
             </div>
           </div>
@@ -329,7 +334,7 @@ export default function ASMRVideoStudio() {
             </span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Generate professional ASMR content with our advanced AI technology. Perfect for TikTok &amp; YouTube creators, ASMR enthusiasts, and content makers. Start with 2 free trials, then choose a subscription plan with fair usage limits—subscriptions are not unlimited.
+            Generate professional ASMR content with our advanced AI technology. Perfect for TikTok &amp; YouTube creators, ASMR enthusiasts, and content makers. Start with 2 free trials, then purchase credit packs for unlimited generations.
           </p>
         </div>
       </section>
@@ -636,97 +641,38 @@ export default function ASMRVideoStudio() {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Pricing CTA Section */}
       <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Simple, Fair Pricing</h2>
-          <p className="text-xl text-gray-600">Start free, upgrade when you need more AI ASMR generations</p>
-          <p className="text-sm text-gray-500 mt-2">
-            Learn about our <Link href="/refund" className="text-purple-600 hover:text-purple-700 underline">refund policy</Link> - 3-day refund window (conditions apply)
+        <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl p-12 text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">Ready to Create Amazing ASMR Videos?</h2>
+          <p className="text-xl mb-8 opacity-90">
+            Choose from our flexible credit packages and start generating AI ASMR videos today
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              name: 'Free Trial',
-              price: '$0',
-              period: '2 videos',
-              features: [
-                '2 free AI ASMR videos',
-                'All ASMR types available', 
-                '720p video quality',
-                'No watermark',
-                'Download included'
-              ],
-              cta: 'Start Free',
-              popular: false
-            },
-            {
-              name: 'Pro Monthly',
-              price: '$9.99',
-              period: 'per month',
-              features: [
-                '100 AI ASMR videos/month',
-                'All ASMR types & styles',
-                '1080p HD quality',
-                'Priority processing',
-                'Commercial usage rights',
-                'Early access to new features'
-              ],
-              cta: 'Choose Pro',
-              popular: true
-            },
-            {
-              name: 'Creator Annual',
-              price: '$99',
-              period: 'per year',
-              features: [
-                '1500 AI ASMR videos/year',
-                'All premium features',
-                'Custom ASMR templates',
-                '4K video quality (coming soon)',
-                'API access',
-                'Priority support'
-              ],
-              cta: 'Best Value',
-              popular: false
-            }
-          ].map((plan, idx) => (
-            <div key={idx} className={`relative bg-white rounded-3xl border-2 p-8 ${
-              plan.popular ? 'border-purple-500 shadow-2xl' : 'border-gray-200 shadow-lg'
-            }`}>
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium">
-                  Most Popular
-                </div>
-              )}
-              <div className="text-center mb-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  <span className="text-gray-600 ml-2">{plan.period}</span>
-                </div>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, fidx) => (
-                  <li key={fidx} className="flex items-center space-x-3">
-                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                    </div>
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <button className={`w-full py-3 rounded-xl font-semibold transition-colors ${
-                plan.popular 
-                  ? 'bg-purple-600 text-white hover:bg-purple-700' 
-                  : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-              }`}>
-                {plan.cta}
-              </button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white/10 rounded-xl p-4">
+              <div className="text-2xl font-bold">115+ Credits</div>
+              <div className="text-sm opacity-75">From $9.9</div>
             </div>
-          ))}
+            <div className="bg-white/20 rounded-xl p-4 border-2 border-white/30">
+              <div className="text-2xl font-bold">355+ Credits</div>
+              <div className="text-sm opacity-75">From $30</div>
+              <div className="text-xs mt-1 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full inline-block">Most Popular</div>
+            </div>
+            <div className="bg-white/10 rounded-xl p-4">
+              <div className="text-2xl font-bold">1450+ Credits</div>
+              <div className="text-sm opacity-75">From $99</div>
+            </div>
+          </div>
+          <Link 
+            href="/pricing"
+            className="inline-flex items-center px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors transform hover:scale-105"
+          >
+            <Sparkles className="w-5 h-5 mr-2" />
+            View All Pricing Plans
+          </Link>
+          <p className="text-sm mt-4 opacity-75">
+            每10个Credits = 1个AI ASMR视频 • Credits永不过期
+          </p>
         </div>
       </section>
 
@@ -756,7 +702,7 @@ export default function ASMRVideoStudio() {
                 <li><a href="#" className="hover:text-white transition-colors">AI ASMR Generator</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Video Templates</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">API Access</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
               </ul>
             </div>
             

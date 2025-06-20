@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server'
+import { db } from '@/lib/prisma'
+import { CREDITS_CONFIG } from '@/lib/credits-config'
 import https from 'https';
 
 export async function POST(request: NextRequest) {
   try {
+    // 1. 验证用户登录
+    const { userId: clerkUserId } = await auth()
+    if (!clerkUserId) {
+      return NextResponse.json({ error: '未授权' }, { status: 401 })
+    }
+
     const body = await request.json();
     const { prompt, aspectRatio, duration } = body;
 
@@ -11,6 +20,30 @@ export async function POST(request: NextRequest) {
         { error: '提示词是必需的' },
         { status: 400 }
       );
+    }
+
+    // 2. 检查用户积分是否足够
+    const user = await db.user.findUnique({
+      where: { clerkUserId },
+      select: {
+        id: true,
+        totalCredits: true,
+        usedCredits: true
+      }
+    })
+
+    if (!user) {
+      return NextResponse.json({ error: '用户不存在' }, { status: 404 })
+    }
+
+    const remainingCredits = user.totalCredits - user.usedCredits
+    
+    if (!CREDITS_CONFIG.canCreateVideo(remainingCredits)) {
+      return NextResponse.json({
+        error: `积分不足，需要${CREDITS_CONFIG.VIDEO_COST}积分，当前剩余${remainingCredits}积分`,
+        needCredits: CREDITS_CONFIG.VIDEO_COST,
+        currentCredits: remainingCredits
+      }, { status: 402 }) // 402 Payment Required
     }
 
     // 准备请求数据
@@ -67,11 +100,42 @@ export async function POST(request: NextRequest) {
       throw new Error(result.msg || result.message || '视频生成失败');
     }
 
+    // 3. 扣除积分并创建视频记录
+    await db.$transaction(async (tx: any) => {
+      // 扣除用户积分
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          usedCredits: {
+            increment: CREDITS_CONFIG.VIDEO_COST
+          }
+        }
+      })
+
+      // 创建视频记录
+      await tx.video.create({
+        data: {
+          userId: user.id,
+          title: `ASMR Video - ${new Date().toLocaleString()}`,
+          type: 'ASMR',
+          prompt: prompt,
+          status: 'processing',
+          creditsUsed: CREDITS_CONFIG.VIDEO_COST,
+          // 可能需要存储外部taskId用于后续状态查询
+          // externalId: result.data?.taskId
+        }
+      })
+    })
+
+    console.log(`✅ 用户 ${clerkUserId} 生成视频成功，扣除${CREDITS_CONFIG.VIDEO_COST}积分`)
+
     return NextResponse.json({
       success: true,
       videoId: result.data?.taskId,
       status: 'pending',
       message: result.msg || 'Video generation started',
+      creditsUsed: CREDITS_CONFIG.VIDEO_COST,
+      remainingCredits: remainingCredits - CREDITS_CONFIG.VIDEO_COST
     });
 
   } catch (error) {
