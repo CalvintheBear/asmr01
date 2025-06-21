@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build && npm run clean:cache",
+    "build": "prisma generate && npx @cloudflare/next-on-pages",
+    "build:vercel": "prisma generate && next build && npm run clean:cache",
     "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages && npm run clean:cache",
     "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
