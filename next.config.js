@@ -1,6 +1,6 @@
-// Cloudflare Pages 配置
+// Cloudflare Pages 专用配置
 
-// 开发环境设置Cloudflare平台
+// Cloudflare 开发环境设置
 if (process.env.NODE_ENV === 'development') {
   try {
     const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
@@ -39,11 +39,11 @@ const nextConfig = {
     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: '/',
     VEO3_API_KEY: process.env.VEO3_API_KEY || 'c98268b5c693894dd721ed1d576edb',
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
-    // 动态域名配置
+    // 应用URL配置
     DOMAIN: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}/api` : 'http://localhost:3000/api',
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-    // Railway PostgreSQL 数据库连接 - 优先使用环境变量
+    // Railway PostgreSQL 数据库连接（保留数据库连接）
     DATABASE_URL: process.env.DATABASE_URL,
     // Creem 支付配置
     CREEM_API_KEY: process.env.CREEM_API_KEY,

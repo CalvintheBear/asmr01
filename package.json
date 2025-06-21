@@ -10,6 +10,7 @@
     "build:cloudflare": "prisma generate && next build && npm run clean:cloudflare",
     "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
+    "start:railway": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "preview": "npx wrangler pages dev",
     "deploy": "npx wrangler pages deploy",
@@ -24,6 +25,9 @@
     "test:endpoints": "node scripts/test-api-endpoints.js",
     "debug:env": "node scripts/debug-environment.js",
     "check:production": "node scripts/check-production-status.js",
+    "check:railway": "node scripts/check-railway-config.js",
+    "test:railway": "node scripts/test-railway-app.js",
+    "test:railway-db": "node scripts/test-railway-db-connection.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
