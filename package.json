@@ -21,6 +21,7 @@
     "check:env": "node scripts/check-env-vars.js",
     "test:db": "node scripts/test-database.js",
     "test:api": "node scripts/test-user-sync.js",
+    "test:endpoints": "node scripts/test-api-endpoints.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

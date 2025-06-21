@@ -12,21 +12,35 @@ export async function GET() {
     }
 
     const user = await db.user.findUnique({
-      where: { clerkUserId }
+      where: { clerkUserId },
+      include: {
+        videos: {
+          select: { id: true }
+        }
+      }
     })
 
     if (!user) {
       return NextResponse.json({ error: '用户不存在' }, { status: 404 })
     }
 
-    return NextResponse.json({
+    const creditsData = {
       totalCredits: user.totalCredits,
       usedCredits: user.usedCredits,
-      remainingCredits: user.totalCredits - user.usedCredits
+      remainingCredits: user.totalCredits - user.usedCredits,
+      videosCount: user.videos.length
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: creditsData
     })
 
   } catch (error) {
     console.error('获取积分失败:', error)
-    return NextResponse.json({ error: '获取积分失败' }, { status: 500 })
+    return NextResponse.json({ 
+      success: false,
+      error: '获取积分失败' 
+    }, { status: 500 })
   }
 } 
