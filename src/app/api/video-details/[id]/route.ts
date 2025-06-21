@@ -4,49 +4,116 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: any
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const resolvedParams = await params;
+  const taskId = resolvedParams.id;
+  
   try {
-    const videoId = params.id;
-
-    if (!videoId) {
+    if (!taskId) {
       return NextResponse.json(
-        { error: '视频ID是必需的' },
+        { error: '任务ID是必需的', success: false },
         { status: 400 }
       );
     }
 
-    // 直接调用我们的video-status API来获取视频详情
-    const statusResponse = await fetch(`http://localhost:3000/api/video-status/${videoId}`);
-    const statusResult = await statusResponse.json();
+    // 使用Veo3 record-info端点查询视频详情
+    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/record-info?taskId=${taskId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'User-Agent': 'Veo3-Client/1.0',
+      }
+    });
 
-    if (!statusResult.success) {
-      throw new Error(statusResult.error || '获取视频状态失败');
+    if (!response.ok) {
+      // 如果是404，说明taskId不存在
+      if (response.status === 404) {
+        return NextResponse.json({
+          success: false,
+          error: '任务不存在',
+          id: taskId,
+          status: 'not_found'
+        }, { status: 404 });
+      }
+      
+      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
     }
 
-    // 从status API响应中构建详细信息
-    const details = statusResult.details || {};
+    const result = await response.json();
+    console.log('Video Details API Response:', result);
+
+    // 检查响应格式
+    if (result.code !== 200) {
+      // 如果是任务不存在的错误
+      if (result.code === 404 || result.msg?.includes('not found') || result.msg?.includes('不存在')) {
+        return NextResponse.json({
+          success: false,
+          error: '任务不存在或已过期',
+          id: taskId,
+          status: 'not_found'
+        }, { status: 404 });
+      }
+      
+      throw new Error(result.msg || result.message || '获取视频详情失败');
+    }
+
+    // 处理响应数据
+    const data = result.data;
+    if (!data) {
+      return NextResponse.json({
+        success: false,
+        error: '任务不存在或数据为空',
+        id: taskId,
+        status: 'not_found'
+      }, { status: 404 });
+    }
+
+    // 根据Kie.ai文档的状态码解析
+    const statusCode = data.successFlag;
+    const resultUrls = data.response?.resultUrls || [];
     
+    let status = 'processing';
+    let videoUrl = null;
+    
+    if (statusCode === 2 || statusCode === 3 || data.errorCode) {
+      status = 'failed';
+    } else if (statusCode === 1 && resultUrls.length > 0) {
+      status = 'completed';
+      videoUrl = resultUrls[0]; // veo3_fast只返回720p视频
+    } else if (statusCode === 0) {
+      status = 'processing';
+    }
+
     return NextResponse.json({
       success: true,
-      id: videoId,
-      prompt: "ASMR video generated with AI", // 默认提示词
-      model: "veo3_fast",
-      aspectRatio: "16:9",
-      duration: "8",
-      createdAt: details.createTime ? new Date(details.createTime).toISOString() : new Date().toISOString(),
-      completedAt: details.completeTime ? new Date(details.completeTime).toISOString() : null,
-      status: statusResult.status,
-      videoUrl: statusResult.videoUrl,
-      originalTaskId: details.originalTaskId
+      id: data.taskId || taskId,
+      status: status,
+      prompt: data.prompt || '',
+      model: 'veo3_fast',
+      aspectRatio: data.aspectRatio || '16:9',
+      duration: data.duration || '8s',
+      videoUrl: videoUrl,
+      createdAt: data.createTime,
+      completedAt: data.completeTime,
+      details: {
+        statusCode,
+        errorCode: data.errorCode,
+        errorMessage: data.errorMessage,
+        resultUrls
+      }
     });
 
   } catch (error) {
-    console.error('获取视频详细信息失败:', error);
+    console.error('获取视频详情失败:', error);
+    
+    const errorMessage = error instanceof Error ? error.message : '获取视频详情失败';
+    
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '获取视频详细信息失败',
-        success: false
+        error: errorMessage,
+        success: false,
+        id: taskId
       },
       { status: 500 }
     );

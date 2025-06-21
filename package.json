@@ -31,6 +31,8 @@
     "check:cloudflare": "node scripts/check-cloudflare-deployment.js",
     "test:user": "node scripts/test-user-functions.js",
     "check:full": "node scripts/comprehensive-deployment-check.js",
+    "test:clerk": "node scripts/test-clerk-config.js",
+    "test:all-apis": "node scripts/test-all-apis.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

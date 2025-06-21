@@ -45,17 +45,6 @@ export interface VideoDetailsResponse {
   error?: string;
 }
 
-export interface Video1080PResponse {
-  code: number;
-  message: string;
-  data?: {
-    id: string;
-    videoUrl1080p?: string;
-    status: 'pending' | 'processing' | 'completed' | 'failed';
-  };
-  error?: string;
-}
-
 export class Veo3ApiClient {
   private config: Veo3Config;
 
@@ -110,25 +99,21 @@ export class Veo3ApiClient {
     });
   }
 
-  async getVideoStatus(videoId: string): Promise<VideoGenerationResponse> {
-    return this.makeRequest(`/api/v1/veo/video/${videoId}`);
+  async getVideoStatus(taskId: string): Promise<VideoGenerationResponse> {
+    return this.makeRequest(`/api/v1/veo/record-info?taskId=${taskId}`);
   }
 
-  async getVideoDetails(videoId: string): Promise<VideoDetailsResponse> {
-    return this.makeRequest(`/api/v1/veo/video/${videoId}/details`);
+  async getVideoDetails(taskId: string): Promise<VideoDetailsResponse> {
+    return this.makeRequest(`/api/v1/veo/record-info?taskId=${taskId}`);
   }
 
-  async get1080PVideo(videoId: string): Promise<Video1080PResponse> {
-    return this.makeRequest(`/api/v1/veo/video/${videoId}/1080p`);
-  }
-
-  async pollVideoStatus(videoId: string, onProgress?: (progress: VideoGenerationResponse) => void): Promise<VideoGenerationResponse> {
+  async pollVideoStatus(taskId: string, onProgress?: (progress: VideoGenerationResponse) => void): Promise<VideoGenerationResponse> {
     const maxAttempts = 60; // 最多轮询5分钟
     let attempts = 0;
 
     while (attempts < maxAttempts) {
       try {
-        const status = await this.getVideoStatus(videoId);
+        const status = await this.getVideoStatus(taskId);
         
         if (onProgress) {
           onProgress(status);

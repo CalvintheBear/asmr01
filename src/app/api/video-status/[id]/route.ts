@@ -2,39 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { findTaskRecord, updateTaskRecord } from '@/lib/taskid-storage';
 
-// 获取1080p视频的函数
-async function get1080PVideo(taskId: string): Promise<string | null> {
-  try {
-    // 根据kie.ai文档，调用获取1080p视频的API
-    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/get1080p?taskId=${taskId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
-        'User-Agent': 'Veo3-Client/1.0',
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
-    }
-
-    const result = await response.json();
-
-    if (result.code === 200 && result.data?.videoUrl1080p) {
-      return result.data.videoUrl1080p;
-    }
-    return null;
-  } catch (error) {
-    console.error('获取1080p视频失败:', error);
-    return null;
-  }
-}
-
 // 更新数据库中的视频记录
 async function updateVideoInDatabase(taskId: string, updateData: {
   status: string;
   videoUrl: string;
-  videoUrl1080p: string;
   completedAt: Date;
 }): Promise<void> {
   try {
@@ -60,8 +31,7 @@ async function updateVideoInDatabase(taskId: string, updateData: {
     // 同时更新临时存储
     await updateTaskRecord(taskId, {
       status: updateData.status,
-      videoUrl: updateData.videoUrl,
-      videoUrl1080p: updateData.videoUrl1080p
+      videoUrl: updateData.videoUrl
     });
 
     console.log('✅ 视频记录已更新 - VideoID:', taskRecord.videoId, 'TaskID:', taskId);
@@ -75,19 +45,20 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const resolvedParams = await params;
+  const taskId = resolvedParams.id;
+  
   try {
-    const resolvedParams = await params;
-    const videoId = resolvedParams.id;
 
-    if (!videoId) {
+    if (!taskId) {
       return NextResponse.json(
-        { error: '视频ID是必需的' },
+        { error: '任务ID是必需的', success: false },
         { status: 400 }
       );
     }
 
-    // 使用正确的Veo3 record-info端点查询视频状态，GET请求方法
-    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/record-info?taskId=${videoId}`, {
+    // 使用Veo3 record-info端点查询视频状态
+    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/record-info?taskId=${taskId}`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
@@ -96,6 +67,16 @@ export async function GET(
     });
 
     if (!response.ok) {
+      // 如果是404，说明taskId不存在
+      if (response.status === 404) {
+        return NextResponse.json({
+          success: false,
+          error: '任务不存在',
+          id: taskId,
+          status: 'not_found'
+        }, { status: 404 });
+      }
+      
       throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
     }
 
@@ -104,18 +85,33 @@ export async function GET(
 
     // 检查响应格式
     if (result.code !== 200) {
+      // 如果是任务不存在的错误
+      if (result.code === 404 || result.msg?.includes('not found') || result.msg?.includes('不存在')) {
+        return NextResponse.json({
+          success: false,
+          error: '任务不存在或已过期',
+          id: taskId,
+          status: 'not_found'
+        }, { status: 404 });
+      }
+      
       throw new Error(result.msg || result.message || '获取视频状态失败');
     }
 
     // 处理响应数据
     const data = result.data;
     if (!data) {
-      throw new Error('响应数据为空');
+      return NextResponse.json({
+        success: false,
+        error: '任务不存在或数据为空',
+        id: taskId,
+        status: 'not_found'
+      }, { status: 404 });
     }
 
-    // 根据kie.ai文档的状态码解析
+    // 根据Kie.ai文档的状态码解析
     // 0: 生成中, 1: 成功, 2: 失败, 3: 生成失败
-    const statusCode = data.successFlag; // 实际是状态码
+    const statusCode = data.successFlag;
     const completeTime = data.completeTime;
     const errorCode = data.errorCode;
     const errorMessage = data.errorMessage;
@@ -124,7 +120,6 @@ export async function GET(
     let processedStatus = 'processing';
     let progress = 50;
     let videoUrl = null;
-    let videoUrl1080p = null;
     
     if (statusCode === 2 || statusCode === 3 || errorCode) {
       // 状态码2或3表示失败
@@ -132,29 +127,16 @@ export async function GET(
       progress = 0;
       console.log('❌ 视频生成失败:', errorMessage || '未知错误');
     } else if (statusCode === 1 && resultUrls.length > 0) {
-      // 状态码1表示成功完成
+      // 状态码1表示成功完成，veo3_fast只返回720p视频
       processedStatus = 'completed';
       progress = 100;
-      videoUrl = resultUrls[0]; // 720p视频URL
-      
-      // 尝试获取1080p版本
-      try {
-        const video1080pUrl = await get1080PVideo(videoId);
-        if (video1080pUrl) {
-          videoUrl1080p = video1080pUrl;
-          console.log('✅ 成功获取1080p视频:', video1080pUrl);
-        }
-      } catch (error) {
-        console.log('⚠️ 获取1080p视频失败，使用720p版本:', error);
-        videoUrl1080p = videoUrl; // fallback到720p
-      }
+      videoUrl = resultUrls[0]; // 720p视频URL（veo3_fast的默认输出）
 
       // 更新数据库记录
       try {
-        await updateVideoInDatabase(videoId, {
+        await updateVideoInDatabase(taskId, {
           status: 'completed',
           videoUrl: videoUrl,
-          videoUrl1080p: videoUrl1080p || videoUrl,
           completedAt: new Date()
         });
       } catch (dbError) {
@@ -172,10 +154,9 @@ export async function GET(
 
     return NextResponse.json({
       success: true,
-      id: data.taskId || videoId,
+      id: data.taskId || taskId,
       status: processedStatus,
       videoUrl: videoUrl,
-      videoUrl1080p: videoUrl1080p,
       progress: progress,
       // 添加详细信息便于调试
       details: {
@@ -185,16 +166,21 @@ export async function GET(
         errorCode,
         errorMessage,
         resultUrls,
-        originalTaskId: data.response?.taskId
+        model: 'veo3_fast' // 明确标注使用的模型
       }
     });
 
   } catch (error) {
     console.error('获取视频状态失败:', error);
+    
+    // 改善错误响应
+    const errorMessage = error instanceof Error ? error.message : '获取视频状态失败';
+    
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '获取视频状态失败',
-        success: false
+        error: errorMessage,
+        success: false,
+        id: resolvedParams.id || 'unknown'
       },
       { status: 500 }
     );
