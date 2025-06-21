@@ -10,15 +10,16 @@ if (process.env.NODE_ENV === 'development' && !process.env.RAILWAY_ENVIRONMENT) 
   }
 }
 
-// 检测部署平台
-const isRailway = process.env.RAILWAY_ENVIRONMENT || process.env.PORT;
-const isCloudflare = process.env.CF_PAGES || !isRailway;
+// 检测部署平台 - 修复类型问题
+const isRailway = !!(process.env.RAILWAY_ENVIRONMENT || process.env.PORT);
+const isCloudflare = !!(process.env.CF_PAGES) || !isRailway;
 
 console.log('🏗️ 部署平台检测:', {
   isRailway,
   isCloudflare,
   NODE_ENV: process.env.NODE_ENV,
   RAILWAY_ENVIRONMENT: process.env.RAILWAY_ENVIRONMENT,
+  CF_PAGES: process.env.CF_PAGES,
   PORT: process.env.PORT
 });
 
@@ -28,9 +29,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   
-  // 图片优化配置 - 根据平台调整
+  // 图片优化配置 - 根据平台调整，确保布尔值
   images: {
-    unoptimized: isCloudflare, // 只在Cloudflare时禁用优化
+    unoptimized: Boolean(isCloudflare), // 明确转换为布尔值
   },
   
   // TypeScript和ESLint配置
