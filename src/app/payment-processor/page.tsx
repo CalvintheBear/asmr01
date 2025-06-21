@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSearchParams } from 'next/navigation'
 import { AlertCircle, CheckCircle, CreditCard, RefreshCw, Zap } from 'lucide-react'
 import { CREEM_CONFIG } from '@/lib/creem-config'
 
-export default function PaymentProcessorPage() {
+function PaymentProcessorContent() {
   const { user } = useUser()
   const searchParams = useSearchParams()
   const [processing, setProcessing] = useState(false)
@@ -103,5 +103,24 @@ export default function PaymentProcessorPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600">正在加载...</p>
+      </div>
+    </div>
+  )
+}
+
+export default function PaymentProcessorPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PaymentProcessorContent />
+    </Suspense>
   )
 } 
