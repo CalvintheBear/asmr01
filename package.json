@@ -4,16 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && npm run pages:build",
-    "build:vercel": "prisma generate && next build && npm run clean:cache",
-    "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages && npm run clean:cache",
+    "build": "prisma generate && next build",
+    "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
-    "clean:cache": "rimraf .next/cache",
-    "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "start": "next start",
     "lint": "next lint",
+    "preview": "npx wrangler pages dev",
+    "deploy": "npx wrangler pages deploy",
+    "clean:cache": "rimraf .next/cache",
+    "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
