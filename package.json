@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && npx @cloudflare/next-on-pages",
+    "build": "prisma generate && next build",
     "build:vercel": "prisma generate && next build",
-    "build:local": "prisma generate && next build && npx @cloudflare/next-on-pages --skip-build",
+    "build:railway": "prisma generate && next build",
+    "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages",
     "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
