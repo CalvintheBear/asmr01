@@ -22,6 +22,8 @@
     "test:db": "node scripts/test-database.js",
     "test:api": "node scripts/test-user-sync.js",
     "test:endpoints": "node scripts/test-api-endpoints.js",
+    "debug:env": "node scripts/debug-environment.js",
+    "check:production": "node scripts/check-production-status.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSearchParams } from 'next/navigation'
+import { useEffect, useState, Suspense } from 'react'
+import { CheckCircle, Sparkles, ArrowRight, AlertCircle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
-import { CheckCircle, Sparkles, ArrowRight, Home, Loader2, AlertCircle } from 'lucide-react'
 import { CREEM_CONFIG } from '@/lib/creem-config'
 
 interface PaymentInfo {
@@ -16,25 +16,51 @@ interface PaymentInfo {
   creditsAdded: number
 }
 
+interface DebugInfo {
+  urlParams: Record<string, string>
+  productInfo: any
+  environmentInfo: any
+  apiResponse: any
+  errors: string[]
+}
+
 function PaymentSuccessContent() {
   const { user } = useUser()
   const searchParams = useSearchParams()
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null)
   const [userCredits, setUserCredits] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  const [debugInfo, setDebugInfo] = useState<DebugInfo>({
+    urlParams: {},
+    productInfo: null,
+    environmentInfo: null,
+    apiResponse: null,
+    errors: []
+  })
 
   useEffect(() => {
+    const errors: string[] = []
+    
     // 从URL参数获取支付信息 - 检查多种可能的参数名
     const productId = searchParams.get('product_id') || searchParams.get('product')
     const orderId = searchParams.get('order_id') || searchParams.get('checkout_id') || searchParams.get('order')
     const customerId = searchParams.get('customer_id') || searchParams.get('customer')
     
+    const urlParams = Object.fromEntries(searchParams.entries())
+    
     console.log('🔍 支付成功页面参数:', {
-      allParams: Object.fromEntries(searchParams.entries()),
+      allParams: urlParams,
       productId,
       orderId,
       customerId
     })
+
+    // 更新调试信息
+    setDebugInfo(prev => ({
+      ...prev,
+      urlParams,
+      errors
+    }))
 
     if (productId) {
       // 从Creem配置获取产品信息
@@ -50,11 +76,27 @@ function PaymentSuccessContent() {
           amount: productInfo.amount,
           creditsAdded: productInfo.creditsToAdd
         })
+        
+        setDebugInfo(prev => ({
+          ...prev,
+          productInfo
+        }))
       } else {
-        console.error('❌ 无法找到产品信息:', productId)
+        const error = `❌ 无法找到产品信息: ${productId}`
+        console.error(error)
+        errors.push(error)
+        
+        // 检查是否是测试环境产品ID在生产环境使用
+        const isTestProductId = productId.startsWith('prod_3') || productId.startsWith('prod_67') || productId.startsWith('prod_5')
+        if (isTestProductId) {
+          errors.push('⚠️ 检测到测试环境产品ID，可能是环境配置问题')
+        }
       }
     } else {
-      console.log('⚠️ 未找到产品ID参数')
+      const error = '⚠️ 未找到产品ID参数'
+      console.log(error)
+      errors.push(error)
+      
       // 如果没有产品ID，显示默认信息
       setPaymentInfo({
         product_id: '',
@@ -69,16 +111,44 @@ function PaymentSuccessContent() {
     // 获取用户最新的积分信息
     if (user) {
       fetchUserCredits()
+    } else {
+      errors.push('❌ 用户未登录')
+      setLoading(false)
     }
+    
+    // 更新错误信息
+    setDebugInfo(prev => ({
+      ...prev,
+      errors
+    }))
   }, [searchParams, user])
 
   const fetchUserCredits = async () => {
     try {
+      console.log('📡 开始获取用户积分信息...')
+      
       const response = await fetch('/api/credits')
+      const result = await response.json()
+      
+      console.log('📊 积分API响应:', {
+        status: response.status,
+        ok: response.ok,
+        result
+      })
+      
+      // 更新调试信息
+      setDebugInfo(prev => ({
+        ...prev,
+        apiResponse: {
+          status: response.status,
+          ok: response.ok,
+          result
+        }
+      }))
+      
       if (response.ok) {
-        const result = await response.json()
-        if (result.success) {
-          const credits = result.data.remainingCredits // 修复：使用剩余积分而不是总积分
+        if (result.success && result.data) {
+          const credits = result.data.remainingCredits
           setUserCredits(credits)
           console.log('✅ 积分信息已获取:', { 
             totalCredits: result.data.totalCredits,
@@ -87,17 +157,52 @@ function PaymentSuccessContent() {
             videosCount: result.data.videosCount
           })
         } else {
-          console.error('获取积分信息失败:', result.message)
+          const error = `❌ API响应格式错误: ${result.error || result.message || '未知错误'}`
+          console.error(error)
+          setDebugInfo(prev => ({
+            ...prev,
+            errors: [...prev.errors, error]
+          }))
         }
       } else {
-        console.error('获取积分信息失败:', response.status, response.statusText)
+        const error = `❌ 获取积分信息失败: ${response.status} ${response.statusText}`
+        console.error(error)
+        setDebugInfo(prev => ({
+          ...prev,
+          errors: [...prev.errors, error]
+        }))
       }
     } catch (error) {
-      console.error('获取用户积分失败:', error)
+      const errorMsg = `❌ 获取用户积分失败: ${error instanceof Error ? error.message : '网络错误'}`
+      console.error(errorMsg, error)
+      setDebugInfo(prev => ({
+        ...prev,
+        errors: [...prev.errors, errorMsg]
+      }))
     } finally {
       setLoading(false)
     }
   }
+
+  // 获取环境配置信息
+  useEffect(() => {
+    const fetchEnvironmentInfo = async () => {
+      try {
+        const response = await fetch('/api/check-creem-config')
+        const envInfo = await response.json()
+        console.log('🔧 环境配置信息:', envInfo)
+        
+        setDebugInfo(prev => ({
+          ...prev,
+          environmentInfo: envInfo
+        }))
+      } catch (error) {
+        console.error('获取环境信息失败:', error)
+      }
+    }
+    
+    fetchEnvironmentInfo()
+  }, [])
 
   if (loading) {
     return (
@@ -124,6 +229,34 @@ function PaymentSuccessContent() {
           </p>
         </div>
 
+        {/* 错误和警告信息 */}
+        {debugInfo.errors.length > 0 && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center mb-2">
+              <AlertCircle className="w-5 h-5 text-red-600 mr-2" />
+              <h3 className="font-medium text-red-800">检测到问题</h3>
+            </div>
+            <ul className="text-sm text-red-700 space-y-1">
+              {debugInfo.errors.map((error, index) => (
+                <li key={index}>• {error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* 环境配置警告 */}
+        {debugInfo.environmentInfo && debugInfo.environmentInfo.environment?.isTestMode && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center">
+              <AlertCircle className="w-5 h-5 text-yellow-600 mr-2" />
+              <div>
+                <p className="text-yellow-800 font-medium">⚠️ 检测到测试环境配置</p>
+                <p className="text-yellow-700 text-sm">当前使用测试环境，支付可能不会真实处理。请检查环境变量配置。</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Payment Details */}
         {paymentInfo && (
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
@@ -146,6 +279,12 @@ function PaymentSuccessContent() {
                     ${paymentInfo.amount} USD
                   </div>
                 </div>
+                <div>
+                  <div className="text-sm text-gray-500">产品ID</div>
+                  <div className="text-sm font-mono text-gray-600">
+                    {paymentInfo.product_id}
+                  </div>
+                </div>
               </div>
               
               <div className="space-y-4">
@@ -159,6 +298,12 @@ function PaymentSuccessContent() {
                   <div className="text-sm text-gray-500">订单ID</div>
                   <div className="text-sm font-mono text-gray-600">
                     {paymentInfo.order_id}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500">客户ID</div>
+                  <div className="text-sm font-mono text-gray-600">
+                    {paymentInfo.customer_id}
                   </div>
                 </div>
               </div>
@@ -182,6 +327,9 @@ function PaymentSuccessContent() {
                 {userCredits !== null ? userCredits : '--'}
               </div>
               <div className="text-gray-600">Available Credits</div>
+              {userCredits === null && (
+                <div className="text-xs text-red-500 mt-1">获取失败</div>
+              )}
             </div>
             
             <div className="bg-white rounded-xl p-6 shadow-sm">
@@ -196,6 +344,101 @@ function PaymentSuccessContent() {
             </div>
           </div>
         </div>
+
+        {/* 积分同步状态检查 */}
+        {userCredits !== null && (
+          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">💎 积分同步状态</h3>
+            
+            {userCredits === 8 ? (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <AlertCircle className="w-5 h-5 text-yellow-600 mr-2" />
+                    <div>
+                      <p className="text-yellow-800 font-medium">积分可能未同步</p>
+                      <p className="text-yellow-700 text-sm">检测到您的积分仍为初始积分(8)，支付可能未正确处理</p>
+                    </div>
+                  </div>
+                  <Link 
+                    href={`/payment-processor?${new URLSearchParams({
+                      order_id: paymentInfo?.order_id || '',
+                      product_id: paymentInfo?.product_id || '',
+                      customer_id: paymentInfo?.customer_id || ''
+                    }).toString()}`}
+                    className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 text-sm font-medium"
+                  >
+                    手动同步积分
+                  </Link>
+                </div>
+              </div>
+            ) : userCredits > 8 ? (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
+                  <div>
+                    <p className="text-green-800 font-medium">✅ 积分同步成功</p>
+                    <p className="text-green-700 text-sm">您的积分已成功更新，可以开始创作视频了！</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="flex items-center">
+                  <AlertCircle className="w-5 h-5 text-red-600 mr-2" />
+                  <div>
+                    <p className="text-red-800 font-medium">⚠️ 积分异常</p>
+                    <p className="text-red-700 text-sm">积分数量异常({userCredits})，请联系客服处理</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* 调试信息 (仅在开发环境或有错误时显示) */}
+        {(process.env.NODE_ENV === 'development' || debugInfo.errors.length > 0) && (
+          <details className="bg-gray-50 rounded-lg p-4 mb-8">
+            <summary className="cursor-pointer font-medium text-gray-700 mb-2">
+              🔧 调试信息 (点击展开)
+            </summary>
+            <div className="space-y-3 text-sm">
+              <div>
+                <strong>URL参数:</strong>
+                <pre className="bg-white p-2 rounded mt-1 overflow-x-auto">
+                  {JSON.stringify(debugInfo.urlParams, null, 2)}
+                </pre>
+              </div>
+              
+              {debugInfo.productInfo && (
+                <div>
+                  <strong>产品信息:</strong>
+                  <pre className="bg-white p-2 rounded mt-1 overflow-x-auto">
+                    {JSON.stringify(debugInfo.productInfo, null, 2)}
+                  </pre>
+                </div>
+              )}
+              
+              {debugInfo.environmentInfo && (
+                <div>
+                  <strong>环境配置:</strong>
+                  <pre className="bg-white p-2 rounded mt-1 overflow-x-auto">
+                    {JSON.stringify(debugInfo.environmentInfo, null, 2)}
+                  </pre>
+                </div>
+              )}
+              
+              {debugInfo.apiResponse && (
+                <div>
+                  <strong>API响应:</strong>
+                  <pre className="bg-white p-2 rounded mt-1 overflow-x-auto">
+                    {JSON.stringify(debugInfo.apiResponse, null, 2)}
+                  </pre>
+                </div>
+              )}
+            </div>
+          </details>
+        )}
 
         {/* Next Steps */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
@@ -230,31 +473,6 @@ function PaymentSuccessContent() {
 
         {/* Action Buttons */}
         <div className="text-center space-y-4">
-          {/* 如果积分显示为8（初始积分），说明webhook可能未执行，显示手动处理选项 */}
-          {userCredits === 8 && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <AlertCircle className="w-5 h-5 text-yellow-600 mr-2" />
-                  <div>
-                    <p className="text-yellow-800 font-medium">积分可能未同步</p>
-                    <p className="text-yellow-700 text-sm">检测到您的积分仍为初始积分，可能需要手动处理</p>
-                  </div>
-                </div>
-                <Link 
-                  href={`/payment-processor?${new URLSearchParams({
-                    order_id: paymentInfo?.order_id || '',
-                    product_id: paymentInfo?.product_id || '',
-                    customer_id: paymentInfo?.customer_id || ''
-                  }).toString()}`}
-                  className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 text-sm font-medium"
-                >
-                  手动同步积分
-                </Link>
-              </div>
-            </div>
-          )}
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/"
@@ -267,38 +485,12 @@ function PaymentSuccessContent() {
             
             <Link 
               href="/profile"
-              className="inline-flex items-center px-8 py-4 bg-white border-2 border-gray-200 text-gray-700 rounded-xl font-bold text-lg hover:border-gray-300 hover:bg-gray-50 transition-all duration-300"
+              className="inline-flex items-center px-8 py-4 bg-white border-2 border-purple-600 text-purple-600 rounded-xl font-bold text-lg hover:bg-purple-50 transition-all duration-300"
             >
-              <Home className="w-5 h-5 mr-2" />
-              查看我的信息
+              查看个人中心
             </Link>
           </div>
-          
-          <p className="text-sm text-gray-500">
-            有问题？联系我们：<a href="mailto:support@cuttingasmr.org" className="text-purple-600 hover:text-purple-700">support@cuttingasmr.org</a>
-          </p>
         </div>
-
-        {/* Development Info */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="mt-12 bg-gray-100 rounded-xl p-6">
-            <h3 className="font-bold text-gray-800 mb-4">🛠️ 开发信息</h3>
-            <div className="text-sm text-gray-600 space-y-2">
-              <p><strong>环境</strong>: 本地开发</p>
-              <p><strong>用户</strong>: {user?.emailAddresses[0]?.emailAddress}</p>
-              <p><strong>支付状态</strong>: 测试模式</p>
-              <p><strong>当前积分</strong>: {userCredits}</p>
-              {paymentInfo && (
-                <div className="mt-2">
-                  <p><strong>支付信息</strong>:</p>
-                  <pre className="bg-gray-200 p-2 rounded text-xs overflow-auto">
-                    {JSON.stringify(paymentInfo, null, 2)}
-                  </pre>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )
@@ -309,7 +501,7 @@ function LoadingFallback() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex items-center justify-center">
       <div className="text-center">
         <Loader2 className="w-12 h-12 animate-spin text-purple-600 mx-auto mb-4" />
-        <p className="text-gray-600">正在加载支付信息...</p>
+        <p className="text-gray-600">Loading payment information...</p>
       </div>
     </div>
   )
