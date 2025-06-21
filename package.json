@@ -29,6 +29,8 @@
     "test:railway": "node scripts/test-railway-app.js",
     "test:railway-db": "node scripts/test-railway-db-connection.js",
     "check:cloudflare": "node scripts/check-cloudflare-deployment.js",
+    "test:user": "node scripts/test-user-functions.js",
+    "check:full": "node scripts/comprehensive-deployment-check.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
