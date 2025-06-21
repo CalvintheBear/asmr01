@@ -18,6 +18,9 @@
     "clean:cloudflare": "rimraf .next/cache && rimraf .next/trace",
     "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "verify:creem": "node scripts/verify-production-config.js",
+    "check:env": "node scripts/check-env-vars.js",
+    "test:db": "node scripts/test-database.js",
+    "test:api": "node scripts/test-user-sync.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -27,6 +30,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "dotenv": "^16.5.0",
     "lucide-react": "^0.515.0",
     "next": "15.2.3",
     "postcss": "^8",
