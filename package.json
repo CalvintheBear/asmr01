@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && next build && npm run clean:safe",
     "build:vercel": "prisma generate && next build",
     "build:railway": "prisma generate && next build",
     "build:cloudflare": "prisma generate && next build && npm run clean:cloudflare",
@@ -14,6 +14,7 @@
     "preview": "npx wrangler pages dev",
     "deploy": "npx wrangler pages deploy",
     "clean:cache": "rimraf .next/cache",
+    "clean:safe": "node -e \"try { require('fs').rmSync('.next/cache', {recursive: true, force: true}); require('fs').rmSync('.next/trace', {recursive: true, force: true}); } catch(e) { console.log('Clean skipped:', e.message); }\"",
     "clean:cloudflare": "rimraf .next/cache && rimraf .next/trace",
     "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "postinstall": "prisma generate"
