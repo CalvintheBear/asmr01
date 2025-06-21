@@ -1,17 +1,17 @@
 // Creem产品配置 - 统一管理所有产品ID
 export const CREEM_CONFIG = {
-  // 当前使用的产品ID（测试环境，基于用户提供的实际ID）
-  CURRENT_PRODUCT_IDS: {
+  // 测试环境产品ID（开发使用）
+  TEST_PRODUCT_IDS: {
     starter: 'prod_3ClKXTvoV2aQBMoEjTTMzM',   // $9.9 - 115积分
     standard: 'prod_67wDHjBHhgxyDUeaxr7JCG',  // $30 - 355积分
     premium: 'prod_5AkdzTWba2cogt75cngOhu'    // $99 - 1450积分
   },
 
-  // 生产环境产品ID（预留）
+  // 生产环境产品ID（正式环境）
   PRODUCTION_PRODUCT_IDS: {
-    starter: 'prod_3ClKXTvoV2aQBMoEjTTMzM',   // 与测试环境相同
-    standard: 'prod_67wDHjBHhgxyDUeaxr7JCG',  // 与测试环境相同
-    premium: 'prod_5AkdzTWba2cogt75cngOhu'    // 与测试环境相同
+    starter: 'prod_7jHfoQZh5FuYUbIJgIM9ZQ',   // $9.9 - 115积分
+    standard: 'prod_7E4i1f1bV8CPMYc7gRx67l',  // $30 - 355积分
+    premium: 'prod_6mI2w4gJN4FfZ6FuOFzfcr'    // $99 - 1450积分
   },
 
   // 根据环境获取当前使用的产品ID
@@ -19,30 +19,49 @@ export const CREEM_CONFIG = {
     // 检查是否是开发环境或者设置了测试模式
     const isTestMode = process.env.NODE_ENV === 'development' || 
                       process.env.CREEM_TEST_MODE === 'true' ||
-                      process.env.NEXT_PUBLIC_APP_URL?.includes('localhost')
+                      process.env.NEXT_PUBLIC_APP_URL?.includes('localhost') ||
+                      process.env.NEXT_PUBLIC_APP_URL?.includes('trycloudflare.com')
     
-    // 目前测试和生产环境使用相同的产品ID
-    return this.CURRENT_PRODUCT_IDS
+    // 开发环境使用测试产品ID，生产环境使用正式产品ID
+    return isTestMode ? this.TEST_PRODUCT_IDS : this.PRODUCTION_PRODUCT_IDS
   },
 
-  // 根据产品ID反向查找积分包信息（统一映射表）
+  // 根据产品ID反向查找积分包信息（包含测试和生产环境的映射）
   PRODUCT_MAPPING: {
-    // Starter 套餐
+    // 测试环境产品映射
     'prod_3ClKXTvoV2aQBMoEjTTMzM': {
       planType: 'starter' as const,
       creditsToAdd: 115,
       amount: 9.9,
       originalPrice: 12
     },
-    // Standard 套餐  
     'prod_67wDHjBHhgxyDUeaxr7JCG': {
       planType: 'standard' as const,
       creditsToAdd: 355,
       amount: 30,
       originalPrice: 40
     },
-    // Premium 套餐
     'prod_5AkdzTWba2cogt75cngOhu': {
+      planType: 'premium' as const,
+      creditsToAdd: 1450,
+      amount: 99,
+      originalPrice: 120
+    },
+    
+    // 生产环境产品映射
+    'prod_7jHfoQZh5FuYUbIJgIM9ZQ': {
+      planType: 'starter' as const,
+      creditsToAdd: 115,
+      amount: 9.9,
+      originalPrice: 12
+    },
+    'prod_7E4i1f1bV8CPMYc7gRx67l': {
+      planType: 'standard' as const,
+      creditsToAdd: 355,
+      amount: 30,
+      originalPrice: 40
+    },
+    'prod_6mI2w4gJN4FfZ6FuOFzfcr': {
       planType: 'premium' as const,
       creditsToAdd: 1450,
       amount: 99,
@@ -57,7 +76,8 @@ export const CREEM_CONFIG = {
     // 检查是否是测试环境
     const isTestMode = process.env.NODE_ENV === 'development' || 
                       process.env.CREEM_TEST_MODE === 'true' ||
-                      process.env.NEXT_PUBLIC_APP_URL?.includes('localhost')
+                      process.env.NEXT_PUBLIC_APP_URL?.includes('localhost') ||
+                      process.env.NEXT_PUBLIC_APP_URL?.includes('trycloudflare.com')
     
     // 测试环境使用test路径，生产环境使用payment路径
     const basePath = isTestMode ? 'test/payment' : 'payment'
@@ -73,7 +93,8 @@ export const CREEM_CONFIG = {
   isTestMode: () => {
     return process.env.NODE_ENV === 'development' || 
            process.env.CREEM_TEST_MODE === 'true' ||
-           process.env.NEXT_PUBLIC_APP_URL?.includes('localhost')
+           process.env.NEXT_PUBLIC_APP_URL?.includes('localhost') ||
+           process.env.NEXT_PUBLIC_APP_URL?.includes('trycloudflare.com')
   }
 }
 

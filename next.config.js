@@ -29,9 +29,9 @@ const nextConfig = {
     VEO3_API_KEY: process.env.VEO3_API_KEY || 'c98268b5c693894dd721ed1d576edb',
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
     DOMAIN: 'http://localhost:3000',
-    // 确保所有内部API调用都使用3000端口
-    NEXT_PUBLIC_API_URL: 'http://localhost:3000/api',
-    NEXT_PUBLIC_APP_URL: 'http://localhost:3000',
+    // 确保所有内部API调用都使用3000端口  
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}/api` : 'http://localhost:3000/api',
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
     // Railway PostgreSQL 数据库连接 - 用户实际数据库
     DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway',
   },

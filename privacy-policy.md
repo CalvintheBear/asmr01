@@ -4,7 +4,9 @@ Effective Date: January 8, 2025
 
 This Privacy Policy of CuttingASMR.org ("We," "Us," or "Our") describes Our policies and procedures on how we might collect, store, use, and/or share Your information when You use our Service. This includes use of our website at https://cuttingasmr.org/ (the "Website"). The Privacy Policy also tells You about Your privacy rights and how the law protects You.
 
-We use Your Personal Data to provide and improve the Service. By using the Website, You agree to the collection and use of information in accordance with this Privacy Policy.
+We use Your Personal Data to provide and improve the Service. By registering and using our Service, You explicitly agree to the collection and use of information in accordance with this Privacy Policy, our Terms of Service, and Refund Policy.
+
+**Registration Consent**: By creating an account with CuttingASMR.org, you automatically agree to our Privacy Policy, Terms of Service, and Refund Policy. This consent is required to use our services.
 
 Should you have any questions or concerns regarding this Privacy Policy and our services, please check our Terms and Conditions, or contact us directly via j2983236233@gmail.com.
 
@@ -26,6 +28,12 @@ For the purposes of this Privacy Policy:
 - **Third-party Social Media Service** refers to any website or social network through which a User can log in or create an account to use the Service.
 - **You** means the individual accessing or using the Service, or the company or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.
 
+## Data Security and Privacy Commitment
+
+**Complete Privacy Protection**: Your generated AI ASMR content and prompts are processed securely by our Veo3 ASMR system. We never share your AI ASMR content with third parties or use it to train models. All Veo3 ASMR content is stored securely and only accessible by you.
+
+**Professional Quality Assurance**: All AI ASMR content is generated in high-definition quality optimized for YouTube and social media platforms. Content is provided in standard MP4 format with excellent audio-visual synchronization. The Veo3 ASMR technology ensures professional broadcast-quality results suitable for monetization.
+
 ## Collecting and Using Your Personal Data
 
 ### Types of Data We May Collect
@@ -39,13 +47,12 @@ While using Our Service through the Website, We may ask You to provide Us with c
 - Web Cookies
 - ASMR preferences and content selections
 - Video generation history and preferences
+- Agreement consent records and timestamps
 
 #### Information from Third-Party Social Media Services
 The Company allows You to create an account and log in to use the Service through the following Third-party Social Media Services:
 
 - Google
-- Facebook
-- Twitter
 
 If You decide to register through or otherwise grant us access to a Third-Party Social Media Service, We may collect Personal Data that is already associated with Your third-party account, such as Your name, Your email address, Your activities, or Your contact list.
 

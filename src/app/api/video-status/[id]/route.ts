@@ -1,5 +1,93 @@
 import { NextRequest, NextResponse } from 'next/server';
 import https from 'https';
+import { db } from '@/lib/prisma';
+import { findTaskRecord, updateTaskRecord } from '@/lib/taskid-storage';
+
+// 获取1080p视频的函数
+async function get1080PVideo(taskId: string): Promise<string | null> {
+  try {
+    // 根据kie.ai文档，调用获取1080p视频的API
+    const result = await new Promise<any>((resolve, reject) => {
+      const options = {
+        hostname: 'kieai.erweima.ai',
+        port: 443,
+        path: `/api/v1/veo/get1080p?taskId=${taskId}`,
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+          'User-Agent': 'Veo3-Client/1.0',
+        },
+      };
+
+      const req = https.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          try {
+            const response = JSON.parse(data);
+            resolve(response);
+          } catch (error) {
+            reject(new Error('Invalid JSON response'));
+          }
+        });
+      });
+
+      req.on('error', reject);
+      req.end();
+    });
+
+    if (result.code === 200 && result.data?.videoUrl1080p) {
+      return result.data.videoUrl1080p;
+    }
+    return null;
+  } catch (error) {
+    console.error('获取1080p视频失败:', error);
+    return null;
+  }
+}
+
+// 更新数据库中的视频记录
+async function updateVideoInDatabase(taskId: string, updateData: {
+  status: string;
+  videoUrl: string;
+  videoUrl1080p: string;
+  completedAt: Date;
+}): Promise<void> {
+  try {
+    // 首先从临时存储中找到对应的记录
+    const taskRecord = await findTaskRecord(taskId);
+    if (!taskRecord) {
+      console.log('⚠️ 未找到TaskID记录:', taskId);
+      return;
+    }
+
+    // 更新数据库中的视频记录 (通过videoId)
+    await db.video.update({
+      where: {
+        id: taskRecord.videoId
+      },
+      data: {
+        status: updateData.status,
+        videoUrl: updateData.videoUrl,
+        completedAt: updateData.completedAt
+      }
+    });
+
+    // 同时更新临时存储
+    await updateTaskRecord(taskId, {
+      status: updateData.status,
+      videoUrl: updateData.videoUrl,
+      videoUrl1080p: updateData.videoUrl1080p
+    });
+
+    console.log('✅ 视频记录已更新 - VideoID:', taskRecord.videoId, 'TaskID:', taskId);
+  } catch (error) {
+    console.error('❌ 数据库更新失败:', error);
+    throw error;
+  }
+}
 
 export async function GET(
   request: NextRequest,
@@ -65,8 +153,9 @@ export async function GET(
       throw new Error('响应数据为空');
     }
 
-    // 根据实际响应结构解析状态
-    const successFlag = data.successFlag;
+    // 根据kie.ai文档的状态码解析
+    // 0: 生成中, 1: 成功, 2: 失败, 3: 生成失败
+    const statusCode = data.successFlag; // 实际是状态码
     const completeTime = data.completeTime;
     const errorCode = data.errorCode;
     const errorMessage = data.errorMessage;
@@ -75,20 +164,46 @@ export async function GET(
     let processedStatus = 'processing';
     let progress = 50;
     let videoUrl = null;
+    let videoUrl1080p = null;
     
-    if (errorCode) {
-      // 有错误码，生成失败
+    if (statusCode === 2 || statusCode === 3 || errorCode) {
+      // 状态码2或3表示失败
       processedStatus = 'failed';
       progress = 0;
-    } else if (successFlag === 1 && completeTime && resultUrls.length > 0) {
-      // 成功标志为1，有完成时间，且有结果URL，表示完成
+      console.log('❌ 视频生成失败:', errorMessage || '未知错误');
+    } else if (statusCode === 1 && resultUrls.length > 0) {
+      // 状态码1表示成功完成
       processedStatus = 'completed';
       progress = 100;
-      videoUrl = resultUrls[0]; // 取第一个视频URL
-    } else if (successFlag === 1) {
-      // 有成功标志但可能还在处理中
+      videoUrl = resultUrls[0]; // 720p视频URL
+      
+      // 尝试获取1080p版本
+      try {
+        const video1080pUrl = await get1080PVideo(videoId);
+        if (video1080pUrl) {
+          videoUrl1080p = video1080pUrl;
+          console.log('✅ 成功获取1080p视频:', video1080pUrl);
+        }
+      } catch (error) {
+        console.log('⚠️ 获取1080p视频失败，使用720p版本:', error);
+        videoUrl1080p = videoUrl; // fallback到720p
+      }
+
+      // 更新数据库记录
+      try {
+        await updateVideoInDatabase(videoId, {
+          status: 'completed',
+          videoUrl: videoUrl,
+          videoUrl1080p: videoUrl1080p || videoUrl,
+          completedAt: new Date()
+        });
+      } catch (dbError) {
+        console.error('❌ 更新数据库失败:', dbError);
+      }
+    } else if (statusCode === 0) {
+      // 状态码0表示正在生成
       processedStatus = 'processing';
-      progress = 80;
+      progress = 75;
     } else {
       // 其他情况视为处理中
       processedStatus = 'processing';
@@ -100,10 +215,11 @@ export async function GET(
       id: data.taskId || videoId,
       status: processedStatus,
       videoUrl: videoUrl,
+      videoUrl1080p: videoUrl1080p,
       progress: progress,
       // 添加详细信息便于调试
       details: {
-        successFlag,
+        statusCode,
         completeTime,
         createTime: data.createTime,
         errorCode,

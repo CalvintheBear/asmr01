@@ -22,7 +22,6 @@ interface ASMRVideoResultProps {
   onDownload?: () => void;
   onDownload1080p?: () => void;
   onOpenAssets?: () => void;
-  onGetDetails?: (videoId: string) => void;
 }
 
 export default function ASMRVideoResult({
@@ -36,8 +35,7 @@ export default function ASMRVideoResult({
   details,
   onDownload,
   onDownload1080p,
-  onOpenAssets,
-  onGetDetails
+  onOpenAssets
 }: ASMRVideoResultProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -45,34 +43,67 @@ export default function ASMRVideoResult({
   const hasContent = isGenerating || videoUrl;
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-      <h3 className="text-xl font-bold text-gray-900 mb-4">ASMR Video Result</h3>
+    <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 p-8 h-fit">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">ASMR Video Result</h2>
       
       {!hasContent ? (
         /* 默认状态 - 等待生成 */
-        <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center relative overflow-hidden">
-          {/* 背景装饰效果 */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.05),transparent_50%)]"></div>
+        <div className="space-y-6">
+          <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center relative overflow-hidden">
+            {/* 背景装饰效果 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.05),transparent_50%)]"></div>
+            </div>
+            
+            <div className="relative z-10 text-center">
+              {/* 播放按钮 */}
+              <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4 mx-auto">
+                <Play className="w-6 h-6 text-gray-400 ml-1" />
+              </div>
+              
+              <h4 className="text-lg font-medium text-gray-600 mb-2">Ready to Generate</h4>
+              <p className="text-sm text-gray-500 mb-4">
+                Choose an ASMR type and enter a prompt to<br />
+                generate your relaxing video content
+              </p>
+              
+              {/* 特性说明 */}
+              <div className="flex items-center justify-center space-x-2 text-xs text-gray-400">
+                <Volume2 className="w-3 h-3" />
+                <span>8-second videos with high-quality audio</span>
+              </div>
+            </div>
           </div>
-          
-          <div className="relative z-10 text-center">
-            {/* 播放按钮 */}
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4 mx-auto">
-              <Play className="w-6 h-6 text-gray-400 ml-1" />
+
+          {/* 添加占位内容来匹配左侧面板高度 */}
+          <div className="bg-gray-50 rounded-xl p-4 space-y-3">
+            <h4 className="text-lg font-medium text-gray-700">How it works:</h4>
+            <div className="space-y-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2">
+                <span className="w-5 h-5 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs font-medium">1</span>
+                <span>Choose an ASMR type or use custom prompt</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-5 h-5 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs font-medium">2</span>
+                <span>AI generates 8-second video with audio</span>
+              </div>
             </div>
-            
-            <h4 className="text-lg font-medium text-gray-600 mb-2">Ready to Generate</h4>
-            <p className="text-sm text-gray-500 mb-4">
-              Choose an ASMR type and enter a prompt to<br />
-              generate your relaxing video content
-            </p>
-            
-            {/* 特性说明 */}
-            <div className="flex items-center justify-center space-x-2 text-xs text-gray-400">
-              <Volume2 className="w-3 h-3" />
-              <span>8-second videos with high-quality audio</span>
-            </div>
+          </div>
+
+          {/* 快速操作按钮 */}
+          <div className="space-y-3">
+            <button
+              disabled
+              className="w-full py-3 bg-gray-100 text-gray-400 rounded-xl font-medium cursor-not-allowed"
+            >
+              Generate Video First
+            </button>
+            <button
+              disabled
+              className="w-full py-2 text-gray-400 border border-gray-200 rounded-xl cursor-not-allowed"
+            >
+              View History
+            </button>
           </div>
         </div>
       ) : isGenerating ? (
@@ -129,7 +160,7 @@ export default function ASMRVideoResult({
         <div className="space-y-4">
           {/* 完成的视频展示 */}
           <div className="aspect-video bg-gray-900 rounded-xl overflow-hidden relative group cursor-pointer">
-            {videoUrl ? (
+            {(videoUrl1080p || videoUrl) ? (
               <video 
                 controls 
                 className="w-full h-full object-cover"
@@ -137,7 +168,7 @@ export default function ASMRVideoResult({
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
               >
-                <source src={videoUrl} type="video/mp4" />
+                <source src={videoUrl1080p || videoUrl} type="video/mp4" />
                 您的浏览器不支持视频播放
               </video>
             ) : (
@@ -184,50 +215,23 @@ export default function ASMRVideoResult({
             {/* 主要下载按钮 */}
             <div className="flex items-center space-x-2">
               <button
-                onClick={onDownload}
+                onClick={videoUrl1080p ? onDownload1080p : onDownload}
                 className="flex-1 flex items-center justify-center px-4 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors"
               >
                 <Download className="w-4 h-4 mr-2" />
-                <span className="text-sm font-medium">Download Video (1080p)</span>
+                <span className="text-sm font-medium">
+                  Download Video {videoUrl1080p ? '(1080p)' : '(720p)'}
+                </span>
               </button>
-              
-              {videoUrl1080p && (
-                <button
-                  onClick={onDownload1080p}
-                  className="flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
-                  title="Download 1080p version"
-                >
-                  <Download className="w-4 h-4 mr-1" />
-                  <span className="text-sm font-medium">1080p</span>
-                </button>
-              )}
             </div>
             
             {/* 次要操作按钮 */}
             <div className="flex items-center space-x-2">
-              {videoId && !details && (
-                <button
-                  onClick={() => onGetDetails?.(videoId)}
-                  className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium"
-                >
-                  Get Details
-                </button>
-              )}
-              
-              {videoId && !videoUrl1080p && (
-                <button
-                  onClick={() => onDownload1080p?.()}
-                  className="flex-1 px-4 py-2 text-blue-700 border border-blue-300 rounded-xl hover:bg-blue-50 transition-colors text-sm font-medium"
-                >
-                  Get 1080p
-                </button>
-              )}
-              
               <button
                 onClick={onOpenAssets}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium"
+                className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium"
               >
-                My Assets
+                历史生成视频
               </button>
             </div>
           </div>

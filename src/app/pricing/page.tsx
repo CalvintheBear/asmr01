@@ -145,7 +145,7 @@ export default function PricingPage() {
           
           <div className="inline-flex items-center bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 px-6 py-3 rounded-full text-lg font-bold border border-green-200">
             <Video className="w-5 h-5 mr-3" />
-            每10个Credits = 1个AI ASMR视频 • Credits永不过期 • 1080p高质量下载
+            10 Credits = 1 AI ASMR Video • Credits Never Expire • 1080p High Quality Download
           </div>
         </div>
 

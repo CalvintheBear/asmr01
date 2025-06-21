@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server'
 import { db } from '@/lib/prisma'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
+import { saveTaskRecord } from '@/lib/taskid-storage'
 import https from 'https';
 
 export async function POST(request: NextRequest) {
@@ -27,6 +28,7 @@ export async function POST(request: NextRequest) {
       where: { clerkUserId },
       select: {
         id: true,
+        email: true,
         totalCredits: true,
         usedCredits: true
       }
@@ -101,7 +103,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 3. 扣除积分并创建视频记录
-    await db.$transaction(async (tx: any) => {
+    const videoRecord = await db.$transaction(async (tx: any) => {
       // 扣除用户积分
       await tx.user.update({
         where: { id: user.id },
@@ -113,7 +115,7 @@ export async function POST(request: NextRequest) {
       })
 
       // 创建视频记录
-      await tx.video.create({
+      const video = await tx.video.create({
         data: {
           userId: user.id,
           title: `ASMR Video - ${new Date().toLocaleString()}`,
@@ -121,17 +123,32 @@ export async function POST(request: NextRequest) {
           prompt: prompt,
           status: 'processing',
           creditsUsed: CREDITS_CONFIG.VIDEO_COST,
-          // 可能需要存储外部taskId用于后续状态查询
-          // externalId: result.data?.taskId
         }
       })
+      
+      return video;
     })
+
+    // 保存TaskID映射到临时存储
+    const taskId = result.data?.taskId;
+    if (taskId) {
+      await saveTaskRecord({
+        taskId: taskId,
+        userId: user.id,
+        userEmail: user.email,
+        videoId: videoRecord.id,
+        prompt: prompt,
+        createdAt: new Date().toISOString(),
+        status: 'processing'
+      });
+    }
 
     console.log(`✅ 用户 ${clerkUserId} 生成视频成功，扣除${CREDITS_CONFIG.VIDEO_COST}积分`)
 
     return NextResponse.json({
       success: true,
-      videoId: result.data?.taskId,
+      videoId: taskId,
+      taskId: taskId,
       status: 'pending',
       message: result.msg || 'Video generation started',
       creditsUsed: CREDITS_CONFIG.VIDEO_COST,

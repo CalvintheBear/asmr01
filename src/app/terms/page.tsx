@@ -32,7 +32,11 @@ export default function TermsPage() {
           <div className="prose prose-lg max-w-none">
             <h2>1. Acceptance of Terms</h2>
             <p>
-              By accessing and using CuttingASMR.org ("Service"), you accept and agree to be bound by the terms and provision of this agreement.
+              By registering an account or accessing CuttingASMR.org ("Service"), you automatically accept and agree to be bound by these Terms of Service, our Privacy Policy, and Refund Policy. This agreement is required to use our services.
+            </p>
+            
+            <p>
+              <strong>Registration Consent</strong>: Creating an account constitutes explicit agreement to all our policies and terms. If you do not agree to these terms, you must not use our Service.
             </p>
 
             <h2>2. Use License</h2>
@@ -48,12 +52,20 @@ export default function TermsPage() {
 
             <h2>3. Generated Content Rights</h2>
             <p>
-              You retain all rights to videos generated through our service. You may use generated videos for personal and commercial purposes.
+              <strong>Full Commercial Rights</strong>: Every ASMR video generated through our platform comes with complete commercial usage rights. Whether you're creating ASMR videos for YouTube monetization, client projects, or selling ASMR video content, you own the rights to each ASMR video. Many professional creators use our ASMR video generator for their commercial ASMR video productions.
+            </p>
+            
+            <p>
+              You retain all rights to videos generated through our service. You may use generated videos for personal and commercial purposes without restrictions or additional licensing fees.
             </p>
 
             <h2>4. Payment Terms</h2>
             <p>
-              All payments are processed securely through Creem. Credits purchased do not expire. Refunds may be available within 30 days of purchase.
+              <strong>Cost-Effective Pricing</strong>: We offer very cost-effective pricing at just 15 credits per AI ASMR generation. New users receive free credits upon sign-up to try our Veo3 ASMR generator! We also offer various credit packs for frequent AI ASMR creators. Much more affordable than traditional production equipment using Veo3 ASMR technology.
+            </p>
+            
+            <p>
+              All payments are processed securely through Creem. Credits purchased do not expire. Refunds are available within 3 days of purchase if you have used fewer than 20 credits.
             </p>
 
             <h2>5. Disclaimer</h2>

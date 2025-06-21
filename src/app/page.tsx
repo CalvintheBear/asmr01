@@ -1,18 +1,66 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
 import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones } from 'lucide-react'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
+import { useCredits } from '@/hooks/useCredits'
+import { CREDITS_CONFIG } from '@/lib/credits-config'
 
 export default function ASMRVideoStudio() {
   const { user, isLoaded } = useUser()
-  const [selectedASMRType, setSelectedASMRType] = useState('keyboard')
-  const [prompt, setPrompt] = useState('Professional close-up of fingers typing on premium mechanical keyboard with individual key switches. Camera: Side and overhead angles capturing finger precision and key movement. Lighting: Clean desk lighting highlighting keyboard details. Audio: Satisfying tactile clicks, key depression sounds, typing rhythm patterns.')
-  const [showAllTypes, setShowAllTypes] = useState(false)
+  const [selectedASMRType, setSelectedASMRType] = useState('default')
+  const [prompt, setPrompt] = useState('')
+  const [showAllTypesModal, setShowAllTypesModal] = useState(false)
+  const [userSynced, setUserSynced] = useState(false)
+  
+  // 使用积分钩子
+  const { credits, loading: creditsLoading, refetch: refetchCredits } = useCredits(!!user && userSynced)
+
+  // 用户登录后自动同步到数据库
+  useEffect(() => {
+    const syncUser = async () => {
+      if (!isLoaded || !user || userSynced) return
+      
+      try {
+        console.log('🔄 自动同步用户到数据库...')
+        const response = await fetch('/api/user/sync', {
+          method: 'POST'
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          console.log('✅ 用户同步成功:', result)
+          setUserSynced(true)
+          // 同步成功后获取积分信息
+          refetchCredits()
+        } else {
+          console.error('❌ 用户同步失败:', response.status)
+          // 即使同步失败也尝试获取积分
+          setUserSynced(true)
+          refetchCredits()
+        }
+      } catch (error) {
+        console.error('💥 用户同步错误:', error)
+        // 即使出错也标记为已尝试同步
+        setUserSynced(true)
+        refetchCredits()
+      }
+    }
+
+    syncUser()
+  }, [isLoaded, user, userSynced, refetchCredits])
+
+  // 默认选项（自由编辑）
+  const defaultOption = {
+    id: 'default',
+    name: 'Custom Prompt',
+    description: 'Create your own ASMR scene with custom description',
+    prompt: ''
+  }
 
   // ASMR类型分类定义
   const asmrCategories = [
@@ -240,9 +288,14 @@ export default function ASMRVideoStudio() {
   const handleASMRTypeChange = (typeId: string) => {
     setSelectedASMRType(typeId)
     
-    const selectedType = allAsmrTypes.find(type => type.id === typeId)
-    if (selectedType) {
-      setPrompt(selectedType.prompt)
+    if (typeId === 'default') {
+      // 默认选项，清空提示词让用户自由编辑
+      setPrompt('')
+    } else {
+      const selectedType = allAsmrTypes.find(type => type.id === typeId)
+      if (selectedType) {
+        setPrompt(selectedType.prompt)
+      }
     }
   }
 
@@ -252,6 +305,12 @@ export default function ASMRVideoStudio() {
   const { generationStatus, generateVideo, getVideoDetails, get1080PVideo, resetGeneration, isGenerating } = useVideoGeneration()
 
   const handleGenerate = async () => {
+    // 检查积分是否足够
+    if (user && credits && !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits)) {
+      alert(`积分不足！生成视频需要${CREDITS_CONFIG.VIDEO_COST}积分，当前剩余${credits.remainingCredits}积分。请前往定价页面购买积分。`)
+      return
+    }
+    
     if (!isSubscribed && freeTrialsLeft <= 0) {
       alert('You have used all your free trials. Please subscribe to continue generating AI ASMR videos.')
       return
@@ -264,6 +323,13 @@ export default function ASMRVideoStudio() {
         aspectRatio: '16:9',
         duration: '8',
       })
+      
+      // 生成成功后立即刷新积分
+      if (user) {
+        setTimeout(() => {
+          refetchCredits()
+        }, 1000) // 延迟1秒刷新，确保数据库已更新
+      }
       
       // 减少免费试用次数
       if (!isSubscribed && freeTrialsLeft > 0) {
@@ -292,12 +358,28 @@ export default function ASMRVideoStudio() {
               <h1 className="text-xl font-bold text-gray-900">CuttingASMR.org</h1>
             </div>
             <div className="flex items-center space-x-4">
-                              <Link href="/pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
-                  Pricing
-                </Link>
+              <Link href="/pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+                Pricing
+              </Link>
               <button className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                 Blog
               </button>
+              
+              {/* 积分显示 */}
+              {user && (
+                <div className="px-3 py-1 bg-purple-50 border border-purple-200 rounded-lg">
+                  {creditsLoading ? (
+                    <span className="text-sm text-purple-600">加载中...</span>
+                  ) : credits ? (
+                    <span className="text-sm text-purple-700 font-medium">
+                      积分: {credits.remainingCredits}
+                    </span>
+                  ) : (
+                    <span className="text-sm text-purple-600">--</span>
+                  )}
+                </div>
+              )}
+              
               {user ? (
                 <div className="flex items-center space-x-4">
                   <Link href="/profile" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
@@ -343,7 +425,7 @@ export default function ASMRVideoStudio() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Panel - Generator */}
-          <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden h-fit">
             <div className="p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Generate ASMR Video</h2>
               
@@ -352,83 +434,47 @@ export default function ASMRVideoStudio() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-medium text-gray-900">Choose ASMR Type</h3>
                   <button
-                    onClick={() => setShowAllTypes(!showAllTypes)}
+                    onClick={() => setShowAllTypesModal(true)}
                     className="text-sm text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1"
                   >
-                    <span>{showAllTypes ? 'Simple View' : 'All Categories'}</span>
+                    <span>All Categories</span>
                   </button>
                 </div>
                 
-                {!showAllTypes ? (
-                  // 简化视图 - 显示每个分类的第一个选项 + All按钮
-                  <div className="grid grid-cols-2 gap-3">
-                    {asmrCategories.map((category) => (
-                      <button
-                        key={category.types[0].id}
-                        onClick={() => handleASMRTypeChange(category.types[0].id)}
-                        className={`relative p-3 rounded-xl border-2 transition-all text-sm font-medium ${
-                          selectedASMRType === category.types[0].id
-                            ? 'border-purple-500 bg-purple-600 text-white shadow-lg'
-                            : 'border-gray-200 hover:border-gray-300 text-gray-700 bg-white'
-                        }`}
-                      >
-                        <div className="flex items-center space-x-2">
-                          <span>{category.icon}</span>
-                          <span className="truncate">{category.types[0].name}</span>
-                        </div>
-                      </button>
-                    ))}
-                    
-                    {/* All按钮 */}
+                <div className="grid grid-cols-2 gap-3">
+                  {/* 默认选项（自由编辑） */}
+                  <button
+                    onClick={() => handleASMRTypeChange('default')}
+                    className={`relative p-3 rounded-xl border-2 transition-all text-sm font-medium col-span-2 ${
+                      selectedASMRType === 'default'
+                        ? 'border-purple-500 bg-purple-600 text-white shadow-lg'
+                        : 'border-gray-200 hover:border-gray-300 text-gray-700 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <span>✏️</span>
+                      <span>{defaultOption.name}</span>
+                    </div>
+                  </button>
+                  
+                  {/* 显示每个分类的第一个选项 */}
+                  {asmrCategories.map((category) => (
                     <button
-                      onClick={() => setShowAllTypes(true)}
-                      className="relative p-3 rounded-xl border-2 border-dashed border-purple-300 hover:border-purple-400 text-purple-600 bg-purple-50 hover:bg-purple-100 transition-all text-sm font-medium col-span-2"
+                      key={category.types[0].id}
+                      onClick={() => handleASMRTypeChange(category.types[0].id)}
+                      className={`relative p-3 rounded-xl border-2 transition-all text-sm font-medium ${
+                        selectedASMRType === category.types[0].id
+                          ? 'border-purple-500 bg-purple-600 text-white shadow-lg'
+                          : 'border-gray-200 hover:border-gray-300 text-gray-700 bg-white'
+                      }`}
                     >
-                      <div className="flex items-center justify-center space-x-2">
-                        <span>📋</span>
-                        <span>View All ASMR Types</span>
+                      <div className="flex items-center space-x-2">
+                        <span>{category.icon}</span>
+                        <span className="truncate">{category.types[0].name}</span>
                       </div>
                     </button>
-                  </div>
-                ) : (
-                  // 完整分类视图
-                  <div className="space-y-6 max-h-96 overflow-y-auto pr-2">
-                    {asmrCategories.map((category) => (
-                      <div key={category.id} className="space-y-3">
-                        <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
-                          <span className="text-lg">{category.icon}</span>
-                          <h4 className="font-semibold text-gray-900">{category.name}</h4>
-                        </div>
-                        <div className="grid grid-cols-1 gap-2">
-                          {category.types.map((type) => (
-                            <button
-                              key={type.id}
-                              onClick={() => handleASMRTypeChange(type.id)}
-                              className={`relative p-3 rounded-lg border transition-all text-left ${
-                                selectedASMRType === type.id
-                                  ? 'border-purple-500 bg-purple-50 shadow-md'
-                                  : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
-                              }`}
-                            >
-                              <div className="space-y-1">
-                                <h5 className={`font-medium text-sm ${
-                                  selectedASMRType === type.id ? 'text-purple-900' : 'text-gray-900'
-                                }`}>
-                                  {type.name}
-                                </h5>
-                                <p className={`text-xs leading-relaxed ${
-                                  selectedASMRType === type.id ? 'text-purple-700' : 'text-gray-600'
-                                }`}>
-                                  {type.description}
-                                </p>
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                  ))}
+                </div>
               </div>
 
               {/* Prompt Section */}
@@ -450,8 +496,10 @@ export default function ASMRVideoStudio() {
                 </div>
               </div>
 
+
+
               {/* Trial Status */}
-              {!isSubscribed && (
+              {!isSubscribed && !user && (
                 <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-2xl">
                   <div className="flex items-center justify-between">
                     <div>
@@ -483,7 +531,7 @@ export default function ASMRVideoStudio() {
                 ) : (
                   <>
                     <span>
-                      Generate Video (30 credits)
+                      Generate Video (10 credits)
                     </span>
                   </>
                 )}
@@ -565,13 +613,6 @@ export default function ASMRVideoStudio() {
                   } catch (error) {
                     alert('获取1080P视频失败，请稍后重试');
                   }
-                }
-              }}
-              onGetDetails={async (videoId) => {
-                try {
-                  await getVideoDetails(videoId);
-                } catch (error) {
-                  alert('获取视频详细信息失败');
                 }
               }}
               onOpenAssets={() => {
@@ -733,6 +774,100 @@ export default function ASMRVideoStudio() {
           </div>
         </div>
       </footer>
+
+      {/* ASMR Types Modal */}
+      {showAllTypesModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold text-gray-900">Choose ASMR Type</h3>
+                <button
+                  onClick={() => setShowAllTypesModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <span className="text-gray-500 text-xl">×</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
+              <div className="space-y-8">
+                {/* 默认选项 */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
+                    <span className="text-lg">✏️</span>
+                    <h4 className="font-semibold text-gray-900">Custom</h4>
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleASMRTypeChange('default')
+                      setShowAllTypesModal(false)
+                    }}
+                    className={`w-full p-4 rounded-lg border transition-all text-left ${
+                      selectedASMRType === 'default'
+                        ? 'border-purple-500 bg-purple-50 shadow-md'
+                        : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="space-y-1">
+                      <h5 className={`font-medium ${
+                        selectedASMRType === 'default' ? 'text-purple-900' : 'text-gray-900'
+                      }`}>
+                        {defaultOption.name}
+                      </h5>
+                      <p className={`text-sm leading-relaxed ${
+                        selectedASMRType === 'default' ? 'text-purple-700' : 'text-gray-600'
+                      }`}>
+                        {defaultOption.description}
+                      </p>
+                    </div>
+                  </button>
+                </div>
+
+                {/* 所有分类 */}
+                {asmrCategories.map((category) => (
+                  <div key={category.id} className="space-y-3">
+                    <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
+                      <span className="text-lg">{category.icon}</span>
+                      <h4 className="font-semibold text-gray-900">{category.name}</h4>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {category.types.map((type) => (
+                        <button
+                          key={type.id}
+                          onClick={() => {
+                            handleASMRTypeChange(type.id)
+                            setShowAllTypesModal(false)
+                          }}
+                          className={`p-4 rounded-lg border transition-all text-left ${
+                            selectedASMRType === type.id
+                              ? 'border-purple-500 bg-purple-50 shadow-md'
+                              : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
+                          }`}
+                        >
+                          <div className="space-y-1">
+                            <h5 className={`font-medium ${
+                              selectedASMRType === type.id ? 'text-purple-900' : 'text-gray-900'
+                            }`}>
+                              {type.name}
+                            </h5>
+                            <p className={`text-sm leading-relaxed ${
+                              selectedASMRType === type.id ? 'text-purple-700' : 'text-gray-600'
+                            }`}>
+                              {type.description}
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 } 

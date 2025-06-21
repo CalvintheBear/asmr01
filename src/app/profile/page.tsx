@@ -17,6 +17,21 @@ interface Purchase {
   formattedDate: string
 }
 
+interface Video {
+  id: string
+  taskId: string | null
+  title: string
+  type: string
+  prompt: string
+  status: string
+  videoUrl: string | null
+  videoUrl1080p: string | null
+  thumbnailUrl: string | null
+  creditsUsed: number
+  createdAt: string
+  completedAt: string | null
+}
+
 export default function ProfilePage() {
   const { user, isLoaded } = useUser()
   const { credits, loading, error, refetch } = useCredits(false) // 不自动获取
@@ -25,6 +40,11 @@ export default function ProfilePage() {
   const [purchases, setPurchases] = useState<Purchase[]>([])
   const [purchasesLoading, setPurchasesLoading] = useState(false)
   const [purchasesError, setPurchasesError] = useState<string | null>(null)
+  
+  // 历史视频相关状态
+  const [videos, setVideos] = useState<Video[]>([])
+  const [videosLoading, setVideosLoading] = useState(false)
+  const [videosError, setVideosError] = useState<string | null>(null)
 
   // 获取购买历史
   const fetchPurchases = async () => {
@@ -51,6 +71,31 @@ export default function ProfilePage() {
     }
   }
 
+  // 获取历史视频
+  const fetchVideos = async () => {
+    try {
+      setVideosLoading(true)
+      setVideosError(null)
+      
+      const response = await fetch('/api/user/videos')
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          setVideos(result.data.videos)
+        } else {
+          setVideosError(result.error)
+        }
+      } else {
+        setVideosError('获取视频历史失败')
+      }
+    } catch (error) {
+      console.error('获取视频历史失败:', error)
+      setVideosError('网络错误')
+    } finally {
+      setVideosLoading(false)
+    }
+  }
+
   // 用户加载完成后自动同步到数据库并获取最新数据
   useEffect(() => {
     let isMounted = true
@@ -64,11 +109,12 @@ export default function ProfilePage() {
       const now = Date.now()
       if (now - lastSyncTime < SYNC_COOLDOWN) {
         console.log('⏰ 同步冷却中，直接获取数据...')
-        // 即使在冷却期也要获取最新数据
-        if (isMounted) {
-          refetch()
-          fetchPurchases()
-        }
+                    // 即使在冷却期也要获取最新数据
+            if (isMounted) {
+              refetch()
+              fetchPurchases()
+              fetchVideos()
+            }
         return
       }
       
@@ -103,9 +149,10 @@ export default function ProfilePage() {
         
         // 同步成功后获取最新积分信息和购买历史
         if (isMounted) {
-          console.log('📊 正在获取最新积分和购买记录...')
+          console.log('📊 正在获取最新积分、购买记录和视频历史...')
           refetch()
           fetchPurchases()
+          fetchVideos()
         }
       } catch (err) {
         if (isMounted) {
@@ -116,6 +163,7 @@ export default function ProfilePage() {
           // 即使同步失败也尝试获取数据
           refetch()
           fetchPurchases()
+          fetchVideos()
         }
       } finally {
         if (isMounted) {
@@ -283,6 +331,122 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* 历史生成视频 */}
+        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+            <span className="mr-2">🎬</span>
+            历史生成视频
+            <button 
+              onClick={fetchVideos}
+              disabled={videosLoading}
+              className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
+            >
+              {videosLoading ? '加载中...' : '刷新'}
+            </button>
+          </h2>
+
+          {videosError ? (
+            <div className="text-red-400 text-sm mb-4">
+              {videosError}
+              <button 
+                onClick={fetchVideos}
+                className="ml-2 text-blue-400 hover:text-blue-300 underline"
+              >
+                重试
+              </button>
+            </div>
+          ) : videos.length > 0 ? (
+            <div className="space-y-4">
+              {videos.map((video) => (
+                <div key={video.id} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <div className="flex items-center mb-2">
+                        <span className="text-lg font-semibold text-white">
+                          {video.title}
+                        </span>
+                        <span className={`ml-3 px-2 py-1 rounded-full text-xs font-medium ${
+                          video.status === 'completed' 
+                            ? 'bg-green-500/20 text-green-300' 
+                            : video.status === 'failed'
+                            ? 'bg-red-500/20 text-red-300'
+                            : 'bg-yellow-500/20 text-yellow-300'
+                        }`}>
+                          {video.status === 'completed' ? '已完成' : 
+                           video.status === 'failed' ? '失败' : '处理中'}
+                        </span>
+                      </div>
+                      
+                      <div className="mb-3">
+                        <p className="text-gray-400 text-sm mb-1">提示词:</p>
+                        <p className="text-white text-sm bg-white/5 p-2 rounded">
+                          {video.prompt.length > 100 ? 
+                            `${video.prompt.substring(0, 100)}...` : 
+                            video.prompt
+                          }
+                        </p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                          <p className="text-gray-400">TaskID</p>
+                          <p className="text-white font-mono text-xs">
+                            {video.taskId || '暂无'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400">消耗积分</p>
+                          <p className="text-orange-400 font-medium">
+                            -{video.creditsUsed}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400">创建时间</p>
+                          <p className="text-white">
+                            {new Date(video.createdAt).toLocaleString('zh-CN')}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-400">视频状态</p>
+                          <div className="flex flex-col gap-1">
+                            {video.videoUrl && (
+                              <a 
+                                href={video.videoUrl1080p || video.videoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 text-xs underline"
+                              >
+                                📥 下载视频 {video.videoUrl1080p ? '(1080p)' : '(720p)'}
+                              </a>
+                            )}
+                            {video.taskId && (
+                              <p className="text-gray-500 text-xs">
+                                🔗 TaskID: {video.taskId.substring(0, 8)}...
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : videosLoading ? (
+            <div className="text-gray-300 text-center py-8">
+              <div className="animate-spin w-6 h-6 border-2 border-white/30 border-t-white rounded-full mx-auto mb-2"></div>
+              加载视频历史中...
+            </div>
+          ) : (
+            <div className="text-gray-300 text-center py-8">
+              <p>暂无生成记录</p>
+              <p className="text-sm text-gray-400 mt-2">
+                去 <a href="/" className="text-blue-400 hover:text-blue-300 underline">首页</a> 开始生成您的第一个AI ASMR视频
+              </p>
+            </div>
+          )}
+        </div>
+
         {/* 购买历史 */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
@@ -370,6 +534,131 @@ export default function ProfilePage() {
               </p>
             </div>
           )}
+        </div>
+
+        {/* 数据管理 */}
+        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+            <span className="mr-2">🔒</span>
+            数据管理
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* 导出数据 */}
+            <button
+              onClick={async () => {
+                try {
+                  const response = await fetch('/api/user/export-data')
+                  if (response.ok) {
+                    const data = await response.json()
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+                    const url = URL.createObjectURL(blob)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = `cuttingasmr-data-${new Date().toISOString().split('T')[0]}.json`
+                    a.click()
+                    URL.revokeObjectURL(url)
+                  } else {
+                    alert('导出失败，请稍后重试')
+                  }
+                } catch (error) {
+                  console.error('导出数据失败:', error)
+                  alert('导出失败，请稍后重试')
+                }
+              }}
+              className="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+            >
+              <div className="font-medium">📥 导出我的数据</div>
+              <div className="text-sm text-gray-400 mt-1">
+                下载包含您所有数据的JSON文件
+              </div>
+            </button>
+
+            {/* 清除视频历史 */}
+            <button
+              onClick={async () => {
+                if (confirm('确定要清除所有视频生成历史吗？此操作不可恢复。')) {
+                  try {
+                    const response = await fetch('/api/user/clear-videos', { method: 'DELETE' })
+                    if (response.ok) {
+                      setVideos([])
+                      alert('视频历史已清除')
+                    } else {
+                      alert('清除失败，请稍后重试')
+                    }
+                  } catch (error) {
+                    console.error('清除视频历史失败:', error)
+                    alert('清除失败，请稍后重试')
+                  }
+                }
+              }}
+              className="bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+            >
+              <div className="font-medium">🗑️ 清除视频历史</div>
+              <div className="text-sm text-gray-400 mt-1">
+                删除所有视频生成记录
+              </div>
+            </button>
+            
+            {/* 清除偏好设置 */}
+            <button
+              onClick={async () => {
+                if (confirm('确定要重置所有偏好设置吗？这将清除您的ASMR类型偏好。')) {
+                  try {
+                    const response = await fetch('/api/user/clear-preferences', { method: 'DELETE' })
+                    if (response.ok) {
+                      alert('偏好设置已重置')
+                    } else {
+                      alert('重置失败，请稍后重试')
+                    }
+                  } catch (error) {
+                    console.error('重置偏好失败:', error)
+                    alert('重置失败，请稍后重试')
+                  }
+                }
+              }}
+              className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+            >
+              <div className="font-medium">🔄 重置偏好设置</div>
+              <div className="text-sm text-gray-400 mt-1">
+                清除ASMR类型偏好和设置
+              </div>
+            </button>
+
+            {/* 删除账户 */}
+            <button
+              onClick={async () => {
+                const confirmation = prompt('删除账户是不可恢复的操作。请输入 "DELETE" 确认删除：')
+                if (confirmation === 'DELETE') {
+                  try {
+                    const response = await fetch('/api/user/delete-account', { method: 'DELETE' })
+                    if (response.ok) {
+                      alert('账户删除请求已提交。我们将在24小时内处理您的请求。')
+                      window.location.href = '/'
+                    } else {
+                      alert('删除请求失败，请联系客服')
+                    }
+                  } catch (error) {
+                    console.error('删除账户失败:', error)
+                    alert('删除请求失败，请联系客服')
+                  }
+                }
+              }}
+              className="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+            >
+              <div className="font-medium">⚠️ 删除账户</div>
+              <div className="text-sm text-gray-400 mt-1">
+                永久删除账户和所有数据
+              </div>
+            </button>
+          </div>
+
+          <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+            <p className="text-blue-300 text-sm">
+              💡 <strong>数据保护</strong>: 根据我们的隐私政策，您有权访问、更正、删除或导出您的个人数据。
+              如需帮助，请联系 <a href="mailto:j2983236233@gmail.com" className="underline">j2983236233@gmail.com</a>
+            </p>
+          </div>
         </div>
 
         {/* 操作按钮 */}
