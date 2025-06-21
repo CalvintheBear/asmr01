@@ -1,3 +1,6 @@
+// 导入SSR polyfills
+require('./src/polyfills');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 图片优化配置
@@ -45,6 +48,14 @@ const nextConfig = {
     if (!isServer && process.env.NODE_ENV === 'production') {
       config.devtool = false;
     }
+    
+    // 配置resolve fallback
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    };
     
     return config;
   },
