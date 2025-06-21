@@ -38,7 +38,22 @@ const nextConfig = {
   
   // 输出配置 - 排除大文件
   webpack: (config, { isServer }) => {
-    // 移除问题的polyfill配置，转用其他方法
+    // 在服务器端注入self polyfill
+    if (isServer) {
+      const originalEntry = config.entry;
+      config.entry = async () => {
+        const entries = await originalEntry();
+        // 为每个入口添加polyfill
+        for (const key in entries) {
+          if (Array.isArray(entries[key])) {
+            entries[key].unshift('./src/polyfills.js');
+          } else if (typeof entries[key] === 'string') {
+            entries[key] = ['./src/polyfills.js', entries[key]];
+          }
+        }
+        return entries;
+      };
+    }
     
     // 减小包大小
     config.optimization = {
