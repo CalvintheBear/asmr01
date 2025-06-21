@@ -18,6 +18,40 @@ const nextConfig = {
   reactStrictMode: true,
   compress: true,
   
+  // Cloudflare Pages 优化配置
+  experimental: {
+    // 禁用缓存以减小文件大小
+    turbotrace: {
+      logLevel: 'bug',
+    },
+  },
+  
+  // 输出配置 - 排除大文件
+  webpack: (config, { isServer }) => {
+    // 减小包大小
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+            maxSize: 20000000, // 20MB
+          },
+        },
+      },
+    };
+    
+    // 生产环境排除source maps
+    if (!isServer && process.env.NODE_ENV === 'production') {
+      config.devtool = false;
+    }
+    
+    return config;
+  },
+  
   // 环境变量配置 - 统一使用3000端口
   env: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_cGxlYXNlZC1jbGFtLTc5LmNsZXJrLmFjY291bnRzLmRldiQ',
