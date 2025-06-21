@@ -1,13 +1,29 @@
+# 避免递归构建问题
+.vercel/
+.next/
+node_modules/
+.git/
+
+# 构建工具
+wrangler.toml
+build-output/
+
+# 开发文件
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 临时文件
+*.tmp
+.DS_Store
+Thumbs.db
+
 # 缓存和临时文件
 .next/cache
 .next/server/vendor-chunks
 *.tsbuildinfo
-*.log
-
-# 开发文件
-.env.local
-.env.development.local
-.env.production.local
 
 # 调试文件
 npm-debug.log*
@@ -30,10 +46,6 @@ coverage/
 .idea/
 *.swp
 *.swo
-
-# 系统文件
-.DS_Store
-Thumbs.db
 
 # 任务和日志文件
 task-storage.json
