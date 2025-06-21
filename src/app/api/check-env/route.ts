@@ -3,6 +3,7 @@ export const runtime = "edge";
 import { NextRequest, NextResponse } from 'next/server'
 import { CREEM_CONFIG } from '@/lib/creem-config'
 
+// 环境变量检查API - 2025-06-22 更新
 export async function GET(request: NextRequest) {
   const isTestMode = CREEM_CONFIG.isTestMode()
   const productIds = CREEM_CONFIG.PRODUCT_IDS
