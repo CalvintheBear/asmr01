@@ -31,8 +31,8 @@ const nextConfig = {
   
   // 环境变量配置
   env: {
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_cGxlYXNlZC1jbGFtLTc5LmNsZXJrLmFjY291bnRzLmRldiQ',
-    CLERK_SECRET_KEY: 'sk_test_T8He2nKmyV1okMkk8lZcbIh66KSFWoxr3s0lLMyO36',
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_cGxlYXNlZC1jbGFtLTc5LmNsZXJrLmFjY291bnRzLmRldiQ',
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || 'sk_test_T8He2nKmyV1okMkk8lZcbIh66KSFWoxr3s0lLMyO36',
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: '/',
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: '/',
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: '/',
@@ -43,8 +43,11 @@ const nextConfig = {
     DOMAIN: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}/api` : 'http://localhost:3000/api',
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-    // Railway PostgreSQL 数据库连接
-    DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway',
+    // Railway PostgreSQL 数据库连接 - 优先使用环境变量
+    DATABASE_URL: process.env.DATABASE_URL,
+    // Creem 支付配置
+    CREEM_API_KEY: process.env.CREEM_API_KEY,
+    CREEM_WEBHOOK_SECRET: process.env.CREEM_WEBHOOK_SECRET,
   },
 };
 
