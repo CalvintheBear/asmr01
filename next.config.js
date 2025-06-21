@@ -1,10 +1,14 @@
 // Cloudflare Pages 配置
 
-const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
-
 // 开发环境设置Cloudflare平台
 if (process.env.NODE_ENV === 'development') {
-  setupDevPlatform();
+  try {
+    const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
+    setupDevPlatform();
+  } catch (error) {
+    // 生产环境或模块不存在时忽略
+    console.log('Development platform setup skipped');
+  }
 }
 
 /** @type {import('next').NextConfig} */
