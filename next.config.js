@@ -20,10 +20,7 @@ const nextConfig = {
   
   // Cloudflare Pages 优化配置
   experimental: {
-    // 禁用缓存以减小文件大小
-    turbotrace: {
-      logLevel: 'bug',
-    },
+    // 启用运行时优化
   },
   
   // 输出配置 - 排除大文件
