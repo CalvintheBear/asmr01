@@ -1,5 +1,11 @@
 // Cloudflare Pages 配置
 
+// 全局polyfill - 在所有代码之前执行
+if (typeof global !== 'undefined') {
+  global.self = global.self || global;
+  global.window = global.window || global;
+}
+
 // 开发环境设置Cloudflare平台
 if (process.env.NODE_ENV === 'development') {
   try {
@@ -38,21 +44,16 @@ const nextConfig = {
   
   // 输出配置 - 排除大文件
   webpack: (config, { isServer }) => {
-    // 在服务器端注入self polyfill
+    // 服务器端配置优化
     if (isServer) {
-      const originalEntry = config.entry;
-      config.entry = async () => {
-        const entries = await originalEntry();
-        // 为每个入口添加polyfill
-        for (const key in entries) {
-          if (Array.isArray(entries[key])) {
-            entries[key].unshift('./src/polyfills.js');
-          } else if (typeof entries[key] === 'string') {
-            entries[key] = ['./src/polyfills.js', entries[key]];
-          }
-        }
-        return entries;
-      };
+      // 确保全局变量可用
+      const webpack = require('webpack');
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'typeof self': JSON.stringify('object'),
+          'typeof window': JSON.stringify('object'),
+        })
+      );
     }
     
     // 减小包大小
