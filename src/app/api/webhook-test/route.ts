@@ -1,6 +1,6 @@
+export const runtime = "edge";
+
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       console.log('📄 将作为纯文本处理')
     }
     
-    // 写入日志文件
+    // 记录日志到控制台（Edge Runtime不支持文件系统）
     const logData = {
       timestamp: new Date().toISOString(),
       headers,
@@ -34,28 +34,7 @@ export async function POST(request: NextRequest) {
       userAgent: headers['user-agent'] || 'unknown'
     }
     
-    const logFile = path.join(process.cwd(), 'webhook-logs.json')
-    const logs = []
-    
-    // 读取现有日志
-    try {
-      const existingLogs = fs.readFileSync(logFile, 'utf8')
-      logs.push(...JSON.parse(existingLogs))
-    } catch (e) {
-      // 文件不存在或格式错误，创建新数组
-    }
-    
-    // 添加新日志
-    logs.push(logData)
-    
-    // 保持最新50条记录
-    if (logs.length > 50) {
-      logs.splice(0, logs.length - 50)
-    }
-    
-    // 写入文件
-    fs.writeFileSync(logFile, JSON.stringify(logs, null, 2))
-    console.log('💾 日志已保存到 webhook-logs.json')
+    console.log('💾 Webhook测试日志:', JSON.stringify(logData, null, 2))
     
     // 检查是否是Creem webhook
     if (headers['user-agent']?.includes('creem') || jsonData?.type?.includes('payment')) {

@@ -1,9 +1,10 @@
+export const runtime = "edge";
+
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server'
 import { db } from '@/lib/prisma'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
 import { saveTaskRecord } from '@/lib/taskid-storage'
-import https from 'https';
 
 export async function POST(request: NextRequest) {
   try {
@@ -49,53 +50,30 @@ export async function POST(request: NextRequest) {
     }
 
     // 准备请求数据
-    const requestData = JSON.stringify({
+    const requestData = {
       prompt,
       model: 'veo3_fast',
       aspectRatio: aspectRatio || '16:9',
       duration: duration || '8',
+    };
+
+    // 使用fetch调用Kie.ai API (Edge Runtime兼容)
+    const response = await fetch('https://kieai.erweima.ai/api/v1/veo/generate', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Veo3-Client/1.0',
+      },
+      body: JSON.stringify(requestData)
     });
 
-    // 直接使用Node.js https模块调用Kie.ai API
-    const result = await new Promise<any>((resolve, reject) => {
-      const options = {
-        hostname: 'kieai.erweima.ai',
-        port: 443,
-        path: '/api/v1/veo/generate',
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(requestData),
-          'User-Agent': 'Veo3-Client/1.0',
-        },
-      };
+    if (!response.ok) {
+      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+    }
 
-      const req = https.request(options, (res) => {
-        let data = '';
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-        res.on('end', () => {
-          try {
-            const response = JSON.parse(data);
-            console.log('Kie.ai API Response:', response);
-            resolve(response);
-          } catch (error) {
-            console.error('Failed to parse response:', data);
-            reject(new Error('Invalid JSON response'));
-          }
-        });
-      });
-
-      req.on('error', (error) => {
-        console.error('HTTPS Request Error:', error);
-        reject(error);
-      });
-
-      req.write(requestData);
-      req.end();
-    });
+    const result = await response.json();
+    console.log('Kie.ai API Response:', result);
 
     // 检查API响应
     if (result.code !== 200) {

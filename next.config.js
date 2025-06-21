@@ -1,5 +1,11 @@
-// 导入SSR polyfills
-require('./src/polyfills');
+// Cloudflare Pages 配置
+
+const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
+
+// 开发环境设置Cloudflare平台
+if (process.env.NODE_ENV === 'development') {
+  setupDevPlatform();
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -28,6 +34,8 @@ const nextConfig = {
   
   // 输出配置 - 排除大文件
   webpack: (config, { isServer }) => {
+    // 移除问题的polyfill配置，转用其他方法
+    
     // 减小包大小
     config.optimization = {
       ...config.optimization,

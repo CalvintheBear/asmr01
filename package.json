@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build && npm run clean:cache",
-    "build:cloudflare": "prisma generate && next build && npm run clean:cache && node scripts/optimize-for-cloudflare.js",
+    "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages && npm run clean:cache",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy",
     "clean:cache": "rimraf .next/cache",
     "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "start": "next start",
@@ -31,7 +34,9 @@
     "typescript": "^5"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.12",
     "eslint": "^8",
-    "eslint-config-next": "15.2.3"
+    "eslint-config-next": "15.2.3",
+    "glob": "^11.0.3"
   }
 }

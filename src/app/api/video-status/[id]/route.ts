@@ -1,5 +1,6 @@
+export const runtime = "edge";
+
 import { NextRequest, NextResponse } from 'next/server';
-import https from 'https';
 import { db } from '@/lib/prisma';
 import { findTaskRecord, updateTaskRecord } from '@/lib/taskid-storage';
 
@@ -7,36 +8,19 @@ import { findTaskRecord, updateTaskRecord } from '@/lib/taskid-storage';
 async function get1080PVideo(taskId: string): Promise<string | null> {
   try {
     // 根据kie.ai文档，调用获取1080p视频的API
-    const result = await new Promise<any>((resolve, reject) => {
-      const options = {
-        hostname: 'kieai.erweima.ai',
-        port: 443,
-        path: `/api/v1/veo/get1080p?taskId=${taskId}`,
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
-          'User-Agent': 'Veo3-Client/1.0',
-        },
-      };
-
-      const req = https.request(options, (res) => {
-        let data = '';
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-        res.on('end', () => {
-          try {
-            const response = JSON.parse(data);
-            resolve(response);
-          } catch (error) {
-            reject(new Error('Invalid JSON response'));
-          }
-        });
-      });
-
-      req.on('error', reject);
-      req.end();
+    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/get1080p?taskId=${taskId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'User-Agent': 'Veo3-Client/1.0',
+      }
     });
+
+    if (!response.ok) {
+      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+    }
+
+    const result = await response.json();
 
     if (result.code === 200 && result.data?.videoUrl1080p) {
       return result.data.videoUrl1080p;
@@ -105,42 +89,20 @@ export async function GET(
     }
 
     // 使用正确的Veo3 record-info端点查询视频状态，GET请求方法
-    const result = await new Promise<any>((resolve, reject) => {
-      const options = {
-        hostname: 'kieai.erweima.ai',
-        port: 443,
-        path: `/api/v1/veo/record-info?taskId=${videoId}`,
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
-          'User-Agent': 'Veo3-Client/1.0',
-        },
-      };
-
-      const req = https.request(options, (res) => {
-        let data = '';
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-        res.on('end', () => {
-          try {
-            const response = JSON.parse(data);
-            console.log('Video Status API Response:', response);
-            resolve(response);
-          } catch (error) {
-            console.error('Failed to parse response:', data);
-            reject(new Error('Invalid JSON response'));
-          }
-        });
-      });
-
-      req.on('error', (error) => {
-        console.error('HTTPS Request Error:', error);
-        reject(error);
-      });
-
-      req.end();
+    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/record-info?taskId=${videoId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'User-Agent': 'Veo3-Client/1.0',
+      }
     });
+
+    if (!response.ok) {
+      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    console.log('Video Status API Response:', result);
 
     // 检查响应格式
     if (result.code !== 200) {
