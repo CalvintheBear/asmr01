@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && next build && npm run clean:cloudflare",
     "build:vercel": "prisma generate && next build",
     "build:railway": "prisma generate && next build",
     "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages",
@@ -14,6 +14,7 @@
     "preview": "npx wrangler pages dev",
     "deploy": "npx wrangler pages deploy",
     "clean:cache": "rimraf .next/cache",
+    "clean:cloudflare": "rimraf .next/cache && rimraf .next/trace",
     "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
     "postinstall": "prisma generate"
   },
