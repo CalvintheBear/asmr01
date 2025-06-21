@@ -17,6 +17,7 @@
     "clean:safe": "node -e \"try { require('fs').rmSync('.next/cache', {recursive: true, force: true}); require('fs').rmSync('.next/trace', {recursive: true, force: true}); } catch(e) { console.log('Clean skipped:', e.message); }\"",
     "clean:cloudflare": "rimraf .next/cache && rimraf .next/trace",
     "optimize:cloudflare": "node scripts/optimize-for-cloudflare.js",
+    "verify:creem": "node scripts/verify-production-config.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

@@ -1,5 +1,3 @@
-export const runtime = "edge";
-
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server'
 import { db } from '@/lib/prisma'
@@ -57,7 +55,7 @@ export async function POST(request: NextRequest) {
       duration: duration || '8',
     };
 
-    // 使用fetch调用Kie.ai API (Edge Runtime兼容)
+    // 使用fetch调用Kie.ai API
     const response = await fetch('https://kieai.erweima.ai/api/v1/veo/generate', {
       method: 'POST',
       headers: {
