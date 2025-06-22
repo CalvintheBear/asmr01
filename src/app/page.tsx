@@ -18,7 +18,7 @@ export default function ASMRVideoStudio() {
   const [userSynced, setUserSynced] = useState(false)
   
   // 使用积分钩子
-  const { credits, loading: creditsLoading, refetch: refetchCredits } = useCredits(!!user && userSynced)
+  const { credits, loading: creditsLoading, refetch: refetchCredits, forceRefresh: forceRefreshCredits } = useCredits(!!user && userSynced)
 
   // 用户登录后自动同步到数据库
   useEffect(() => {
@@ -367,16 +367,28 @@ export default function ASMRVideoStudio() {
               
               {/* 积分显示 */}
               {user && (
-                <div className="px-3 py-1 bg-purple-50 border border-purple-200 rounded-lg">
-                  {creditsLoading ? (
-                    <span className="text-sm text-purple-600">加载中...</span>
-                  ) : credits ? (
-                    <span className="text-sm text-purple-700 font-medium">
-                      积分: {credits.remainingCredits}
-                    </span>
-                  ) : (
-                    <span className="text-sm text-purple-600">--</span>
-                  )}
+                <div className="flex items-center space-x-2">
+                  <div className="px-3 py-1 bg-purple-50 border border-purple-200 rounded-lg">
+                    {creditsLoading ? (
+                      <span className="text-sm text-purple-600">加载中...</span>
+                    ) : credits ? (
+                      <span className="text-sm text-purple-700 font-medium">
+                        积分: {credits.remainingCredits}
+                      </span>
+                    ) : (
+                      <span className="text-sm text-purple-600">--</span>
+                    )}
+                  </div>
+                  <button
+                    onClick={forceRefreshCredits}
+                    disabled={creditsLoading}
+                    className="p-1 text-purple-600 hover:text-purple-700 disabled:opacity-50 transition-colors"
+                    title="强制刷新积分（从数据库重新获取）"
+                  >
+                    <svg className={`w-4 h-4 ${creditsLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </button>
                 </div>
               )}
               
@@ -747,7 +759,7 @@ export default function ASMRVideoStudio() {
               </ul>
             </div>
             
-            <div>
+              <div>
               <h4 className="font-semibold mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>

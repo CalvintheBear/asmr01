@@ -12,6 +12,7 @@ interface UseCreditsReturn {
   loading: boolean
   error: string | null
   refetch: () => Promise<void>
+  forceRefresh: () => Promise<void>
 }
 
 export function useCredits(autoFetch: boolean = false): UseCreditsReturn {
@@ -19,12 +20,16 @@ export function useCredits(autoFetch: boolean = false): UseCreditsReturn {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchCredits = async () => {
+  const fetchCredits = async (forceRefresh: boolean = false) => {
     try {
       setLoading(true)
       setError(null)
 
-      const response = await fetch('/api/credits')
+      // 如果是强制刷新，使用POST方法，否则使用GET方法
+      const response = forceRefresh 
+        ? await fetch('/api/credits', { method: 'POST' })
+        : await fetch('/api/credits')
+      
       const data = await response.json()
 
       if (!response.ok) {
@@ -33,6 +38,11 @@ export function useCredits(autoFetch: boolean = false): UseCreditsReturn {
 
       if (data.success && data.data) {
         setCredits(data.data)
+        
+        // 如果是强制刷新，显示成功消息
+        if (forceRefresh && data.message) {
+          console.log('✅ ' + data.message, data.debug)
+        }
       } else {
         throw new Error('返回数据格式错误')
       }
@@ -55,6 +65,7 @@ export function useCredits(autoFetch: boolean = false): UseCreditsReturn {
     credits,
     loading,
     error,
-    refetch: fetchCredits
+    refetch: () => fetchCredits(false),
+    forceRefresh: () => fetchCredits(true)
   }
 } 
