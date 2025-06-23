@@ -306,7 +306,7 @@ export default function PricingPage() {
             <div>
               <h4 className="font-semibold text-gray-900 mb-4">Support</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="mailto:support@cuttingasmr.org" className="hover:text-purple-600 transition-colors">Contact Us</a></li>
+                <li><a href="mailto:j2983236233@gmail.com" className="hover:text-purple-600 transition-colors">Contact Us</a></li>
                 <li><Link href="/help" className="hover:text-purple-600 transition-colors">Help Center</Link></li>
                 <li><Link href="/tutorials" className="hover:text-purple-600 transition-colors">Tutorials</Link></li>
               </ul>

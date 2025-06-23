@@ -75,7 +75,7 @@ export default function TermsPage() {
 
             <h2>6. Contact Information</h2>
             <p>
-              If you have any questions about these Terms of Service, please contact us at support@cuttingasmr.org
+              If you have any questions about these Terms of Service, please contact us at j2983236233@gmail.com
             </p>
           </div>
         </div>

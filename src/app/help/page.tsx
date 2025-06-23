@@ -87,7 +87,7 @@ export default function HelpPage() {
                 Can't find what you're looking for? Our support team is here to help!
               </p>
               <a 
-                href="mailto:support@cuttingasmr.org"
+                href="mailto:j2983236233@gmail.com"
                 className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
                 <HelpCircle className="w-5 h-5 mr-2" />

@@ -234,7 +234,7 @@ export default function CreditsRecoveryPage() {
             <li>• 支付时请使用与网站登录相同的邮箱地址</li>
             <li>• 如果必须使用不同邮箱，请在支付后联系客服</li>
             <li>• 积分恢复后会立即显示在您的账户中</li>
-            <li>• 如有疑问，请联系 support@cuttingasmr.org</li>
+                          <li>• 如有疑问，请联系 j2983236233@gmail.com</li>
           </ul>
         </div>
       </div>
