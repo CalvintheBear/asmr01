@@ -340,7 +340,7 @@ function PaymentSuccessContent() {
           
           <div className="text-center mt-6">
             <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full inline-block text-sm font-medium">
-              ⚡ Credits永不过期 • 随时使用
+                              ⚡ Credits Never Expire • Use Anytime
             </div>
           </div>
         </div>

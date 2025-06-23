@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development' && !process.env.RAILWAY_ENVIRONMENT) 
   }
 }
 
-// 检测部署平台 - 修复类型问题
+// 检测部署平台
 const isRailway = !!(process.env.RAILWAY_ENVIRONMENT || process.env.PORT);
 const isCloudflare = !!(process.env.CF_PAGES) || !isRailway;
 
@@ -29,9 +29,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   
-  // 图片优化配置 - 根据平台调整，确保布尔值
+  // 图片优化配置
   images: {
-    unoptimized: Boolean(isCloudflare), // 明确转换为布尔值
+    unoptimized: Boolean(isCloudflare),
   },
   
   // TypeScript和ESLint配置
@@ -41,6 +41,12 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  
+  // Railway专用配置
+  ...(isRailway && {
+    output: 'standalone',
+    outputFileTracingRoot: process.cwd(),
+  }),
   
   // 环境变量配置
   env: {
@@ -52,7 +58,6 @@ const nextConfig = {
     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: '/',
     VEO3_API_KEY: process.env.VEO3_API_KEY || 'c98268b5c693894dd721ed1d576edb',
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
-    // 动态域名配置 - 根据平台自动设置
     DOMAIN: isRailway 
       ? 'https://cuttingasmr.org'
       : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
@@ -62,20 +67,10 @@ const nextConfig = {
     NEXT_PUBLIC_APP_URL: isRailway
       ? 'https://cuttingasmr.org'
       : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-    // 数据库连接
-    DATABASE_URL: process.env.DATABASE_URL,
-    // Creem 支付配置
-    CREEM_API_KEY: process.env.CREEM_API_KEY,
-    CREEM_WEBHOOK_SECRET: process.env.CREEM_WEBHOOK_SECRET,
+    DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway',
+    CREEM_API_KEY: process.env.CREEM_API_KEY || 'creem_4bO7LLLWie17BD2i7qTNNA',
+    CREEM_WEBHOOK_SECRET: process.env.CREEM_WEBHOOK_SECRET || 'whsec_6jovyxtbgdcdNEMdH0nspT',
   },
-  
-  // Railway特定配置
-  ...(isRailway && {
-    output: 'standalone', // Railway推荐的输出模式
-    experimental: {
-      outputFileTracingRoot: process.cwd(),
-    },
-  }),
 };
 
 module.exports = nextConfig; 

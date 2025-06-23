@@ -33,7 +33,8 @@ export default function AboutPage() {
             <p className="mb-6">
               At CuttingASMR.org, we're passionate about making high-quality ASMR content accessible to everyone. 
               Using Google's revolutionary Veo3 AI technology, we empower creators, wellness professionals, 
-              and ASMR enthusiasts to generate stunning, realistic ASMR videos in minutes.
+              and ASMR enthusiasts to generate stunning, therapeutic relaxation videos featuring satisfying textures, 
+              nature sounds, and calming visual content designed for stress relief and better sleep.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">

@@ -31,7 +31,7 @@ export default function ImageUploader({
       };
       reader.readAsDataURL(file);
     } else {
-      alert('请选择有效的图片文件');
+              alert('Please select a valid image file');
     }
   };
 
@@ -76,7 +76,7 @@ export default function ImageUploader({
           <div className="relative overflow-hidden rounded-2xl border-2 border-gray-200">
             <img
               src={previewUrl}
-              alt="上传的图片"
+              alt="Uploaded Image"
               className="w-full h-48 object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-200">
@@ -124,10 +124,10 @@ export default function ImageUploader({
               <p className={`text-lg font-medium mb-2 ${
                 dragOver ? 'text-purple-700' : 'text-gray-700'
               }`}>
-                {dragOver ? '释放以上传图片' : '点击或拖拽上传图片'}
+                {dragOver ? 'Drop to upload image' : 'Click or drag to upload image'}
               </p>
               <p className="text-sm text-gray-500">
-                支持 JPG, PNG, WebP 格式，最大 10MB
+                Support JPG, PNG, WebP formats, max 10MB
               </p>
             </div>
           </div>

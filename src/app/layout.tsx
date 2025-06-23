@@ -10,14 +10,14 @@ import ClientSideScript from '../components/ClientSideScript'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CuttingASMR.org - AI ASMR Video Generator | Free Trial',
-  description: 'Create stunning AI ASMR videos with our advanced generator. Enjoy 2 free trials, then subscribe for unlimited access. Perfect for ASMR creators and YouTube channels.',
-  keywords: 'ASMR,AI ASMR,ASMR video,ASMR generator,AI ASMR generator,ASMR creator,YouTube ASMR,cutting ASMR,relaxing videos',
-  authors: [{ name: 'CuttingASMR Team' }],
+  title: 'AI ASMR Generator - Powered by Gemini Veo3 | Create ASMR Videos with AI',
+  description: 'Advanced AI ASMR video generator powered by Gemini Veo3 technology. Create professional AI-generated ASMR content for relaxation, sleep, and therapeutic wellness. FREE credits for new users!',
+  keywords: 'AI ASMR generator,Gemini Veo3,AI ASMR videos,AI video generator,ASMR AI,artificial intelligence ASMR,AI generated ASMR,automated ASMR creation,AI wellness videos,free ASMR credits',
+  authors: [{ name: 'CuttingASMR Wellness Team' }],
   creator: 'CuttingASMR',
   openGraph: {
-    title: 'CuttingASMR.org - AI ASMR Video Generator',
-    description: 'Professional AI ASMR video generator with 2 free trials. Create relaxing ASMR content for YouTube and social media.',
+    title: 'AI ASMR Generator - Powered by Gemini Veo3 Technology',
+    description: 'Advanced AI ASMR video generator using cutting-edge Gemini Veo3 AI. Create professional AI-generated ASMR videos for relaxation and wellness. FREE credits for new users!',
     url: 'https://cuttingasmr.org',
     siteName: 'CuttingASMR.org',
     type: 'website',
@@ -44,32 +44,46 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "WebApplication",
-                "name": "CuttingASMR.org - AI ASMR Video Generator",
-                "description": "Professional AI ASMR video generator with subscription model. 2 free trials included.",
+                "@type": "SoftwareApplication",
+                "name": "CuttingASMR - AI ASMR Generator Powered by Gemini Veo3",
+                "description": "Advanced AI ASMR video generator utilizing Gemini Veo3 artificial intelligence for creating professional therapeutic content and wellness videos.",
                 "url": "https://cuttingasmr.org",
-                "applicationCategory": "MultimediaApplication",
+                "applicationCategory": "HealthApplication",
                 "operatingSystem": "Web",
                 "author": {
                   "@type": "Organization",
-                  "name": "CuttingASMR",
+                  "name": "CuttingASMR Wellness",
                   "url": "https://cuttingasmr.org"
                 },
+                "applicationSubCategory": "Wellness & Meditation",
+                "featureList": [
+                  "Gemini Veo3 AI ASMR video generation",
+                  "Advanced AI-powered content creation",
+                  "Automated ASMR video production",
+                  "AI-generated therapeutic wellness content",
+                  "Intelligent ASMR scene customization"
+                ],
                 "offers": [
                   {
                     "@type": "Offer",
-                    "name": "Free Trial",
-                    "price": "0",
+                    "name": "Starter Package",
+                    "price": "9.90",
                     "priceCurrency": "USD",
-                    "description": "2 free ASMR video generations"
+                    "description": "115 credits for therapeutic video generation"
                   },
                   {
                     "@type": "Offer", 
-                    "name": "Pro Subscription",
-                    "price": "9.99",
+                    "name": "Standard Package",
+                    "price": "30.00",
                     "priceCurrency": "USD",
-                    "billingDuration": "P1M",
-                    "description": "Unlimited ASMR video generation"
+                    "description": "355 credits for wellness content creation"
+                  },
+                  {
+                    "@type": "Offer", 
+                    "name": "Premium Package",
+                    "price": "99.00",
+                    "priceCurrency": "USD",
+                    "description": "1450 credits for professional therapeutic content"
                   }
                 ]
               })

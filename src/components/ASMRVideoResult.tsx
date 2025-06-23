@@ -169,7 +169,7 @@ export default function ASMRVideoResult({
                 onPause={() => setIsPlaying(false)}
               >
                 <source src={videoUrl1080p || videoUrl} type="video/mp4" />
-                您的浏览器不支持视频播放
+                Your browser does not support video playback
               </video>
             ) : (
               <div className="w-full h-full flex items-center justify-center">

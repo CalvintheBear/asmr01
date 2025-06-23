@@ -51,21 +51,21 @@ model Purchase {
 }
 
 model Video {
-  id           String    @id @default(cuid())
-  userId       String
-  taskId       String?   // kie.ai API返回的taskId
-  title        String
-  type         String
-  prompt       String
-  status       String    @default("processing")
-  videoUrl     String?   // 720p视频URL
-  videoUrl1080p String?  // 1080p视频URL
-  thumbnailUrl String?
-  creditsUsed  Int       @default(10)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  completedAt  DateTime?
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String    @id @default(cuid())
+  userId        String
+  taskId        String?
+  title         String
+  type          String
+  prompt        String
+  status        String    @default("processing")
+  videoUrl      String?
+  videoUrl1080p String?
+  thumbnailUrl  String?
+  creditsUsed   Int       @default(10)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  completedAt   DateTime?
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("videos")
 }
@@ -107,20 +107,4 @@ model Settings {
   updatedAt DateTime @updatedAt
 
   @@map("settings")
-}
-
-model UserAgreement {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  email           String
-  agreedAt        DateTime @default(now())
-  privacyPolicy   Boolean  @default(false)
-  termsOfService  Boolean  @default(false)
-  refundPolicy    Boolean  @default(false)
-  userAgent       String?
-  ipConsent       Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@map("user_agreements")
 }
