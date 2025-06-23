@@ -419,14 +419,20 @@ export default function ASMRVideoStudio() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex-1 bg-gradient-to-br from-purple-50 via-indigo-50 via-pink-50 to-cyan-50 min-h-screen relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-purple-300/20 to-pink-300/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-cyan-300/20 to-blue-300/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-indigo-300/15 to-purple-300/15 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
           
           {/* Hero Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-6">
               AI ASMR Generator
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+              <span className="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Powered by Gemini Veo3
               </span>
             </h1>
@@ -453,7 +459,7 @@ export default function ASMRVideoStudio() {
           {/* Main Content - Two Column Layout */}
           <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-start mb-12">
             {/* Left Panel - ASMR Controls */}
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden h-fit">
+            <div className="bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden h-fit transform hover:scale-[1.02] transition-all duration-300">
               
               {/* ASMR Type Selection */}
               <div className="p-6 border-b border-gray-200">
@@ -538,10 +544,10 @@ export default function ASMRVideoStudio() {
                     <button
                       onClick={handleGenerate}
                       disabled={!prompt.trim() || isGenerating}
-                      className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${
+                                              className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                         !prompt.trim() || isGenerating
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-xl transform hover:scale-[1.02]'
+                          : 'bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white hover:from-purple-700 hover:via-pink-700 hover:to-indigo-700 shadow-2xl hover:shadow-3xl transform hover:scale-105 relative overflow-hidden group'
                       }`}
                     >
                       {isGenerating ? (
@@ -598,9 +604,9 @@ export default function ASMRVideoStudio() {
             
             <div className="grid md:grid-cols-3 gap-8 mb-8">
               {/* Step 1 */}
-              <div className="relative">
-                <div className="bg-gray-50 rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center">
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+              <div className="relative group">
+                <div className="bg-gradient-to-br from-purple-100/80 to-pink-100/80 backdrop-blur-sm rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-purple-200/50 transform group-hover:scale-105 transition-all duration-300">
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
                     1
                   </div>
                   <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
@@ -614,9 +620,9 @@ export default function ASMRVideoStudio() {
               </div>
 
               {/* Step 2 */}
-              <div className="relative">
-                <div className="bg-gray-50 rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center">
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+              <div className="relative group">
+                <div className="bg-gradient-to-br from-indigo-100/80 to-cyan-100/80 backdrop-blur-sm rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-indigo-200/50 transform group-hover:scale-105 transition-all duration-300">
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
                     2
                   </div>
                   <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
@@ -630,9 +636,9 @@ export default function ASMRVideoStudio() {
               </div>
 
               {/* Step 3 */}
-              <div className="relative">
-                <div className="bg-gray-50 rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center">
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+              <div className="relative group">
+                <div className="bg-gradient-to-br from-emerald-100/80 to-teal-100/80 backdrop-blur-sm rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-emerald-200/50 transform group-hover:scale-105 transition-all duration-300">
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
                     3
                   </div>
                   <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
@@ -659,7 +665,7 @@ export default function ASMRVideoStudio() {
           </div>
 
           {/* Therapeutic Benefits Section */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-12">
+          <div className="bg-gradient-to-br from-white via-cyan-50/30 to-indigo-50/30 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 p-8 mb-12">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Advanced AI Video Generation Technology</h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -722,7 +728,7 @@ export default function ASMRVideoStudio() {
 
       {/* FAQ Section for SEO */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="bg-white rounded-3xl p-12">
+        <div className="bg-gradient-to-br from-white via-gray-50/30 to-slate-50/30 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-white/40">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -761,7 +767,7 @@ export default function ASMRVideoStudio() {
             </div>
           </div>
           
-          <div className="mt-12 p-6 bg-purple-50 rounded-xl border border-purple-200">
+          <div className="mt-12 p-6 bg-gradient-to-br from-purple-100/80 to-pink-100/80 backdrop-blur-sm rounded-xl border border-purple-200/50 shadow-lg">
             <div className="flex items-start space-x-3">
               <Sparkles className="w-6 h-6 text-purple-600 mt-1 flex-shrink-0" />
               <div>
@@ -778,7 +784,11 @@ export default function ASMRVideoStudio() {
 
       {/* Pricing CTA Section */}
       <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl p-12 text-center text-white">
+        <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
+          {/* Floating decorative elements */}
+          <div className="absolute -top-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+          <div className="relative z-10">
           <h2 className="text-3xl font-bold mb-4">Ready to Create Amazing ASMR Videos?</h2>
           <p className="text-xl mb-8 opacity-90">
             Choose from our flexible credit packages and start generating AI ASMR videos today
@@ -808,13 +818,19 @@ export default function ASMRVideoStudio() {
           <p className="text-sm mt-4 opacity-75">
             10 Credits = 1 AI ASMR Video • Credits Never Expire
           </p>
+          </div>
         </div>
       </section>
 
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <footer className="bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 text-white relative overflow-hidden">
+        {/* Footer background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
