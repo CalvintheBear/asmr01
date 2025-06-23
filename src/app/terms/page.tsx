@@ -75,7 +75,27 @@ export default function TermsPage() {
 
             <h2>6. Contact Information</h2>
             <p>
-              If you have any questions about these Terms of Service, please contact us at j2983236233@gmail.com
+              If you have any questions about these Terms of Service, please contact us at supportadmin@cuttingasmr.org
+            </p>
+
+            <h2>7. Platform Disclosure and Third-Party Services</h2>
+            <p>
+              <strong>Independent Service:</strong> CuttingASMR.org is an independent platform that provides enhanced access to third-party AI models, specifically Google's VEO3. We are not affiliated with, endorsed by, or sponsored by Google LLC or any other AI model providers.
+            </p>
+            <p>
+              <strong>Service Nature:</strong> Our platform functions as an AI wrapper service, providing:
+            </p>
+            <ul>
+              <li>Custom user interface and user experience</li>
+              <li>Specialized ASMR templates and prompts</li>
+              <li>Credit-based access management</li>
+              <li>Additional features and workflow enhancements</li>
+            </ul>
+            <p>
+              <strong>Third-Party Dependencies:</strong> Our service depends on the availability and functionality of third-party AI models. We do not guarantee the performance or availability of underlying AI services.
+            </p>
+            <p>
+              <strong>Disclaimer:</strong> This platform is not affiliated with, endorsed by, or sponsored by Google. VEO3 is a trademark of Google LLC.
             </p>
           </div>
         </div>

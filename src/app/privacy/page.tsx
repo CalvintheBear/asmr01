@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
             </p>
 
             <p className="mb-8">
-              Should you have any questions or concerns regarding this Privacy Policy and our services, please check our Terms and Conditions, or contact us directly via j2983236233@gmail.com.
+              Should you have any questions or concerns regarding this Privacy Policy and our services, please check our Terms and Conditions, or contact us directly via supportadmin@cuttingasmr.org.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Interpretation and Definitions</h2>
@@ -199,8 +199,8 @@ export default function PrivacyPolicy() {
 
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li><strong>Browser Settings</strong>: You can configure your browser settings to refuse the use of cookies. Please note that doing so may affect the full functionality of our website and the ASMR generation services we provide.</li>
-              <li><strong>Opt-Out of Personalized Content</strong>: If you wish to opt out of personalized ASMR content recommendations, please contact us at j2983236233@gmail.com.</li>
-              <li><strong>Account Deactivation</strong>: You can request deactivation of your account at any time by contacting us. Please send an email to j2983236233@gmail.com with your request. Once your account is deactivated, we will ensure your personal information is processed in accordance with applicable privacy regulations.</li>
+              <li><strong>Opt-Out of Personalized Content</strong>: If you wish to opt out of personalized ASMR content recommendations, please contact us at supportadmin@cuttingasmr.org.</li>
+              <li><strong>Account Deactivation</strong>: You can request deactivation of your account at any time by contacting us. Please send an email to supportadmin@cuttingasmr.org with your request. Once your account is deactivated, we will ensure your personal information is processed in accordance with applicable privacy regulations.</li>
             </ul>
 
             <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Changes to This Privacy Policy</h2>
@@ -210,7 +210,7 @@ export default function PrivacyPolicy() {
 
             <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Contact Us</h2>
             <p className="mb-6">
-              If you have any questions or concerns about this Privacy Policy, you can contact us by email: j2983236233@gmail.com
+              If you have any questions or concerns about this Privacy Policy, you can contact us by email: supportadmin@cuttingasmr.org
             </p>
           </div>
         </div>

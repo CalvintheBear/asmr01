@@ -244,6 +244,17 @@ export default function PricingPage() {
           ))}
         </div>
 
+        {/* Platform Disclosure and Disclaimer */}
+        <div className="bg-gray-50 rounded-xl p-6 mb-8 text-center max-w-6xl mx-auto">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">Platform Disclosure</h3>
+          <p className="text-sm text-gray-600 mb-4">
+            CuttingASMR.org is an independent AI wrapper platform that provides enhanced access to Google's VEO3 AI model through our custom interface. We are not affiliated with Google and provide additional features, templates, and user experience improvements for ASMR video generation.
+          </p>
+          <p className="text-xs text-gray-500">
+            <strong>Disclaimer:</strong> This platform is not affiliated with, endorsed by, or sponsored by Google. VEO3 is a trademark of Google LLC.
+          </p>
+        </div>
+
         {/* Features Section */}
         <div className="mb-16">
           <h2 className="text-4xl font-bold text-center text-gray-900 mb-4">Why Choose CuttingASMR.org?</h2>
@@ -306,7 +317,7 @@ export default function PricingPage() {
             <div>
               <h4 className="font-semibold text-gray-900 mb-4">Support</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="mailto:j2983236233@gmail.com" className="hover:text-purple-600 transition-colors">Contact Us</a></li>
+                <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-purple-600 transition-colors">Contact Us</a></li>
                 <li><Link href="/help" className="hover:text-purple-600 transition-colors">Help Center</Link></li>
                 <li><Link href="/tutorials" className="hover:text-purple-600 transition-colors">Tutorials</Link></li>
               </ul>

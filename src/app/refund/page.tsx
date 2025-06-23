@@ -113,9 +113,9 @@ export default function RefundPolicy() {
                  </div>
                  <div>
                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Contact Us</h3>
-                   <p className="text-gray-700">
-                     Reach out to our support team at <a href="mailto:j2983236233@gmail.com" className="text-purple-600 hover:text-purple-700 underline font-medium">j2983236233@gmail.com</a>.
-                   </p>
+                               <p className="text-gray-600 mb-6">
+              Reach out to our support team at <a href="mailto:supportadmin@cuttingasmr.org" className="text-purple-600 hover:text-purple-700 underline font-medium">supportadmin@cuttingasmr.org</a>.
+            </p>
                  </div>
                </div>
 
@@ -191,19 +191,20 @@ export default function RefundPolicy() {
                We reserve the right to update our refund policy at any time. Any changes will be reflected on this page, and we encourage you to review it periodically. Major changes will be communicated to users in advance via email or website notifications.
              </p>
 
-             <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mt-8">
-               <h3 className="text-lg font-semibold text-purple-800 mb-3">Need Help?</h3>
-               <p className="text-purple-700 mb-3">
-                 If you have any questions about our refund policy or need to request a refund, please don't hesitate to contact us:
+             <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-8 text-center">
+               <h3 className="text-2xl font-bold text-gray-900 mb-4">Need Help?</h3>
+               <p className="text-gray-600 mb-6">
+                 Our support team is here to assist you with any questions
                </p>
-               <div className="flex items-center space-x-2">
-                 <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                 </svg>
-                                                 <a href="mailto:j2983236233@gmail.com" className="text-purple-600 hover:text-purple-700 underline font-medium">
-                j2983236233@gmail.com
+                               <a 
+                  href="mailto:supportadmin@cuttingasmr.org" 
+                  className="inline-flex items-center px-8 py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  supportadmin@cuttingasmr.org
                 </a>
-               </div>
              </div>
           </div>
         </div>

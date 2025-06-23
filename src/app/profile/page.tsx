@@ -536,6 +536,61 @@ export default function ProfilePage() {
           )}
         </div>
 
+        {/* 账户管理 - Creem Compliance */}
+        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+            <span className="mr-2">💳</span>
+            账户管理
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* 管理支付和订阅 */}
+            <button
+              onClick={async () => {
+                try {
+                  const response = await fetch('/api/creem-portal')
+                  const data = await response.json()
+                  
+                  if (data.success && data.portalUrl) {
+                    // 在新标签页中打开Creem Customer Portal
+                    window.open(data.portalUrl, '_blank', 'noopener,noreferrer')
+                  } else {
+                    // 备用方案：直接打开Creem客户门户
+                    window.open('https://www.creem.io/customer-portal', '_blank', 'noopener,noreferrer')
+                  }
+                } catch (error) {
+                  console.error('打开客户门户失败:', error)
+                  // 备用方案：直接打开Creem客户门户
+                  window.open('https://www.creem.io/customer-portal', '_blank', 'noopener,noreferrer')
+                }
+              }}
+              className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+            >
+              <div className="font-medium">💳 管理支付方式</div>
+              <div className="text-sm text-gray-400 mt-1">
+                更新支付方式、查看账单历史
+              </div>
+            </button>
+
+            {/* 客服支持 */}
+            <a
+              href="mailto:supportadmin@cuttingasmr.org"
+              className="bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/50 px-4 py-3 rounded-lg transition-colors text-left block"
+            >
+              <div className="font-medium">📧 联系客服</div>
+              <div className="text-sm text-gray-400 mt-1">
+                需要帮助？我们3个工作日内回复
+              </div>
+            </a>
+          </div>
+
+          <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
+            <p className="text-blue-300 text-sm">
+              <strong>💡 支付管理说明：</strong> 点击"管理支付方式"将打开Creem客户门户，您可以在那里安全地管理您的支付方式、查看详细账单历史，以及处理任何支付相关事务。
+            </p>
+          </div>
+        </div>
+
         {/* 数据管理 */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
@@ -656,7 +711,7 @@ export default function ProfilePage() {
           <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
             <p className="text-blue-300 text-sm">
               💡 <strong>数据保护</strong>: 根据我们的隐私政策，您有权访问、更正、删除或导出您的个人数据。
-              如需帮助，请联系 <a href="mailto:j2983236233@gmail.com" className="underline">j2983236233@gmail.com</a>
+              如需帮助，请联系 <a href="mailto:supportadmin@cuttingasmr.org" className="underline">supportadmin@cuttingasmr.org</a>
             </p>
           </div>
         </div>

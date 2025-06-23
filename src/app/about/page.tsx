@@ -68,6 +68,33 @@ export default function AboutPage() {
               <li><strong>24/7 Support:</strong> Always here to help you succeed</li>
             </ul>
 
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Technology & Transparency</h2>
+            
+            {/* Transparency Notice */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-sm text-blue-800 text-center">
+                <strong>Transparency Notice:</strong> CuttingASMR.org is an independent platform that provides a user-friendly interface built on top of Google's VEO3 AI model. We are not affiliated with, endorsed by, or sponsored by Google. We enhance the VEO3 experience with custom features and templates for ASMR content creation.
+              </p>
+            </div>
+            
+            <div className="bg-blue-50 rounded-xl p-6 mb-8">
+              <h3 className="font-bold text-lg text-gray-900 mb-3">What We Are</h3>
+              <p className="text-gray-600 mb-4">
+                CuttingASMR.org is an independent AI wrapper platform that provides enhanced access to Google's VEO3 AI model. We are not affiliated with Google or any AI model providers.
+              </p>
+              <h3 className="font-bold text-lg text-gray-900 mb-3">What We Provide</h3>
+              <ul className="list-disc pl-6 text-gray-600 space-y-1 mb-4">
+                <li>Custom user interface for VEO3 AI model</li>
+                <li>50+ specialized ASMR templates and prompts</li>
+                <li>Credit-based pricing system</li>
+                <li>Enhanced user experience and workflow</li>
+                <li>Commercial licensing for generated content</li>
+              </ul>
+              <p className="text-xs text-gray-500">
+                <strong>Disclaimer:</strong> This platform is not affiliated with, endorsed by, or sponsored by Google. VEO3 is a trademark of Google LLC.
+              </p>
+            </div>
+
             <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-8 text-center">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Join Our Community</h3>
               <p className="text-gray-600 mb-6">

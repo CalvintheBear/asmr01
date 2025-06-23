@@ -4,13 +4,19 @@ At cuttingasmr.org, we strive to provide our users with the best experience poss
 
 **Service Quality**: Our Veo3 ASMR technology produces excellent results, but if you're not satisfied, try adjusting your prompt with more specific details about the desired mood, lighting, or audio elements. Since each AI ASMR generation consumes credits, we recommend reviewing our template examples first.
 
-Refund Eligibility
-Time Limit: Refund requests must be made within 3 days of your purchase. After this period, we cannot process any refund requests.
-Credit Usage: If you have used more than 20 credits, you are not eligible for a refund, regardless of the time since purchase.
-How to Request a Refund
-If you meet the eligibility criteria and wish to request a refund, please follow these steps:
+# Refund Policy
 
-1. Contact Us: Reach out to our support team at j2983236233@gmail.com.
+## Refund Eligibility
+
+We offer a 3-day refund policy for all credit purchases. To be eligible for a refund:
+
+1. Request must be made within 3 days of purchase
+2. You must have used fewer than 20 credits from your purchase
+3. You must provide your order ID
+
+## How to Request a Refund
+
+1. Contact Us: Reach out to our support team at supportadmin@cuttingasmr.org.
 
 2. Provide Details: Include your account details, order number, purchase date, and reason for the refund request.
 

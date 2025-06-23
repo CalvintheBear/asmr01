@@ -2,7 +2,7 @@
 export const privacyPolicyContent = {
   // 基本信息
   effectiveDate: "2025年1月8日",
-  contactEmail: "j2983236233@gmail.com",
+  contactEmail: "supportadmin@cuttingasmr.org",
   companyName: "CuttingASMR.org",
   websiteUrl: "https://cuttingasmr.org",
   

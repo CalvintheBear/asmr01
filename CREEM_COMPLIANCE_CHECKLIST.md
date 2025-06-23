@@ -8,7 +8,7 @@
 - [x] 突出ASMR的健康和治疗价值
 
 ### 2. 客服邮箱统一
-- [x] 将所有个人Gmail邮箱替换为专业域名邮箱 `support@cuttingasmr.org`
+- [x] 将所有个人Gmail邮箱替换为专业域名邮箱 `supportadmin@cuttingasmr.org`
 - [x] 更新隐私政策中的联系邮箱
 - [x] 更新退款政策中的联系邮箱
 
@@ -31,7 +31,7 @@
 
 ### 3. 支付流程透明度
 - [ ] 确保退款政策易于找到和理解
-- [ ] 验证客服邮箱 `support@cuttingasmr.org` 正常工作
+- [ ] 验证客服邮箱 `supportadmin@cuttingasmr.org` 正常工作
 - [ ] 测试支付成功和失败页面
 
 ### 4. 内容审核
@@ -50,7 +50,7 @@
 6. **合规使用** - 产品用于合法的治疗和放松目的
 
 ### ⚠️ 需要重点关注的领域
-1. **客服邮箱** - 确保 `support@cuttingasmr.org` 能够正常接收邮件
+1. **客服邮箱** - 确保 `supportadmin@cuttingasmr.org` 能够正常接收邮件
 2. **产品描述** - 继续监控是否有可能被误解的内容
 3. **域名匹配** - 确保申请时使用的URL与实际网站匹配
 

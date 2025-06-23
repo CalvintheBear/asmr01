@@ -869,7 +869,7 @@ export default function ASMRVideoStudio() {
                 <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
                 <li><Link href="/terms" className="hover:text-white transition-colors">Terms</Link></li>
                 <li><Link href="/refund" className="hover:text-white transition-colors">Refund</Link></li>
-                <li><a href="mailto:j2983236233@gmail.com" className="hover:text-white transition-colors">Contact Admin</a></li>
+                <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-white transition-colors">Contact Support</a></li>
               </ul>
             </div>
           </div>
