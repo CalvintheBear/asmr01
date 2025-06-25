@@ -128,8 +128,8 @@ const nextConfig = {
   
   // 运行时环境变量验证
   webpack: (config, { dev }) => {
-    if (!dev) {
-      // 生产环境验证必需的环境变量
+    if (!dev && !isCloudflare) {
+      // 生产环境验证必需的环境变量（Cloudflare环境跳过，因为环境变量在运行时加载）
       const requiredEnvVars = [
         'CLERK_SECRET_KEY',
         'VEO3_API_KEY', 
