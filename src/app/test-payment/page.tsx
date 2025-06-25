@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 
+// 强制动态渲染，避免静态生成时的Clerk错误
+export const dynamic = 'force-dynamic'
+
 export default function TestPaymentPage() {
   const { user } = useUser()
   const [webhookResult, setWebhookResult] = useState<any>(null)

@@ -2,6 +2,9 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useUser } from '@clerk/nextjs'
+
+// 强制动态渲染，避免静态生成时的Clerk错误
+export const dynamic = 'force-dynamic'
 import { useSearchParams } from 'next/navigation'
 import { AlertCircle, CheckCircle, CreditCard, RefreshCw, Zap } from 'lucide-react'
 import { CREEM_CONFIG } from '@/lib/creem-config'

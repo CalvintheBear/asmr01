@@ -4,46 +4,27 @@ import { useUser } from '@clerk/nextjs'
 import { useCredits } from '@/hooks/useCredits'
 import { useState } from 'react'
 
+// 强制动态渲染，避免静态生成时的Clerk错误
+export const dynamic = 'force-dynamic'
+
 export default function TestCreditsPage() {
   const { user } = useUser()
   const { 
-    creditsData, 
+    credits, 
     loading, 
     error, 
-    refreshCredits, 
-    addCredits, 
-    deductCredits, 
-    hasEnoughCredits 
-  } = useCredits()
+    refetch, 
+    forceRefresh 
+  } = useCredits(true)
   
-  const [testAmount, setTestAmount] = useState(10)
-  const [testReason, setTestReason] = useState('')
   const [operationLoading, setOperationLoading] = useState(false)
-
-  const handleAddCredits = async () => {
-    setOperationLoading(true)
-    try {
-      await addCredits(testAmount, testReason || '测试增加积分')
-    } finally {
-      setOperationLoading(false)
-    }
-  }
-
-  const handleDeductCredits = async () => {
-    setOperationLoading(true)
-    try {
-      await deductCredits(testAmount, testReason || '测试扣除积分')
-    } finally {
-      setOperationLoading(false)
-    }
-  }
 
   const testWebhook = async () => {
     try {
       const response = await fetch('/api/test-creem')
       if (response.ok) {
         console.log('✅ Webhook测试成功')
-        await refreshCredits()
+        await refetch()
       } else {
         console.error('❌ Webhook测试失败')
       }
@@ -91,7 +72,7 @@ export default function TestCreditsPage() {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">💰 积分信息</h2>
             <button
-              onClick={refreshCredits}
+              onClick={refetch}
               disabled={loading}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
@@ -105,11 +86,11 @@ export default function TestCreditsPage() {
             </div>
           )}
 
-          {loading && !creditsData ? (
+          {loading && !credits ? (
             <div className="text-center py-8">
               <p className="text-gray-500">加载积分信息中...</p>
             </div>
-          ) : creditsData ? (
+          ) : credits ? (
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                 积分信息
@@ -117,23 +98,19 @@ export default function TestCreditsPage() {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-400">剩余积分:</span>
-                  <span className="font-bold text-purple-600">{creditsData.remainingCredits}</span>
+                  <span className="font-bold text-purple-600">{credits.remainingCredits}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-400">总积分:</span>
-                  <span className="text-gray-900 dark:text-white">{creditsData.totalCredits}</span>
+                  <span className="text-gray-900 dark:text-white">{credits.totalCredits}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-400">已使用:</span>
-                  <span className="text-gray-900 dark:text-white">{creditsData.usedCredits}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">奖励积分:</span>
-                  <span className="text-gray-900 dark:text-white">{creditsData.bonusCredits}</span>
+                  <span className="text-gray-900 dark:text-white">{credits.usedCredits}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-400">创建视频:</span>
-                  <span className="text-gray-900 dark:text-white">{creditsData.videosCreated}</span>
+                  <span className="text-gray-900 dark:text-white">{credits.videosCount}</span>
                 </div>
               </div>
             </div>
@@ -144,59 +121,24 @@ export default function TestCreditsPage() {
           )}
         </div>
 
-        {/* 积分操作测试 */}
+        {/* Webhook 测试 */}
         <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">🧪 积分操作测试</h2>
+          <h2 className="text-xl font-semibold mb-4">🧪 Webhook 测试</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                操作数量
-              </label>
-              <input
-                type="number"
-                value={testAmount}
-                onChange={(e) => setTestAmount(Number(e.target.value))}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-                min="1"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                操作原因 (可选)
-              </label>
-              <input
-                type="text"
-                value={testReason}
-                onChange={(e) => setTestReason(e.target.value)}
-                placeholder="测试原因..."
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-            </div>
-          </div>
-
           <div className="flex flex-wrap gap-4">
-            <button
-              onClick={handleAddCredits}
-              disabled={operationLoading}
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
-            >
-              {operationLoading ? '处理中...' : `增加 ${testAmount} 积分`}
-            </button>
-            
-            <button
-              onClick={handleDeductCredits}
-              disabled={operationLoading || !hasEnoughCredits(testAmount)}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
-            >
-              {operationLoading ? '处理中...' : `扣除 ${testAmount} 积分`}
-            </button>
-
             <button
               onClick={testWebhook}
               className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
             >
-              测试 Webhook
+              测试 Premium Webhook
+            </button>
+            
+            <button
+              onClick={forceRefresh}
+              disabled={loading}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? '强制刷新中...' : '强制刷新积分'}
             </button>
           </div>
 

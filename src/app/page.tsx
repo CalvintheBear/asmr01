@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
+
+// 强制动态渲染，避免静态生成时的Clerk错误
+export const dynamic = 'force-dynamic'
 import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check } from 'lucide-react'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'

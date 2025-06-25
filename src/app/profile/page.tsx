@@ -5,6 +5,9 @@ import { useCredits } from '@/hooks/useCredits'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
 import { useEffect, useState } from 'react'
 
+// 强制动态渲染，避免静态生成时的Clerk错误
+export const dynamic = 'force-dynamic'
+
 interface Purchase {
   id: string
   packageType: string
