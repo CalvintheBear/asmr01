@@ -1,5 +1,8 @@
 'use client'
 
+// 强制动态渲染，避免静态生成时的Clerk错误（CreemPaymentButton使用useUser）
+export const dynamic = 'force-dynamic'
+
 import Link from 'next/link'
 import { ArrowLeft, Check, Sparkles, Video, Star, Users, Shield, Zap, Clock, Crown, Headphones, Play, Heart } from 'lucide-react'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
