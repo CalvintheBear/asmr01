@@ -1,6 +1,7 @@
 'use client'
 
-// 强制动态渲染，避免静态生成时的Clerk错误（CreemPaymentButton使用useUser）
+// 在Cloudflare Pages中必须使用Edge Runtime（CreemPaymentButton使用useUser）
+export const runtime = 'edge'
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'

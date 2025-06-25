@@ -1,10 +1,11 @@
 'use client'
 
+// 在Cloudflare Pages中必须使用Edge Runtime
+export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
-
-// 强制动态渲染，避免静态生成时的Clerk错误
-export const dynamic = 'force-dynamic'
 import { AlertCircle, CheckCircle, RefreshCw, Mail, CreditCard } from 'lucide-react'
 
 interface UnmatchedPayment {
