@@ -29,8 +29,28 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  
+  // 如果没有 publishableKey，直接渲染内容（用于构建时避免Clerk错误）
+  if (!publishableKey) {
+    return (
+      <html lang="zh-CN">
+        <head>
+          {/* 网站图标设置 */}
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="shortcut icon" href="/favicon.svg" />
+          <link rel="apple-touch-icon" href="/logo.svg" />
+        </head>
+        <body className={inter.className}>
+          {children}
+          <ClientSideScript />
+        </body>
+      </html>
+    );
+  }
+
   return (
-    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider publishableKey={publishableKey}>
       <html lang="zh-CN">
         <head>
           {/* 网站图标设置 */}
