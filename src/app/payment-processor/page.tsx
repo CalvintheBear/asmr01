@@ -1,16 +1,21 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
-import { useUser } from '@clerk/nextjs'
-
 // 强制动态渲染，避免静态生成时的Clerk错误
 export const dynamic = 'force-dynamic'
+
+import { useState, useEffect, Suspense } from 'react'
+import { useUser } from '@clerk/nextjs'
 import { useSearchParams } from 'next/navigation'
 import { AlertCircle, CheckCircle, CreditCard, RefreshCw, Zap } from 'lucide-react'
 import { CREEM_CONFIG } from '@/lib/creem-config'
 
 function PaymentProcessorContent() {
-  const { user } = useUser()
+  const { user, isLoaded } = useUser()
+  
+  // 在加载完成前显示加载状态，避免预渲染错误
+  if (!isLoaded) {
+    return <LoadingFallback />
+  }
   const searchParams = useSearchParams()
   const [processing, setProcessing] = useState(false)
   const [result, setResult] = useState<any>(null)

@@ -7,7 +7,19 @@ import { useUser } from '@clerk/nextjs'
 export const dynamic = 'force-dynamic'
 
 export default function TestPaymentPage() {
-  const { user } = useUser()
+  const { user, isLoaded } = useUser()
+  
+  // 在加载完成前显示加载状态，避免预渲染错误
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">正在加载...</p>
+        </div>
+      </div>
+    )
+  }
   const [webhookResult, setWebhookResult] = useState<any>(null)
   const [userInfo, setUserInfo] = useState<any>(null)
   const [envInfo, setEnvInfo] = useState<any>(null)
