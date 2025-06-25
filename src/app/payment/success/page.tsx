@@ -1,6 +1,7 @@
 'use client'
 
-// 强制动态渲染，避免预渲染时的Clerk错误
+// 在Cloudflare Pages中必须使用Edge Runtime（使用useUser hook）
+export const runtime = 'edge'
 export const dynamic = 'force-dynamic'
 
 import { useUser } from '@clerk/nextjs'
