@@ -1,5 +1,8 @@
 'use client'
 
+// 强制动态渲染，避免预渲染时的Clerk错误
+export const dynamic = 'force-dynamic'
+
 import { useUser } from '@clerk/nextjs'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState, Suspense } from 'react'

@@ -106,10 +106,10 @@ const nextConfig = {
   env: {
     // Clerk配置 (公开密钥可以暴露，私钥不可以)
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_CLERK_SIGN_IN_URL: '/',
-    NEXT_PUBLIC_CLERK_SIGN_UP_URL: '/',
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: '/',
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: '/',
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || '/dashboard',
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL || '/dashboard',
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL || '/dashboard',
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL || '/dashboard',
     
     // API配置 (不设置默认值，强制使用环境变量)
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
