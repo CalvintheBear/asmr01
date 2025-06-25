@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const { userId: clerkUserId } = await auth()
     
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await request.json()
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     // 验证必要参数
     if (!orderId && !customerEmail) {
       return NextResponse.json({ 
-        error: '需要提供订单ID或客户邮箱' 
+        error: 'Order ID or customer email is required' 
       }, { status: 400 })
     }
 
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     if (!currentUser) {
       return NextResponse.json({ 
-        error: '当前用户不存在' 
+        error: 'Current user not found' 
       }, { status: 404 })
     }
 
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     if (unmatchedPayments.length === 0) {
       return NextResponse.json({ 
-        error: '未找到匹配的未处理支付记录' 
+        error: 'No matching unprocessed payment record found' 
       }, { status: 404 })
     }
 
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
 
     if (!productInfo) {
       return NextResponse.json({ 
-        error: '无法识别积分包类型' 
+        error: 'Unable to identify credit package type' 
       }, { status: 400 })
     }
 
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
 
     if (existingPurchase) {
       return NextResponse.json({ 
-        error: '此订单已经处理过了' 
+        error: 'This order has already been processed' 
       }, { status: 409 })
     }
 
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: '积分恢复成功',
+      message: 'Credits recovery successful',
       details: {
         userId: currentUser.id,
         userEmail: currentUser.email,
@@ -160,8 +160,8 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('💥 手动积分恢复失败:', error)
     return NextResponse.json({ 
-      error: '恢复积分失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'Failed to recover credits',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 }
@@ -172,7 +172,7 @@ export async function GET(request: NextRequest) {
     const { userId: clerkUserId } = await auth()
     
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     // 获取所有未匹配的支付记录
@@ -211,8 +211,8 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('💥 获取未匹配支付失败:', error)
     return NextResponse.json({ 
-      error: '获取数据失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'Failed to get data',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 } 

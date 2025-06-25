@@ -11,5 +11,5 @@ CREEM_TEST_MODE = "false"
 # 生产环境域名
 NEXT_PUBLIC_APP_URL = "https://cuttingasmr.org"
 # Creem生产环境配置 - 需要在Cloudflare Pages设置中配置实际值
-# CREEM_API_KEY = "creem_4bO7LLLWie17BD2i7qTNNA"  # 在Cloudflare Pages中设置
-# CREEM_WEBHOOK_SECRET = "whsec_6jovyxtbgdcdNEMdH0nspT"  # 在Cloudflare Pages中设置 
+# CREEM_API_KEY = "creem_3383jJhZ9BrQXXeHL2bxB"  # 在Cloudflare Pages中设置
+# CREEM_WEBHOOK_SECRET = "whsec_bCADZ6mZaWDVnJCzwato5"  # 在Cloudflare Pages中设置 

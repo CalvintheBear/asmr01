@@ -8,7 +8,8 @@ export async function GET(request: NextRequest) {
     
     if (!userId) {
       return NextResponse.json({ 
-        error: '未授权访问' 
+        success: false,
+        error: 'Unauthorized access'
       }, { status: 401 })
     }
 
@@ -19,7 +20,8 @@ export async function GET(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json({ 
-        error: '用户不存在' 
+        success: false,
+        error: 'User not found'
       }, { status: 404 })
     }
 
@@ -65,8 +67,9 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('获取购买历史失败:', error)
     return NextResponse.json({ 
-      error: '获取购买历史失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      success: false,
+      error: 'Failed to get purchase history',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 } 

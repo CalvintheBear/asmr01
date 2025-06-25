@@ -27,7 +27,61 @@ console.log('🏗️ 部署平台检测:', {
 const nextConfig = {
   // 基础配置
   reactStrictMode: true,
-  poweredByHeader: false,
+  poweredByHeader: false, // 隐藏Next.js框架信息
+  
+  // 🔒 安全响应头配置
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY', // 防止页面被嵌入iframe
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff', // 防止MIME类型嗅探攻击
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin', // 控制referrer信息泄露
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block', // 启用XSS保护
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()', // 限制敏感权限
+          }
+        ],
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: process.env.NODE_ENV === 'production' 
+              ? 'https://cuttingasmr.org'
+              : 'http://localhost:3000', // CORS配置
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0', // API响应不缓存
+          }
+        ],
+      },
+    ];
+  },
   
   // 图片优化配置
   images: {
@@ -48,16 +102,19 @@ const nextConfig = {
     outputFileTracingRoot: process.cwd(),
   }),
   
-  // 环境变量配置
+  // 环境变量配置 - 移除硬编码敏感信息
   env: {
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_cGxlYXNlZC1jbGFtLTc5LmNsZXJrLmFjY291bnRzLmRldiQ',
-    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || 'sk_test_T8He2nKmyV1okMkk8lZcbIh66KSFWoxr3s0lLMyO36',
+    // Clerk配置 (公开密钥可以暴露，私钥不可以)
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: '/',
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: '/',
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: '/',
     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: '/',
-    VEO3_API_KEY: process.env.VEO3_API_KEY || 'c98268b5c693894dd721ed1d576edb',
+    
+    // API配置 (不设置默认值，强制使用环境变量)
     VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
+    
+    // 应用URL配置
     DOMAIN: isRailway 
       ? 'https://cuttingasmr.org'
       : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
@@ -67,9 +124,27 @@ const nextConfig = {
     NEXT_PUBLIC_APP_URL: isRailway
       ? 'https://cuttingasmr.org'
       : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-    DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway',
-    CREEM_API_KEY: process.env.CREEM_API_KEY || 'creem_4bO7LLLWie17BD2i7qTNNA',
-    CREEM_WEBHOOK_SECRET: process.env.CREEM_WEBHOOK_SECRET || 'whsec_6jovyxtbgdcdNEMdH0nspT',
+  },
+  
+  // 运行时环境变量验证
+  webpack: (config, { dev }) => {
+    if (!dev) {
+      // 生产环境验证必需的环境变量
+      const requiredEnvVars = [
+        'CLERK_SECRET_KEY',
+        'VEO3_API_KEY', 
+        'DATABASE_URL',
+        'CREEM_API_KEY',
+        'CREEM_WEBHOOK_SECRET'
+      ];
+      
+      const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+      if (missingVars.length > 0) {
+        console.error('❌ 缺少必需的环境变量:', missingVars);
+        throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+      }
+    }
+    return config;
   },
 };
 

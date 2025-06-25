@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     console.error('获取Creem Portal URL失败:', error)
     return NextResponse.json({ 
       success: false,
-      error: '无法获取客户门户URL',
+      error: 'Unable to get customer portal URL',
       portalUrl: 'https://www.creem.io/customer-portal' // 备用URL
     }, { status: 500 })
   }

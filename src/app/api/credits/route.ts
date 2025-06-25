@@ -8,7 +8,7 @@ export async function GET() {
     const { userId: clerkUserId } = await auth()
     
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const user = await db.user.findUnique({
@@ -21,7 +21,7 @@ export async function GET() {
     })
 
     if (!user) {
-      return NextResponse.json({ error: '用户不存在' }, { status: 404 })
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const creditsData = {
@@ -46,7 +46,7 @@ export async function GET() {
     console.error('获取积分失败:', error)
     return NextResponse.json({ 
       success: false,
-      error: '获取积分失败' 
+      error: 'Failed to get credits' 
     }, { status: 500 })
   }
 }
@@ -57,7 +57,7 @@ export async function POST() {
     const { userId: clerkUserId } = await auth()
     
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     console.log('🔄 手动刷新积分，Clerk用户ID:', clerkUserId)
@@ -74,7 +74,7 @@ export async function POST() {
 
     if (!user) {
       console.log('❌ 未找到用户:', clerkUserId)
-      return NextResponse.json({ error: '用户不存在' }, { status: 404 })
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     console.log('✅ 从数据库获取到用户数据:', {
@@ -94,7 +94,7 @@ export async function POST() {
     return NextResponse.json({
       success: true,
       data: creditsData,
-      message: '积分信息已刷新',
+      message: 'Credits information refreshed',
       debug: {
         userId: user.id,
         clerkUserId: user.clerkUserId,
@@ -107,7 +107,7 @@ export async function POST() {
     console.error('刷新积分失败:', error)
     return NextResponse.json({ 
       success: false,
-      error: '刷新积分失败' 
+      error: 'Failed to refresh credits' 
     }, { status: 500 })
   }
 } 

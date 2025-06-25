@@ -10,6 +10,7 @@ interface TaskRecord {
   status?: string;
   videoUrl?: string;
   videoUrl1080p?: string;
+  model?: string;
 }
 
 // 保存TaskID记录 - 直接更新数据库中的video记录
@@ -54,8 +55,8 @@ export async function findTaskRecord(taskId: string): Promise<TaskRecord | null>
       prompt: video.prompt,
       createdAt: video.createdAt.toISOString(),
       status: video.status,
-              videoUrl: video.videoUrl || undefined,
-        videoUrl1080p: video.videoUrl1080p || undefined
+      videoUrl: video.videoUrl || undefined,
+      videoUrl1080p: video.videoUrl1080p || undefined
     };
   } catch (error) {
     console.error('❌ 查找TaskID记录失败:', error);
@@ -90,8 +91,8 @@ export async function getUserTaskRecords(userId: string): Promise<TaskRecord[]> 
         prompt: video.prompt,
         createdAt: video.createdAt.toISOString(),
         status: video.status,
-        videoUrl: video.videoUrl,
-        videoUrl1080p: video.videoUrl1080p
+        videoUrl: video.videoUrl || undefined,
+        videoUrl1080p: video.videoUrl1080p || undefined
       }));
   } catch (error) {
     console.error('❌ 获取用户TaskID记录失败:', error);

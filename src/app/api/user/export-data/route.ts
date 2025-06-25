@@ -10,8 +10,8 @@ export async function GET(request: NextRequest) {
     
     if (!user) {
       return NextResponse.json(
-        { error: '用户未认证' },
-        { status: 401 }
+        { error: 'User data not found' },
+        { status: 404 }
       )
     }
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
     if (!userData) {
       return NextResponse.json(
-        { error: '用户数据不存在' },
+        { error: 'User data not found' },
         { status: 404 }
       )
     }
@@ -117,8 +117,8 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json(
       { 
-        error: '数据导出失败',
-        details: error instanceof Error ? error.message : '未知错误'
+        error: 'Data export failed',
+        details: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
     )

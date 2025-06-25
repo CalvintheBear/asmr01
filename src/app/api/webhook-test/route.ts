@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('💥 Webhook测试失败:', error)
     return NextResponse.json({ 
-      error: 'webhook处理失败',
+      error: 'Failed to process webhook',
       details: error instanceof Error ? error.message : String(error)
     }, { status: 500 })
   }

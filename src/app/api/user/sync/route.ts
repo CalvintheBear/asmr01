@@ -8,7 +8,7 @@ export async function POST() {
     
     // 先检查认证状态
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     // 尝试获取用户信息，处理速率限制
@@ -20,7 +20,7 @@ export async function POST() {
       if (clerkError?.status === 429 || clerkError?.clerkError) {
         console.log('⚠️ Clerk API速率限制:', clerkError)
         return NextResponse.json({ 
-          error: 'API速率限制，请稍后重试',
+          error: 'API rate limit exceeded, please try again later',
           retryAfter: clerkError?.retryAfter || 30
         }, { status: 429 })
       }
@@ -28,7 +28,7 @@ export async function POST() {
     }
 
     if (!user) {
-      return NextResponse.json({ error: '无法获取用户信息' }, { status: 401 })
+      return NextResponse.json({ error: 'Unable to get user information' }, { status: 401 })
     }
 
     console.log('🔄 开始用户数据同步...')
@@ -105,8 +105,8 @@ export async function POST() {
   } catch (error) {
     console.error('💥 用户同步失败:', error)
     return NextResponse.json({ 
-      error: '用户同步失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'User synchronization failed',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 }
@@ -115,7 +115,7 @@ export async function GET() {
   try {
     const { userId: clerkUserId } = await auth()
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     console.log('📖 获取用户信息...')
@@ -132,7 +132,7 @@ export async function GET() {
     })
 
     if (!user) {
-      return NextResponse.json({ error: '用户不存在' }, { status: 404 })
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const userInfo = {
@@ -154,8 +154,8 @@ export async function GET() {
   } catch (error) {
     console.error('💥 获取用户信息失败:', error)
     return NextResponse.json({ 
-      error: '获取用户信息失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'Failed to get user information',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 } 

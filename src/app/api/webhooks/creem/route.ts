@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     console.log('🔧 环境变量检查:')
     console.log('- NODE_ENV:', process.env.NODE_ENV)
     console.log('- DATABASE_URL存在:', !!process.env.DATABASE_URL)
-    console.log('- CREEM_SECRET_KEY存在:', !!process.env.CREEM_SECRET_KEY)
+    console.log('- CREEM_API_KEY存在:', !!process.env.CREEM_API_KEY)
     console.log('- CLERK_SECRET_KEY存在:', !!process.env.CLERK_SECRET_KEY)
     
     // 安全地获取请求数据
@@ -25,8 +25,8 @@ export async function POST(request: NextRequest) {
       console.error('💥 JSON解析失败:', parseError)
       console.log('📝 请求头:', Object.fromEntries(request.headers.entries()))
       return NextResponse.json({ 
-        error: 'JSON解析失败',
-        details: parseError instanceof Error ? parseError.message : '未知解析错误'
+        error: 'JSON parsing failed',
+        details: parseError instanceof Error ? parseError.message : 'Unknown parsing error'
       }, { status: 400 })
     }
     
@@ -81,15 +81,15 @@ export async function POST(request: NextRequest) {
     // 处理其他事件类型
     return NextResponse.json({ 
       success: true, 
-      message: '事件类型不需要处理',
+      message: 'Event type does not need processing',
       eventType: payload.eventType 
     })
 
   } catch (error) {
     console.error('💥 Webhook处理错误:', error)
     return NextResponse.json({ 
-      error: '处理webhook失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'Failed to process webhook',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 }
@@ -108,7 +108,7 @@ async function handlePaymentSucceeded(paymentData: any) {
     const customerId = paymentData.customer?.id
     
     if (!productId || !customerEmail || !orderId) {
-      throw new Error('缺少必要的支付数据字段: productId=' + productId + ', customerEmail=' + customerEmail + ', orderId=' + orderId)
+      throw new Error('Missing required payment data fields: productId=' + productId + ', customerEmail=' + customerEmail + ', orderId=' + orderId)
     }
 
     console.log('✅ 第1步：支付数据验证通过')
@@ -116,7 +116,7 @@ async function handlePaymentSucceeded(paymentData: any) {
     // 🔸 第2步：产品信息识别
     const productInfo = CREEM_CONFIG.getProductInfo(productId)
     if (!productInfo) {
-      throw new Error(`❌ 未知的产品ID: ${productId}`)
+      throw new Error(`❌ Unknown product ID: ${productId}`)
     }
 
     console.log('✅ 第2步：产品信息解析成功:')
@@ -140,7 +140,7 @@ async function handlePaymentSucceeded(paymentData: any) {
         success: false,
         error: 'duplicate_order',
         orderId: orderId,
-        message: '该订单已处理过，跳过重复处理'
+        message: 'This order has already been processed, skipping duplicate processing'
       }
     }
 
@@ -197,7 +197,7 @@ async function handlePaymentSucceeded(paymentData: any) {
             amount: amount,
             creditsToAdd: productInfo.creditsToAdd,
             timestamp: new Date().toISOString(),
-            suggestion: '需要手动关联用户或提醒用户使用正确邮箱注册'
+            suggestion: 'Order recorded, but user not found. Please ensure you are using the same email address used for registration, or contact customer service'
           }
         }
       })
@@ -207,7 +207,7 @@ async function handlePaymentSucceeded(paymentData: any) {
         error: 'user_not_found',
         customerEmail: customerEmail,
         purchaseId: purchaseRecord.id,
-        suggestion: '订单已记录，但用户未找到。请确保使用与注册账号相同的邮箱进行支付，或联系客服处理'
+        suggestion: 'Order recorded, but user not found. Please ensure you are using the same email address used for registration, or contact customer service'
       }
     }
 
@@ -300,7 +300,7 @@ async function handlePaymentSucceeded(paymentData: any) {
       data: {
         action: 'credits_sync_failed',
         details: {
-          error: error instanceof Error ? error.message : '未知错误',
+          error: error instanceof Error ? error.message : 'Unknown error',
           paymentData: paymentData,
           timestamp: new Date().toISOString(),
           failurePoint: '处理过程中发生错误'

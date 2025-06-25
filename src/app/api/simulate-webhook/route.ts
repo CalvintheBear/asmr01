@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const { userId: clerkUserId } = await auth()
     
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await request.json()
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     // 验证必要参数
     if (!productId) {
       return NextResponse.json({ 
-        error: '缺少产品ID' 
+        error: 'Missing product ID' 
       }, { status: 400 })
     }
 
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const productInfo = CREEM_CONFIG.getProductInfo(productId)
     if (!productInfo) {
       return NextResponse.json({ 
-        error: `未知的产品ID: ${productId}` 
+        error: `Unknown product ID: ${productId}` 
       }, { status: 400 })
     }
 
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json({ 
-        error: '用户不存在' 
+        error: 'User not found' 
       }, { status: 404 })
     }
 
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
       if (existingPurchase) {
         return NextResponse.json({ 
-          error: '此订单已经处理过了',
+          error: 'This order has already been processed',
           purchaseId: existingPurchase.id
         }, { status: 409 })
       }
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: '积分处理成功',
+      message: 'Credits processed successfully',
       details: {
         userId: user.id,
         userEmail: user.email,
@@ -131,8 +131,8 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('💥 模拟Webhook处理失败:', error)
     return NextResponse.json({ 
-      error: '处理失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'Processing failed',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 } 

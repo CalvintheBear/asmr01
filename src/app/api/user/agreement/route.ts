@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     
     if (!user) {
       return NextResponse.json(
-        { error: '用户未认证' },
+        { error: 'User not authenticated' },
         { status: 401 }
       )
     }
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     // 验证用户ID匹配
     if (userId !== user.id) {
       return NextResponse.json(
-        { error: '用户ID不匹配' },
+        { error: 'User ID mismatch' },
         { status: 403 }
       )
     }
@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     
     if (!user) {
       return NextResponse.json(
-        { error: '用户未认证' },
+        { error: 'User not authenticated' },
         { status: 401 }
       )
     }

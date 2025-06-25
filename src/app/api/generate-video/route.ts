@@ -3,13 +3,24 @@ import { auth } from '@clerk/nextjs/server'
 import { db } from '@/lib/prisma'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
 import { saveTaskRecord } from '@/lib/taskid-storage'
+import { getApiKey, reportApiSuccess, reportApiError } from '@/lib/api-key-pool'
+import { rateLimiter, getClientIP, RATE_LIMITS, createRateLimitResponse } from '@/lib/rate-limiter'
 
 export async function POST(request: NextRequest) {
   try {
     // 1. 验证用户登录
     const { userId: clerkUserId } = await auth()
     if (!clerkUserId) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // 2. 🔒 速率限制检查 - 仅针对用户级别，确保不同IP用户都能正常使用
+    const userIdentifier = `user:${clerkUserId}`;
+    
+    // 只检查用户级别限制，不限制IP（因为真实用户可能来自不同IP）
+    if (!rateLimiter.isAllowed(userIdentifier, RATE_LIMITS.VIDEO_GENERATION.limit, RATE_LIMITS.VIDEO_GENERATION.windowMs)) {
+      console.log(`🚫 User ${clerkUserId} video generation frequency too high, please try again later`);
+      return createRateLimitResponse(userIdentifier, RATE_LIMITS.VIDEO_GENERATION.limit);
     }
 
     const body = await request.json();
@@ -17,13 +28,19 @@ export async function POST(request: NextRequest) {
 
     if (!prompt) {
       return NextResponse.json(
-        { error: '提示词是必需的' },
+        { error: 'Prompt is required' },
         { status: 400 }
       );
     }
 
-    // 2. 检查用户积分是否足够
-    const user = await db.user.findUnique({
+    // 2. 使用数据库事务进行原子性操作（积分检查 + 预扣除）
+    let user: any;
+    let videoRecord: any;
+    
+    try {
+      const result = await db.$transaction(async (tx: any) => {
+        // 首先获取并锁定用户记录（防止并发问题）
+        const userRecord = await tx.user.findUnique({
       where: { clerkUserId },
       select: {
         id: true,
@@ -33,79 +50,156 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    if (!user) {
-      return NextResponse.json({ error: '用户不存在' }, { status: 404 })
+        if (!userRecord) {
+          throw new Error('User does not exist')
     }
 
-    const remainingCredits = user.totalCredits - user.usedCredits
+        const remainingCredits = userRecord.totalCredits - userRecord.usedCredits
     
     if (!CREDITS_CONFIG.canCreateVideo(remainingCredits)) {
+          throw new Error(`Insufficient credits, need ${CREDITS_CONFIG.VIDEO_COST} credits, current remaining ${remainingCredits} credits`)
+        }
+
+        // 预扣除积分（确保并发安全）
+        await tx.user.update({
+          where: { id: userRecord.id },
+          data: {
+            usedCredits: {
+              increment: CREDITS_CONFIG.VIDEO_COST
+            }
+          }
+        })
+
+        // 创建视频记录（状态为pending，等待API调用结果）
+        const video = await tx.video.create({
+          data: {
+            userId: userRecord.id,
+            title: `ASMR Video - ${new Date().toLocaleString()}`,
+            type: 'ASMR',
+            prompt: prompt,
+            status: 'pending', // 先设为pending，API成功后更新为processing
+            creditsUsed: CREDITS_CONFIG.VIDEO_COST,
+          }
+        })
+        
+        return { user: userRecord, video };
+      }, {
+        // 设置事务隔离级别，确保并发安全
+        isolationLevel: 'Serializable'
+      })
+      
+      user = result.user;
+      videoRecord = result.video;
+      
+    } catch (transactionError: any) {
+      if (transactionError.message.includes('Insufficient credits')) {
+        const currentUser = await db.user.findUnique({
+          where: { clerkUserId },
+          select: { totalCredits: true, usedCredits: true }
+        })
+        const remainingCredits = currentUser ? currentUser.totalCredits - currentUser.usedCredits : 0;
+        
       return NextResponse.json({
-        error: `积分不足，需要${CREDITS_CONFIG.VIDEO_COST}积分，当前剩余${remainingCredits}积分`,
+        error: `Insufficient credits, need ${CREDITS_CONFIG.VIDEO_COST} credits, current remaining ${remainingCredits} credits`,
         needCredits: CREDITS_CONFIG.VIDEO_COST,
         currentCredits: remainingCredits
-      }, { status: 402 }) // 402 Payment Required
+        }, { status: 402 })
+      }
+      throw transactionError;
     }
 
-    // 准备请求数据
+    // 3. 准备请求数据（按照kie.ai官方文档格式）
     const requestData = {
-      prompt,
-      model: 'veo3_fast',
+      prompt: prompt,
+      // 根据官方文档，veo3_fast 是text-to-video的默认模型，不需要显式指定model参数
+      // kie.ai的veo3 API会自动使用veo3_fast进行8秒视频生成
       aspectRatio: aspectRatio || '16:9',
       duration: duration || '8',
     };
 
-    // 使用fetch调用Kie.ai API
+    // 4. 获取API密钥并调用Kie.ai Veo3 API
+    const apiKey = getApiKey();
+    console.log(`🎬 User ${user.email} starting to generate veo3_fast video, using key: ${apiKey.substring(0, 10)}...`);
+    console.log(`📝 Prompt: ${prompt.substring(0, 100)}...`);
+    
     const response = await fetch('https://kieai.erweima.ai/api/v1/veo/generate', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'Veo3-Client/1.0',
+        'User-Agent': 'Veo3Fast-Client/1.0',
       },
       body: JSON.stringify(requestData)
     });
 
+    console.log(`🔗 API response status: ${response.status}`);
+
     if (!response.ok) {
-      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      console.error(`❌ API request failed: ${response.status} ${response.statusText}`, errorText);
+      
+      // API失败时回滚积分和删除视频记录
+      await db.$transaction(async (tx: any) => {
+        await tx.user.update({
+          where: { id: user.id },
+          data: {
+            usedCredits: {
+              decrement: CREDITS_CONFIG.VIDEO_COST
+            }
+          }
+        })
+        
+        await tx.video.delete({
+          where: { id: videoRecord.id }
+        })
+      })
+      
+      const error = new Error(`API request failed: ${response.status} ${response.statusText}`);
+      reportApiError(apiKey, error);
+      throw error;
     }
 
     const result = await response.json();
-    console.log('Kie.ai API Response:', result);
+    console.log('✅ Kie.ai Veo3 API response:', result);
 
-    // 检查API响应
+    // 5. 检查API响应格式
     if (result.code !== 200) {
-      throw new Error(result.msg || result.message || '视频生成失败');
-    }
+      console.error(`❌ API returned error: ${result.code} - ${result.msg || result.message}`);
 
-    // 3. 扣除积分并创建视频记录
-    const videoRecord = await db.$transaction(async (tx: any) => {
-      // 扣除用户积分
+      // API失败时回滚积分和删除视频记录
+      await db.$transaction(async (tx: any) => {
       await tx.user.update({
         where: { id: user.id },
         data: {
           usedCredits: {
-            increment: CREDITS_CONFIG.VIDEO_COST
+              decrement: CREDITS_CONFIG.VIDEO_COST
           }
         }
       })
 
-      // 创建视频记录
-      const video = await tx.video.create({
-        data: {
-          userId: user.id,
-          title: `ASMR Video - ${new Date().toLocaleString()}`,
-          type: 'ASMR',
-          prompt: prompt,
-          status: 'processing',
-          creditsUsed: CREDITS_CONFIG.VIDEO_COST,
-        }
+        await tx.video.delete({
+          where: { id: videoRecord.id }
+        })
       })
       
-      return video;
+      const error = new Error(result.msg || result.message || 'veo3_fast video generation failed');
+      reportApiError(apiKey, error);
+      throw error;
+    }
+
+    // 6. API成功，报告成功并更新视频状态
+    reportApiSuccess(apiKey);
+    
+    // 更新视频记录状态为processing
+    await db.video.update({
+      where: { id: videoRecord.id },
+      data: {
+          status: 'processing',
+        taskId: result.data?.taskId || null
+        }
     })
 
-    // 保存TaskID映射到临时存储
+    // 7. 保存TaskID映射到临时存储
     const taskId = result.data?.taskId;
     if (taskId) {
       await saveTaskRecord({
@@ -115,28 +209,39 @@ export async function POST(request: NextRequest) {
         videoId: videoRecord.id,
         prompt: prompt,
         createdAt: new Date().toISOString(),
-        status: 'processing'
+        status: 'processing',
+        model: 'veo3_fast' // 明确记录使用的模型
       });
+      
+      console.log(`📝 TaskID ${taskId} saved to temporary storage`);
     }
 
-    console.log(`✅ 用户 ${clerkUserId} 生成视频成功，扣除${CREDITS_CONFIG.VIDEO_COST}积分`)
+    const remainingCredits = user.totalCredits - user.usedCredits - CREDITS_CONFIG.VIDEO_COST;
+    
+    console.log(`✅ User ${user.email} veo3_fast video generation request successful`);
+    console.log(`💰 Credits consumed: ${CREDITS_CONFIG.VIDEO_COST}, remaining credits: ${remainingCredits}`);
+    console.log(`🎥 Video ID: ${videoRecord.id}, TaskID: ${taskId}`);
 
     return NextResponse.json({
       success: true,
       videoId: taskId,
       taskId: taskId,
       status: 'pending',
-      message: result.msg || 'Video generation started',
+      message: result.msg || 'veo3_fast video generation started',
       creditsUsed: CREDITS_CONFIG.VIDEO_COST,
-      remainingCredits: remainingCredits - CREDITS_CONFIG.VIDEO_COST
+      remainingCredits: remainingCredits,
+      model: 'veo3_fast',
+      estimatedDuration: '8 seconds',
+      quality: '720p'
     });
 
   } catch (error) {
-    console.error('视频生成失败:', error);
+    console.error('❌ veo3_fast video generation failed:', error);
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '视频生成失败',
-        success: false
+        error: error instanceof Error ? error.message : 'veo3_fast video generation failed',
+        success: false,
+        model: 'veo3_fast'
       },
       { status: 500 }
     );

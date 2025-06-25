@@ -10,8 +10,8 @@ export async function DELETE(request: NextRequest) {
     
     if (!user) {
       return NextResponse.json(
-        { error: '用户未认证' },
-        { status: 401 }
+        { error: 'User not found' },
+        { status: 404 }
       )
     }
 
@@ -22,7 +22,7 @@ export async function DELETE(request: NextRequest) {
 
     if (!userData) {
       return NextResponse.json(
-        { error: '用户不存在' },
+        { error: 'User not found' },
         { status: 404 }
       )
     }
@@ -57,8 +57,8 @@ export async function DELETE(request: NextRequest) {
     
     return NextResponse.json(
       { 
-        error: '重置失败',
-        details: error instanceof Error ? error.message : '未知错误'
+        error: 'Reset failed',
+        details: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
     )

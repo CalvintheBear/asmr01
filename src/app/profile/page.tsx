@@ -34,19 +34,19 @@ interface Video {
 
 export default function ProfilePage() {
   const { user, isLoaded } = useUser()
-  const { credits, loading, error, refetch } = useCredits(false) // 不自动获取
+  const { credits, loading, error, refetch } = useCredits(false) // Don't auto-fetch
   const [syncing, setSyncing] = useState(false)
   const [syncError, setSyncError] = useState<string | null>(null)
   const [purchases, setPurchases] = useState<Purchase[]>([])
   const [purchasesLoading, setPurchasesLoading] = useState(false)
   const [purchasesError, setPurchasesError] = useState<string | null>(null)
   
-  // 历史视频相关状态
+  // Video history related states
   const [videos, setVideos] = useState<Video[]>([])
   const [videosLoading, setVideosLoading] = useState(false)
   const [videosError, setVideosError] = useState<string | null>(null)
 
-  // 获取购买历史
+  // Fetch purchase history
   const fetchPurchases = async () => {
     try {
       setPurchasesLoading(true)
@@ -61,17 +61,17 @@ export default function ProfilePage() {
           setPurchasesError(result.error)
         }
       } else {
-        setPurchasesError('获取购买历史失败')
+        setPurchasesError('Failed to fetch purchase history')
       }
     } catch (error) {
-      console.error('获取购买历史失败:', error)
-      setPurchasesError('网络错误')
+      console.error('Failed to fetch purchase history:', error)
+      setPurchasesError('Network error')
     } finally {
       setPurchasesLoading(false)
     }
   }
 
-  // 获取历史视频
+  // Fetch video history
   const fetchVideos = async () => {
     try {
       setVideosLoading(true)
@@ -86,35 +86,35 @@ export default function ProfilePage() {
           setVideosError(result.error)
         }
       } else {
-        setVideosError('获取视频历史失败')
+        setVideosError('Failed to fetch video history')
       }
     } catch (error) {
-      console.error('获取视频历史失败:', error)
-      setVideosError('网络错误')
+      console.error('Failed to fetch video history:', error)
+      setVideosError('Network error')
     } finally {
       setVideosLoading(false)
     }
   }
 
-  // 用户加载完成后自动同步到数据库并获取最新数据
+  // Auto sync user to database after user loads and fetch latest data
   useEffect(() => {
     let isMounted = true
     let lastSyncTime = 0
-    const SYNC_COOLDOWN = 30000 // 30秒冷却时间
+    const SYNC_COOLDOWN = 30000 // 30 seconds cooldown
     
     const syncUserAndFetchData = async () => {
       if (!isLoaded || !user || !isMounted) return
       
-      // 检查冷却时间
+      // Check cooldown
       const now = Date.now()
       if (now - lastSyncTime < SYNC_COOLDOWN) {
-        console.log('⏰ 同步冷却中，直接获取数据...')
-                    // 即使在冷却期也要获取最新数据
-            if (isMounted) {
-              refetch()
-              fetchPurchases()
-              fetchVideos()
-            }
+        console.log('⏰ Sync on cooldown, fetching data directly...')
+        // Even during cooldown, fetch latest data
+        if (isMounted) {
+          refetch()
+          fetchPurchases()
+          fetchVideos()
+        }
         return
       }
       
@@ -123,16 +123,16 @@ export default function ProfilePage() {
         setSyncError(null)
         lastSyncTime = now
         
-        console.log('🔄 开始同步用户到数据库...')
+        console.log('🔄 Starting user sync to database...')
         const response = await fetch('/api/user/sync', {
           method: 'POST'
         })
         
         if (!response.ok) {
-          // 如果是速率限制错误，静默处理
+          // Handle rate limit errors silently
           if (response.status === 429) {
-            console.log('⚠️ Clerk API速率限制，稍后自动重试')
-            // 直接获取积分信息，因为用户可能已经存在
+            console.log('⚠️ Clerk API rate limit, will retry automatically')
+            // Fetch credits directly as user might already exist
             if (isMounted) {
               refetch()
               fetchPurchases()
@@ -141,26 +141,26 @@ export default function ProfilePage() {
           }
           
           const errorData = await response.json()
-          throw new Error(errorData.error || '用户同步失败')
+          throw new Error(errorData.error || 'User sync failed')
         }
         
         const result = await response.json()
-        console.log('✅ 用户同步成功:', result)
+        console.log('✅ User sync successful:', result)
         
-        // 同步成功后获取最新积分信息和购买历史
+        // After successful sync, fetch latest credits and purchase history
         if (isMounted) {
-          console.log('📊 正在获取最新积分、购买记录和视频历史...')
+          console.log('📊 Fetching latest credits, purchases and video history...')
           refetch()
           fetchPurchases()
           fetchVideos()
         }
       } catch (err) {
         if (isMounted) {
-          const errorMessage = err instanceof Error ? err.message : '用户同步失败'
+          const errorMessage = err instanceof Error ? err.message : 'User sync failed'
           setSyncError(errorMessage)
-          console.error('用户同步失败:', err)
+          console.error('User sync failed:', err)
           
-          // 即使同步失败也尝试获取数据
+          // Even if sync fails, try to fetch data
           refetch()
           fetchPurchases()
           fetchVideos()
@@ -174,17 +174,17 @@ export default function ProfilePage() {
 
     syncUserAndFetchData()
     
-    // 清理函数
+    // Cleanup function
     return () => {
       isMounted = false
     }
-  }, [isLoaded, user]) // 移除refetch依赖
+  }, [isLoaded, user]) // Remove refetch dependency
 
   if (!isLoaded || syncing) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
         <div className="text-white text-lg">
-          {syncing ? '正在同步用户信息...' : 'Loading...'}
+          {syncing ? 'Syncing user information...' : 'Loading...'}
         </div>
       </div>
     )
@@ -193,7 +193,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-lg">请先登录</div>
+        <div className="text-white text-lg">Please sign in first</div>
       </div>
     )
   }
@@ -203,7 +203,7 @@ export default function ProfilePage() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-white">个人中心</h1>
+          <h1 className="text-3xl font-bold text-white">User Profile</h1>
           <UserButton 
             appearance={{
               elements: {
@@ -213,7 +213,7 @@ export default function ProfilePage() {
           />
         </div>
 
-        {/* 错误提示 */}
+        {/* Error notification */}
         {syncError && (
           <div className="mb-6 bg-red-500/20 border border-red-500/50 rounded-lg p-4">
             <p className="text-red-200">⚠️ {syncError}</p>
@@ -221,48 +221,48 @@ export default function ProfilePage() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* 用户信息卡片 */}
+          {/* User info card */}
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <span className="mr-2">👤</span>
-              基本信息
+              Basic Information
             </h2>
             
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-gray-300">显示名称</label>
+                <label className="text-sm text-gray-300">Display Name</label>
                 <p className="text-white font-medium">
-                  {user.fullName || user.firstName || '未设置'}
+                  {user.fullName || user.firstName || 'Not set'}
                 </p>
               </div>
               
               <div>
-                <label className="text-sm text-gray-300">邮箱地址</label>
+                <label className="text-sm text-gray-300">Email Address</label>
                 <p className="text-white font-medium">
-                  {user.primaryEmailAddress?.emailAddress || '未设置'}
+                  {user.primaryEmailAddress?.emailAddress || 'Not set'}
                 </p>
               </div>
               
               <div>
-                <label className="text-sm text-gray-300">注册时间</label>
+                <label className="text-sm text-gray-300">Registration Date</label>
                 <p className="text-white font-medium">
-                  {user.createdAt ? new Date(user.createdAt).toLocaleDateString('zh-CN') : '未知'}
+                  {user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US') : 'Unknown'}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 积分信息卡片 */}
+          {/* Credits info card */}
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
               <span className="mr-2">💎</span>
-              积分信息
+              Credits Information
               <button 
                 onClick={refetch}
                 disabled={loading}
                 className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
               >
-                {loading ? '刷新中...' : '刷新'}
+                {loading ? 'Refreshing...' : 'Refresh'}
               </button>
             </h2>
 
@@ -273,7 +273,7 @@ export default function ProfilePage() {
                   onClick={refetch}
                   className="ml-2 text-blue-400 hover:text-blue-300 underline"
                 >
-                  重试
+                  Retry
                 </button>
               </div>
             ) : credits ? (
@@ -283,14 +283,14 @@ export default function ProfilePage() {
                     <p className="text-2xl font-bold text-green-400">
                       {credits.remainingCredits}
                     </p>
-                    <p className="text-sm text-gray-300">剩余积分</p>
+                    <p className="text-sm text-gray-300">Remaining Credits</p>
                   </div>
                   
                   <div className="text-center p-4 bg-white/5 rounded-lg">
                     <p className="text-2xl font-bold text-blue-400">
                       {credits.totalCredits}
                     </p>
-                    <p className="text-sm text-gray-300">总积分</p>
+                    <p className="text-sm text-gray-300">Total Credits</p>
                   </div>
                 </div>
 
@@ -299,49 +299,49 @@ export default function ProfilePage() {
                     <p className="text-2xl font-bold text-purple-400">
                       {credits.usedCredits}
                     </p>
-                    <p className="text-sm text-gray-300">已使用</p>
+                    <p className="text-sm text-gray-300">Used Credits</p>
                   </div>
                   
                   <div className="text-center p-4 bg-white/5 rounded-lg">
                     <p className="text-2xl font-bold text-orange-400">
                       {credits.videosCount}
                     </p>
-                    <p className="text-sm text-gray-300">视频数量</p>
+                    <p className="text-sm text-gray-300">Videos Created</p>
                   </div>
                 </div>
 
                 <div className="text-sm text-gray-300 bg-white/5 p-3 rounded-lg">
-                  <p>💡 每生成一个视频消耗 {CREDITS_CONFIG.VIDEO_COST} 积分</p>
-                  <p>💡 可以生成约 {CREDITS_CONFIG.getVideoCount(credits.remainingCredits)} 个视频</p>
+                  <p>💡 Each video generation costs {CREDITS_CONFIG.VIDEO_COST} credits</p>
+                  <p>💡 You can create approximately {CREDITS_CONFIG.getVideoCount(credits.remainingCredits)} videos</p>
                 </div>
               </div>
             ) : loading ? (
-              <div className="text-gray-300">加载积分信息中...</div>
+              <div className="text-gray-300">Loading credits information...</div>
             ) : (
               <div className="text-gray-300">
-                <p>积分信息暂未加载</p>
+                <p>Credits information not loaded yet</p>
                 <button 
                   onClick={refetch}
                   className="mt-2 text-blue-400 hover:text-blue-300 underline"
                 >
-                  点击加载
+                  Click to load
                 </button>
               </div>
             )}
           </div>
         </div>
 
-        {/* 历史生成视频 */}
+        {/* Generated videos history */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
             <span className="mr-2">🎬</span>
-            历史生成视频
+            Generated Videos History
             <button 
               onClick={fetchVideos}
               disabled={videosLoading}
               className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
             >
-              {videosLoading ? '加载中...' : '刷新'}
+              {videosLoading ? 'Loading...' : 'Refresh'}
             </button>
           </h2>
 
@@ -352,7 +352,7 @@ export default function ProfilePage() {
                 onClick={fetchVideos}
                 className="ml-2 text-blue-400 hover:text-blue-300 underline"
               >
-                重试
+                Retry
               </button>
             </div>
           ) : videos.length > 0 ? (
@@ -372,13 +372,13 @@ export default function ProfilePage() {
                             ? 'bg-red-500/20 text-red-300'
                             : 'bg-yellow-500/20 text-yellow-300'
                         }`}>
-                          {video.status === 'completed' ? '已完成' : 
-                           video.status === 'failed' ? '失败' : '处理中'}
+                          {video.status === 'completed' ? 'Completed' : 
+                           video.status === 'failed' ? 'Failed' : 'Processing'}
                         </span>
                       </div>
                       
                       <div className="mb-3">
-                        <p className="text-gray-400 text-sm mb-1">提示词:</p>
+                        <p className="text-gray-400 text-sm mb-1">Prompt:</p>
                         <p className="text-white text-sm bg-white/5 p-2 rounded">
                           {video.prompt.length > 100 ? 
                             `${video.prompt.substring(0, 100)}...` : 
@@ -391,23 +391,23 @@ export default function ProfilePage() {
                         <div>
                           <p className="text-gray-400">TaskID</p>
                           <p className="text-white font-mono text-xs">
-                            {video.taskId || '暂无'}
+                            {video.taskId || 'None'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">消耗积分</p>
+                          <p className="text-gray-400">Credits Used</p>
                           <p className="text-orange-400 font-medium">
                             -{video.creditsUsed}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">创建时间</p>
+                          <p className="text-gray-400">Created At</p>
                           <p className="text-white">
-                            {new Date(video.createdAt).toLocaleString('zh-CN')}
+                            {new Date(video.createdAt).toLocaleString('en-US')}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">视频状态</p>
+                          <p className="text-gray-400">Video Status</p>
                           <div className="flex flex-col gap-1">
                             {video.videoUrl && (
                               <a 
@@ -416,7 +416,7 @@ export default function ProfilePage() {
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 text-xs underline"
                               >
-                                📥 下载视频 {video.videoUrl1080p ? '(1080p)' : '(720p)'}
+                                📥 Download Video {video.videoUrl1080p ? '(1080p)' : '(720p)'}
                               </a>
                             )}
                             {video.taskId && (
@@ -435,29 +435,29 @@ export default function ProfilePage() {
           ) : videosLoading ? (
             <div className="text-gray-300 text-center py-8">
               <div className="animate-spin w-6 h-6 border-2 border-white/30 border-t-white rounded-full mx-auto mb-2"></div>
-              加载视频历史中...
+              Loading video history...
             </div>
           ) : (
             <div className="text-gray-300 text-center py-8">
-              <p>暂无生成记录</p>
+              <p>No generation history yet</p>
               <p className="text-sm text-gray-400 mt-2">
-                去 <a href="/" className="text-blue-400 hover:text-blue-300 underline">首页</a> 开始生成您的第一个AI ASMR视频
+                Go to <a href="/" className="text-blue-400 hover:text-blue-300 underline">homepage</a> to start generating your first AI ASMR video
               </p>
             </div>
           )}
         </div>
 
-        {/* 购买历史 */}
+        {/* Purchase history */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
             <span className="mr-2">🛒</span>
-            购买历史
+            Purchase History
             <button 
               onClick={fetchPurchases}
               disabled={purchasesLoading}
               className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
             >
-              {purchasesLoading ? '加载中...' : '刷新'}
+              {purchasesLoading ? 'Loading...' : 'Refresh'}
             </button>
           </h2>
 
@@ -468,7 +468,7 @@ export default function ProfilePage() {
                 onClick={fetchPurchases}
                 className="ml-2 text-blue-400 hover:text-blue-300 underline"
               >
-                重试
+                Retry
               </button>
             </div>
           ) : purchases.length > 0 ? (
@@ -486,31 +486,31 @@ export default function ProfilePage() {
                             ? 'bg-green-500/20 text-green-300' 
                             : 'bg-yellow-500/20 text-yellow-300'
                         }`}>
-                          {purchase.status === 'completed' ? '已完成' : '处理中'}
+                          {purchase.status === 'completed' ? 'Completed' : 'Processing'}
                         </span>
                       </div>
                       
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
-                          <p className="text-gray-400">支付金额</p>
+                          <p className="text-gray-400">Payment Amount</p>
                           <p className="text-white font-medium">
                             ${purchase.amount.toFixed(2)} {purchase.currency}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">获得积分</p>
+                          <p className="text-gray-400">Credits Received</p>
                           <p className="text-green-400 font-medium">
                             +{purchase.creditsAdded}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">订单号</p>
+                          <p className="text-gray-400">Order ID</p>
                           <p className="text-white font-mono text-xs">
-                            {purchase.orderId || '暂无'}
+                            {purchase.orderId || 'None'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">购买时间</p>
+                          <p className="text-gray-400">Purchase Date</p>
                           <p className="text-white">
                             {purchase.formattedDate}
                           </p>
@@ -524,27 +524,27 @@ export default function ProfilePage() {
           ) : purchasesLoading ? (
             <div className="text-gray-300 text-center py-8">
               <div className="animate-spin w-6 h-6 border-2 border-white/30 border-t-white rounded-full mx-auto mb-2"></div>
-              加载购买历史中...
+              Loading purchase history...
             </div>
           ) : (
             <div className="text-gray-300 text-center py-8">
-              <p>暂无购买记录</p>
+              <p>No purchase history yet</p>
               <p className="text-sm text-gray-400 mt-2">
-                去 <a href="/pricing" className="text-blue-400 hover:text-blue-300 underline">购买积分包</a> 开始您的创作之旅
+                Go to <a href="/pricing" className="text-blue-400 hover:text-blue-300 underline">buy credits</a> to start your creative journey
               </p>
             </div>
           )}
         </div>
 
-        {/* 账户管理 - Creem Compliance */}
+        {/* Account management - Creem Compliance */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
             <span className="mr-2">💳</span>
-            账户管理
+            Account Management
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {/* 管理支付和订阅 */}
+            {/* Manage payments and subscriptions */}
             <button
               onClick={async () => {
                 try {
@@ -552,54 +552,54 @@ export default function ProfilePage() {
                   const data = await response.json()
                   
                   if (data.success && data.portalUrl) {
-                    // 在新标签页中打开Creem Customer Portal
+                    // Open Creem Customer Portal in new tab
                     window.open(data.portalUrl, '_blank', 'noopener,noreferrer')
                   } else {
-                    // 备用方案：直接打开Creem客户门户
+                    // Fallback: directly open Creem customer portal
                     window.open('https://www.creem.io/customer-portal', '_blank', 'noopener,noreferrer')
                   }
                 } catch (error) {
-                  console.error('打开客户门户失败:', error)
-                  // 备用方案：直接打开Creem客户门户
+                  console.error('Failed to open customer portal:', error)
+                  // Fallback: directly open Creem customer portal
                   window.open('https://www.creem.io/customer-portal', '_blank', 'noopener,noreferrer')
                 }
               }}
               className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/50 px-4 py-3 rounded-lg transition-colors text-left"
             >
-              <div className="font-medium">💳 管理支付方式</div>
+              <div className="font-medium">💳 Manage Payment Methods</div>
               <div className="text-sm text-gray-400 mt-1">
-                更新支付方式、查看账单历史
+                Update payment methods, view billing history
               </div>
             </button>
 
-            {/* 客服支持 */}
+            {/* Customer support */}
             <a
               href="mailto:supportadmin@cuttingasmr.org"
               className="bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/50 px-4 py-3 rounded-lg transition-colors text-left block"
             >
-              <div className="font-medium">📧 联系客服</div>
+              <div className="font-medium">📧 Contact Support</div>
               <div className="text-sm text-gray-400 mt-1">
-                需要帮助？我们3个工作日内回复
+                Need help? We respond within 3 business days
               </div>
             </a>
           </div>
 
           <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
             <p className="text-blue-300 text-sm">
-              <strong>💡 支付管理说明：</strong> 点击"管理支付方式"将打开Creem客户门户，您可以在那里安全地管理您的支付方式、查看详细账单历史，以及处理任何支付相关事务。
+              <strong>💡 Payment Management:</strong> Clicking "Manage Payment Methods" will open the Creem customer portal where you can safely manage your payment methods, view detailed billing history, and handle any payment-related matters.
             </p>
           </div>
         </div>
 
-        {/* 数据管理 */}
+        {/* Data management */}
         <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
             <span className="mr-2">🔒</span>
-            数据管理
+            Data Management
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* 导出数据 */}
+            {/* Export data */}
             <button
               onClick={async () => {
                 try {
@@ -614,122 +614,122 @@ export default function ProfilePage() {
                     a.click()
                     URL.revokeObjectURL(url)
                   } else {
-                    alert('导出失败，请稍后重试')
+                    alert('Export failed, please try again later')
                   }
                 } catch (error) {
-                  console.error('导出数据失败:', error)
-                  alert('导出失败，请稍后重试')
+                  console.error('Export data failed:', error)
+                  alert('Export failed, please try again later')
                 }
               }}
               className="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/50 px-4 py-3 rounded-lg transition-colors text-left"
             >
-              <div className="font-medium">📥 导出我的数据</div>
+              <div className="font-medium">📥 Export My Data</div>
               <div className="text-sm text-gray-400 mt-1">
-                下载包含您所有数据的JSON文件
+                Download a JSON file containing all your data
               </div>
             </button>
 
-            {/* 清除视频历史 */}
+            {/* Clear video history */}
             <button
               onClick={async () => {
-                if (confirm('确定要清除所有视频生成历史吗？此操作不可恢复。')) {
+                if (confirm('Are you sure you want to clear all video generation history? This action cannot be undone.')) {
                   try {
                     const response = await fetch('/api/user/clear-videos', { method: 'DELETE' })
                     if (response.ok) {
                       setVideos([])
-                      alert('视频历史已清除')
+                      alert('Video history cleared')
                     } else {
-                      alert('清除失败，请稍后重试')
+                      alert('Clear failed, please try again later')
                     }
                   } catch (error) {
-                    console.error('清除视频历史失败:', error)
-                    alert('清除失败，请稍后重试')
+                    console.error('Clear video history failed:', error)
+                    alert('Clear failed, please try again later')
                   }
                 }
               }}
               className="bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/50 px-4 py-3 rounded-lg transition-colors text-left"
             >
-              <div className="font-medium">🗑️ 清除视频历史</div>
+              <div className="font-medium">🗑️ Clear Video History</div>
               <div className="text-sm text-gray-400 mt-1">
-                删除所有视频生成记录
+                Delete all video generation records
               </div>
             </button>
             
-            {/* 清除偏好设置 */}
+            {/* Clear preferences */}
             <button
               onClick={async () => {
-                if (confirm('确定要重置所有偏好设置吗？这将清除您的ASMR类型偏好。')) {
+                if (confirm('Are you sure you want to reset all preferences? This will clear your ASMR type preferences.')) {
                   try {
                     const response = await fetch('/api/user/clear-preferences', { method: 'DELETE' })
                     if (response.ok) {
-                      alert('偏好设置已重置')
+                      alert('Preferences reset successfully')
                     } else {
-                      alert('重置失败，请稍后重试')
+                      alert('Reset failed, please try again later')
                     }
                   } catch (error) {
-                    console.error('重置偏好失败:', error)
-                    alert('重置失败，请稍后重试')
+                    console.error('Reset preferences failed:', error)
+                    alert('Reset failed, please try again later')
                   }
                 }
               }}
               className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/50 px-4 py-3 rounded-lg transition-colors text-left"
             >
-              <div className="font-medium">🔄 重置偏好设置</div>
+              <div className="font-medium">🔄 Reset Preferences</div>
               <div className="text-sm text-gray-400 mt-1">
-                清除ASMR类型偏好和设置
+                Clear ASMR type preferences and settings
               </div>
             </button>
 
-            {/* 删除账户 */}
+            {/* Delete account */}
             <button
               onClick={async () => {
-                const confirmation = prompt('删除账户是不可恢复的操作。请输入 "DELETE" 确认删除：')
+                const confirmation = prompt('Account deletion is irreversible. Please type "DELETE" to confirm:')
                 if (confirmation === 'DELETE') {
                   try {
                     const response = await fetch('/api/user/delete-account', { method: 'DELETE' })
                     if (response.ok) {
-                      alert('账户删除请求已提交。我们将在24小时内处理您的请求。')
+                      alert('Account deletion request submitted. We will process your request within 24 hours.')
                       window.location.href = '/'
                     } else {
-                      alert('删除请求失败，请联系客服')
+                      alert('Deletion request failed, please contact support')
                     }
                   } catch (error) {
-                    console.error('删除账户失败:', error)
-                    alert('删除请求失败，请联系客服')
+                    console.error('Delete account failed:', error)
+                    alert('Deletion request failed, please contact support')
                   }
                 }
               }}
               className="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-4 py-3 rounded-lg transition-colors text-left"
             >
-              <div className="font-medium">⚠️ 删除账户</div>
+              <div className="font-medium">⚠️ Delete Account</div>
               <div className="text-sm text-gray-400 mt-1">
-                永久删除账户和所有数据
+                Permanently delete account and all data
               </div>
             </button>
           </div>
 
           <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
             <p className="text-blue-300 text-sm">
-              💡 <strong>数据保护</strong>: 根据我们的隐私政策，您有权访问、更正、删除或导出您的个人数据。
-              如需帮助，请联系 <a href="mailto:supportadmin@cuttingasmr.org" className="underline">supportadmin@cuttingasmr.org</a>
+              💡 <strong>Data Protection</strong>: According to our privacy policy, you have the right to access, correct, delete, or export your personal data.
+              For assistance, please contact <a href="mailto:supportadmin@cuttingasmr.org" className="underline">supportadmin@cuttingasmr.org</a>
             </p>
           </div>
         </div>
 
-        {/* 操作按钮 */}
+        {/* Action buttons */}
         <div className="mt-8 flex flex-wrap gap-4">
           <a
             href="/pricing"
             className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
           >
-            购买积分包
+            Buy Credits
           </a>
           
           <a
             href="/"
             className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20"
           >
-            返回首页
+            Back to Home
           </a>
         </div>
       </div>

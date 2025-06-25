@@ -14,10 +14,10 @@ CREEM_TEST_MODE = false
 NEXT_PUBLIC_APP_URL = https://cuttingasmr.org
 ```
 
-#### 2. Creem生产环境API密钥 ⚠️ 重要
+#### 2. Creem生产环境API密钥 ⚠️ 重要 (新Creem Store)
 ```
-CREEM_API_KEY = creem_4bO7LLLWie17BD2i7qTNNA
-CREEM_WEBHOOK_SECRET = whsec_6jovyxtbgdcdNEMdH0nspT
+CREEM_API_KEY = creem_3383jJhZ9BrQXXeHL2bxB
+CREEM_WEBHOOK_SECRET = whsec_bCADZ6mZaWDVnJCzwato5
 ```
 
 #### 3. 其他必需环境变量
@@ -31,15 +31,15 @@ VEO3_API_BASE_URL = https://api.kie.ai
 
 ## 🏷️ 生产环境产品ID确认
 
-### 当前将使用的生产环境产品ID：
-- **Starter包** (115积分, $9.9): `prod_7jHfoQZh5FuYUbIJgIM9ZQ`
-- **Standard包** (355积分, $30): `prod_7E4i1f1bV8CPMYc7gRx67l`
-- **Premium包** (1450积分, $99): `prod_6mI2w4gJN4FfZ6FuOFzfcr`
+### 当前将使用的生产环境产品ID (新Creem Store)：
+- **Starter包** (115积分, $9.9): `prod_44gUntOAeR5KU9a4wkr45U`
+- **Standard包** (355积分, $30): `prod_2tyKrzLDOi7TLMNiIpHsj4`
+- **Premium包** (1450积分, $99): `prod_7aRS2kaSvk33msxNfnIAV8`
 
 ### 支付链接格式：
-- Starter: https://www.creem.io/payment/prod_7jHfoQZh5FuYUbIJgIM9ZQ
-- Standard: https://www.creem.io/payment/prod_7E4i1f1bV8CPMYc7gRx67l
-- Premium: https://www.creem.io/payment/prod_6mI2w4gJN4FfZ6FuOFzfcr
+- Starter: https://www.creem.io/payment/prod_44gUntOAeR5KU9a4wkr45U
+- Standard: https://www.creem.io/payment/prod_2tyKrzLDOi7TLMNiIpHsj4
+- Premium: https://www.creem.io/payment/prod_7aRS2kaSvk33msxNfnIAV8
 
 ## 🔍 配置验证步骤
 

@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
     if (!clerkUserId) {
       return NextResponse.json(
-        { error: '用户未登录', success: false },
+        { error: 'User not logged in', success: false },
         { status: 401 }
       );
     }
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { error: '用户不存在', success: false },
+        { error: 'User not found', success: false },
         { status: 404 }
       );
     }
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
     console.error('获取用户视频失败:', error);
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '获取视频历史失败',
+        error: error instanceof Error ? error.message : 'Failed to get video history',
         success: false
       },
       { status: 500 }

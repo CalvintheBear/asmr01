@@ -11,7 +11,7 @@ export async function GET(
 
     if (!videoId) {
       return NextResponse.json(
-        { error: '视频ID是必需的' },
+        { error: 'Video ID is required' },
         { status: 400 }
       );
     }
@@ -21,7 +21,7 @@ export async function GET(
     const statusResult = await statusResponse.json();
 
     if (!statusResult.success) {
-      throw new Error(statusResult.error || '获取视频状态失败');
+      throw new Error(statusResult.error || 'Failed to get video status');
     }
 
     // 从status API响应中构建详细信息
@@ -45,7 +45,7 @@ export async function GET(
     console.error('获取视频详细信息失败:', error);
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '获取视频详细信息失败',
+        error: error instanceof Error ? error.message : 'Failed to get video details',
         success: false
       },
       { status: 500 }

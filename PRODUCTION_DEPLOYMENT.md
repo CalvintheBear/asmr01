@@ -2,15 +2,15 @@
 
 ## 🔑 Creem正式环境配置
 
-### 产品信息更新完成 ✅
-- **Starter**: `prod_7jHfoQZh5FuYUbIJgIM9ZQ` - $9.9 (115积分)
-- **Standard**: `prod_7E4i1f1bV8CPMYc7gRx67l` - $30 (355积分)  
-- **Premium**: `prod_6mI2w4gJN4FfZ6FuOFzfcr` - $99 (1450积分)
+### 产品信息更新完成 ✅ (新Creem Store)
+- **Starter**: `prod_44gUntOAeR5KU9a4wkr45U` - $9.9 (115积分)
+- **Standard**: `prod_2tyKrzLDOi7TLMNiIpHsj4` - $30 (355积分)  
+- **Premium**: `prod_7aRS2kaSvk33msxNfnIAV8` - $99 (1450积分)
 
 ### 支付链接验证
-- **Premium**: https://www.creem.io/payment/prod_6mI2w4gJN4FfZ6FuOFzfcr
-- **Standard**: https://www.creem.io/payment/prod_7E4i1f1bV8CPMYc7gRx67l
-- **Starter**: https://www.creem.io/payment/prod_7jHfoQZh5FuYUbIJgIM9ZQ
+- **Premium**: https://www.creem.io/payment/prod_7aRS2kaSvk33msxNfnIAV8
+- **Standard**: https://www.creem.io/payment/prod_2tyKrzLDOi7TLMNiIpHsj4
+- **Starter**: https://www.creem.io/payment/prod_44gUntOAeR5KU9a4wkr45U
 
 ## 🌐 域名配置
 
@@ -24,9 +24,9 @@ Return URL: https://cuttingasmr.org/payment/success
 
 ### 必需的生产环境变量
 ```bash
-# Creem Payment Configuration
-CREEM_SECRET_KEY=creem_4bO7LLLWie17BD2i7qTNNA
-CREEM_WEBHOOK_SECRET=whsec_6jovyxtbgdcdNEMdH0nspT
+# Creem Payment Configuration (新Creem Store)
+CREEM_API_KEY=creem_3383jJhZ9BrQXXeHL2bxB
+CREEM_WEBHOOK_SECRET=whsec_bCADZ6mZaWDVnJCzwato5
 
 # Application Configuration
 NEXT_PUBLIC_APP_URL=https://cuttingasmr.org

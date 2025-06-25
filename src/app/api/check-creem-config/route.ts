@@ -49,8 +49,8 @@ export async function GET(request: NextRequest) {
     console.error('检查Creem配置失败:', error)
     return NextResponse.json({ 
       success: false,
-      error: '检查配置失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: 'Failed to check configuration',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 } 

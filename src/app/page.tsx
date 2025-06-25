@@ -299,20 +299,37 @@ export default function ASMRVideoStudio() {
     }
   }
 
-  const [freeTrialsLeft, setFreeTrialsLeft] = useState(2)
-  const [isSubscribed, setIsSubscribed] = useState(false)
+  // 移除错误的免费试用逻辑，完全基于积分系统
+  // const [freeTrialsLeft, setFreeTrialsLeft] = useState(2)
+  // const [isSubscribed, setIsSubscribed] = useState(false)
   
   const { generationStatus, generateVideo, getVideoDetails, get1080PVideo, resetGeneration, isGenerating } = useVideoGeneration()
 
   const handleGenerate = async () => {
-    // 检查积分是否足够
-    if (user && credits && !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits)) {
-      alert(`Insufficient credits! Video generation requires ${CREDITS_CONFIG.VIDEO_COST} credits, you currently have ${credits.remainingCredits} credits remaining. Please visit the pricing page to purchase more credits.`)
+    // 全面的安全检查
+    if (!user) {
+      alert('Please sign in to generate videos.')
       return
     }
     
-    if (!isSubscribed && freeTrialsLeft <= 0) {
-      alert('You have used all your free trials. Please subscribe to continue generating AI ASMR videos.')
+    if (!userSynced) {
+      alert('User synchronization in progress. Please wait a moment and try again.')
+      return
+    }
+    
+    if (creditsLoading) {
+      alert('Credits information is loading. Please wait a moment and try again.')
+      return
+    }
+    
+    if (!credits) {
+      alert('Unable to load credits information. Please refresh the page and try again.')
+      return
+    }
+    
+    // 检查积分是否足够 - 这是唯一的判断标准
+    if (!CREDITS_CONFIG.canCreateVideo(credits.remainingCredits)) {
+      alert(`Insufficient credits! Video generation requires ${CREDITS_CONFIG.VIDEO_COST} credits, you currently have ${credits.remainingCredits} credits remaining. Please visit the pricing page to purchase more credits.`)
       return
     }
     
@@ -329,11 +346,6 @@ export default function ASMRVideoStudio() {
         setTimeout(() => {
           refetchCredits()
         }, 1000) // 延迟1秒刷新，确保数据库已更新
-      }
-      
-      // 减少免费试用次数
-      if (!isSubscribed && freeTrialsLeft > 0) {
-        setFreeTrialsLeft(prev => prev - 1)
       }
     } catch (error) {
       console.error('生成视频失败:', error)
@@ -430,18 +442,39 @@ export default function ASMRVideoStudio() {
           
           {/* Hero Section */}
           <div className="text-center mb-12">
+            {/* New User Credits Badge */}
+            <div className="mb-6 flex justify-center">
+              {!user ? (
+                <SignInButton mode="modal">
+                  <button className="group inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <span className="mr-2 bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold">
+                      New
+                    </span>
+                    <Sparkles className="w-4 h-4 mr-1 animate-pulse" />
+                    FREE credits for new users!
+                  </button>
+                </SignInButton>
+              ) : (
+                <div className="inline-flex items-center bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-semibold shadow-sm cursor-default">
+                  <span className="mr-2 bg-green-500/20 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold text-green-700">
+                    ✓
+                  </span>
+                  <Star className="w-4 h-4 mr-1 text-green-600" />
+                  Welcome back! Enjoy your credits
+                </div>
+              )}
+            </div>
+            
             <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-6">
               AI ASMR Generator
               <span className="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Powered by Gemini Veo3
+                Powered by Veo3
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Create professional AI ASMR videos using cutting-edge Gemini Veo3 artificial intelligence. 
-              Our advanced AI video generator transforms your ideas into therapeutic ASMR content automatically.
-              <span className="block mt-2 text-green-600 font-semibold">
-                FREE credits for new users!
-              </span>
+              FREE credits for new users! Perfect for YouTube, TikTok creators and ASMR makers. 
+              Generate professional relaxing video in minutes with advanced Google Veo3 AI technology. 
+              No editing skills required.
             </p>
             
             {/* Credits Display */}
@@ -543,9 +576,23 @@ export default function ASMRVideoStudio() {
                   <div className="space-y-4">
                     <button
                       onClick={handleGenerate}
-                      disabled={!prompt.trim() || isGenerating}
+                      disabled={
+                        !user || 
+                        !userSynced || 
+                        creditsLoading || 
+                        !credits || 
+                        !prompt.trim() || 
+                        isGenerating || 
+                        !CREDITS_CONFIG.canCreateVideo(credits?.remainingCredits || 0)
+                      }
                                               className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                        !prompt.trim() || isGenerating
+                        !user || 
+                        !userSynced || 
+                        creditsLoading || 
+                        !credits || 
+                        !prompt.trim() || 
+                        isGenerating || 
+                        !CREDITS_CONFIG.canCreateVideo(credits?.remainingCredits || 0)
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                           : 'bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white hover:from-purple-700 hover:via-pink-700 hover:to-indigo-700 shadow-2xl hover:shadow-3xl transform hover:scale-105 relative overflow-hidden group'
                       }`}
@@ -558,10 +605,70 @@ export default function ASMRVideoStudio() {
                       ) : (
                         <div className="flex items-center justify-center space-x-2">
                           <Play className="w-5 h-5" />
-                          <span>Generate ASMR Video (10 Credits)</span>
+                          <span>
+                            {!user 
+                              ? 'Sign In Required'
+                              : !userSynced 
+                              ? 'Syncing Account...'
+                              : creditsLoading 
+                              ? 'Loading Credits...'
+                              : !credits 
+                              ? 'Credits Unavailable'
+                              : !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits) 
+                              ? `Insufficient Credits (Need ${CREDITS_CONFIG.VIDEO_COST})`
+                              : `Generate ASMR Video (10 Credits)`
+                            }
+                          </span>
                         </div>
                       )}
                     </button>
+                    
+                    {/* Loading state notice */}
+                    {user && (!userSynced || creditsLoading || !credits) && (
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="flex-shrink-0">
+                            <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-blue-800 mb-1">
+                              {!userSynced 
+                                ? 'Syncing Account'
+                                : creditsLoading 
+                                ? 'Loading Credits'
+                                : 'Loading Account Data'
+                              }
+                            </h4>
+                            <p className="text-sm text-blue-700">
+                              Please wait while we load your account information...
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Credits insufficient notice */}
+                    {user && userSynced && !creditsLoading && credits && !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits) && (
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="flex-shrink-0">
+                            <Zap className="w-5 h-5 text-yellow-600 mt-0.5" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-yellow-800 mb-1">Credits Needed</h4>
+                            <p className="text-sm text-yellow-700 mb-3">
+                              You need {CREDITS_CONFIG.VIDEO_COST} credits to generate a video. 
+                              You currently have {credits.remainingCredits} credits remaining.
+                            </p>
+                            <Link href="/pricing" className="inline-block">
+                              <button className="bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-700 transition-colors">
+                                Get More Credits
+                              </button>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
@@ -669,7 +776,7 @@ export default function ASMRVideoStudio() {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Advanced AI Video Generation Technology</h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Powered by Gemini Veo3 artificial intelligence, our AI ASMR generator creates professional therapeutic videos 
+                Powered by Veo3 Fast, our AI ASMR generator creates professional therapeutic videos 
                 automatically. The AI analyzes your prompts and generates high-quality ASMR content with precision.
               </p>
             </div>
@@ -679,7 +786,7 @@ export default function ASMRVideoStudio() {
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Zap className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Gemini Veo3 AI Engine</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">Veo3 Fast AI Engine</h3>
                 <p className="text-sm text-gray-600">Advanced artificial intelligence that understands ASMR triggers and generates professional videos</p>
               </div>
               
@@ -714,9 +821,9 @@ export default function ASMRVideoStudio() {
                   <Check className="w-5 h-5 text-blue-600 mt-0.5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-blue-900 mb-1">Advanced AI Technology Powered by Gemini Veo3</h4>
+                  <h4 className="font-semibold text-blue-900 mb-1">Advanced AI Technology Powered by Veo3</h4>
                   <p className="text-sm text-blue-800">
-                    Our AI ASMR generator utilizes cutting-edge Gemini Veo3 artificial intelligence to create therapeutic content automatically. 
+                    Our AI ASMR generator utilizes cutting-edge Veo3 Fast artificial intelligence to create therapeutic content automatically. 
                     The AI analyzes your prompts and generates professional ASMR videos for wellness and relaxation purposes.
                   </p>
                 </div>
@@ -773,7 +880,7 @@ export default function ASMRVideoStudio() {
               <div>
                 <h4 className="font-semibold text-purple-900 mb-2">AI Content Creation for Social Media Success</h4>
                 <p className="text-purple-800">
-                  Powered by advanced Gemini Veo3 AI, our generator helps content creators build successful YouTube and TikTok channels. 
+                  Powered by advanced Veo3 Fast AI, our generator helps content creators build successful YouTube and TikTok channels. 
                   Create viral-ready ASMR content that engages audiences and grows your subscriber base automatically.
                 </p>
               </div>

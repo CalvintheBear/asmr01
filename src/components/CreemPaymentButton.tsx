@@ -194,7 +194,7 @@ export default function CreemPaymentButton({
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
               <p className="text-sm text-yellow-800">
-                💡 <strong>Important:</strong> If payment email doesn't match, credits may not sync automatically and will require manual processing.
+                💡 <strong>Important:</strong> If payment email doesn't match, credits may not sync automatically and will require contacting administrator.
               </p>
             </div>
 

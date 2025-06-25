@@ -1,31 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { findTaskRecord, updateTaskRecord } from '@/lib/taskid-storage';
+import { getApiKey, reportApiSuccess, reportApiError } from '@/lib/api-key-pool';
 
 // 获取1080p视频的函数
 async function get1080PVideo(taskId: string): Promise<string | null> {
+  const apiKey = getApiKey();
   try {
     // 根据kie.ai文档，调用获取1080p视频的API
     const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/get1080p?taskId=${taskId}`, {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'Authorization': `Bearer ${apiKey}`,
         'User-Agent': 'Veo3-Client/1.0',
       }
     });
 
     if (!response.ok) {
-      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+      const error = new Error(`API request failed: ${response.status} ${response.statusText}`);
+      reportApiError(apiKey, error);
+      throw error;
     }
 
     const result = await response.json();
 
     if (result.code === 200 && result.data?.videoUrl1080p) {
+      reportApiSuccess(apiKey);
       return result.data.videoUrl1080p;
     }
     return null;
   } catch (error) {
     console.error('获取1080p视频失败:', error);
+    reportApiError(apiKey, error);
     return null;
   }
 }
@@ -81,22 +87,25 @@ export async function GET(
 
     if (!videoId) {
       return NextResponse.json(
-        { error: '视频ID是必需的' },
+        { error: 'Video ID is required' },
         { status: 400 }
       );
     }
 
     // 使用正确的Veo3 record-info端点查询视频状态，GET请求方法
+    const apiKey = getApiKey();
     const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/record-info?taskId=${videoId}`, {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer c982688b5c6938943dd721ed1d576edb',
+        'Authorization': `Bearer ${apiKey}`,
         'User-Agent': 'Veo3-Client/1.0',
       }
     });
 
     if (!response.ok) {
-      throw new Error(`API请求失败: ${response.status} ${response.statusText}`);
+      const error = new Error(`API request failed: ${response.status} ${response.statusText}`);
+      reportApiError(apiKey, error);
+      throw error;
     }
 
     const result = await response.json();
@@ -104,13 +113,18 @@ export async function GET(
 
     // 检查响应格式
     if (result.code !== 200) {
-      throw new Error(result.msg || result.message || '获取视频状态失败');
+      const error = new Error(result.msg || result.message || 'Failed to get video status');
+      reportApiError(apiKey, error);
+      throw error;
     }
+
+    // 报告API调用成功
+    reportApiSuccess(apiKey);
 
     // 处理响应数据
     const data = result.data;
     if (!data) {
-      throw new Error('响应数据为空');
+      throw new Error('Response data is empty');
     }
 
     // 根据kie.ai文档的状态码解析
@@ -193,7 +207,7 @@ export async function GET(
     console.error('获取视频状态失败:', error);
     return NextResponse.json(
       { 
-        error: error instanceof Error ? error.message : '获取视频状态失败',
+        error: error instanceof Error ? error.message : 'Failed to get video status',
         success: false
       },
       { status: 500 }

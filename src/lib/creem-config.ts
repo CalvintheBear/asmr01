@@ -7,11 +7,11 @@ export const CREEM_CONFIG = {
     premium: 'prod_5AkdzTWba2cogt75cngOhu'    // $99 - 1450积分
   },
 
-  // 生产环境产品ID（正式环境）
+  // 生产环境产品ID（新Creem store）
   PRODUCTION_PRODUCT_IDS: {
-    starter: 'prod_7jHfoQZh5FuYUbIJgIM9ZQ',   // $9.9 - 115积分
-    standard: 'prod_7E4i1f1bV8CPMYc7gRx67l',  // $30 - 355积分
-    premium: 'prod_6mI2w4gJN4FfZ6FuOFzfcr'    // $99 - 1450积分
+    starter: 'prod_44gUntOAeR5KU9a4wkr45U',   // $9.9 - 115积分
+    standard: 'prod_2tyKrzLDOi7TLMNiIpHsj4',  // $30 - 355积分
+    premium: 'prod_7aRS2kaSvk33msxNfnIAV8'    // $99 - 1450积分
   },
 
   // 根据环境获取当前使用的产品ID
@@ -67,20 +67,20 @@ export const CREEM_CONFIG = {
       originalPrice: 120
     },
     
-    // 生产环境产品映射
-    'prod_7jHfoQZh5FuYUbIJgIM9ZQ': {
+    // 新生产环境产品映射
+    'prod_44gUntOAeR5KU9a4wkr45U': {
       planType: 'starter' as const,
       creditsToAdd: 115,
       amount: 9.9,
       originalPrice: 12
     },
-    'prod_7E4i1f1bV8CPMYc7gRx67l': {
+    'prod_2tyKrzLDOi7TLMNiIpHsj4': {
       planType: 'standard' as const,
       creditsToAdd: 355,
       amount: 30,
       originalPrice: 40
     },
-    'prod_6mI2w4gJN4FfZ6FuOFzfcr': {
+    'prod_7aRS2kaSvk33msxNfnIAV8': {
       planType: 'premium' as const,
       creditsToAdd: 1450,
       amount: 99,

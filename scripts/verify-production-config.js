@@ -38,9 +38,9 @@ const testProductIds = {
 };
 
 const productionProductIds = {
-  starter: 'prod_7jHfoQZh5FuYUbIJgIM9ZQ',   // $9.9 - 115积分
-  standard: 'prod_7E4i1f1bV8CPMYc7gRx67l',  // $30 - 355积分
-  premium: 'prod_6mI2w4gJN4FfZ6FuOFzfcr'    // $99 - 1450积分
+  starter: 'prod_44gUntOAeR5KU9a4wkr45U',   // $9.9 - 115积分
+  standard: 'prod_2tyKrzLDOi7TLMNiIpHsj4',  // $30 - 355积分
+  premium: 'prod_7aRS2kaSvk33msxNfnIAV8'    // $99 - 1450积分
 };
 
 const currentProductIds = isTestMode ? testProductIds : productionProductIds;
@@ -70,15 +70,15 @@ if (isTestMode) {
   console.log('3. NEXT_PUBLIC_APP_URL设置为"https://cuttingasmr.org"');
   console.log('4. 在Cloudflare Pages中设置正确的CREEM_API_KEY和CREEM_WEBHOOK_SECRET');
   console.log('');
-  console.log('📝 生产环境应使用的配置:');
-  console.log('- CREEM_API_KEY: creem_4bO7LLLWie17BD2i7qTNNA');
-  console.log('- CREEM_WEBHOOK_SECRET: whsec_6jovyxtbgdcdNEMdH0nspT');
+  console.log('📝 生产环境应使用的配置 (新Creem Store):');
+  console.log('- CREEM_API_KEY: creem_3383jJhZ9BrQXXeHL2bxB');
+  console.log('- CREEM_WEBHOOK_SECRET: whsec_bCADZ6mZaWDVnJCzwato5');
 } else {
   console.log('✅ 当前配置正确，将使用生产环境产品ID');
   console.log('');
-  console.log('🔑 请确保在Cloudflare Pages中设置了正确的API密钥:');
-  console.log('- CREEM_API_KEY: creem_4bO7LLLWie17BD2i7qTNNA');
-  console.log('- CREEM_WEBHOOK_SECRET: whsec_6jovyxtbgdcdNEMdH0nspT');
+  console.log('🔑 请确保在Cloudflare Pages中设置了正确的API密钥 (新Creem Store):');
+  console.log('- CREEM_API_KEY: creem_3383jJhZ9BrQXXeHL2bxB');
+  console.log('- CREEM_WEBHOOK_SECRET: whsec_bCADZ6mZaWDVnJCzwato5');
 }
 
 console.log('');
