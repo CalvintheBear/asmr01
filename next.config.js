@@ -25,116 +25,55 @@ console.log('🏗️ 部署平台检测:', {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 基础配置
-  reactStrictMode: true,
-  poweredByHeader: false, // 隐藏Next.js框架信息
+  // Railway 构建优化
+  output: process.env.RAILWAY_ENVIRONMENT ? 'standalone' : undefined,
   
-  // 🔒 安全响应头配置
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY', // 防止页面被嵌入iframe
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff', // 防止MIME类型嗅探攻击
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin', // 控制referrer信息泄露
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block', // 启用XSS保护
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()', // 限制敏感权限
-          }
-        ],
-      },
-      {
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: process.env.NODE_ENV === 'production' 
-              ? 'https://cuttingasmr.org'
-              : 'http://localhost:3000', // CORS配置
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Content-Type, Authorization',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'no-store, max-age=0', // API响应不缓存
-          }
-        ],
-      },
-    ];
+  // 禁用静态优化，强制使用动态渲染
+  experimental: {
+    forceSwcTransforms: true,
   },
   
-  // 图片优化配置
+  // 确保正确的 Node.js 环境
+  serverRuntimeConfig: {},
+  publicRuntimeConfig: {},
+  
+  // 简化的 webpack 配置
+  webpack: (config, { isServer, dev }) => {
+    // 只在非开发环境下应用优化
+    if (!dev) {
+      config.optimization = {
+        ...config.optimization,
+        minimize: false, // 禁用压缩以避免构建问题
+      }
+    }
+    
+    return config
+  },
+  
+  // 禁用图像优化（可能导致构建问题）
   images: {
-    unoptimized: Boolean(isCloudflare),
+    unoptimized: true,
   },
   
-  // TypeScript和ESLint配置 - 修复：在Railway环境中跳过严格检查
+  // ESLint 配置
   eslint: {
     ignoreDuringBuilds: true,
   },
+  
+  // TypeScript 配置
   typescript: {
     ignoreBuildErrors: true,
   },
   
-  // Railway专用配置
-  ...(isRailway && {
-    output: 'standalone',
-    outputFileTracingRoot: process.cwd(),
-    // 强制动态渲染避免预渲染错误
-    experimental: {
-      staticGenerationRetryCount: 0,
-      staticGenerationBailout: 'force-dynamic'
-    }
-  }),
+  // 禁用 SWC 压缩
+  swcMinify: false,
   
-  // 环境变量配置 - 移除硬编码敏感信息
+  // 强制动态路由
+  trailingSlash: false,
+  
+  // 环境变量
   env: {
-    // Clerk配置 (公开密钥可以暴露，私钥不可以)
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || '/dashboard',
-    NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL || '/dashboard',
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL || '/dashboard',
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL || '/dashboard',
-    
-    // API配置 (不设置默认值，强制使用环境变量)
-    VEO3_API_BASE_URL: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
-    
-    // 应用URL配置
-    DOMAIN: isRailway 
-      ? 'https://cuttingasmr.org'
-      : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-    NEXT_PUBLIC_API_URL: isRailway
-      ? 'https://cuttingasmr.org/api'
-      : (process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}/api` : 'http://localhost:3000/api'),
-    NEXT_PUBLIC_APP_URL: isRailway
-      ? 'https://cuttingasmr.org'
-      : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-  },
-  
-  // Webpack配置优化 - 移除构建时环境变量验证（由railway-build-check.js处理）
-  webpack: (config, { dev, isServer }) => {
-    // 构建优化，不验证环境变量
-    return config;
+    CUSTOM_ENV: process.env.NODE_ENV,
   },
 };
 

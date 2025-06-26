@@ -1,5 +1,6 @@
 'use client'
 
+// 全局错误页面 - 处理500等服务器错误
 export default function GlobalError({
   error,
   reset,
@@ -15,23 +16,31 @@ export default function GlobalError({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '1rem'
+          fontFamily: 'system-ui, sans-serif'
         }}>
           <div style={{ textAlign: 'center' }}>
-            <h2 style={{ marginBottom: '1rem' }}>出错了!</h2>
+            <h1>500</h1>
+            <p>服务器内部错误</p>
             <button
               onClick={() => reset()}
               style={{
-                padding: '0.5rem 1rem',
-                backgroundColor: '#7c3aed',
+                background: '#7c3aed',
                 color: 'white',
                 border: 'none',
-                borderRadius: '0.25rem',
-                cursor: 'pointer'
+                padding: '8px 16px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                marginRight: '8px'
               }}
             >
               重试
             </button>
+            <a href="/" style={{
+              color: '#7c3aed',
+              textDecoration: 'none'
+            }}>
+              返回首页
+            </a>
           </div>
         </div>
       </body>
