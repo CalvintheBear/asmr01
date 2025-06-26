@@ -1,5 +1,3 @@
-export const runtime = "edge";
-
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/prisma'
 import { CREEM_CONFIG } from '@/lib/creem-config'
