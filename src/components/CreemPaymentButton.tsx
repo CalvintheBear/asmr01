@@ -88,8 +88,8 @@ export default function CreemPaymentButton({
     setError(null)
 
     try {
-      // 🔥 NEW: 直接调用后端API创建支付订单
-      const response = await fetch('/api/payments/creem', {
+      // 🔥 NEW: 先尝试高级API（支持数据库），失败则回退到简单API
+      let response = await fetch('/api/payments/creem-advanced', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,8 +97,20 @@ export default function CreemPaymentButton({
         body: JSON.stringify({ planType })
       })
 
+      // 如果高级API失败，回退到简单API
       if (!response.ok) {
-        throw new Error('Failed to create payment order')
+        console.log('高级API失败，回退到简单API...')
+        response = await fetch('/api/payments/creem', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ planType })
+        })
+        
+        if (!response.ok) {
+          throw new Error('All payment APIs failed')
+        }
       }
 
       const result = await response.json()
