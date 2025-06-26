@@ -11,7 +11,7 @@ PORT=3000
 ### Clerk 认证（生产环境）
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuY3V0dGluZ2FzbXIub3JnJA
-CLERK_SECRET_KEY=sk_live_clsk_live_Y2xlcmsuY3V0dGluZ2FzbXIub3JnJA
+CLERK_SECRET_KEY=sk_live_IHF9Y65N6Q6NUtJU5FNmlges6IBrFPFwzwXwqb3Qxf
 ```
 
 ### 应用URL配置

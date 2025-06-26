@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "prisma generate && next build && npm run clean:safe",
     "build:vercel": "prisma generate && next build",
-    "build:railway": "prisma generate && next build",
+    "build:railway": "node scripts/railway-build-check.js && prisma generate && next build",
     "build:cloudflare": "prisma generate && next build && npm run clean:cloudflare",
     "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
