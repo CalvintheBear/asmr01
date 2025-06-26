@@ -16,6 +16,35 @@ interface TestResult {
 }
 
 function TestContent() {
+  const [mounted, setMounted] = useState(false)
+  const [hasClerk, setHasClerk] = useState(false)
+  
+  // 在客户端挂载后再检查Clerk
+  useEffect(() => {
+    setMounted(true)
+    // 检查是否有Clerk的publishableKey
+    setHasClerk(!!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || typeof window !== 'undefined')
+  }, [])
+
+  if (!mounted) {
+    return <div className="p-4">正在初始化...</div>
+  }
+
+  if (!hasClerk) {
+    return (
+      <div className="container mx-auto p-6 max-w-4xl">
+        <h1 className="text-3xl font-bold mb-6">支付流程测试页面</h1>
+        <div className="bg-red-50 p-4 rounded-lg">
+          <p className="text-red-700">Clerk认证未配置，无法进行测试</p>
+        </div>
+      </div>
+    )
+  }
+
+  return <AuthenticatedTestContent />
+}
+
+function AuthenticatedTestContent() {
   const { user, isLoaded } = useUser()
   const [testResults, setTestResults] = useState<{
     advancedApiHealth: TestResult | null
