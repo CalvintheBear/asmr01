@@ -40,19 +40,19 @@ export default function RootLayout({
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   
   return (
-    <ClerkProvider publishableKey={publishableKey}>
-      <html lang="zh-CN">
-        <head>
-          {/* 网站图标设置 */}
-          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-          <link rel="shortcut icon" href="/favicon.svg" />
-          <link rel="apple-touch-icon" href="/logo.svg" />
-        </head>
-        <body className={inter.className}>
+    <html lang="zh-CN">
+      <head>
+        {/* 网站图标设置 */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/logo.svg" />
+      </head>
+      <body className={inter.className}>
+        <ClerkProvider publishableKey={publishableKey}>
           {children}
-          <ClientSideScript />
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+        <ClientSideScript />
+      </body>
+    </html>
   )
 } 
