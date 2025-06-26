@@ -65,9 +65,6 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // 禁用 SWC 压缩
-  swcMinify: false,
-  
   // 强制动态路由
   trailingSlash: false,
   
