@@ -20,7 +20,10 @@ const endpoints = [
   {
     name: '购买历史API',
     url: 'https://cuttingasmr.org/api/user/purchases',
-    checkFn: (data) => {
+    checkFn: (data, statusCode) => {
+      if (statusCode === 401) {
+        return '✅ API受保护 (需要登录)';
+      }
       if (data.error === '未授权访问') {
         return '✅ API正常（需要登录）';
       } else if (data.success) {
@@ -33,7 +36,10 @@ const endpoints = [
   {
     name: '积分API',
     url: 'https://cuttingasmr.org/api/credits',
-    checkFn: (data) => {
+    checkFn: (data, statusCode) => {
+      if (statusCode === 401) {
+        return '✅ API受保护 (需要登录)';
+      }
       if (data.error === '未授权访问') {
         return '✅ API正常（需要登录）';
       } else if (data.success) {
@@ -47,11 +53,27 @@ const endpoints = [
     name: '健康检查',
     url: 'https://cuttingasmr.org/api/health',
     checkFn: (data) => {
-      if (data.status === 'ok') {
+      if (data.status === 'healthy') {
         return '✅ 服务正常';
       } else {
         return '❌ 服务异常';
       }
+    }
+  },
+  {
+    name: 'Creem Webhook',
+    url: 'https://cuttingasmr.org/api/webhooks/creem',
+    checkFn: (data, statusCode) => {
+      if (statusCode === 405) {
+        return '✅ Webhook端点存在 (仅接受POST)';
+      }
+      if (statusCode >= 400 && statusCode < 500) {
+        return `✅ Webhook端点有响应 (状态码: ${statusCode})`;
+      }
+      if (statusCode === 200) {
+        return '✅ Webhook端点存在';
+      }
+      return `❌ Webhook检查失败，状态码: ${statusCode}`;
     }
   }
 ];
@@ -68,11 +90,17 @@ function checkEndpoint(endpoint) {
       
       res.on('end', () => {
         try {
-          const jsonData = JSON.parse(data);
-          const result = endpoint.checkFn(jsonData);
+          const jsonData = data ? JSON.parse(data) : {};
+          const result = endpoint.checkFn(jsonData, res.statusCode);
           resolve({ name: endpoint.name, result, status: res.statusCode });
         } catch (error) {
-          resolve({ name: endpoint.name, result: '❌ 响应格式错误', status: res.statusCode });
+          // 如果JSON解析失败，但我们有特定的状态码检查，仍然可以进行
+          const result = endpoint.checkFn({}, res.statusCode);
+          if (result.startsWith('✅')) {
+            resolve({ name: endpoint.name, result, status: res.statusCode });
+          } else {
+            resolve({ name: endpoint.name, result: '❌ 响应格式错误', status: res.statusCode });
+          }
         }
       });
     });

@@ -111,8 +111,9 @@ export async function POST(request: NextRequest) {
     // 3. 准备请求数据（按照kie.ai官方文档格式）
     const requestData = {
       prompt: prompt,
-      // 根据官方文档，veo3_fast 是text-to-video的默认模型，不需要显式指定model参数
-      // kie.ai的veo3 API会自动使用veo3_fast进行8秒视频生成
+      // 备注：为了确保使用正确的模型并控制成本，此处显式指定 model 为 'veo3_fast'。
+      // 旧有逻辑依赖服务端的默认模型，但实践证明这可能导致调用到价格更高的模型。
+      model: 'veo3_fast',
       aspectRatio: aspectRatio || '16:9',
       duration: duration || '8',
     };
