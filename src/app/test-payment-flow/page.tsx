@@ -1,231 +1,205 @@
 'use client'
 
-import { useState } from 'react'
-import { useUser } from '@clerk/nextjs'
+import { useState, useEffect, Suspense } from 'react'
+import { ClerkProvider, useUser } from '@clerk/nextjs'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 
-// 强制动态渲染，禁用静态生成
+// 导出dynamic配置确保页面不会静态生成
 export const dynamic = 'force-dynamic'
 
-export default function TestPaymentFlow() {
+interface TestResult {
+  success: boolean
+  data?: any
+  status?: number
+  error?: string
+  label: string
+}
+
+function TestContent() {
   const { user, isLoaded } = useUser()
-  const [testResults, setTestResults] = useState<any[]>([])
+  const [testResults, setTestResults] = useState<{
+    advancedApiHealth: TestResult | null
+    simpleApiHealth: TestResult | null
+    advancedApiTest: TestResult | null
+    simpleApiTest: TestResult | null
+  }>({
+    advancedApiHealth: null,
+    simpleApiHealth: null,
+    advancedApiTest: null,
+    simpleApiTest: null
+  })
 
-  const addTestResult = (test: string, result: 'pass' | 'fail', details: any) => {
-    setTestResults(prev => [...prev, {
-      timestamp: new Date().toISOString(),
-      test,
-      result,
-      details
-    }])
-  }
-
-  const testAPIEndpoints = async () => {
-    const tests = [
-      { name: '健康检查', url: '/api/health', method: 'GET' },
-      { name: 'Creem配置检查', url: '/api/check-creem-config', method: 'GET' },
-      { name: '积分查询', url: '/api/credits', method: 'GET' },
-    ]
-
-    for (const test of tests) {
-      try {
-        const response = await fetch(test.url, { method: test.method })
-        const result = await response.json()
-        
-        addTestResult(test.name, response.ok ? 'pass' : 'fail', {
-          status: response.status,
-          data: result
-        })
-      } catch (error) {
-        addTestResult(test.name, 'fail', {
-          error: error instanceof Error ? error.message : String(error)
-        })
-      }
-    }
-  }
-
-  const testPaymentAPI = async (planType: 'starter' | 'standard' | 'premium') => {
+  const testAPI = async (endpoint: string, label: string): Promise<TestResult> => {
     try {
-      // 测试高级API
-      const advancedResponse = await fetch('/api/payments/creem-advanced', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planType })
-      })
-
-      if (advancedResponse.ok) {
-        const result = await advancedResponse.json()
-        addTestResult(`高级支付API (${planType})`, 'pass', result)
-        return result
-      } else {
-        // 回退到简单API
-        const simpleResponse = await fetch('/api/payments/creem', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ planType })
-        })
-
-        if (simpleResponse.ok) {
-          const result = await simpleResponse.json()
-          addTestResult(`简单支付API (${planType})`, 'pass', result)
-          return result
-        } else {
-          addTestResult(`支付API (${planType})`, 'fail', {
-            error: 'Both APIs failed'
-          })
-        }
+      const response = await fetch(endpoint)
+      const data = await response.json()
+      return { 
+        success: response.ok, 
+        data, 
+        status: response.status,
+        label 
       }
     } catch (error) {
-      addTestResult(`支付API (${planType})`, 'fail', {
-        error: error instanceof Error ? error.message : String(error)
-      })
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : String(error), 
+        label 
+      }
     }
   }
 
-  if (!isLoaded) {
-    return <div className="p-8">加载中...</div>
+  const runTests = async () => {
+    console.log('开始运行API测试...')
+    
+    // 测试API健康检查
+    const advancedHealth = await testAPI('/api/payments/creem-advanced', '高级API健康检查')
+    const simpleHealth = await testAPI('/api/payments/creem', '简单API健康检查')
+    
+    // 如果用户已登录，测试实际支付创建
+    let advancedTest: TestResult | null = null
+    let simpleTest: TestResult | null = null
+    
+    if (user) {
+      advancedTest = await testAPI('/api/payments/creem-advanced', '高级API支付测试')
+      simpleTest = await testAPI('/api/payments/creem', '简单API支付测试')
+    }
+
+    setTestResults({
+      advancedApiHealth: advancedHealth,
+      simpleApiHealth: simpleHealth,
+      advancedApiTest: advancedTest,
+      simpleApiTest: simpleTest
+    })
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">🧪 支付流程测试</h1>
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-            <h2 className="text-red-800 font-semibold mb-2">需要登录</h2>
-            <p className="text-red-700">请先登录以测试完整的支付流程</p>
-          </div>
-        </div>
-      </div>
-    )
+  useEffect(() => {
+    if (isLoaded) {
+      runTests()
+    }
+  }, [isLoaded, user])
+
+  if (!isLoaded) {
+    return <div className="p-4">正在加载用户信息...</div>
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">🧪 支付流程端到端测试</h1>
-        
-        {/* 用户信息 */}
-        <div className="bg-white rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">👤 当前用户信息</h2>
-          <div className="space-y-2 text-sm">
-            <p><strong>用户ID:</strong> {user.id}</p>
-            <p><strong>邮箱:</strong> {user.primaryEmailAddress?.emailAddress}</p>
-            <p><strong>登录状态:</strong> ✅ 已登录</p>
+    <div className="container mx-auto p-6 max-w-4xl">
+      <h1 className="text-3xl font-bold mb-6">支付流程测试页面</h1>
+      
+      {/* 用户状态 */}
+      <div className="bg-blue-50 p-4 rounded-lg mb-6">
+        <h2 className="text-xl font-semibold mb-2">用户状态</h2>
+        {user ? (
+          <div>
+            <p className="text-green-600">✅ 已登录</p>
+            <p>用户ID: {user.id}</p>
+            <p>邮箱: {user.primaryEmailAddress?.emailAddress}</p>
           </div>
-        </div>
+        ) : (
+          <p className="text-red-600">❌ 未登录</p>
+        )}
+      </div>
 
-        {/* API测试 */}
-        <div className="bg-white rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">🔌 API端点测试</h2>
-          <button
-            onClick={testAPIEndpoints}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-          >
-            测试所有API端点
-          </button>
-        </div>
+      {/* API测试结果 */}
+      <div className="bg-gray-50 p-4 rounded-lg mb-6">
+        <h2 className="text-xl font-semibold mb-4">API测试结果</h2>
+        
+        {Object.entries(testResults).map(([key, result]) => (
+          result && (
+            <div key={key} className="mb-4 p-3 border rounded">
+              <h3 className="font-medium">{result.label}</h3>
+              <div className={`mt-2 ${result.success ? 'text-green-600' : 'text-red-600'}`}>
+                {result.success ? '✅ 成功' : '❌ 失败'} (状态: {result.status || 'N/A'})
+              </div>
+              {result.data && (
+                <pre className="mt-2 text-sm bg-white p-2 rounded overflow-auto">
+                  {JSON.stringify(result.data, null, 2)}
+                </pre>
+              )}
+              {result.error && (
+                <div className="mt-2 text-red-600 text-sm">
+                  错误: {result.error}
+                </div>
+              )}
+            </div>
+          )
+        ))}
+      </div>
 
-        {/* 支付按钮测试 */}
-        <div className="bg-white rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">💳 支付按钮测试</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h3 className="font-semibold mb-2">Starter - $9.9</h3>
-              <p className="text-sm text-gray-600 mb-4">115 积分</p>
-              <CreemPaymentButton
+      {/* 支付测试 */}
+      {user && (
+        <div className="bg-green-50 p-4 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">支付功能测试</h2>
+          <p className="mb-4">使用真实的支付按钮测试购买流程：</p>
+          
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-medium mb-2">Starter套餐 (115积分 - $9.9)</h3>
+              <CreemPaymentButton 
                 planType="starter"
                 amount={9.9}
                 description="Starter Plan"
-                className="w-full bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
               >
-                测试 Starter 购买
+                测试购买 Starter
               </CreemPaymentButton>
-              <button
-                onClick={() => testPaymentAPI('starter')}
-                className="w-full mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 text-sm"
-              >
-                仅测试API
-              </button>
             </div>
-
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h3 className="font-semibold mb-2">Standard - $30</h3>
-              <p className="text-sm text-gray-600 mb-4">355 积分</p>
-              <CreemPaymentButton
+            
+            <div>
+              <h3 className="font-medium mb-2">Standard套餐 (355积分 - $30)</h3>
+              <CreemPaymentButton 
                 planType="standard"
                 amount={30}
                 description="Standard Plan"
-                className="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
               >
-                测试 Standard 购买
+                测试购买 Standard
               </CreemPaymentButton>
-              <button
-                onClick={() => testPaymentAPI('standard')}
-                className="w-full mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 text-sm"
-              >
-                仅测试API
-              </button>
             </div>
-
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h3 className="font-semibold mb-2">Premium - $99</h3>
-              <p className="text-sm text-gray-600 mb-4">1450 积分</p>
-              <CreemPaymentButton
+            
+            <div>
+              <h3 className="font-medium mb-2">Premium套餐 (1450积分 - $99)</h3>
+              <CreemPaymentButton 
                 planType="premium"
                 amount={99}
                 description="Premium Plan"
-                className="w-full bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
+                className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
               >
-                测试 Premium 购买
+                测试购买 Premium
               </CreemPaymentButton>
-              <button
-                onClick={() => testPaymentAPI('premium')}
-                className="w-full mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 text-sm"
-              >
-                仅测试API
-              </button>
             </div>
           </div>
         </div>
+      )}
 
-        {/* 测试结果 */}
-        {testResults.length > 0 && (
-          <div className="bg-white rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">📊 测试结果</h2>
-            <div className="space-y-3">
-              {testResults.map((result, index) => (
-                <div
-                  key={index}
-                  className={`p-3 rounded-lg border ${
-                    result.result === 'pass' 
-                      ? 'bg-green-50 border-green-200' 
-                      : 'bg-red-50 border-red-200'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold">
-                      {result.result === 'pass' ? '✅' : '❌'} {result.test}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {new Date(result.timestamp).toLocaleTimeString()}
-                    </span>
-                  </div>
-                  <pre className="text-xs bg-gray-100 p-2 rounded overflow-x-auto">
-                    {JSON.stringify(result.details, null, 2)}
-                  </pre>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => setTestResults([])}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            >
-              清空结果
-            </button>
-          </div>
-        )}
+      {!user && (
+        <div className="bg-yellow-50 p-4 rounded-lg">
+          <p className="text-yellow-700">请先登录以测试支付功能</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="container mx-auto p-6 max-w-4xl">
+      <div className="animate-pulse">
+        <div className="h-8 bg-gray-200 rounded w-1/3 mb-6"></div>
+        <div className="h-20 bg-gray-200 rounded mb-6"></div>
+        <div className="h-40 bg-gray-200 rounded mb-6"></div>
+        <div className="h-60 bg-gray-200 rounded"></div>
       </div>
     </div>
+  )
+}
+
+export default function TestPaymentFlowPage() {
+  return (
+    <Suspense fallback={<LoadingSkeleton />}>
+      <ClerkProvider dynamic>
+        <TestContent />
+      </ClerkProvider>
+    </Suspense>
   )
 } 
