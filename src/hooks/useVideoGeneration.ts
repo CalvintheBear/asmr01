@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react';
+import { useAuth } from '@clerk/nextjs';
 
 interface VideoGenerationOptions {
   prompt: string;
@@ -28,6 +29,7 @@ interface VideoGenerationStatus {
 }
 
 export function useVideoGeneration() {
+  const { getToken } = useAuth();
   const [generationStatus, setGenerationStatus] = useState<VideoGenerationStatus>({
     status: 'idle',
     progress: 0,
@@ -47,11 +49,15 @@ export function useVideoGeneration() {
         duration: options.duration || '8',
       };
 
+      // 🔥 关键修复：在API调用前，强制刷新并获取最新的认证令牌
+      const token = await getToken();
+
       // 发起生成请求
       const response = await fetch('/api/generate-video', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // 将令牌加入请求头
         },
         body: JSON.stringify(requestData),
       });
@@ -80,7 +86,7 @@ export function useVideoGeneration() {
         error: error instanceof Error ? error.message : '视频生成失败',
       });
     }
-  }, []);
+  }, [getToken]);
 
   const pollVideoStatus = useCallback(async (videoId: string) => {
     const maxAttempts = 60; // 最多轮询5分钟
