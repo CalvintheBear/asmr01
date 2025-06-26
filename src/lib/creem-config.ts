@@ -2,9 +2,9 @@
 export const CREEM_CONFIG = {
   // 测试环境产品ID（开发使用）
   TEST_PRODUCT_IDS: {
-    starter: 'prod_3ClKXTvoV2aQBMoEjTTMzM',   // $9.9 - 115积分
-    standard: 'prod_67wDHjBHhgxyDUeaxr7JCG',  // $30 - 355积分
-    premium: 'prod_5AkdzTWba2cogt75cngOhu'    // $99 - 1450积分
+    starter: 'prod_lhs2fDYYFI3zopjMPlFmm',   // $9.9 - 115积分
+    standard: 'prod_5tjwlfqHOw6sj2KRimpxCj',  // $30 - 355积分
+    premium: 'prod_3qqpqcmyQnY5OvYqmarL8R'    // $99 - 1450积分
   },
 
   // 生产环境产品ID（新Creem store）
@@ -47,7 +47,27 @@ export const CREEM_CONFIG = {
 
   // 根据产品ID反向查找积分包信息（包含测试和生产环境的映射）
   PRODUCT_MAPPING: {
-    // 测试环境产品映射
+    // 新测试环境产品映射
+    'prod_lhs2fDYYFI3zopjMPlFmm': {
+      planType: 'starter' as const,
+      creditsToAdd: 115,
+      amount: 9.9,
+      originalPrice: 12
+    },
+    'prod_5tjwlfqHOw6sj2KRimpxCj': {
+      planType: 'standard' as const,
+      creditsToAdd: 355,
+      amount: 30,
+      originalPrice: 40
+    },
+    'prod_3qqpqcmyQnY5OvYqmarL8R': {
+      planType: 'premium' as const,
+      creditsToAdd: 1450,
+      amount: 99,
+      originalPrice: 120
+    },
+    
+    // 旧测试环境产品映射（保留兼容性）
     'prod_3ClKXTvoV2aQBMoEjTTMzM': {
       planType: 'starter' as const,
       creditsToAdd: 115,
@@ -67,7 +87,7 @@ export const CREEM_CONFIG = {
       originalPrice: 120
     },
     
-    // 新生产环境产品映射
+    // 生产环境产品映射
     'prod_44gUntOAeR5KU9a4wkr45U': {
       planType: 'starter' as const,
       creditsToAdd: 115,
