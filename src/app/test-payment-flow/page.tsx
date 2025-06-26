@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
-import { ClerkProvider, useUser } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 
 // 导出dynamic配置确保页面不会静态生成
@@ -197,9 +197,7 @@ function LoadingSkeleton() {
 export default function TestPaymentFlowPage() {
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <ClerkProvider dynamic>
-        <TestContent />
-      </ClerkProvider>
+      <TestContent />
     </Suspense>
   )
 } 
