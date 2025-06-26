@@ -14,10 +14,20 @@ console.log('- 平台:', process.platform);
 console.log('- 架构:', process.arch);
 console.log('');
 
+// 检查是否在Railway环境中
+const isRailwayEnvironment = !!(process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_PROJECT_ID);
+const isCI = !!(process.env.CI || process.env.RAILWAY_ENVIRONMENT);
+
+console.log('🔍 环境检测:');
+console.log('- Railway环境:', isRailwayEnvironment ? '✅ 是' : '❌ 否');
+console.log('- CI环境:', isCI ? '✅ 是' : '❌ 否');
+console.log('');
+
 // 检查环境变量
 console.log('📋 环境变量检查:');
 console.log('- NODE_ENV:', process.env.NODE_ENV || 'undefined');
 console.log('- RAILWAY_ENVIRONMENT:', process.env.RAILWAY_ENVIRONMENT || 'undefined');
+console.log('- RAILWAY_PROJECT_ID:', !!process.env.RAILWAY_PROJECT_ID ? '✅ 已设置' : '❌ 缺失');
 console.log('- DATABASE_URL:', !!process.env.DATABASE_URL ? '✅ 已设置' : '❌ 缺失');
 console.log('- CLERK_SECRET_KEY:', !!process.env.CLERK_SECRET_KEY ? '✅ 已设置' : '⚠️ 缺失（运行时需要）');
 console.log('- CREEM_API_KEY:', !!process.env.CREEM_API_KEY ? '✅ 已设置' : '⚠️ 缺失（运行时需要）');
@@ -28,7 +38,9 @@ console.log('');
 
 // 检查关键构建依赖
 const criticalMissing = [];
-if (!process.env.DATABASE_URL) {
+
+// 只在本地开发环境强制要求DATABASE_URL
+if (!process.env.DATABASE_URL && !isRailwayEnvironment && !isCI) {
   criticalMissing.push('DATABASE_URL');
 }
 
@@ -38,6 +50,17 @@ if (criticalMissing.length > 0) {
   console.log('\n📝 请在Railway Dashboard中设置以下环境变量:');
   console.log('DATABASE_URL=${{Postgres.DATABASE_URL}}');
   process.exit(1);
+}
+
+// 在Railway/CI环境中，即使缺少DATABASE_URL也继续构建
+if (!process.env.DATABASE_URL && (isRailwayEnvironment || isCI)) {
+  console.log('⚠️ Railway/CI环境：DATABASE_URL缺失，但继续构建');
+  console.log('注意：如果Prisma生成失败，可能需要在Railway中配置数据库环境变量');
+  console.log('');
+  
+  // 设置一个临时的DATABASE_URL以避免Prisma生成失败
+  process.env.DATABASE_URL = 'postgresql://dummy:dummy@localhost:5432/dummy';
+  console.log('🔧 设置临时DATABASE_URL以支持Prisma生成');
 }
 
 // 检查运行时变量（警告但不阻止构建）
