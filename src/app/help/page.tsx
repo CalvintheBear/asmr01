@@ -1,9 +1,16 @@
 import Link from 'next/link'
 import { ArrowLeft, Mail, MessageCircle, Clock, Shield } from 'lucide-react'
+import SEOHead from '@/components/SEOHead'
 
 export default function HelpPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEOHead
+        title="Help & Support - AI ASMR Generator | CuttingASMR.org"
+        description="Get help with CuttingASMR.org AI ASMR video generator. FAQ, support contact, billing help, and technical assistance for Gemini Veo3 powered platform."
+        canonical="https://cuttingasmr.org/help"
+        keywords="ASMR help, AI video support, CuttingASMR support, ASMR FAQ, technical help"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           href="/"

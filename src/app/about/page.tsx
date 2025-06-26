@@ -1,9 +1,16 @@
 import Link from 'next/link'
 import { ArrowLeft, Sparkles, Users, Target, Star } from 'lucide-react'
+import SEOHead from '@/components/SEOHead'
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEOHead
+        title="About CuttingASMR.org - AI ASMR Video Generator Platform"
+        description="Learn about CuttingASMR.org, the advanced AI ASMR video generator powered by Google Veo3. Our mission, technology, and commitment to wellness content creation."
+        canonical="https://cuttingasmr.org/about"
+        keywords="about CuttingASMR, AI ASMR platform, Google Veo3 ASMR, AI video generator company, ASMR technology"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           href="/pricing"

@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import { ArrowLeft, Check, Sparkles, Video, Star, Users, Shield, Zap, Clock, Crown, Headphones, Play, Heart } from 'lucide-react'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
+import SEOHead from '@/components/SEOHead'
 
 export default function PricingPage() {
   const plans = [
@@ -116,6 +117,12 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      <SEOHead
+        title="AI ASMR Generator Pricing - Powered by Gemini Veo3 | CuttingASMR.org"
+        description="Choose from affordable AI ASMR video generation packages. Starter ($9.9), Standard ($30), Premium ($99). Credits never expire. 1080p quality downloads."
+        canonical="https://cuttingasmr.org/pricing"
+        keywords="AI ASMR pricing, Gemini Veo3 cost, ASMR video generation price, AI video pricing, ASMR credits"
+      />
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
