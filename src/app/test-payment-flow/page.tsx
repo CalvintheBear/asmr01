@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 
+// 强制动态渲染，禁用静态生成
+export const dynamic = 'force-dynamic'
+
 export default function TestPaymentFlow() {
   const { user, isLoaded } = useUser()
   const [testResults, setTestResults] = useState<any[]>([])
