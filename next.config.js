@@ -126,26 +126,9 @@ const nextConfig = {
       : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   },
   
-  // 运行时环境变量验证 - 修复：只在实际需要时验证
+  // Webpack配置优化 - 移除构建时环境变量验证（由railway-build-check.js处理）
   webpack: (config, { dev, isServer }) => {
-    // 只在生产环境的服务端构建时验证关键环境变量
-    if (!dev && isServer && !isCloudflare) {
-      console.log('🔍 检查关键环境变量...');
-      
-      // 只验证数据库连接，其他在运行时验证
-      const criticalEnvVars = [
-        'DATABASE_URL'  // 构建时需要，用于Prisma生成
-      ];
-      
-      const missingVars = criticalEnvVars.filter(varName => !process.env[varName]);
-      if (missingVars.length > 0) {
-        console.warn('⚠️ 缺少关键环境变量:', missingVars);
-        console.warn('这可能导致部分功能无法正常工作，但不阻止构建');
-        // 不再抛出错误，只记录警告
-      } else {
-        console.log('✅ 关键环境变量检查通过');
-      }
-    }
+    // 构建优化，不验证环境变量
     return config;
   },
 };

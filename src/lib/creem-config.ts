@@ -16,32 +16,46 @@ export const CREEM_CONFIG = {
 
   // 根据环境获取当前使用的产品ID
   get PRODUCT_IDS(): { starter: string; standard: string; premium: string } {
-    // 修复：明确检查是否为生产环境域名
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || ''
-    const isProductionDomain = appUrl.includes('cuttingasmr.org')
     
-    // 如果是生产域名，强制使用生产环境配置
-    if (isProductionDomain) {
-      console.log('🌐 检测到生产域名，使用生产环境产品ID')
-      return this.PRODUCTION_PRODUCT_IDS
+    // 🔥 修复：优先检查 CREEM_TEST_MODE 环境变量
+    const explicitTestMode = process.env.CREEM_TEST_MODE === 'true'
+    const explicitProductionMode = process.env.CREEM_TEST_MODE === 'false'
+    
+    // 检查其他测试模式条件
+    const isDevelopmentEnv = process.env.NODE_ENV === 'development'
+    const isLocalUrl = appUrl.includes('localhost') || appUrl.includes('trycloudflare.com')
+    
+    // 最终测试模式判断逻辑
+    let isTestMode = false
+    
+    if (explicitTestMode) {
+      // 明确设置为测试模式
+      isTestMode = true
+      console.log('🧪 明确设置为测试模式 (CREEM_TEST_MODE=true)')
+    } else if (explicitProductionMode) {
+      // 明确设置为生产模式
+      isTestMode = false
+      console.log('🚀 明确设置为生产模式 (CREEM_TEST_MODE=false)')
+    } else {
+      // 自动检测模式
+      isTestMode = isDevelopmentEnv || isLocalUrl
+      console.log('🔍 自动检测模式:', { isDevelopmentEnv, isLocalUrl, result: isTestMode })
     }
-    
-    // 检查是否是开发环境或者设置了测试模式
-    const isTestMode = process.env.NODE_ENV === 'development' || 
-                      process.env.CREEM_TEST_MODE === 'true' ||
-                      appUrl.includes('localhost') ||
-                      appUrl.includes('trycloudflare.com')
     
     console.log('🔧 环境判断:', {
       NODE_ENV: process.env.NODE_ENV,
       CREEM_TEST_MODE: process.env.CREEM_TEST_MODE,
       NEXT_PUBLIC_APP_URL: appUrl,
-      isProductionDomain,
-      isTestMode,
-      willUseProduction: isProductionDomain || !isTestMode
+      explicitTestMode,
+      explicitProductionMode,
+      isDevelopmentEnv,
+      isLocalUrl,
+      finalIsTestMode: isTestMode,
+      willUseProductIds: isTestMode ? 'TEST_PRODUCT_IDS' : 'PRODUCTION_PRODUCT_IDS'
     })
     
-    // 开发环境使用测试产品ID，生产环境使用正式产品ID
+    // 返回对应的产品ID
     return isTestMode ? this.TEST_PRODUCT_IDS : this.PRODUCTION_PRODUCT_IDS
   },
 
@@ -112,21 +126,21 @@ export const CREEM_CONFIG = {
   getPaymentUrl: (planType: 'starter' | 'standard' | 'premium'): string => {
     const productId = CREEM_CONFIG.PRODUCT_IDS[planType]
     
-    // 修复：明确检查是否为生产环境域名
+    // 🔥 修复：使用相同的测试模式判断逻辑
+    const explicitTestMode = process.env.CREEM_TEST_MODE === 'true'
+    const explicitProductionMode = process.env.CREEM_TEST_MODE === 'false'
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || ''
-    const isProductionDomain = appUrl.includes('cuttingasmr.org')
+    const isDevelopmentEnv = process.env.NODE_ENV === 'development'
+    const isLocalUrl = appUrl.includes('localhost') || appUrl.includes('trycloudflare.com')
     
-    // 如果是生产域名，强制使用生产环境
-    if (isProductionDomain) {
-      console.log('🌐 生产域名，使用生产支付链接')
-      return `https://www.creem.io/payment/${productId}`
+    let isTestMode = false
+    if (explicitTestMode) {
+      isTestMode = true
+    } else if (explicitProductionMode) {
+      isTestMode = false
+    } else {
+      isTestMode = isDevelopmentEnv || isLocalUrl
     }
-    
-    // 检查是否是测试环境
-    const isTestMode = process.env.NODE_ENV === 'development' || 
-                      process.env.CREEM_TEST_MODE === 'true' ||
-                      appUrl.includes('localhost') ||
-                      appUrl.includes('trycloudflare.com')
     
     // 测试环境使用test路径，生产环境使用payment路径
     const basePath = isTestMode ? 'test/payment' : 'payment'
@@ -137,7 +151,8 @@ export const CREEM_CONFIG = {
       productId,
       isTestMode,
       basePath,
-      paymentUrl
+      paymentUrl,
+      CREEM_TEST_MODE: process.env.CREEM_TEST_MODE
     })
     
     return paymentUrl
@@ -150,19 +165,20 @@ export const CREEM_CONFIG = {
 
   // 检查是否是测试环境
   isTestMode: () => {
-    // 修复：明确检查是否为生产环境域名
+    // 🔥 修复：使用相同的测试模式判断逻辑
+    const explicitTestMode = process.env.CREEM_TEST_MODE === 'true'
+    const explicitProductionMode = process.env.CREEM_TEST_MODE === 'false'
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || ''
-    const isProductionDomain = appUrl.includes('cuttingasmr.org')
+    const isDevelopmentEnv = process.env.NODE_ENV === 'development'
+    const isLocalUrl = appUrl.includes('localhost') || appUrl.includes('trycloudflare.com')
     
-    // 如果是生产域名，强制返回false（非测试模式）
-    if (isProductionDomain) {
+    if (explicitTestMode) {
+      return true
+    } else if (explicitProductionMode) {
       return false
+    } else {
+      return isDevelopmentEnv || isLocalUrl
     }
-    
-    return process.env.NODE_ENV === 'development' || 
-           process.env.CREEM_TEST_MODE === 'true' ||
-           appUrl.includes('localhost') ||
-           appUrl.includes('trycloudflare.com')
   }
 }
 
