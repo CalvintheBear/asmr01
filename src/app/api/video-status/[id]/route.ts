@@ -109,9 +109,9 @@ export async function GET(
       return NextResponse.json({ error: 'You do not have access permissions' }, { status: 403 });
     }
 
-    // 修正API端点：使用与veo3-api.ts一致的 /api/v1/veo/video/{taskId} 端点
+    // 恢复使用正确的 record-info 端点查询视频状态
     const apiKey = getApiKey();
-    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/video/${videoId}`, {
+    const response = await fetch(`https://kieai.erweima.ai/api/v1/veo/record-info?taskId=${videoId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -144,18 +144,37 @@ export async function GET(
       throw new Error('Response data is empty');
     }
 
-    const { status, videoUrl, progress } = data;
+    // 恢复旧的数据处理逻辑以适配 record-info 端点的响应
+    // 根据kie.ai文档的状态码解析
+    // 0: 生成中, 1: 成功, 2: 失败, 3: 生成失败
+    const statusCode = data.successFlag; // 实际是状态码
+    const completeTime = data.completeTime;
+    const errorCode = data.errorCode;
+    const errorMessage = data.errorMessage;
+    const resultUrls = data.response?.resultUrls || [];
+
+    let processedStatus = 'processing';
+    let progress = 50;
+    let videoUrl: string | null = null;
     let videoUrl1080p: string | null = null;
     
-    if (status === 'failed') {
-      console.log('❌ 视频生成失败:', result.msg || '未知错误');
+    if (statusCode === 2 || statusCode === 3 || errorCode) {
+      // 状态码2或3表示失败
+      processedStatus = 'failed';
+      progress = 0;
+      console.log('❌ 视频生成失败:', errorMessage || '未知错误');
       await updateVideoInDatabase(videoId, {
         status: 'failed',
         videoUrl: '',
         videoUrl1080p: '',
         completedAt: new Date()
       });
-    } else if (status === 'completed' && videoUrl) {
+    } else if (statusCode === 1 && resultUrls.length > 0) {
+      // 状态码1表示成功完成
+      processedStatus = 'completed';
+      progress = 100;
+      videoUrl = resultUrls[0]; // 720p视频URL
+      
       // 尝试获取1080p版本
       try {
         const video1080pUrlResult = await get1080PVideo(videoId);
@@ -172,24 +191,39 @@ export async function GET(
       try {
         await updateVideoInDatabase(videoId, {
           status: 'completed',
-          videoUrl: videoUrl,
-          videoUrl1080p: videoUrl1080p || videoUrl,
+          videoUrl: videoUrl || '',
+          videoUrl1080p: videoUrl1080p || videoUrl || '',
           completedAt: new Date()
         });
       } catch (dbError) {
         console.error('❌ 更新数据库失败:', dbError);
       }
+    } else if (statusCode === 0) {
+      // 状态码0表示正在生成
+      processedStatus = 'processing';
+      progress = 75;
+    } else {
+      // 其他情况视为处理中
+      processedStatus = 'processing';
+      progress = 50;
     }
 
     return NextResponse.json({
       success: true,
       id: data.taskId || videoId,
-      status: status,
+      status: processedStatus,
       videoUrl: videoUrl,
       videoUrl1080p: videoUrl1080p,
-      progress: progress || (status === 'completed' ? 100 : (status === 'processing' ? 75 : 50)),
+      progress: progress,
+      // 添加详细信息便于调试
       details: {
-        originalMessage: result.msg,
+        statusCode,
+        completeTime,
+        createTime: data.createTime,
+        errorCode,
+        errorMessage,
+        resultUrls,
+        originalTaskId: data.response?.taskId
       }
     });
 
