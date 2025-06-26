@@ -46,6 +46,17 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/logo.svg" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X6FN29E8XC"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-X6FN29E8XC');
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>
         <ClerkProvider publishableKey={publishableKey}>
