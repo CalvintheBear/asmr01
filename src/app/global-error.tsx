@@ -1,5 +1,8 @@
 'use client'
 
+// 强制动态渲染 - 解决构建时预渲染500页面的错误
+export const dynamic = 'force-dynamic'
+
 // 全局错误页面 - 处理500等服务器错误
 export default function GlobalError({
   error,
