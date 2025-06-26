@@ -88,7 +88,7 @@ const nextConfig = {
     unoptimized: Boolean(isCloudflare),
   },
   
-  // TypeScript和ESLint配置
+  // TypeScript和ESLint配置 - 修复：在Railway环境中跳过严格检查
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -100,6 +100,11 @@ const nextConfig = {
   ...(isRailway && {
     output: 'standalone',
     outputFileTracingRoot: process.cwd(),
+    // 强制动态渲染避免预渲染错误
+    experimental: {
+      staticGenerationRetryCount: 0,
+      staticGenerationBailout: 'force-dynamic'
+    }
   }),
   
   // 环境变量配置 - 移除硬编码敏感信息
