@@ -256,81 +256,77 @@ async function handlePaymentSucceeded(paymentData: any) {
     console.log(`  💎 当前积分: ${user.totalCredits}`)
     console.log(`  🔗 匹配方式: ${isOrderIdMatch ? '订单ID匹配' : '邮箱匹配'}`)
 
-    // 🔸 第5步：更新用户积分和订单状态
-    console.log('✅ 第5步：开始积分更新...')
+    // 🔸 第5步：为用户分配积分
+    console.log(`✅ 第5步：开始为用户分配积分: ${user.email}`)
     
-    const creditsToAdd = productInfo.creditsToAdd
-    const newTotalCredits = user.totalCredits + creditsToAdd
-
-    // 更新用户积分
-    const updatedUser = await db.user.update({
-      where: { id: user.id },
-      data: {
-        totalCredits: newTotalCredits,
-        updatedAt: new Date()
-      }
-    })
-
-    // 更新订单记录，关联用户并标记完成
-    await db.purchase.update({
-      where: { id: purchaseRecord.id },
-      data: {
-        userId: user.id,
-        status: 'completed'
-      }
-    })
-
-    console.log('✅ 第5步：积分更新和订单完成:')
-    console.log(`  👤 用户: ${user.email}`)
-    console.log(`  📦 套餐: ${productInfo.planType}`)
-    console.log(`  ➕ 增加积分: ${creditsToAdd}`)
-    console.log(`  📊 原积分: ${user.totalCredits}`)
-    console.log(`  📊 新积分: ${updatedUser.totalCredits}`)
-    console.log(`  📦 订单状态: completed`)
-
-    // 记录成功的积分同步操作
-    await db.auditLog.create({
-      data: {
-        action: 'credits_synced_success',
-        details: {
-          userId: user.id,
-          userEmail: user.email,
-          paymentEmail: customerEmail,
-          emailMatch: user.email === customerEmail,
-          productId: productId,
-          productName: productInfo.planType,
-          creditsAdded: creditsToAdd,
-          oldTotal: user.totalCredits,
-          newTotal: updatedUser.totalCredits,
-          orderId: orderId,
-          purchaseId: purchaseRecord.id,
-          timestamp: new Date().toISOString(),
-          processSteps: [
-            '1. 数据验证通过',
-            '2. 产品信息识别成功', 
-            '3. 订单记录创建成功',
-            '4. 用户邮箱匹配成功',
-            '5. 积分更新和订单完成'
-          ]
+    try {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          totalCredits: {
+            increment: productInfo.creditsToAdd
+          }
         }
+      })
+      
+      console.log(`✅ 积分分配成功: ${user.email}增加了${productInfo.creditsToAdd}积分`)
+      
+      // 更新订单状态为完成
+      await db.purchase.update({
+        where: { id: purchaseRecord.id },
+        data: {
+          status: 'completed',
+          userId: user.id // 关联用户ID
+        }
+      })
+      
+    } catch (error) {
+      console.error(`💥 第5步：积分分配失败: ${user.email}`, error)
+      
+      // 记录积分分配失败事件
+      await db.auditLog.create({
+        data: {
+          action: 'payment_credit_allocation_failed',
+          details: {
+            customerEmail: customerEmail,
+            orderId: orderId,
+            userId: user.id,
+            purchaseId: purchaseRecord.id,
+            creditsToAdd: productInfo.creditsToAdd,
+            error: error instanceof Error ? error.message : 'Unknown error',
+            timestamp: new Date().toISOString()
+          }
+        }
+      })
+
+      // 更新订单状态为失败
+      await db.purchase.update({
+        where: { id: purchaseRecord.id },
+        data: {
+          status: 'credit_allocation_failed',
+          userId: user.id
+        }
+      })
+      
+      return { 
+        success: false, 
+        error: 'credit_allocation_failed',
+        userId: user.id,
+        purchaseId: purchaseRecord.id
       }
-    })
+    }
 
-    console.log('🎉 所有步骤完成! 积分已成功同步到用户账户')
+    // 🔸 第6步：返回成功响应
+    console.log(`✅ 第6步：Webhook处理成功: ${orderId}`)
 
-    return {
-      success: true,
-      message: '积分同步成功',
+    return { 
+      success: true, 
+      message: 'Payment processed successfully',
+      orderId: orderId,
       userId: user.id,
-      userEmail: user.email,
-      paymentEmail: customerEmail,
-      productName: productInfo.planType,
-      creditsAdded: creditsToAdd,
-      oldTotal: user.totalCredits,
-      newTotal: updatedUser.totalCredits,
-      packageType: productInfo.planType,
-      purchaseId: purchaseRecord.id,
-      processSteps: 5
+      creditsAdded: productInfo.creditsToAdd,
+      orderIdMatch: isOrderIdMatch,
+      emailMatch: !isOrderIdMatch && !!user
     }
 
   } catch (error) {
