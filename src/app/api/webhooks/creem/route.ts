@@ -145,7 +145,7 @@ async function handlePaymentSucceeded(paymentData: any) {
     }
 
     // 先创建订单记录（无论用户匹配是否成功）
-    const purchaseRecord = await db.purchase.create({
+    let purchaseRecord = await db.purchase.create({
       data: {
         userId: null, // 暂时为空，后续匹配成功后更新
         packageType: productInfo.planType,
@@ -167,53 +167,94 @@ async function handlePaymentSucceeded(paymentData: any) {
     console.log(`  📦 产品类型: ${productInfo.planType}`)
     console.log(`  💎 待分配积分: ${productInfo.creditsToAdd}`)
 
-    // 🔸 第4步：用户邮箱精准匹配
-    console.log(`✅ 第4步：开始用户邮箱匹配: ${customerEmail}`)
-    const user = await db.user.findUnique({
-      where: { email: customerEmail }
+    // 🔸 第4步：通过订单ID查找预创建的订单记录
+    console.log(`✅ 第4步：开始通过订单ID查找用户: ${orderId}`)
+    
+    // 优先通过订单ID查找预创建的订单
+    const existingOrder = await db.purchase.findFirst({
+      where: { 
+        orderId: orderId,
+        status: 'pending' // 只查找待支付状态的订单
+      },
+      include: {
+        user: true
+      }
     })
 
-    if (!user) {
-      console.log(`❌ 第4步：用户匹配失败: ${customerEmail}`)
-      
-      // 更新订单状态为用户未找到
-      await db.purchase.update({
-        where: { id: purchaseRecord.id },
-        data: {
-          status: 'user_not_found'
-        }
-      })
+    let user = null
+    let isOrderIdMatch = false
 
-      // 记录未匹配的支付，供后续手动处理
-      await db.auditLog.create({
+    if (existingOrder && existingOrder.user) {
+      console.log(`✅ 通过订单ID找到用户: ${existingOrder.user.email}`)
+      user = existingOrder.user
+      isOrderIdMatch = true
+      
+      // 更新现有订单记录而不是创建新的
+      await db.purchase.update({
+        where: { id: existingOrder.id },
         data: {
-          action: 'payment_user_not_found',
-          details: {
-            customerEmail: customerEmail,
-            orderId: orderId,
-            purchaseId: purchaseRecord.id,
-            productId: productId,
-            productName: productInfo.planType,
-            amount: amount,
-            creditsToAdd: productInfo.creditsToAdd,
-            timestamp: new Date().toISOString(),
-            suggestion: 'Order recorded, but user not found. Please ensure you are using the same email address used for registration, or contact customer service'
-          }
+          status: 'completed',
+          paymentEmail: customerEmail, // 更新支付邮箱
+          customerId: customerId,
+          amount: parseFloat(amount?.toString() || '0') / 100 // 更新实际支付金额
         }
       })
       
-      return { 
-        success: false, 
-        error: 'user_not_found',
-        customerEmail: customerEmail,
-        purchaseId: purchaseRecord.id,
-        suggestion: 'Order recorded, but user not found. Please ensure you are using the same email address used for registration, or contact customer service'
+      // 使用现有订单记录
+      purchaseRecord = existingOrder
+      
+    } else {
+      // 如果订单ID匹配失败，回退到邮箱匹配
+      console.log(`⚠️ 订单ID匹配失败，回退到邮箱匹配: ${customerEmail}`)
+      user = await db.user.findUnique({
+        where: { email: customerEmail }
+      })
+      
+      if (!user) {
+        console.log(`❌ 第4步：用户匹配失败: ${customerEmail}`)
+        
+        // 更新订单状态为用户未找到
+        await db.purchase.update({
+          where: { id: purchaseRecord.id },
+          data: {
+            status: 'user_not_found'
+          }
+        })
+
+        // 记录未匹配的支付，供后续手动处理
+        await db.auditLog.create({
+          data: {
+            action: 'payment_user_not_found',
+            details: {
+              customerEmail: customerEmail,
+              orderId: orderId,
+              purchaseId: purchaseRecord.id,
+              productId: productId,
+              productName: productInfo.planType,
+              amount: amount,
+              creditsToAdd: productInfo.creditsToAdd,
+              timestamp: new Date().toISOString(),
+              suggestion: 'Both order ID and email matching failed. Please contact customer service',
+              orderIdMatch: false,
+              emailMatch: false
+            }
+          }
+        })
+        
+        return { 
+          success: false, 
+          error: 'user_not_found',
+          customerEmail: customerEmail,
+          purchaseId: purchaseRecord.id,
+          suggestion: 'Both order ID and email matching failed. Please contact customer service'
+        }
       }
     }
 
     console.log(`✅ 第4步：用户匹配成功: ${user.id}`)
     console.log(`  📧 用户邮箱: ${user.email}`)
     console.log(`  💎 当前积分: ${user.totalCredits}`)
+    console.log(`  🔗 匹配方式: ${isOrderIdMatch ? '订单ID匹配' : '邮箱匹配'}`)
 
     // 🔸 第5步：更新用户积分和订单状态
     console.log('✅ 第5步：开始积分更新...')

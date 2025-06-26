@@ -23,15 +23,7 @@ export default function CreemPaymentButton({
   const { user } = useUser()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [showEmailConfirm, setShowEmailConfirm] = useState(false)
   const [showAgreementModal, setShowAgreementModal] = useState(false)
-  const [userEmail, setUserEmail] = useState('')
-
-  useEffect(() => {
-    if (user?.primaryEmailAddress?.emailAddress) {
-      setUserEmail(user.primaryEmailAddress.emailAddress)
-    }
-  }, [user])
 
   // Check if user has agreed to all terms
   const checkUserAgreement = () => {
@@ -96,8 +88,25 @@ export default function CreemPaymentButton({
     setError(null)
 
     try {
-      // Show email confirmation dialog
-      setShowEmailConfirm(true)
+      // 🔥 NEW: 直接调用后端API创建支付订单
+      const response = await fetch('/api/payments/creem', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ planType })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create payment order')
+      }
+
+      const result = await response.json()
+      
+      console.log('✅ 支付订单创建成功:', result)
+      
+      // 直接跳转到支付页面
+      window.open(result.checkout_url, '_blank')
     } catch (err) {
       console.error('Payment error:', err)
       setError(err instanceof Error ? err.message : 'An error occurred during payment')
@@ -110,36 +119,8 @@ export default function CreemPaymentButton({
     setShowAgreementModal(false)
     // After agreement, proceed with payment
     setTimeout(() => {
-      setShowEmailConfirm(true)
+      handlePayment()
     }, 500)
-  }
-
-  const confirmAndPay = async () => {
-    setShowEmailConfirm(false)
-    
-    if (!user) {
-      alert('Please log in first to purchase credits')
-      return
-    }
-
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      // Redirect to payment page
-      const paymentUrl = CREEM_CONFIG.getPaymentUrl(planType)
-      
-      // Save user email to localStorage for later matching
-      localStorage.setItem('payment_user_email', userEmail)
-      localStorage.setItem('payment_session_id', user.id)
-      
-      window.open(paymentUrl, '_blank')
-    } catch (err) {
-      console.error('Payment error:', err)
-      setError(err instanceof Error ? err.message : 'An error occurred during payment')
-    } finally {
-      setIsLoading(false)
-    }
   }
 
   return (
@@ -171,50 +152,7 @@ export default function CreemPaymentButton({
         onComplete={onAgreementComplete} 
       />
 
-      {/* Email Confirmation Dialog */}
-      {showEmailConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-4">📧 Confirm Payment Email</h3>
-            
-            <div className="mb-4">
-              <p className="text-sm text-gray-600 mb-2">
-                Please ensure you use the same email for payment as your website login for proper credit synchronization:
-              </p>
-              
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p className="font-medium text-blue-800">
-                  Login Email: {userEmail}
-                </p>
-                <p className="text-sm text-blue-600 mt-1">
-                  ⚠️ Please use this email address on the payment page
-                </p>
-              </div>
-            </div>
 
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-              <p className="text-sm text-yellow-800">
-                💡 <strong>Important:</strong> If payment email doesn't match, credits may not sync automatically and will require contacting administrator.
-              </p>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowEmailConfirm(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmAndPay}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                I Understand, Continue Payment
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 } 
