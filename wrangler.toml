@@ -3,13 +3,24 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".next"
 
-# Cloudflare Pages 环境变量
+# Cloudflare Pages 环境变量配置
+
+# 开发/测试环境配置
+[env.preview.vars]
+NODE_ENV = "development"
+CREEM_TEST_MODE = "true"
+NEXT_PUBLIC_APP_URL = "https://preview.cuttingasmr.org"
+
+# 生产环境配置
 [env.production.vars]
 NODE_ENV = "production"
-# 确保使用生产环境配置，不使用测试模式
 CREEM_TEST_MODE = "false"
-# 生产环境域名
 NEXT_PUBLIC_APP_URL = "https://cuttingasmr.org"
-# Creem生产环境配置 - 需要在Cloudflare Pages设置中配置实际值
-# CREEM_API_KEY = "creem_3383jJhZ9BrQXXeHL2bxB"  # 在Cloudflare Pages中设置
-# CREEM_WEBHOOK_SECRET = "whsec_bCADZ6mZaWDVnJCzwato5"  # 在Cloudflare Pages中设置 
+
+# 注意：敏感信息应该在Cloudflare Pages控制面板中设置
+# 需要在Cloudflare Pages环境变量中设置：
+# - CREEM_API_KEY
+# - CREEM_WEBHOOK_SECRET  
+# - DATABASE_URL
+# - CLERK_SECRET_KEY
+# - VEO3_API_KEY 
