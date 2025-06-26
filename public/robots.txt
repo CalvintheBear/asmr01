@@ -1,1 +1,32 @@
- 
+User-agent: *
+Allow: /
+
+# 重要页面指引
+Allow: /pricing
+Allow: /help
+Allow: /about
+Allow: /privacy
+Allow: /terms
+Allow: /refund
+
+# 站点地图
+Sitemap: https://cuttingasmr.org/sitemap.xml
+
+# 阻止不必要的文件和目录
+Disallow: /_next/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /payment/
+Disallow: /profile/
+Disallow: /test-*
+Disallow: /debug-*
+Disallow: /credits-recovery/
+
+# 允许静态资源
+Allow: /_next/static/
+Allow: /favicon.svg
+Allow: /logo.svg
+
+# 爬取延迟（避免过于频繁的请求）
+Crawl-delay: 1 
