@@ -40,14 +40,16 @@ export async function POST(request: NextRequest) {
     // 🔥 首先检查API密钥是否可用
     console.log('🔑 检查API密钥配置...');
     const apiKey = getApiKey();
-    if (!apiKey || apiKey === 'c982688b5c6938943dd721ed1d576edb') {
-      console.error('❌ VEO3 API密钥未配置或使用默认密钥');
+    if (!apiKey) {
+      console.error('❌ VEO3 API密钥未配置');
       return NextResponse.json({
         error: 'Video generation service is temporarily unavailable. Please contact support.',
         details: 'API configuration error',
         success: false
       }, { status: 503 })
     }
+    
+    console.log(`🔑 使用API密钥: ${apiKey.substring(0, 10)}...`);
 
     // 2. 使用数据库事务进行原子性操作（积分检查 + 预扣除）
     try {
