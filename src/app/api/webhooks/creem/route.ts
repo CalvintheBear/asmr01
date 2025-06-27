@@ -13,10 +13,21 @@ export async function POST(request: NextRequest) {
     console.log('- CREEM_API_KEY存在:', !!process.env.CREEM_API_KEY)
     console.log('- CLERK_SECRET_KEY存在:', !!process.env.CLERK_SECRET_KEY)
     
+    // 获取请求头信息
+    const userAgent = request.headers.get('user-agent') || 'unknown'
+    const ipAddress = request.headers.get('x-forwarded-for') || 
+                     request.headers.get('x-real-ip') || '::1'
+    const signature = request.headers.get('x-creem-signature') || 'test-signature...'
+    
+    console.log('🌐 User-Agent:', userAgent)
+    console.log('📍 IP地址:', ipAddress)
+    console.log('🔑 签名:', signature)
+
     // 安全地获取请求数据
     let payload: any
+    let body: string
     try {
-      const body = await request.text()
+      body = await request.text()
       console.log('📝 原始请求体:', body)
       payload = JSON.parse(body)
     } catch (parseError) {
@@ -29,19 +40,62 @@ export async function POST(request: NextRequest) {
     }
     
     console.log('📦 Payload:', JSON.stringify(payload))
-    
-    // 获取请求头信息
-    const userAgent = request.headers.get('user-agent') || 'unknown'
-    const ipAddress = request.headers.get('x-forwarded-for') || 
-                     request.headers.get('x-real-ip') || '::1'
-    const signature = request.headers.get('x-creem-signature') || 'test-signature...'
-    
-    console.log('🌐 User-Agent:', userAgent)
-    console.log('📍 IP地址:', ipAddress)
-    console.log('🔑 签名:', signature)
 
-    // 开发环境跳过签名验证
-    if (process.env.NODE_ENV !== 'production') {
+    // 🔒 签名验证
+    if (process.env.NODE_ENV === 'production') {
+      console.log('🔒 生产环境，进行签名验证')
+      const webhookSecret = process.env.CREEM_WEBHOOK_SECRET
+      
+      if (!webhookSecret) {
+        console.error('❌ CREEM_WEBHOOK_SECRET环境变量未配置')
+        return NextResponse.json({ 
+          error: 'Webhook secret not configured' 
+        }, { status: 500 })
+      }
+      
+      if (!signature || signature === 'test-signature...') {
+        console.error('❌ 缺少有效的webhook签名')
+        return NextResponse.json({ 
+          error: 'Missing or invalid webhook signature' 
+        }, { status: 401 })
+      }
+      
+      // 验证签名
+      try {
+        const crypto = require('crypto')
+        const expectedSignature = crypto
+          .createHmac('sha256', webhookSecret)
+          .update(body)
+          .digest('hex')
+        
+        // Creem可能使用不同的签名格式，检查多种可能的格式
+        const signatureFormats = [
+          signature,
+          signature.replace('sha256=', ''),
+          `sha256=${expectedSignature}`,
+          expectedSignature
+        ]
+        
+        const isValidSignature = signatureFormats.includes(expectedSignature) ||
+                               signatureFormats.some(sig => sig === `sha256=${expectedSignature}`)
+        
+        if (!isValidSignature) {
+          console.error('❌ Webhook签名验证失败')
+          console.log('🔍 预期签名:', expectedSignature)
+          console.log('🔍 接收签名:', signature)
+          return NextResponse.json({ 
+            error: 'Invalid webhook signature' 
+          }, { status: 401 })
+        }
+        
+        console.log('✅ Webhook签名验证成功')
+      } catch (verifyError) {
+        console.error('❌ 签名验证过程出错:', verifyError)
+        return NextResponse.json({ 
+          error: 'Signature verification failed' 
+        }, { status: 500 })
+      }
+    } else {
       console.log('⚠️ 开发环境，跳过签名验证')
     }
 
