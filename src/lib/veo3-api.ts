@@ -66,6 +66,8 @@ export class Veo3ApiClient {
   private async makeRequest(endpoint: string, options: RequestInit = {}) {
     const url = `${this.config.baseUrl}${endpoint}`;
     
+    console.log('🔑 使用API密钥:', this.config.apiKey.substring(0, 10) + '...(已脱敏)');
+    
     try {
       // 对于服务端环境，确保使用正确的fetch polyfill
       const globalFetch = globalThis.fetch;
@@ -155,7 +157,7 @@ export class Veo3ApiClient {
 // 创建默认客户端实例
 export function createVeo3Client(): Veo3ApiClient {
   const apiKey = process.env.VEO3_API_KEY || 'c982688b5c6938943dd721ed1d576edb';
-  const baseUrl = process.env.VEO3_API_BASE_URL || 'https://kieai.erweima.ai';
+  const baseUrl = process.env.VEO3_API_BASE_URL || 'https://api.kie.ai';
 
   if (!apiKey) {
     throw new Error('VEO3_API_KEY 环境变量未设置');

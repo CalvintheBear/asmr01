@@ -123,7 +123,8 @@ export async function POST(request: NextRequest) {
     console.log(`🎬 User ${user.email} starting to generate veo3_fast video, using key: ${apiKey.substring(0, 10)}...`);
     console.log(`📝 Prompt: ${prompt.substring(0, 100)}...`);
     
-    const response = await fetch('https://kieai.erweima.ai/api/v1/veo/generate', {
+    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://api.kie.ai';
+    const response = await fetch(`${baseUrl}/api/v1/veo/generate`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
