@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     console.log(`🎬 User ${user.email} starting to generate veo3_fast video, using key: ${apiKey.substring(0, 10)}...`);
     console.log(`📝 Prompt: ${prompt.substring(0, 100)}...`);
     
-    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://api.kie.ai';
+    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://kieai.erweima.ai';
     
     let response;
     try {

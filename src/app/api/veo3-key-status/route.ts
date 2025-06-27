@@ -17,7 +17,7 @@ export async function GET() {
         configured: true,
         keyPreview: key ? key.substring(0, 10) + '...' : 'N/A'
       })),
-      baseUrl: process.env.VEO3_API_BASE_URL || 'https://api.kie.ai',
+      baseUrl: process.env.VEO3_API_BASE_URL || 'https://kieai.erweima.ai',
       environment: process.env.NODE_ENV,
       timestamp: new Date().toISOString()
     })

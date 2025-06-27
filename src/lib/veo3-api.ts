@@ -157,7 +157,7 @@ export class Veo3ApiClient {
 // 创建默认客户端实例
 export function createVeo3Client(): Veo3ApiClient {
   const apiKey = process.env.VEO3_API_KEY || 'c982688b5c6938943dd721ed1d576edb';
-  const baseUrl = process.env.VEO3_API_BASE_URL || 'https://api.kie.ai';
+  const baseUrl = process.env.VEO3_API_BASE_URL || 'https://kieai.erweima.ai';
 
   if (!apiKey) {
     throw new Error('VEO3_API_KEY 环境变量未设置');

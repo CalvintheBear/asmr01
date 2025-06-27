@@ -9,7 +9,7 @@ async function get1080PVideo(taskId: string): Promise<string | null> {
   const apiKey = getApiKey();
   try {
     // 根据kie.ai文档，调用获取1080p视频的API
-    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://api.kie.ai';
+    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://kieai.erweima.ai';
     const response = await fetch(`${baseUrl}/api/v1/veo/get1080p?taskId=${taskId}`, {
       method: 'GET',
       headers: {
@@ -112,7 +112,7 @@ export async function GET(
 
     // 恢复使用正确的 record-info 端点查询视频状态
     const apiKey = getApiKey();
-    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://api.kie.ai';
+    const baseUrl = process.env.VEO3_API_BASE_URL || 'https://kieai.erweima.ai';
     const response = await fetch(`${baseUrl}/api/v1/veo/record-info?taskId=${videoId}`, {
       method: 'GET',
       headers: {
