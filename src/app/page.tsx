@@ -743,6 +743,16 @@ export default function ASMRVideoStudio() {
               </div>
               
               <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How does text to video AI technology work for ASMR content?</h3>
+                <p className="text-gray-600">Our advanced text to video AI technology powered by Google Veo3 transforms simple text descriptions into high-quality ASMR videos. Just describe your desired ASMR scene in text, and our text to video generator creates realistic visuals with synchronized audio effects automatically.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can beginners use text to video technology for ASMR creation?</h3>
+                <p className="text-gray-600">Absolutely! Our text to video platform is designed for beginners - no video editing skills required. Simply type your ASMR concept in plain English, and our text to video AI handles all the complex video production automatically. Perfect for new content creators entering the ASMR space.</p>
+              </div>
+              
+              <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Do AI-generated videos perform well on YouTube and TikTok?</h3>
                 <p className="text-gray-600">Yes! Our AI video generator creates the best ASMR videos that engage audiences across platforms. Many content creators use our Veo3 AI to boost their posting frequency with glass cutting and fruit slicing content, growing their follower base on YouTube Shorts and TikTok Shorts.</p>
               </div>
@@ -770,8 +780,18 @@ export default function ASMRVideoStudio() {
               </div>
               
               <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What makes our text to video generator different from others?</h3>
+                <p className="text-gray-600">Our text to video AI specializes in ASMR content creation with superior audio-visual synchronization. Unlike generic text to video tools, our platform understands ASMR triggers and creates videos that deliver authentic relaxation experiences with perfect timing and realistic physics.</p>
+              </div>
+              
+              <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Does Veo3 AI create best ASMR videos with binaural audio?</h3>
                 <p className="text-gray-600">Yes! Our Veo3 AI generates the best ASMR videos with built-in 3D spatial audio and binaural sound generation. Create immersive therapeutic audio that provides authentic ASMR tingles - perfect for sleep ASMR generator needs.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What text to video features are best for ASMR monetization?</h3>
+                <p className="text-gray-600">Our text to video generator includes premium features perfect for monetizing ASMR content: 4K resolution output, commercial licensing, batch generation for consistent posting, and SEO-optimized video descriptions. Text to video technology helps creators build sustainable revenue streams with professional-quality content.</p>
               </div>
               
               <div>
