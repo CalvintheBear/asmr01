@@ -320,8 +320,8 @@ export default function ASMRVideoStudio() {
             </h1>
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               FREE credits for new users! Perfect for YouTube, TikTok creators and ASMR makers. 
-              Generate professional relaxing video in minutes with advanced Google Veo3 AI technology. 
-              No editing skills required.
+              Generate professional AI videos in minutes with advanced Google Veo3 AI technology. 
+              Best AI video generator - no editing skills required.
             </p>
             
             {/* Credits Display */}
@@ -645,40 +645,40 @@ export default function ASMRVideoStudio() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">What is text to video ASMR generator with Veo3 AI?</h3>
-                <p className="text-gray-600">Our text to video ASMR generator uses advanced Google Veo3 AI technology to transform text prompts into high-quality, relaxing ASMR videos. Perfect text to video tool for creators - generate professional therapeutic content without traditional recording equipment or editing skills.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What is ASMR generator with Veo3 AI technology?</h3>
+                <p className="text-gray-600">Our AI video generator uses advanced Google Veo3 AI technology to transform prompts into high-quality, relaxing ASMR videos. Best AI video maker for creators - generate professional therapeutic content without traditional recording equipment or editing skills.</p>
               </div>
               
                 <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">How to make AI ASMR videos without equipment?</h3>
-                <p className="text-gray-600">Yes! Our text to video AI ASMR generator creates professional content instantly without microphones or editing skills. Transform simple text descriptions into 4K quality ASMR videos with spatial audio and realistic physics effects - perfect for content creators!</p>
+                <p className="text-gray-600">Yes! Our AI video maker creates professional ASMR content instantly without microphones or editing skills. Transform simple prompts into 4K quality ASMR videos with spatial audio and realistic physics effects - perfect for content creators!</p>
       </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Perfect text to video tool for YouTube Shorts & TikTok Shorts?</h3>
-                <p className="text-gray-600">Absolutely! Our text to video AI generates ASMR videos optimized for YouTube Shorts, TikTok Shorts, and social media platforms. Transform text prompts into engaging video content that drives views and subscriber growth for content creators.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Perfect AI video generator for YouTube Shorts & TikTok Shorts?</h3>
+                <p className="text-gray-600">Absolutely! Our Google Veo AI generates ASMR videos optimized for YouTube Shorts, TikTok Shorts, and social media platforms. Create engaging video content that drives views and subscriber growth for content creators.</p>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">How can content creators scale their ASMR YouTube channel with text to video?</h3>
-                <p className="text-gray-600">Content creators can generate multiple text to video ASMR videos daily using our AI video maker. Create consistent ASMR content ideas for your YouTube channel without time-consuming setup - perfect for building a profitable ASMR creator business with meditation and sleep content.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How can content creators scale their ASMR YouTube channel with Veo3 AI?</h3>
+                <p className="text-gray-600">Content creators can generate multiple ASMR videos daily using our best AI video generator. Create consistent ASMR content ideas for your YouTube channel without time-consuming setup - perfect for building a profitable ASMR creator business with meditation and sleep content.</p>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">What ASMR content ideas can text to video AI create?</h3>
-                <p className="text-gray-600">Our text to video ASMR generator creates amazing content: glass cutting, fruit slicing, knife cutting, lava effects, magma visuals, crystal breaking, and water sounds. Transform any ASMR video idea into reality with our best AI video generator - perfect for stress relief videos and sleep ASMR content.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What ASMR content ideas can Google Veo3 AI create?</h3>
+                <p className="text-gray-600">Our AI video generator creates amazing content: glass cutting, fruit slicing, knife cutting, lava effects, magma visuals, crystal breaking, and water sounds. Transform any ASMR video idea into reality with our best AI video generator - perfect for stress relief videos and sleep ASMR content.</p>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Do text to video AI videos perform well on YouTube and TikTok?</h3>
-                <p className="text-gray-600">Yes! Our text to video generator creates the best ASMR videos that engage audiences across platforms. Many content creators use our text to video AI to boost their posting frequency with glass cutting and fruit slicing content, growing their follower base on YouTube Shorts and TikTok Shorts.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Do AI-generated videos perform well on YouTube and TikTok?</h3>
+                <p className="text-gray-600">Yes! Our AI video generator creates the best ASMR videos that engage audiences across platforms. Many content creators use our Veo3 AI to boost their posting frequency with glass cutting and fruit slicing content, growing their follower base on YouTube Shorts and TikTok Shorts.</p>
               </div>
             </div>
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Best text to video length for TikTok Shorts and YouTube Shorts?</h3>
-                <p className="text-gray-600">For TikTok Shorts, 10-15 second text to video loops work best for maximum engagement. For YouTube Shorts, our text to video generator creates seamless loops perfect for longer immersive content and meditation videos. Our AI video maker optimizes duration automatically.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Best video length for TikTok Shorts and YouTube Shorts?</h3>
+                <p className="text-gray-600">For TikTok Shorts, 10-15 second video loops work best for maximum engagement. For YouTube Shorts, our AI video generator creates seamless loops perfect for longer immersive content and meditation videos. Our best AI video maker optimizes duration automatically.</p>
               </div>
               
               <div>
@@ -692,18 +692,18 @@ export default function ASMRVideoStudio() {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">How quickly can I create text to video content for my ASMR channel?</h3>
-                <p className="text-gray-600">Generate professional text to video ASMR videos in just 3-5 minutes! Perfect for content creators who need consistent ASMR video ideas. Transform text prompts into daily content for TikTok Shorts or weekly uploads for YouTube channels effortlessly.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How quickly can I create AI content for my ASMR channel?</h3>
+                <p className="text-gray-600">Generate professional ASMR videos in just 3-5 minutes! Perfect for content creators who need consistent ASMR video ideas. Transform prompts into daily content for TikTok Shorts or weekly uploads for YouTube channels effortlessly.</p>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Does text to video AI create best ASMR videos with binaural audio?</h3>
-                <p className="text-gray-600">Yes! Our text to video Veo3 AI generates the best ASMR videos with built-in 3D spatial audio and binaural sound generation. Transform text into immersive therapeutic audio that provides authentic ASMR tingles - perfect for sleep ASMR generator needs.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Does Veo3 AI create best ASMR videos with binaural audio?</h3>
+                <p className="text-gray-600">Yes! Our Veo3 AI generates the best ASMR videos with built-in 3D spatial audio and binaural sound generation. Create immersive therapeutic audio that provides authentic ASMR tingles - perfect for sleep ASMR generator needs.</p>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize text to video ASMR content for my brand?</h3>
-                <p className="text-gray-600">Absolutely! Content creators can customize every aspect through detailed text prompts. Our text to video AI creates unique ASMR content ideas with glass cutting, lava effects, and magma visuals that match your YouTube channel's style and audience preferences. Perfect for building a distinctive ASMR creator identity.</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize AI-generated ASMR content for my brand?</h3>
+                <p className="text-gray-600">Absolutely! Content creators can customize every aspect through detailed prompts. Our Google AI creates unique ASMR content ideas with glass cutting, lava effects, and magma visuals that match your YouTube channel's style and audience preferences. Perfect for building a distinctive ASMR creator identity.</p>
               </div>
             </div>
           </div>
@@ -712,10 +712,10 @@ export default function ASMRVideoStudio() {
             <div className="flex items-start space-x-3">
               <Sparkles className="w-6 h-6 text-emerald-600 mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold text-emerald-800 mb-2">Best Text to Video AI for Content Creators & Social Media Success</h4>
+                <h4 className="font-semibold text-emerald-800 mb-2">Best AI Video Generator for Content Creators & Social Media Success</h4>
                 <p className="text-emerald-700 leading-relaxed">
-                  Powered by advanced Google Veo3 AI, our text to video generator helps content creators build successful YouTube Shorts and TikTok Shorts channels. 
-                  Transform text prompts into viral-ready ASMR content with glass cutting, fruit slicing, and stress relief videos that engage audiences and grow your subscriber base automatically.
+                  Powered by advanced Google Veo3 AI, our AI ASMR generator helps content creators build successful YouTube Shorts and TikTok Shorts channels. 
+                  Create viral-ready ASMR content with glass cutting, fruit slicing, and stress relief videos that engage audiences and grow your subscriber base automatically.
                 </p>
               </div>
             </div>
@@ -727,10 +727,10 @@ export default function ASMRVideoStudio() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 p-12">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Advanced Text to Video AI Technology with Veo3</h2>
+            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Advanced AI Video Generation Technology with Veo3</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Powered by Google Veo3 AI, our text to video generator creates professional therapeutic ASMR videos 
-              automatically. The best AI video generator technology analyzes your text prompts and transforms them into high-quality ASMR content with precision - perfect for content creators and stress relief videos.
+              Powered by Google Veo3 AI, our ASMR generator creates professional therapeutic videos 
+              automatically. The best AI video generator technology analyzes your prompts and transforms them into high-quality ASMR content with precision - perfect for content creators and stress relief videos.
             </p>
             </div>
           
@@ -739,16 +739,16 @@ export default function ASMRVideoStudio() {
               <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-7 h-7 text-emerald-600" />
             </div>
-              <h3 className="font-semibold text-gray-800 mb-3">Google Veo3 AI Text to Video Engine</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">Advanced text to video AI technology that transforms text prompts into professional ASMR videos with sleep-inducing effects</p>
+              <h3 className="font-semibold text-gray-800 mb-3">Google Veo3 AI Video Engine</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">Advanced Google AI technology that transforms prompts into professional ASMR videos with sleep-inducing effects</p>
             </div>
             
             <div className="text-center p-6">
               <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Settings className="w-7 h-7 text-blue-600" />
           </div>
-              <h3 className="font-semibold text-gray-800 mb-3">Smart Text to Video AI Creator Tools</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">Intelligent text to video algorithms adapt to your ASMR content ideas and create personalized experiences for content creators</p>
+              <h3 className="font-semibold text-gray-800 mb-3">Smart AI Video Creator Tools</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">Intelligent AI algorithms adapt to your ASMR content ideas and create personalized experiences for content creators</p>
             </div>
             
             <div className="text-center p-6">
@@ -756,7 +756,7 @@ export default function ASMRVideoStudio() {
                 <Video className="w-7 h-7 text-amber-600" />
               </div>
               <h3 className="font-semibold text-gray-800 mb-3">Best AI Video Maker for YouTube & TikTok</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">Text to video AI production optimized for YouTube Shorts and TikTok Shorts - creates viral-ready ASMR content in minutes</p>
+              <p className="text-sm text-gray-600 leading-relaxed">AI video production optimized for YouTube Shorts and TikTok Shorts - creates viral-ready ASMR content in minutes</p>
             </div>
             
             <div className="text-center p-6">
@@ -764,7 +764,7 @@ export default function ASMRVideoStudio() {
                 <Sparkles className="w-7 h-7 text-slate-600" />
               </div>
               <h3 className="font-semibold text-gray-800 mb-3">Advanced ASMR Content Ideas Generator</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">Text to video AI understands glass cutting, fruit slicing, lava effects, and knife sounds - automatically creates meditation and stress relief experiences</p>
+              <p className="text-sm text-gray-600 leading-relaxed">Veo3 AI understands glass cutting, fruit slicing, lava effects, and knife sounds - automatically creates meditation and stress relief experiences</p>
             </div>
           </div>
           
@@ -774,9 +774,9 @@ export default function ASMRVideoStudio() {
                 <Check className="w-5 h-5 text-emerald-600 mt-0.5" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Best Text to Video AI Technology Powered by Google Veo3</h4>
+                <h4 className="font-semibold text-gray-800 mb-2">Best AI Video Technology Powered by Google Veo3</h4>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Our text to video ASMR generator utilizes cutting-edge Google Veo3 AI technology to transform text prompts into therapeutic content automatically. 
+                  Our ASMR generator utilizes cutting-edge Google Veo3 AI technology to transform prompts into therapeutic content automatically. 
                   Perfect for content creators - the AI analyzes your ASMR video ideas and generates professional stress relief videos, sleep ASMR content, and meditation videos for wellness purposes.
                 </p>
               </div>

@@ -9,7 +9,7 @@ pages_build_output_dir = ".next"
 [env.preview.vars]
 NODE_ENV = "development"
 CREEM_TEST_MODE = "true"
-NEXT_PUBLIC_APP_URL = "https://preview.cuttingasmr.org"
+NEXT_PUBLIC_APP_URL = "https://cuttingasmr.org"
 
 # 生产环境配置
 [env.production.vars]
