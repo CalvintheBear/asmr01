@@ -21,42 +21,18 @@ export const defaultOption: ASMRType = {
   prompt: ''
 }
 
-// ASMR类型分类定义（完整复制所有提示词）
+// ASMR类型分类定义（重新整理分类）
 export const asmrCategories: ASMRCategory[] = [
   {
-    id: 'texture-therapy',
-    name: 'Texture & Aromatherapy',
-    icon: '🌿',
+    id: 'cutting',
+    name: 'Cutting & Slicing',
+    icon: '🔪',
     types: [
       {
-        id: 'ice-texture',
-        name: 'Ice Crystallization ASMR',
-        description: 'Peaceful ice formation and natural crystal sounds for relaxation',
-        prompt: 'Gentle close-up of ice crystals forming naturally on glass surface. Camera: Macro lens capturing crystalline patterns and light refraction. Lighting: Soft studio lighting highlighting ice transparency and natural formations. Audio: Gentle crystallization sounds, peaceful settling noises, calming natural ice formation sounds for stress relief and meditation.'
-      },
-      {
-        id: 'hot-iron',
-        name: 'Hot Iron Forging',
-        description: 'Industrial blade cutting glowing hot metal with sparks and heat',
-        prompt: 'Close-up of glowing red-hot metal being shaped by blacksmith hammer on anvil. Camera: Side angle capturing hammer strikes and sparks flying. Lighting: Dramatic forge lighting with glowing metal illumination. Audio: Rhythmic hammer strikes, metal ringing, crackling fire, and sizzling sounds of hot metal cooling.'
-      },
-      {
-        id: 'golden-apple-texture',
-        name: 'Golden Apple Texture ASMR',
-        description: 'Therapeutic golden fruit textures with gentle natural sounds',
-        prompt: 'Peaceful macro view of golden apple with natural texture transitions and gentle surface changes. Camera: Close-up focusing on fruit texture with warm metallic reflections and natural patterns. Lighting: Soft golden lighting enhancing surface details and creating calming ambiance. Audio: Gentle texture sounds, peaceful natural settling, therapeutic audio for relaxation and mindfulness.'
-      },
-      {
-        id: 'lime-texture',
-        name: 'Lime Aromatherapy ASMR',
-        description: 'Therapeutic citrus textures and natural aromatherapy sounds',
-        prompt: 'Peaceful macro view of fresh lime with natural texture exploration and gentle citrus oil release. Camera: Close-up focusing on fruit surface textures and natural juice formation. Lighting: Natural bright lighting enhancing vibrant green colors and droplet formations. Audio: Gentle texture sounds, natural citrus aromatherapy audio, peaceful dripping sounds for stress relief and mindfulness.'
-      },
-      {
-        id: 'red-crystal-sphere',
-        name: 'Red Crystal Sphere Cutting',
-        description: 'Knife cutting translucent red crystal with bubble chambers',
-        prompt: 'Surreal scene of knife cutting through translucent red crystal sphere with internal bubble chambers. Camera: Macro lens capturing light refraction through crystal materials. Lighting: Red ambient lighting creating prismatic effects. Audio: Unique crystal chiming sounds, delicate breaking noises, and satisfying cutting through crystalline textures.'
+        id: 'glass-fruit-cutting',
+        name: 'Glass Fruit Cutting',
+        description: 'Knife delicately slicing colorful glass fruits with sparkling effects',
+        prompt: 'Realistic 4K footage close-up of a sharp fruit knife delicately slicing a vibrant blue glass apple on a smooth, reflective black surface. It cracks and shatters into sparkling pieces. The inside of the apple is also crystal-clear glass. The sound is ASMR style.'
       },
       {
         id: 'crystal-apple',
@@ -75,6 +51,67 @@ export const asmrCategories: ASMRCategory[] = [
         name: 'Crystal Burger Cutting',
         description: 'Slicing layered crystal burger with rainbow light effects',
         prompt: 'Surreal scene of knife cutting through transparent crystal burger with layers of colorful crystal ingredients. Camera: Macro lens capturing light refraction through crystal materials. Lighting: Rainbow lighting creating prismatic effects. Audio: Unique crystal chiming sounds, delicate breaking noises, and satisfying cutting through crystalline textures.'
+      },
+      {
+        id: 'red-crystal-sphere',
+        name: 'Red Crystal Sphere Cutting',
+        description: 'Knife cutting translucent red crystal with bubble chambers',
+        prompt: 'Surreal scene of knife cutting through translucent red crystal sphere with internal bubble chambers. Camera: Macro lens capturing light refraction through crystal materials. Lighting: Red ambient lighting creating prismatic effects. Audio: Unique crystal chiming sounds, delicate breaking noises, and satisfying cutting through crystalline textures.'
+      },
+      {
+        id: 'layered-soap-cutting',
+        name: 'Layered Soap Cutting',
+        description: 'Knife smoothly cutting through colorful layered soap blocks',
+        prompt: 'Realistic 4K footage close-up of a sharp knife smoothly slicing through a rainbow-layered soap block on a clean white cutting board. It separates cleanly revealing perfect layers inside. The inside of the soap shows beautiful color gradients. The sound is ASMR style.'
+      },
+      {
+        id: 'honeycomb-cutting',
+        name: 'Honeycomb Cutting',
+        description: 'Knife cutting through fresh honeycomb with golden honey dripping',
+        prompt: 'Realistic 4K footage close-up of a warm knife gently cutting through fresh golden honeycomb on a wooden cutting board. It oozes thick honey that drips slowly. The inside of the honeycomb reveals perfect hexagonal chambers filled with golden honey. The sound is ASMR style.'
+      },
+      {
+        id: 'kinetic-sand-cutting',
+        name: 'Kinetic Sand Cutting',
+        description: 'Knife slicing through colored kinetic sand revealing smooth textures',
+        prompt: 'Realistic 4K footage close-up of a smooth blade cutting through purple kinetic sand molded into a perfect cube on a clean surface. It separates with satisfying precision revealing smooth internal texture. The inside of the sand cube shows perfectly uniform granular structure. The sound is ASMR style.'
+      },
+      {
+        id: 'minecraft-block-cutting',
+        name: 'Minecraft Block Cutting ASMR',
+        description: 'Sharp blade slicing through pixelated Minecraft blocks with satisfying cuts',
+        prompt: 'Realistic 4K footage close-up of a sharp diamond sword smoothly slicing through a colorful pixelated Minecraft grass block on a cubic stone platform. It cuts cleanly revealing layered pixel textures inside. The inside of the block shows dirt pixels beneath grass pixels. The sound is ASMR style with satisfying slicing and block separation sounds.'
+      }
+    ]
+  },
+  {
+    id: 'textures',
+    name: 'Textures & Materials',
+    icon: '✨',
+    types: [
+      {
+        id: 'ice-texture',
+        name: 'Ice Crystallization ASMR',
+        description: 'Peaceful ice formation and natural crystal sounds for relaxation',
+        prompt: 'Gentle close-up of ice crystals forming naturally on glass surface. Camera: Macro lens capturing crystalline patterns and light refraction. Lighting: Soft studio lighting highlighting ice transparency and natural formations. Audio: Gentle crystallization sounds, peaceful settling noises, calming natural ice formation sounds for stress relief and meditation.'
+      },
+      {
+        id: 'golden-apple-texture',
+        name: 'Golden Apple Texture ASMR',
+        description: 'Therapeutic golden fruit textures with gentle natural sounds',
+        prompt: 'Peaceful macro view of golden apple with natural texture transitions and gentle surface changes. Camera: Close-up focusing on fruit texture with warm metallic reflections and natural patterns. Lighting: Soft golden lighting enhancing surface details and creating calming ambiance. Audio: Gentle texture sounds, peaceful natural settling, therapeutic audio for relaxation and mindfulness.'
+      },
+      {
+        id: 'lime-texture',
+        name: 'Lime Aromatherapy ASMR',
+        description: 'Therapeutic citrus textures and natural aromatherapy sounds',
+        prompt: 'Peaceful macro view of fresh lime with natural texture exploration and gentle citrus oil release. Camera: Close-up focusing on fruit surface textures and natural juice formation. Lighting: Natural bright lighting enhancing vibrant green colors and droplet formations. Audio: Gentle texture sounds, natural citrus aromatherapy audio, peaceful dripping sounds for stress relief and mindfulness.'
+      },
+      {
+        id: 'ice-cube-carving',
+        name: 'Ice Cube Carving',
+        description: 'Utility knife smoothly carving translucent ice with melting effects',
+        prompt: 'Realistic 4K footage close-up of a razor-sharp utility knife smoothly carving a large, translucent ice cube on a chilled, brushed metal tray. It melts slowly, creating tiny water droplets. The inside of the ice cube is also solid, clear ice. The sound is ASMR style.'
       }
     ]
   },
@@ -179,6 +216,43 @@ export const asmrCategories: ASMRCategory[] = [
         name: 'Keyboard Typing',
         description: 'Gentle typing sounds on different keyboards',
         prompt: 'Professional close-up of fingers typing on premium mechanical keyboard with individual key switches. Camera: Side and overhead angles capturing finger precision and key movement. Lighting: Clean desk lighting highlighting keyboard details. Audio: Satisfying tactile clicks, key depression sounds, typing rhythm patterns.'
+      },
+      {
+        id: 'squeeze-toy',
+        name: 'Squeeze Toy ASMR',
+        description: 'Gentle squeezing of soft stress toys and squishy objects',
+        prompt: 'Close-up of hands gently squeezing various colorful stress balls, squishy toys, and foam objects on a soft white surface. Camera: Macro lens capturing finger pressure and object deformation. Lighting: Soft ambient lighting highlighting toy textures and colors. Audio: Gentle squishing sounds, soft compression noises, and satisfying stress ball manipulation sounds.'
+      }
+    ]
+  },
+  {
+    id: 'industrial',
+    name: 'Industrial & Crafts',
+    icon: '🔨',
+    types: [
+      {
+        id: 'hot-iron',
+        name: 'Hot Iron Forging',
+        description: 'Industrial blade cutting glowing hot metal with sparks and heat',
+        prompt: 'Close-up of glowing red-hot metal being shaped by blacksmith hammer on anvil. Camera: Side angle capturing hammer strikes and sparks flying. Lighting: Dramatic forge lighting with glowing metal illumination. Audio: Rhythmic hammer strikes, metal ringing, crackling fire, and sizzling sounds of hot metal cooling.'
+      },
+      {
+        id: 'metal-sheet-cutting',
+        name: 'Metal Sheet Cutting',
+        description: 'Heavy-duty shears slicing through gleaming metal sheets',
+        prompt: 'Realistic 4K footage close-up of a heavy-duty metal shear effortlessly slicing a gleaming silver aluminum sheet on a worn, industrial steel workbench. It bends and curls with a resonant clang. The inside of the aluminum sheet is also smooth, polished metal. The sound is ASMR style.'
+      },
+      {
+        id: 'electronic-device-cutting',
+        name: 'Electronic Device Dissection',
+        description: 'Precision knife carefully dissecting electronic devices revealing circuits',
+        prompt: 'Realistic 4K footage close-up of a precision utility knife gently dissecting a sleek black smartphone on an anti-static white mat. It reveals intricate circuit boards and tiny components. The inside of the smartphone is also complex electronic circuitry. The sound is ASMR style.'
+      },
+      {
+        id: 'minecraft-block-breaking',
+        name: 'Minecraft Block Breaking',
+        description: 'Pixelated tools breaking cubic blocks with crumbling pixel effects',
+        prompt: 'Realistic 4K footage close-up of a blocky diamond pickaxe crisply breaking a pixelated dirt block on a stylized grassy terrain. It crumbles into smaller pixel fragments. The inside of the dirt block is also textured brown pixels. The sound is ASMR style.'
       }
     ]
   },

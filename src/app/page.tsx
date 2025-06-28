@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect } from 'react'
 import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check } from 'lucide-react'
 import { asmrCategories, defaultOption } from '@/config/asmr-types'
 import Link from 'next/link'
@@ -21,6 +21,7 @@ import { CREDITS_CONFIG } from '@/lib/credits-config'
 export default function ASMRVideoStudio() {
   const { user, isLoaded } = useUser()
   const searchParams = useSearchParams()
+  const router = useRouter()
   const [selectedASMRType, setSelectedASMRType] = useState('default')
   const [prompt, setPrompt] = useState('')
   const [showAllTypesModal, setShowAllTypesModal] = useState(false)
@@ -158,6 +159,35 @@ export default function ASMRVideoStudio() {
     }
   }
 
+  // 处理下载按钮
+  const handleDownload = () => {
+    if (generationStatus.videoUrl) {
+      const link = document.createElement('a')
+      link.href = generationStatus.videoUrl
+      link.download = `asmr-video-${Date.now()}.mp4`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+  }
+
+  // 处理1080p下载按钮
+  const handleDownload1080p = () => {
+    if (generationStatus.videoUrl1080p) {
+      const link = document.createElement('a')
+      link.href = generationStatus.videoUrl1080p
+      link.download = `asmr-video-1080p-${Date.now()}.mp4`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+  }
+
+  // 处理历史视频按钮 - 跳转到profile页面
+  const handleOpenAssets = () => {
+    router.push('/profile')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <SEOHead
@@ -254,7 +284,7 @@ export default function ASMRVideoStudio() {
             {/* New User Credits Badge */}
             <div className="mb-6 flex justify-center">
               {!user ? (
-                <SignInButton mode="modal">
+                <SignInButton mode="modal" fallbackRedirectUrl="/">
                   <button className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <span className="mr-2 bg-white/20 px-2 py-1 rounded-full text-xs font-medium">
                       New
@@ -264,13 +294,21 @@ export default function ASMRVideoStudio() {
                   </button>
                 </SignInButton>
               ) : (
-                <div className="inline-flex items-center bg-amber-50 text-amber-800 px-6 py-3 rounded-full text-sm font-medium shadow-sm cursor-default border border-amber-200">
-                  <span className="mr-2 bg-emerald-100 px-2 py-1 rounded-full text-xs font-medium text-emerald-700">
-                    ✓
+                <button 
+                  onClick={() => {
+                    const showcaseElement = document.getElementById('video-showcase');
+                    if (showcaseElement) {
+                      showcaseElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                >
+                  <span className="mr-2 bg-white/20 px-2 py-1 rounded-full text-xs font-medium">
+                    ✨
                   </span>
-                  <Star className="w-4 h-4 mr-1 text-emerald-600" />
-                  Welcome back! Enjoy your credits
-                </div>
+                  <Video className="w-4 h-4 mr-1" />
+                  View Video Examples
+                </button>
               )}
             </div>
             
@@ -322,9 +360,11 @@ export default function ASMRVideoStudio() {
                     Default
                   </button>
 
-                  {/* Quick Template Examples - Show more in grid */}
-                  {asmrCategories.slice(0, 3).map((category) => 
-                    category.types.slice(0, category === asmrCategories[0] ? 3 : 2).map((type) => (
+                  {/* Featured ASMR Types */}
+                  {['glass-fruit-cutting', 'ice-cube-carving', 'metal-sheet-cutting', 'fireplace', 'squeeze-toy', 'minecraft-block-cutting', 'electronic-device-cutting'].map((typeId) => {
+                    const type = allAsmrTypes.find(t => t.id === typeId)
+                    if (!type) return null
+                    return (
                       <button
                         key={type.id}
                         onClick={() => handleASMRTypeChange(type.id)}
@@ -336,8 +376,8 @@ export default function ASMRVideoStudio() {
                       >
                         {type.name}
                       </button>
-                    ))
-                  )}
+                    )
+                  })}
                   
                   {/* View All Button */}
                   <button
@@ -505,17 +545,22 @@ export default function ASMRVideoStudio() {
                 thumbnailUrl={generationStatus.thumbnailUrl}
                 videoId={generationStatus.videoId}
                 details={generationStatus.details}
+                onDownload={handleDownload}
+                onDownload1080p={handleDownload1080p}
+                onOpenAssets={handleOpenAssets}
               />
             </div>
           </div>
 
           {/* Video Showcase Section - 新增 */}
-          <VideoShowcase 
-            maxVideos={6}
-            showHeader={true}
-            showViewMore={true}
-            columns={2}
-          />
+          <div id="video-showcase" className="scroll-mt-20">
+            <VideoShowcase 
+              maxVideos={6}
+              showHeader={true}
+              showViewMore={true}
+              columns={2}
+            />
+          </div>
 
           {/* How to Create ASMR Video Section */}
           <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 p-12 mb-20">

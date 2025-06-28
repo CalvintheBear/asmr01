@@ -220,7 +220,7 @@ export default function ASMRVideoResult({
               >
                 <Download className="w-4 h-4 mr-2" />
                 <span className="text-sm font-medium">
-                  Download Video {videoUrl1080p ? '(1080p)' : '(720p)'}
+                  Download Video
                 </span>
               </button>
             </div>
@@ -231,7 +231,7 @@ export default function ASMRVideoResult({
                 onClick={onOpenAssets}
                 className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium"
               >
-                历史生成视频
+                Video History
               </button>
             </div>
           </div>
