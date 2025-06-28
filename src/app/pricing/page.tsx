@@ -125,7 +125,7 @@ export default function PricingPage() {
       />
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
           <Link 
             href="/"
             className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
@@ -133,30 +133,34 @@ export default function PricingPage() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
-          <div className="text-sm text-amber-600 font-medium">
+          <div className="text-sm text-amber-600 font-medium text-center">
             🔥 Limited Time Offer - Save up to 25%
           </div>
         </div>
 
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl flex items-center justify-center mr-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center mb-6 gap-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-5xl font-bold text-gray-800 mb-2">CuttingASMR.org Pricing</h1>
-              <p className="text-xl text-emerald-600 font-medium">Powered by Google Veo3 AI</p>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-2">CuttingASMR.org Pricing</h1>
+              <p className="text-lg sm:text-xl text-emerald-600 font-medium">Powered by Google Veo3 AI</p>
             </div>
           </div>
           
-          <p className="text-2xl text-gray-600 max-w-4xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto mb-8">
             Generate stunning ASMR videos with our advanced AI. Choose the plan that best fits your creative needs.
           </p>
           
-          <div className="inline-flex items-center bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-800 px-6 py-3 rounded-full text-lg font-bold border border-emerald-200">
-            <Video className="w-5 h-5 mr-3" />
-            10 Credits = 1 AI ASMR Video • Credits Never Expire • High Quality Download
+          <div className="flex flex-col sm:flex-row items-center justify-center bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-800 px-4 sm:px-6 py-3 rounded-full text-sm sm:text-lg font-bold border border-emerald-200 gap-2">
+            <Video className="w-5 h-5" />
+            <span className="text-center">10 Credits = 1 AI ASMR Video</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="text-center">Credits Never Expire</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="text-center">High Quality Download</span>
           </div>
         </div>
 

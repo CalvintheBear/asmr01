@@ -26,6 +26,7 @@ export default function ASMRVideoStudio() {
   const [prompt, setPrompt] = useState('')
   const [showAllTypesModal, setShowAllTypesModal] = useState(false)
   const [userSynced, setUserSynced] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
   
   // 使用积分钩子
   const { credits, loading: creditsLoading, refetch: refetchCredits, forceRefresh: forceRefreshCredits } = useCredits(!!user && userSynced)
@@ -188,6 +189,21 @@ export default function ASMRVideoStudio() {
     router.push('/profile')
   }
 
+  // 处理点击外部区域关闭移动端菜单
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showMobileMenu) {
+        const target = event.target as HTMLElement
+        if (!target.closest('header')) {
+          setShowMobileMenu(false)
+        }
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [showMobileMenu])
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <SEOHead
@@ -200,6 +216,7 @@ export default function ASMRVideoStudio() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
+            {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden">
                 <img 
@@ -210,7 +227,9 @@ export default function ASMRVideoStudio() {
               </div>
               <h1 className="text-xl font-bold text-gray-900">CuttingASMR.org</h1>
             </div>
-            <div className="flex items-center space-x-4">
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
               <Link href="/pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                 Pricing
               </Link>
@@ -250,7 +269,7 @@ export default function ASMRVideoStudio() {
                   <Link href="/profile" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
                     Profile
                   </Link>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-600 max-w-[150px] truncate">
                     Welcome, {user.fullName || user.primaryEmailAddress?.emailAddress}
                   </span>
                   <SignOutButton>
@@ -267,7 +286,83 @@ export default function ASMRVideoStudio() {
                 </SignInButton>
               )}
             </div>
+
+            {/* Mobile Navigation */}
+            <div className="md:hidden flex items-center space-x-2">
+              {/* 移动端积分显示 */}
+              {user && (
+                <div className="px-2 py-1 bg-emerald-50 border border-emerald-200 rounded-lg">
+                  <span className="text-xs text-emerald-700 font-medium">
+                    {creditsLoading ? '...' : credits?.remainingCredits || 0}
+                  </span>
+                </div>
+              )}
+              
+              {/* 汉堡菜单按钮 */}
+              <button
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {showMobileMenu ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {showMobileMenu && (
+            <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-sm">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link 
+                  href="/pricing" 
+                  className="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  Pricing
+                </Link>
+                <button className="block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
+                  Blog
+                </button>
+                
+                {user ? (
+                  <>
+                    <Link 
+                      href="/profile" 
+                      className="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      Profile
+                    </Link>
+                    <div className="px-3 py-2 text-sm text-gray-500 truncate">
+                      {user.fullName || user.primaryEmailAddress?.emailAddress}
+                    </div>
+                    <SignOutButton>
+                      <button 
+                        className="block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                        onClick={() => setShowMobileMenu(false)}
+                      >
+                        Sign Out
+                      </button>
+                    </SignOutButton>
+                  </>
+                ) : (
+                  <SignInButton mode="modal" fallbackRedirectUrl="/">
+                    <button 
+                      className="block w-full text-left px-3 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      Sign In
+                    </button>
+                  </SignInButton>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
@@ -312,13 +407,13 @@ export default function ASMRVideoStudio() {
               )}
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
               AI ASMR Generator
               <span className="block text-emerald-700">
                 Powered by Veo3
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               FREE credits for new users! Perfect for YouTube, TikTok creators and ASMR makers. 
               Generate professional AI videos in minutes with advanced Google Veo3 AI technology. 
               Best AI video generator - no editing skills required.
@@ -347,11 +442,11 @@ export default function ASMRVideoStudio() {
                 <p className="text-gray-600 mb-6 leading-relaxed">Select a template or create your own custom ASMR scene</p>
                 
                 {/* Quick Selection - Grid Layout */}
-                <div className="grid grid-cols-3 gap-3 mb-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
                   {/* Default Custom Option */}
                   <button
                     onClick={() => handleASMRTypeChange('default')}
-                    className={`p-4 rounded-xl border transition-all text-center font-medium ${
+                    className={`p-3 sm:p-4 rounded-xl border transition-all text-center font-medium text-sm sm:text-base ${
                       selectedASMRType === 'default'
                         ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
                         : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
@@ -361,20 +456,20 @@ export default function ASMRVideoStudio() {
                   </button>
 
                   {/* Featured ASMR Types */}
-                  {['glass-fruit-cutting', 'ice-cube-carving', 'metal-sheet-cutting', 'fireplace', 'squeeze-toy', 'minecraft-block-cutting', 'electronic-device-cutting'].map((typeId) => {
+                  {['glass-fruit-cutting', 'ice-cube-carving', 'metal-sheet-cutting', 'fireplace', 'squeeze-toy', 'minecraft-block-cutting'].map((typeId) => {
                     const type = allAsmrTypes.find(t => t.id === typeId)
                     if (!type) return null
                     return (
                       <button
                         key={type.id}
                         onClick={() => handleASMRTypeChange(type.id)}
-                        className={`p-4 rounded-xl border transition-all text-center font-medium ${
+                        className={`p-3 sm:p-4 rounded-xl border transition-all text-center font-medium text-sm sm:text-base ${
                           selectedASMRType === type.id
                             ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
                             : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
                         }`}
                       >
-                        {type.name}
+                        <span className="block truncate">{type.name}</span>
                       </button>
                     )
                   })}
@@ -382,7 +477,7 @@ export default function ASMRVideoStudio() {
                   {/* View All Button */}
                   <button
                     onClick={() => setShowAllTypesModal(true)}
-                    className="p-4 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium"
+                    className="p-3 sm:p-4 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium text-sm sm:text-base"
                   >
                     <span className="mr-1">⋯</span> All
                   </button>
@@ -495,29 +590,7 @@ export default function ASMRVideoStudio() {
                         </div>
                       </div>
                     )}
-                    
-                    {/* Credits insufficient notice */}
-                    {user && userSynced && !creditsLoading && credits && !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits) && (
-                      <div className="bg-orange-50 border border-orange-200 rounded-xl p-5">
-                        <div className="flex items-start space-x-3">
-                          <div className="flex-shrink-0">
-                            <Zap className="w-5 h-5 text-orange-600 mt-0.5" />
-                          </div>
-                          <div>
-                            <h4 className="font-medium text-orange-800 mb-1">Credits Needed</h4>
-                            <p className="text-sm text-orange-700 mb-3 leading-relaxed">
-                              You need {CREDITS_CONFIG.VIDEO_COST} credits to generate a video. 
-                              You currently have {credits.remainingCredits} credits remaining.
-                            </p>
-                            <Link href="/pricing" className="inline-block">
-                              <button className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors">
-                                Get More Credits
-                              </button>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+
                   </div>
                 ) : (
                   <div className="bg-stone-50 border border-stone-200 rounded-xl p-6">

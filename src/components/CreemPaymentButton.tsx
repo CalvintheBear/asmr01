@@ -140,12 +140,12 @@ export default function CreemPaymentButton({
       <button
         onClick={handlePayment}
         disabled={isLoading}
-        className={`${className} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        className={`${className} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''} relative overflow-hidden`}
       >
         {isLoading ? (
           <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-            Processing...
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 flex-shrink-0"></div>
+            <span className="text-sm sm:text-base">Processing...</span>
           </div>
         ) : (
           children
@@ -153,8 +153,13 @@ export default function CreemPaymentButton({
       </button>
       
       {error && (
-        <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded">
-          {error}
+        <div className="mt-2 p-2 sm:p-3 text-xs sm:text-sm text-red-600 bg-red-50 rounded-lg border border-red-200">
+          <div className="flex items-start space-x-2">
+            <svg className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="break-words">{error}</span>
+          </div>
         </div>
       )}
 
