@@ -186,8 +186,8 @@ export default function ProfilePage() {
 
   if (!isLoaded || syncing) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-lg">
+      <div className="min-h-screen bg-gradient-to-br from-stone-100 via-white to-amber-50 flex items-center justify-center">
+        <div className="text-gray-800 text-lg">
           {syncing ? 'Syncing user information...' : 'Loading...'}
         </div>
       </div>
@@ -196,18 +196,18 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-lg">Please sign in first</div>
+      <div className="min-h-screen bg-gradient-to-br from-stone-100 via-white to-amber-50 flex items-center justify-center">
+        <div className="text-gray-800 text-lg">Please sign in first</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-stone-100 via-white to-amber-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-white">User Profile</h1>
+          <h1 className="text-3xl font-bold text-gray-800">User Profile</h1>
           <UserButton 
             appearance={{
               elements: {
@@ -219,37 +219,37 @@ export default function ProfilePage() {
 
         {/* Error notification */}
         {syncError && (
-          <div className="mb-6 bg-red-500/20 border border-red-500/50 rounded-lg p-4">
-            <p className="text-red-200">⚠️ {syncError}</p>
+          <div className="mb-6 bg-amber-100 border border-amber-300 rounded-xl p-4">
+            <p className="text-amber-800">⚠️ {syncError}</p>
           </div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* User info card */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+          <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-stone-200 shadow-lg">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">👤</span>
               Basic Information
             </h2>
             
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-gray-300">Display Name</label>
-                <p className="text-white font-medium">
+                <label className="text-sm text-gray-600">Display Name</label>
+                <p className="text-gray-800 font-medium">
                   {user.fullName || user.firstName || 'Not set'}
                 </p>
               </div>
               
               <div>
-                <label className="text-sm text-gray-300">Email Address</label>
-                <p className="text-white font-medium">
+                <label className="text-sm text-gray-600">Email Address</label>
+                <p className="text-gray-800 font-medium">
                   {user.primaryEmailAddress?.emailAddress || 'Not set'}
                 </p>
               </div>
               
               <div>
-                <label className="text-sm text-gray-300">Registration Date</label>
-                <p className="text-white font-medium">
+                <label className="text-sm text-gray-600">Registration Date</label>
+                <p className="text-gray-800 font-medium">
                   {user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US') : 'Unknown'}
                 </p>
               </div>
@@ -257,25 +257,25 @@ export default function ProfilePage() {
           </div>
 
           {/* Credits info card */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+          <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-stone-200 shadow-lg">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">💎</span>
               Credits Information
               <button 
                 onClick={refetch}
                 disabled={loading}
-                className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
+                className="ml-auto text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-colors"
               >
                 {loading ? 'Refreshing...' : 'Refresh'}
               </button>
             </h2>
 
             {error ? (
-              <div className="text-red-400 text-sm mb-4">
+              <div className="text-amber-800 text-sm mb-4 bg-amber-100 p-3 rounded-lg">
                 {error}
                 <button 
                   onClick={refetch}
-                  className="ml-2 text-blue-400 hover:text-blue-300 underline"
+                  className="ml-2 text-emerald-600 hover:text-emerald-700 underline"
                 >
                   Retry
                 </button>
@@ -283,50 +283,50 @@ export default function ProfilePage() {
             ) : credits ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-white/5 rounded-lg">
-                    <p className="text-2xl font-bold text-green-400">
+                  <div className="text-center p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+                    <p className="text-2xl font-bold text-emerald-600">
                       {credits.remainingCredits}
                     </p>
-                    <p className="text-sm text-gray-300">Remaining Credits</p>
+                    <p className="text-sm text-gray-600">Remaining Credits</p>
                   </div>
                   
-                  <div className="text-center p-4 bg-white/5 rounded-lg">
-                    <p className="text-2xl font-bold text-blue-400">
+                  <div className="text-center p-4 bg-amber-50 rounded-lg border border-amber-200">
+                    <p className="text-2xl font-bold text-amber-600">
                       {credits.totalCredits}
                     </p>
-                    <p className="text-sm text-gray-300">Total Credits</p>
+                    <p className="text-sm text-gray-600">Total Credits</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-white/5 rounded-lg">
-                    <p className="text-2xl font-bold text-purple-400">
+                  <div className="text-center p-4 bg-stone-50 rounded-lg border border-stone-200">
+                    <p className="text-2xl font-bold text-stone-600">
                       {credits.usedCredits}
                     </p>
-                    <p className="text-sm text-gray-300">Used Credits</p>
+                    <p className="text-sm text-gray-600">Used Credits</p>
                   </div>
                   
-                  <div className="text-center p-4 bg-white/5 rounded-lg">
-                    <p className="text-2xl font-bold text-orange-400">
+                  <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+                    <p className="text-2xl font-bold text-orange-600">
                       {credits.videosCount}
                     </p>
-                    <p className="text-sm text-gray-300">Videos Created</p>
+                    <p className="text-sm text-gray-600">Videos Created</p>
                   </div>
                 </div>
 
-                <div className="text-sm text-gray-300 bg-white/5 p-3 rounded-lg">
+                <div className="text-sm text-gray-700 bg-stone-50 p-3 rounded-lg border border-stone-200">
                   <p>💡 Each video generation costs {CREDITS_CONFIG.VIDEO_COST} credits</p>
                   <p>💡 You can create approximately {CREDITS_CONFIG.getVideoCount(credits.remainingCredits)} videos</p>
                 </div>
               </div>
             ) : loading ? (
-              <div className="text-gray-300">Loading credits information...</div>
+              <div className="text-gray-600">Loading credits information...</div>
             ) : (
-              <div className="text-gray-300">
+              <div className="text-gray-600">
                 <p>Credits information not loaded yet</p>
                 <button 
                   onClick={refetch}
-                  className="mt-2 text-blue-400 hover:text-blue-300 underline"
+                  className="mt-2 text-emerald-600 hover:text-emerald-700 underline"
                 >
                   Click to load
                 </button>
@@ -336,25 +336,25 @@ export default function ProfilePage() {
         </div>
 
         {/* Generated videos history */}
-        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+        <div className="mt-8 bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-stone-200 shadow-lg">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="mr-2">🎬</span>
             Generated Videos History
             <button 
               onClick={fetchVideos}
               disabled={videosLoading}
-              className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
+              className="ml-auto text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-colors"
             >
               {videosLoading ? 'Loading...' : 'Refresh'}
             </button>
           </h2>
 
           {videosError ? (
-            <div className="text-red-400 text-sm mb-4">
+            <div className="text-amber-800 text-sm mb-4 bg-amber-100 p-3 rounded-lg">
               {videosError}
               <button 
                 onClick={fetchVideos}
-                className="ml-2 text-blue-400 hover:text-blue-300 underline"
+                className="ml-2 text-emerald-600 hover:text-emerald-700 underline"
               >
                 Retry
               </button>
@@ -362,19 +362,19 @@ export default function ProfilePage() {
           ) : videos.length > 0 ? (
             <div className="space-y-4">
               {videos.map((video) => (
-                <div key={video.id} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div key={video.id} className="bg-stone-50 rounded-lg p-4 border border-stone-200">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center mb-2">
-                        <span className="text-lg font-semibold text-white">
+                        <span className="text-lg font-semibold text-gray-800">
                           {video.title}
                         </span>
                         <span className={`ml-3 px-2 py-1 rounded-full text-xs font-medium ${
                           video.status === 'completed' 
-                            ? 'bg-green-500/20 text-green-300' 
+                            ? 'bg-emerald-100 text-emerald-700' 
                             : video.status === 'failed'
-                            ? 'bg-red-500/20 text-red-300'
-                            : 'bg-yellow-500/20 text-yellow-300'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-amber-100 text-amber-700'
                         }`}>
                           {video.status === 'completed' ? 'Completed' : 
                            video.status === 'failed' ? 'Failed' : 'Processing'}
@@ -382,8 +382,8 @@ export default function ProfilePage() {
                       </div>
                       
                       <div className="mb-3">
-                        <p className="text-gray-400 text-sm mb-1">Prompt:</p>
-                        <p className="text-white text-sm bg-white/5 p-2 rounded">
+                        <p className="text-gray-600 text-sm mb-1">Prompt:</p>
+                        <p className="text-gray-800 text-sm bg-white p-2 rounded border border-stone-200">
                           {video.prompt.length > 100 ? 
                             `${video.prompt.substring(0, 100)}...` : 
                             video.prompt
@@ -393,8 +393,8 @@ export default function ProfilePage() {
                       
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
-                          <p className="text-gray-400">TaskID</p>
-                          <p className="text-white font-mono text-xs">
+                          <p className="text-gray-600">TaskID</p>
+                          <p className="text-gray-800 font-mono text-xs">
                             {video.taskId || 'None'}
                           </p>
                         </div>
@@ -452,25 +452,25 @@ export default function ProfilePage() {
         </div>
 
         {/* Purchase history */}
-        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+        <div className="mt-8 bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-stone-200 shadow-lg">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="mr-2">🛒</span>
             Purchase History
             <button 
               onClick={fetchPurchases}
               disabled={purchasesLoading}
-              className="ml-auto text-sm bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 px-3 py-1 rounded-lg transition-colors"
+              className="ml-auto text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-colors"
             >
               {purchasesLoading ? 'Loading...' : 'Refresh'}
             </button>
           </h2>
 
           {purchasesError ? (
-            <div className="text-red-400 text-sm mb-4">
+            <div className="text-amber-800 text-sm mb-4 bg-amber-100 p-3 rounded-lg">
               {purchasesError}
               <button 
                 onClick={fetchPurchases}
-                className="ml-2 text-blue-400 hover:text-blue-300 underline"
+                className="ml-2 text-emerald-600 hover:text-emerald-700 underline"
               >
                 Retry
               </button>
@@ -478,17 +478,17 @@ export default function ProfilePage() {
           ) : purchases.length > 0 ? (
             <div className="space-y-4">
               {purchases.map((purchase) => (
-                <div key={purchase.id} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div key={purchase.id} className="bg-stone-50 rounded-lg p-4 border border-stone-200">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center mb-2">
-                        <span className="text-lg font-semibold text-white capitalize">
+                        <span className="text-lg font-semibold text-gray-800 capitalize">
                           {purchase.packageName}
                         </span>
                         <span className={`ml-3 px-2 py-1 rounded-full text-xs font-medium ${
                           purchase.status === 'completed' 
-                            ? 'bg-green-500/20 text-green-300' 
-                            : 'bg-yellow-500/20 text-yellow-300'
+                            ? 'bg-emerald-100 text-emerald-700' 
+                            : 'bg-amber-100 text-amber-700'
                         }`}>
                           {purchase.status === 'completed' ? 'Completed' : 'Processing'}
                         </span>
@@ -496,26 +496,26 @@ export default function ProfilePage() {
                       
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
-                          <p className="text-gray-400">Payment Amount</p>
-                          <p className="text-white font-medium">
+                          <p className="text-gray-600">Payment Amount</p>
+                          <p className="text-gray-800 font-medium">
                             ${purchase.amount.toFixed(2)} {purchase.currency}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">Credits Received</p>
-                          <p className="text-green-400 font-medium">
+                          <p className="text-gray-600">Credits Received</p>
+                          <p className="text-emerald-600 font-medium">
                             +{purchase.creditsAdded}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">Order ID</p>
-                          <p className="text-white font-mono text-xs">
+                          <p className="text-gray-600">Order ID</p>
+                          <p className="text-gray-800 font-mono text-xs">
                             {purchase.orderId || 'None'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400">Purchase Date</p>
-                          <p className="text-white">
+                          <p className="text-gray-600">Purchase Date</p>
+                          <p className="text-gray-800">
                             {purchase.formattedDate}
                           </p>
                         </div>
@@ -526,23 +526,23 @@ export default function ProfilePage() {
               ))}
             </div>
           ) : purchasesLoading ? (
-            <div className="text-gray-300 text-center py-8">
-              <div className="animate-spin w-6 h-6 border-2 border-white/30 border-t-white rounded-full mx-auto mb-2"></div>
+            <div className="text-gray-600 text-center py-8">
+              <div className="animate-spin w-6 h-6 border-2 border-stone-300 border-t-emerald-600 rounded-full mx-auto mb-2"></div>
               Loading purchase history...
             </div>
           ) : (
-            <div className="text-gray-300 text-center py-8">
+            <div className="text-gray-600 text-center py-8">
               <p>No purchase history yet</p>
-              <p className="text-sm text-gray-400 mt-2">
-                Go to <a href="/pricing" className="text-blue-400 hover:text-blue-300 underline">buy credits</a> to start your creative journey
+              <p className="text-sm text-gray-500 mt-2">
+                Go to <a href="/pricing" className="text-emerald-600 hover:text-emerald-700 underline">buy credits</a> to start your creative journey
               </p>
             </div>
           )}
         </div>
 
         {/* Account management - Creem Compliance */}
-        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+        <div className="mt-8 bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-stone-200 shadow-lg">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="mr-2">💳</span>
             Account Management
           </h2>
@@ -568,10 +568,10 @@ export default function ProfilePage() {
                   window.open('https://www.creem.io/customer-portal', '_blank', 'noopener,noreferrer')
                 }
               }}
-              className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+              className="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-300 px-4 py-3 rounded-lg transition-colors text-left"
             >
               <div className="font-medium">💳 Manage Payment Methods</div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-600 mt-1">
                 Update payment methods, view billing history
               </div>
             </button>
@@ -579,25 +579,25 @@ export default function ProfilePage() {
             {/* Customer support */}
             <a
               href="mailto:supportadmin@cuttingasmr.org"
-              className="bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/50 px-4 py-3 rounded-lg transition-colors text-left block"
+              className="bg-amber-100 hover:bg-amber-200 text-amber-700 border border-amber-300 px-4 py-3 rounded-lg transition-colors text-left block"
             >
               <div className="font-medium">📧 Contact Support</div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-600 mt-1">
                 Need help? We respond within 3 business days
               </div>
             </a>
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
-            <p className="text-blue-300 text-sm">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
+            <p className="text-emerald-800 text-sm">
               <strong>💡 Payment Management:</strong> Clicking "Manage Payment Methods" will open the Creem customer portal where you can safely manage your payment methods, view detailed billing history, and handle any payment-related matters.
             </p>
           </div>
         </div>
 
         {/* Data management */}
-        <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+        <div className="mt-8 bg-white/90 backdrop-blur-md rounded-2xl p-6 border border-stone-200 shadow-lg">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="mr-2">🔒</span>
             Data Management
           </h2>
@@ -625,10 +625,10 @@ export default function ProfilePage() {
                   alert('Export failed, please try again later')
                 }
               }}
-              className="bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+              className="bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 px-4 py-3 rounded-lg transition-colors text-left"
             >
               <div className="font-medium">📥 Export My Data</div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-600 mt-1">
                 Download a JSON file containing all your data
               </div>
             </button>
@@ -651,10 +651,10 @@ export default function ProfilePage() {
                   }
                 }
               }}
-              className="bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+              className="bg-amber-100 hover:bg-amber-200 text-amber-700 border border-amber-300 px-4 py-3 rounded-lg transition-colors text-left"
             >
               <div className="font-medium">🗑️ Clear Video History</div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-600 mt-1">
                 Delete all video generation records
               </div>
             </button>
@@ -676,10 +676,10 @@ export default function ProfilePage() {
                   }
                 }
               }}
-              className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+              className="bg-orange-100 hover:bg-orange-200 text-orange-700 border border-orange-300 px-4 py-3 rounded-lg transition-colors text-left"
             >
               <div className="font-medium">🔄 Reset Preferences</div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-600 mt-1">
                 Clear ASMR type preferences and settings
               </div>
             </button>
@@ -703,19 +703,19 @@ export default function ProfilePage() {
                   }
                 }
               }}
-              className="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/50 px-4 py-3 rounded-lg transition-colors text-left"
+              className="bg-red-100 hover:bg-red-200 text-red-700 border border-red-300 px-4 py-3 rounded-lg transition-colors text-left"
             >
               <div className="font-medium">⚠️ Delete Account</div>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-600 mt-1">
                 Permanently delete account and all data
               </div>
             </button>
           </div>
 
-          <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-            <p className="text-blue-300 text-sm">
+          <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+            <p className="text-emerald-800 text-sm">
               💡 <strong>Data Protection</strong>: According to our privacy policy, you have the right to access, correct, delete, or export your personal data.
-              For assistance, please contact <a href="mailto:supportadmin@cuttingasmr.org" className="underline">supportadmin@cuttingasmr.org</a>
+              For assistance, please contact <a href="mailto:supportadmin@cuttingasmr.org" className="underline text-emerald-700 hover:text-emerald-600">supportadmin@cuttingasmr.org</a>
             </p>
           </div>
         </div>
@@ -724,14 +724,14 @@ export default function ProfilePage() {
         <div className="mt-8 flex flex-wrap gap-4">
           <a
             href="/pricing"
-            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
+            className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
           >
             Buy Credits
           </a>
           
           <a
             href="/"
-            className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20"
+            className="bg-stone-200 hover:bg-stone-300 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors border border-stone-300"
           >
             Back to Home
           </a>

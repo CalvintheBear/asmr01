@@ -11,6 +11,7 @@ import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Use
 import { asmrCategories, defaultOption } from '@/config/asmr-types'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
+import VideoShowcase from '@/components/VideoShowcase'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 import SEOHead from '@/components/SEOHead'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
@@ -230,7 +231,7 @@ export default function ASMRVideoStudio() {
                 </div>
               ) : (
                 <SignInButton mode="modal" fallbackRedirectUrl="/">
-                  <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                  <button className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
                     Sign In
                   </button>
                 </SignInButton>
@@ -241,47 +242,45 @@ export default function ASMRVideoStudio() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 bg-gradient-to-br from-purple-50 via-indigo-50 via-pink-50 to-cyan-50 min-h-screen relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-purple-300/20 to-pink-300/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-cyan-300/20 to-blue-300/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-indigo-300/15 to-purple-300/15 rounded-full blur-3xl animate-pulse"></div>
+      <div className="flex-1 bg-gradient-to-br from-stone-50 via-amber-50/30 to-orange-50/20 min-h-screen relative">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.1),transparent_50%)]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
           
           {/* Hero Section */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-20">
             {/* New User Credits Badge */}
             <div className="mb-6 flex justify-center">
               {!user ? (
                 <SignInButton mode="modal">
-                  <button className="group inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 cursor-pointer">
-                    <span className="mr-2 bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold">
+                  <button className="group inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
+                    <span className="mr-2 bg-white/20 px-2 py-1 rounded-full text-xs font-medium">
                       New
                     </span>
-                    <Sparkles className="w-4 h-4 mr-1 animate-pulse" />
+                    <Sparkles className="w-4 h-4 mr-1" />
                     FREE credits for new users!
                   </button>
                 </SignInButton>
               ) : (
-                <div className="inline-flex items-center bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-semibold shadow-sm cursor-default">
-                  <span className="mr-2 bg-green-500/20 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-bold text-green-700">
+                <div className="inline-flex items-center bg-amber-50 text-amber-800 px-6 py-3 rounded-full text-sm font-medium shadow-sm cursor-default border border-amber-200">
+                  <span className="mr-2 bg-emerald-100 px-2 py-1 rounded-full text-xs font-medium text-emerald-700">
                     ✓
                   </span>
-                  <Star className="w-4 h-4 mr-1 text-green-600" />
+                  <Star className="w-4 h-4 mr-1 text-emerald-600" />
                   Welcome back! Enjoy your credits
                 </div>
               )}
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
               AI ASMR Generator
-              <span className="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <span className="block text-emerald-700">
                 Powered by Veo3
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               FREE credits for new users! Perfect for YouTube, TikTok creators and ASMR makers. 
               Generate professional relaxing video in minutes with advanced Google Veo3 AI technology. 
               No editing skills required.
@@ -289,9 +288,9 @@ export default function ASMRVideoStudio() {
             
             {/* Credits Display */}
             {user && (
-              <div className="inline-flex items-center bg-white rounded-full px-6 py-3 shadow-lg border border-gray-200 mb-8">
-                <Zap className="w-5 h-5 text-yellow-500 mr-2" />
-                                 <span className="font-medium text-gray-900">
+              <div className="inline-flex items-center bg-white rounded-2xl px-6 py-4 shadow-lg border border-stone-200 mb-12">
+                <Zap className="w-5 h-5 text-amber-600 mr-2" />
+                                 <span className="font-medium text-gray-800">
                    {creditsLoading ? 'Loading...' : `${credits?.remainingCredits || 0} Credits Available`}
                  </span>
                  <span className="text-gray-500 ml-2">• 10 credits per video</span>
@@ -300,24 +299,24 @@ export default function ASMRVideoStudio() {
           </div>
 
           {/* Main Content - Two Column Layout */}
-          <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-start mb-12">
+          <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-start mb-20">
             {/* Left Panel - ASMR Controls */}
-            <div className="bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden h-fit transform hover:scale-[1.02] transition-all duration-300">
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 overflow-hidden h-fit">
               
               {/* ASMR Type Selection */}
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Choose ASMR Type</h2>
-                <p className="text-gray-600 mb-6">Select a template or create your own custom ASMR scene</p>
+              <div className="p-8 border-b border-stone-200">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">Choose ASMR Type</h2>
+                <p className="text-gray-600 mb-6 leading-relaxed">Select a template or create your own custom ASMR scene</p>
                 
                 {/* Quick Selection - Grid Layout */}
                 <div className="grid grid-cols-3 gap-3 mb-6">
                   {/* Default Custom Option */}
                   <button
                     onClick={() => handleASMRTypeChange('default')}
-                    className={`p-3 rounded-lg border transition-all text-center ${
+                    className={`p-4 rounded-xl border transition-all text-center font-medium ${
                       selectedASMRType === 'default'
-                        ? 'border-blue-500 bg-blue-500 text-white shadow-md'
-                        : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-700'
+                        ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
+                        : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
                     }`}
                   >
                     Default
@@ -329,10 +328,10 @@ export default function ASMRVideoStudio() {
                       <button
                         key={type.id}
                         onClick={() => handleASMRTypeChange(type.id)}
-                        className={`p-3 rounded-lg border transition-all text-center ${
+                        className={`p-4 rounded-xl border transition-all text-center font-medium ${
                           selectedASMRType === type.id
-                            ? 'border-blue-500 bg-blue-500 text-white shadow-md'
-                            : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-700'
+                            ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
+                            : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
                         }`}
                       >
                         {type.name}
@@ -343,7 +342,7 @@ export default function ASMRVideoStudio() {
                   {/* View All Button */}
                   <button
                     onClick={() => setShowAllTypesModal(true)}
-                    className="p-3 rounded-lg border border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-700 transition-all text-center flex items-center justify-center"
+                    className="p-4 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium"
                   >
                     <span className="mr-1">⋯</span> All
                   </button>
@@ -351,9 +350,9 @@ export default function ASMRVideoStudio() {
               </div>
 
               {/* Prompt Input Section */}
-              <div className="p-6 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Customize Your ASMR Video</h3>
-                <p className="text-gray-600 mb-4">
+              <div className="p-8 border-b border-stone-200">
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">Customize Your ASMR Video</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   {selectedASMRType === 'default' 
                     ? 'Describe your ideal ASMR scene in detail'
                     : 'Edit the template or use it as-is'
@@ -367,7 +366,7 @@ export default function ASMRVideoStudio() {
                     ? "Describe your ASMR scene: lighting, camera angles, sounds, textures, and visual elements. Be specific about what you want to see and hear..."
                     : "Edit the template prompt below or use it as-is..."
                   }
-                  className="w-full h-32 p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full h-32 p-4 border border-stone-300 rounded-xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-stone-50/50 focus:bg-white transition-colors"
                 />
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-sm text-gray-500">
@@ -381,7 +380,7 @@ export default function ASMRVideoStudio() {
               </div>
 
               {/* Generate Button Section */}
-              <div className="p-6">
+              <div className="p-8">
                 {user ? (
                   <div className="space-y-4">
                     <button
@@ -404,7 +403,7 @@ export default function ASMRVideoStudio() {
                         isGenerating || 
                         !CREDITS_CONFIG.canCreateVideo(credits?.remainingCredits || 0)
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white hover:from-purple-700 hover:via-pink-700 hover:to-indigo-700 shadow-2xl hover:shadow-3xl transform hover:scale-105 relative overflow-hidden group'
+                          : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300'
                       }`}
                     >
                       {isGenerating ? (
@@ -435,13 +434,13 @@ export default function ASMRVideoStudio() {
                     
                     {/* Loading state notice */}
                     {user && (!userSynced || creditsLoading || !credits) && (
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
                         <div className="flex items-start space-x-3">
                           <div className="flex-shrink-0">
-                            <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
+                            <div className="animate-spin rounded-full h-5 w-5 border-2 border-amber-600 border-t-transparent"></div>
                           </div>
                           <div>
-                            <h4 className="font-medium text-blue-800 mb-1">
+                            <h4 className="font-medium text-amber-800 mb-1">
                               {!userSynced 
                                 ? 'Syncing Account'
                                 : creditsLoading 
@@ -449,7 +448,7 @@ export default function ASMRVideoStudio() {
                                 : 'Loading Account Data'
                               }
                             </h4>
-                            <p className="text-sm text-blue-700">
+                            <p className="text-sm text-amber-700 leading-relaxed">
                               Please wait while we load your account information...
                             </p>
                           </div>
@@ -459,19 +458,19 @@ export default function ASMRVideoStudio() {
                     
                     {/* Credits insufficient notice */}
                     {user && userSynced && !creditsLoading && credits && !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits) && (
-                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                      <div className="bg-orange-50 border border-orange-200 rounded-xl p-5">
                         <div className="flex items-start space-x-3">
                           <div className="flex-shrink-0">
-                            <Zap className="w-5 h-5 text-yellow-600 mt-0.5" />
+                            <Zap className="w-5 h-5 text-orange-600 mt-0.5" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-yellow-800 mb-1">Credits Needed</h4>
-                            <p className="text-sm text-yellow-700 mb-3">
+                            <h4 className="font-medium text-orange-800 mb-1">Credits Needed</h4>
+                            <p className="text-sm text-orange-700 mb-3 leading-relaxed">
                               You need {CREDITS_CONFIG.VIDEO_COST} credits to generate a video. 
                               You currently have {credits.remainingCredits} credits remaining.
                             </p>
                             <Link href="/pricing" className="inline-block">
-                              <button className="bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-700 transition-colors">
+                              <button className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 transition-colors">
                                 Get More Credits
                               </button>
                             </Link>
@@ -481,13 +480,13 @@ export default function ASMRVideoStudio() {
                     )}
                   </div>
                 ) : (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-blue-900 mb-2">Sign in to Generate Videos</h3>
-                    <p className="text-blue-700 mb-4">
+                  <div className="bg-stone-50 border border-stone-200 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Sign in to Generate Videos</h3>
+                    <p className="text-gray-600 mb-4 leading-relaxed">
                       Create your account to start generating AI ASMR videos with our advanced tools.
                     </p>
                     <SignInButton mode="modal" fallbackRedirectUrl="/">
-                      <button className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                      <button className="w-full px-6 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors">
                         Sign In to Continue
                       </button>
                     </SignInButton>
@@ -510,68 +509,76 @@ export default function ASMRVideoStudio() {
             </div>
           </div>
 
+          {/* Video Showcase Section - 新增 */}
+          <VideoShowcase 
+            maxVideos={6}
+            showHeader={true}
+            showViewMore={true}
+            columns={2}
+          />
+
           {/* How to Create ASMR Video Section */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-12">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">How to Create an ASMR Video with Veo3 AI</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 p-12 mb-20">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-semibold text-gray-800 mb-6">How to Create an ASMR Video with Veo3 AI</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Generate a relaxing ASMR video in just three simple steps with our AI-powered Veo3 platform:
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
               {/* Step 1 */}
               <div className="relative group">
-                <div className="bg-gradient-to-br from-purple-100/80 to-pink-100/80 backdrop-blur-sm rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-purple-200/50 transform group-hover:scale-105 transition-all duration-300">
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-emerald-100 hover:shadow-xl transition-all duration-300">
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg">
                     1
                   </div>
-                  <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
-                    <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Choose ASMR Scene</h3>
-                  <p className="text-gray-600 text-sm">Select from pre-built templates or create your own custom ASMR concept</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Choose ASMR Scene</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">Select from pre-built templates or create your own custom ASMR concept</p>
                 </div>
               </div>
 
               {/* Step 2 */}
               <div className="relative group">
-                <div className="bg-gradient-to-br from-indigo-100/80 to-cyan-100/80 backdrop-blur-sm rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-indigo-200/50 transform group-hover:scale-105 transition-all duration-300">
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-300">
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg">
                     2
                   </div>
-                  <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
-                    <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Customize Your Prompt</h3>
-                  <p className="text-gray-600 text-sm">Describe your ideal ASMR scene with specific details about sounds, visuals, and mood</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Customize Your Prompt</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">Describe your ideal ASMR scene with specific details about sounds, visuals, and mood</p>
                 </div>
               </div>
 
               {/* Step 3 */}
               <div className="relative group">
-                <div className="bg-gradient-to-br from-emerald-100/80 to-teal-100/80 backdrop-blur-sm rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-emerald-200/50 transform group-hover:scale-105 transition-all duration-300">
-                  <div className="absolute top-4 left-4 w-8 h-8 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 h-64 flex flex-col items-center justify-center text-center shadow-lg border border-amber-100 hover:shadow-xl transition-all duration-300">
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg">
                     3
                   </div>
-                  <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-6">
-                    <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Generate & Share</h3>
-                  <p className="text-gray-600 text-sm">AI creates your video in 3-5 minutes. Download and share on YouTube, TikTok, or any platform</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">Generate & Share</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">AI creates your video in 3-5 minutes. Download and share on YouTube, TikTok, or any platform</p>
                 </div>
               </div>
             </div>
 
             <div className="text-center">
               <Link href="#main-generator">
-                <button className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg">
+                <button className="inline-flex items-center px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium text-lg transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
                   Create ASMR Video Now
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -581,75 +588,27 @@ export default function ASMRVideoStudio() {
             </div>
           </div>
 
-          {/* Therapeutic Benefits Section */}
-          <div className="bg-gradient-to-br from-white via-cyan-50/30 to-indigo-50/30 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 p-8 mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Advanced AI Video Generation Technology</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Powered by Veo3 Fast, our AI ASMR generator creates professional therapeutic videos 
-                automatically. The AI analyzes your prompts and generates high-quality ASMR content with precision.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center p-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <Zap className="w-6 h-6 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Veo3 Fast AI Engine</h3>
-                <p className="text-sm text-gray-600">Advanced artificial intelligence that understands ASMR triggers and generates professional videos</p>
-              </div>
-              
-              <div className="text-center p-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <Settings className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">AI-Powered Customization</h3>
-                <p className="text-sm text-gray-600">Intelligent AI algorithms adapt to your prompts and create personalized ASMR experiences</p>
-              </div>
-              
-              <div className="text-center p-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <Video className="w-6 h-6 text-green-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Automated Video Production</h3>
-                <p className="text-sm text-gray-600">AI-driven video generation that produces high-quality ASMR content in minutes</p>
-              </div>
-              
-              <div className="text-center p-4">
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <Sparkles className="w-6 h-6 text-indigo-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Intelligent Scene Recognition</h3>
-                <p className="text-sm text-gray-600">AI understands ASMR concepts and automatically creates therapeutic audio-visual experiences</p>
-              </div>
-            </div>
-            
-            <div className="bg-blue-50 rounded-lg p-6 mt-8">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <Check className="w-5 h-5 text-blue-600 mt-0.5" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-blue-900 mb-1">Advanced AI Technology Powered by Veo3</h4>
-                  <p className="text-sm text-blue-800">
-                    Our AI ASMR generator utilizes cutting-edge Veo3 Fast artificial intelligence to create therapeutic content automatically. 
-                    The AI analyzes your prompts and generates professional ASMR videos for wellness and relaxation purposes.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
 
       {/* FAQ Section for SEO */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="bg-gradient-to-br from-white via-gray-50/30 to-slate-50/30 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-white/40">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-stone-200/50">
+                      <h2 className="text-3xl font-semibold text-center text-gray-800 mb-16">Frequently Asked Questions</h2>
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What is Veo3 AI ASMR video generator?</h3>
+                <p className="text-gray-600">Our Veo3 AI ASMR generator uses advanced Google Veo3 technology to create high-quality, relaxing ASMR videos from text prompts. Generate professional therapeutic content without traditional recording equipment or editing skills.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I create ASMR videos without a microphone?</h3>
+                <p className="text-gray-600">Yes! Our AI ASMR video generator creates professional content instantly without microphones or editing skills. Generate 4K quality videos with spatial audio and realistic physics effects using only text descriptions.</p>
+              </div>
+              
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Perfect for YouTube & TikTok content creators?</h3>
                 <p className="text-gray-600">Absolutely! Our AI generates ASMR videos optimized for social media platforms. Create engaging content for YouTube, TikTok, Instagram, and other platforms with professional quality that drives views and subscriber growth.</p>
@@ -661,12 +620,27 @@ export default function ASMRVideoStudio() {
               </div>
               
               <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What ASMR triggers can your AI create?</h3>
+                <p className="text-gray-600">Our ASMR-optimized engine creates classic triggers like slicing sounds, tapping, water drops, crystal breaking, and viral trends like glass fruit cutting. Generate consistent trigger experiences with realistic physics and spatial audio effects.</p>
+              </div>
+              
+              <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Do AI-generated videos perform well on social media?</h3>
                 <p className="text-gray-600">Yes! Our AI creates professional-quality ASMR content that engages audiences across platforms. Many content creators use our generated videos to boost their posting frequency and grow their follower base on YouTube and TikTok.</p>
               </div>
             </div>
             
             <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How long should AI ASMR videos be for TikTok and YouTube?</h3>
+                <p className="text-gray-600">For TikTok, 10-15 second viral loops work best for maximum engagement. For YouTube, our high quality seamless loop videos are perfect for longer immersive content and sleep videos. Our AI optimizes duration for each platform automatically.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Is your ASMR video generator free to use?</h3>
+                <p className="text-gray-600">We offer free credits for new users to get started, plus flexible paid plans for extensive use. Our transparent credit system means you only pay for rendered videos - no subscriptions required. Perfect for testing before committing.</p>
+              </div>
+              
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">How much does it cost for content creators?</h3>
                 <p className="text-gray-600">Each AI-generated ASMR video costs just 10 credits (less than $1). For content creators, our packages start at $9.90 for 115 credits - creating 11+ videos. Much more cost-effective than traditional video production.</p>
@@ -678,19 +652,24 @@ export default function ASMRVideoStudio() {
               </div>
               
               <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Does your AI create videos with binaural audio?</h3>
+                <p className="text-gray-600">Yes! Our Veo3 AI generates videos with built-in 3D spatial audio and binaural sound generation. Experience immersive therapeutic audio that provides the authentic ASMR tingles and relaxation effects users expect.</p>
+              </div>
+              
+              <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize videos for my brand/niche?</h3>
                 <p className="text-gray-600">Absolutely! Content creators can customize every aspect through detailed prompts. Create unique ASMR content that matches your channel's style, branding, and audience preferences. Perfect for building a distinctive content creator identity.</p>
               </div>
             </div>
           </div>
           
-          <div className="mt-12 p-6 bg-gradient-to-br from-purple-100/80 to-pink-100/80 backdrop-blur-sm rounded-xl border border-purple-200/50 shadow-lg">
+          <div className="mt-12 p-6 bg-emerald-50 rounded-xl border border-emerald-100 shadow-sm">
             <div className="flex items-start space-x-3">
-              <Sparkles className="w-6 h-6 text-purple-600 mt-1 flex-shrink-0" />
+              <Sparkles className="w-6 h-6 text-emerald-600 mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold text-purple-900 mb-2">AI Content Creation for Social Media Success</h4>
-                <p className="text-purple-800">
-                  Powered by advanced Veo3 Fast AI, our generator helps content creators build successful YouTube and TikTok channels. 
+                <h4 className="font-semibold text-emerald-800 mb-2">AI Content Creation for Social Media Success</h4>
+                <p className="text-emerald-700 leading-relaxed">
+                  Powered by advanced Veo3 AI, our generator helps content creators build successful YouTube and TikTok channels. 
                   Create viral-ready ASMR content that engages audiences and grows your subscriber base automatically.
                 </p>
               </div>
@@ -699,53 +678,77 @@ export default function ASMRVideoStudio() {
         </div>
       </section>
 
-      {/* Pricing CTA Section */}
-      <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
-          {/* Floating decorative elements */}
-          <div className="absolute -top-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
-          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
-          <div className="relative z-10">
-          <h2 className="text-3xl font-bold mb-4">Ready to Create Amazing ASMR Videos?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Choose from our flexible credit packages and start generating AI ASMR videos today
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white/10 rounded-xl p-4">
-              <div className="text-2xl font-bold">115+ Credits</div>
-              <div className="text-sm opacity-75">From $9.9</div>
+      {/* Advanced AI Video Generation Technology Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 p-12">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Advanced AI Video Generation Technology</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Powered by Veo3 Fast, our AI ASMR generator creates professional therapeutic videos 
+              automatically. The AI analyzes your prompts and generates high-quality ASMR content with precision.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center p-6">
+              <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-7 h-7 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-3">Veo3 Fast AI Engine</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">Advanced artificial intelligence that understands ASMR triggers and generates professional videos</p>
             </div>
-            <div className="bg-white/20 rounded-xl p-4 border-2 border-white/30">
-              <div className="text-2xl font-bold">355+ Credits</div>
-              <div className="text-sm opacity-75">From $30</div>
-              <div className="text-xs mt-1 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full inline-block">Most Popular</div>
+            
+            <div className="text-center p-6">
+              <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Settings className="w-7 h-7 text-blue-600" />
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-3">AI-Powered Customization</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">Intelligent AI algorithms adapt to your prompts and create personalized ASMR experiences</p>
             </div>
-            <div className="bg-white/10 rounded-xl p-4">
-              <div className="text-2xl font-bold">1450+ Credits</div>
-              <div className="text-sm opacity-75">From $99</div>
+            
+            <div className="text-center p-6">
+              <div className="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Video className="w-7 h-7 text-amber-600" />
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-3">Automated Video Production</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">AI-driven video generation that produces high-quality ASMR content in minutes</p>
+            </div>
+            
+            <div className="text-center p-6">
+              <div className="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-7 h-7 text-slate-600" />
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-3">Intelligent Scene Recognition</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">AI understands ASMR concepts and automatically creates therapeutic audio-visual experiences</p>
             </div>
           </div>
-          <Link 
-            href="/pricing"
-            className="inline-flex items-center px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors transform hover:scale-105"
-          >
-            <Sparkles className="w-5 h-5 mr-2" />
-            View All Pricing Plans
-          </Link>
-          <p className="text-sm mt-4 opacity-75">
-            10 Credits = 1 AI ASMR Video • Credits Never Expire
-          </p>
+          
+          <div className="bg-stone-50 rounded-xl p-6 mt-8">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0">
+                <Check className="w-5 h-5 text-emerald-600 mt-0.5" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800 mb-2">Advanced AI Technology Powered by Veo3</h4>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Our AI ASMR generator utilizes cutting-edge Veo3 AI artificial intelligence to create therapeutic content automatically. 
+                  The AI analyzes your prompts and generates professional ASMR videos for wellness and relaxation purposes.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
 
+
+
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 text-white relative overflow-hidden">
-        {/* Footer background decorations */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl"></div>
+      <footer className="bg-gradient-to-r from-stone-800 via-gray-800 to-stone-800 text-white relative">
+        {/* Subtle footer pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -826,10 +829,10 @@ export default function ASMRVideoStudio() {
                       handleASMRTypeChange('default')
                       setShowAllTypesModal(false)
                     }}
-                    className={`w-full p-4 rounded-lg border transition-all text-left ${
+                    className={`w-full p-4 rounded-xl border transition-all text-left ${
                       selectedASMRType === 'default'
-                        ? 'border-purple-500 bg-purple-50 shadow-md'
-                        : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
+                        ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                        : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
                     }`}
                   >
                     <div className="space-y-1">
@@ -839,7 +842,7 @@ export default function ASMRVideoStudio() {
                         {defaultOption.name}
                       </h5>
                       <p className={`text-sm leading-relaxed ${
-                        selectedASMRType === 'default' ? 'text-purple-700' : 'text-gray-600'
+                        selectedASMRType === 'default' ? 'text-emerald-700' : 'text-gray-600'
                       }`}>
                         {defaultOption.description}
                       </p>
@@ -862,20 +865,20 @@ export default function ASMRVideoStudio() {
                             handleASMRTypeChange(type.id)
                             setShowAllTypesModal(false)
                           }}
-                          className={`p-4 rounded-lg border transition-all text-left ${
+                          className={`p-4 rounded-xl border transition-all text-left ${
                             selectedASMRType === type.id
-                              ? 'border-purple-500 bg-purple-50 shadow-md'
-                              : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
+                              ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                              : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
                           }`}
                         >
                           <div className="space-y-1">
                             <h5 className={`font-medium ${
-                              selectedASMRType === type.id ? 'text-purple-900' : 'text-gray-900'
+                              selectedASMRType === type.id ? 'text-emerald-800' : 'text-gray-800'
                             }`}>
                               {type.name}
                             </h5>
                             <p className={`text-sm leading-relaxed ${
-                              selectedASMRType === type.id ? 'text-purple-700' : 'text-gray-600'
+                              selectedASMRType === type.id ? 'text-emerald-700' : 'text-gray-600'
                             }`}>
                               {type.description}
                             </p>
