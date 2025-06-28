@@ -43,8 +43,8 @@ export default function RootLayout({
     <html lang="zh-CN">
       <head>
         {/* 网站图标设置 */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo.svg" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-X6FN29E8XC"></script>
         <script

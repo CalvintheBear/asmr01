@@ -173,7 +173,7 @@ export default function ASMRVideoStudio() {
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden">
                 <img 
-                  src="/logo.svg" 
+                  src="/favicon.ico" 
                   alt="CuttingASMR Logo" 
                   className="w-full h-full object-cover"
                 />
@@ -191,21 +191,21 @@ export default function ASMRVideoStudio() {
               {/* 积分显示 */}
               {user && (
                 <div className="flex items-center space-x-2">
-                  <div className="px-3 py-1 bg-purple-50 border border-purple-200 rounded-lg">
+                  <div className="px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-lg">
                     {creditsLoading ? (
-                      <span className="text-sm text-purple-600">Loading...</span>
+                      <span className="text-sm text-emerald-600">Loading...</span>
                     ) : credits ? (
-                      <span className="text-sm text-purple-700 font-medium">
+                      <span className="text-sm text-emerald-700 font-medium">
                         Credits: {credits.remainingCredits}
                       </span>
                     ) : (
-                      <span className="text-sm text-purple-600">--</span>
+                      <span className="text-sm text-emerald-600">--</span>
                     )}
                   </div>
                   <button
                     onClick={forceRefreshCredits}
                     disabled={creditsLoading}
-                    className="p-1 text-purple-600 hover:text-purple-700 disabled:opacity-50 transition-colors"
+                    className="p-1 text-emerald-600 hover:text-emerald-700 disabled:opacity-50 transition-colors"
                     title="Force refresh credits (fetch from database)"
                   >
                     <svg className={`w-4 h-4 ${creditsLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -589,14 +589,14 @@ export default function ASMRVideoStudio() {
           </div>
 
 
-        </div>
-      </div>
-
+                </div>
+              </div>
+              
       {/* FAQ Section for SEO */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-20">
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-stone-200/50">
                       <h2 className="text-3xl font-semibold text-center text-gray-800 mb-16">Frequently Asked Questions</h2>
-          
+              
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
@@ -604,11 +604,11 @@ export default function ASMRVideoStudio() {
                 <p className="text-gray-600">Our Veo3 AI ASMR generator uses advanced Google Veo3 technology to create high-quality, relaxing ASMR videos from text prompts. Generate professional therapeutic content without traditional recording equipment or editing skills.</p>
               </div>
               
-              <div>
+                <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I create ASMR videos without a microphone?</h3>
                 <p className="text-gray-600">Yes! Our AI ASMR video generator creates professional content instantly without microphones or editing skills. Generate 4K quality videos with spatial audio and realistic physics effects using only text descriptions.</p>
-              </div>
-              
+      </div>
+
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Perfect for YouTube & TikTok content creators?</h3>
                 <p className="text-gray-600">Absolutely! Our AI generates ASMR videos optimized for social media platforms. Create engaging content for YouTube, TikTok, Instagram, and other platforms with professional quality that drives views and subscriber growth.</p>
@@ -687,13 +687,13 @@ export default function ASMRVideoStudio() {
               Powered by Veo3 Fast, our AI ASMR generator creates professional therapeutic videos 
               automatically. The AI analyzes your prompts and generates high-quality ASMR content with precision.
             </p>
-          </div>
+            </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center p-6">
               <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-7 h-7 text-emerald-600" />
-              </div>
+            </div>
               <h3 className="font-semibold text-gray-800 mb-3">Veo3 Fast AI Engine</h3>
               <p className="text-sm text-gray-600 leading-relaxed">Advanced artificial intelligence that understands ASMR triggers and generates professional videos</p>
             </div>
@@ -701,7 +701,7 @@ export default function ASMRVideoStudio() {
             <div className="text-center p-6">
               <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Settings className="w-7 h-7 text-blue-600" />
-              </div>
+          </div>
               <h3 className="font-semibold text-gray-800 mb-3">AI-Powered Customization</h3>
               <p className="text-sm text-gray-600 leading-relaxed">Intelligent AI algorithms adapt to your prompts and create personalized ASMR experiences</p>
             </div>
