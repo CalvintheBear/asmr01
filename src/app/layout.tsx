@@ -2,7 +2,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
-import ClientSideScript from '../components/ClientSideScript'
 
 // 强制动态渲染 - 解决Railway构建问题
 export const dynamic = 'force-dynamic'
@@ -62,7 +61,6 @@ export default function RootLayout({
         <ClerkProvider publishableKey={publishableKey}>
           {children}
         </ClerkProvider>
-        <ClientSideScript />
       </body>
     </html>
   )
