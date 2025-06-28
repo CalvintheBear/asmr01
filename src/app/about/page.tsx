@@ -6,10 +6,10 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <SEOHead
-        title="About CuttingASMR.org - AI ASMR Video Generator Platform"
-        description="Learn about CuttingASMR.org, the advanced AI ASMR video generator powered by Google Veo3. Our mission, technology, and commitment to wellness content creation."
+        title="About CuttingASMR - AI Video Creation Tutorial & ASMR Creator Platform"
+        description="Learn about our AI video creation tutorial platform. How to become ASMR creator with advanced tools. Professional ASMR maker software for content creators and YouTube channels."
         canonical="https://cuttingasmr.org/about"
-        keywords="about CuttingASMR, AI ASMR platform, Google Veo3 ASMR, AI video generator company, ASMR technology"
+        keywords="ai video creation tutorial, how to become asmr creator, asmr creator tools, asmr maker software, content creator, asmr youtube channel, Google veo 3 ai, best ai video generator, ai content creator tools"
       />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 

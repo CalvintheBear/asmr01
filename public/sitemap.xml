@@ -19,27 +19,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cuttingasmr.org/help</loc>
+    <loc>https://cuttingasmr.org/video-showcase</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cuttingasmr.org/asmr-types</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cuttingasmr.org/privacy</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://cuttingasmr.org/terms</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://cuttingasmr.org/refund</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
   </url>
 </urlset> 

@@ -1,6 +1,14 @@
+import SEOHead from '@/components/SEOHead'
+
 export default function PaymentCancel() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <SEOHead
+        title="Payment Cancelled - CuttingASMR.org | Return to Purchase ASMR Credits"
+        description="Payment was cancelled. You can retry purchasing AI ASMR credits anytime. Secure payment powered by Creem with instant credit delivery."
+        canonical="https://cuttingasmr.org/payment/cancel"
+        keywords="payment cancelled, retry purchase, ASMR credits"
+      />
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
         <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
           <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

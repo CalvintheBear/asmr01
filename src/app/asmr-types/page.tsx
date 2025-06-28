@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, Search, Filter, Check } from 'lucide-react'
 import Link from 'next/link'
+import SEOHead from '@/components/SEOHead'
 import { asmrCategories, defaultOption } from '@/config/asmr-types'
 
 export default function ASMRTypesPage() {
@@ -59,6 +60,12 @@ export default function ASMRTypesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      <SEOHead
+        title="ASMR Content Ideas & Video Templates | 50+ ASMR Triggers List for Creators"
+        description="ASMR content ideas for creators! 50+ ASMR video ideas: glass cutting, fruit, lava effects. ASMR triggers list with AI templates. Perfect content for ASMR YouTube channels."
+        canonical="https://cuttingasmr.org/asmr-types"
+        keywords="asmr content ideas, asmr video ideas, asmr triggers list, asmr creator tools, glass cutting, fruit, lava, magma, knife, cutting, asmr sound effects, ASMR types, YouTube, tiktok, content creator, asmr youtube channel"
+      />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

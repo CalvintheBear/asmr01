@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState, Suspense } from 'react'
 import { CheckCircle, Sparkles, ArrowRight, AlertCircle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import SEOHead from '@/components/SEOHead'
 import { CREEM_CONFIG } from '@/lib/creem-config'
 
 interface PaymentInfo {
@@ -221,6 +222,12 @@ function PaymentSuccessContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
+      <SEOHead
+        title="Payment Successful - CuttingASMR.org | AI ASMR Credits Purchased"
+        description="Payment completed successfully! Your AI ASMR credits have been added to your account. Start creating amazing ASMR videos with our AI generator."
+        canonical="https://cuttingasmr.org/payment/success"
+        keywords="payment success, ASMR credits purchased, AI video credits"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Success Icon */}
         <div className="text-center mb-8">

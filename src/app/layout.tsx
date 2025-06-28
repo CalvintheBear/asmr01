@@ -10,24 +10,24 @@ export const runtime = 'nodejs'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CuttingASMR - AI ASMR视频生成器',
-  description: '使用最新的Google Veo3 AI技术生成专业的ASMR视频。完美适用于YouTube、TikTok创作者和ASMR制作者。无需编辑技能，几分钟内生成高质量的放松视频内容。',
-  keywords: 'ASMR, AI视频生成, YouTube, TikTok, 放松视频, Veo3',
+  title: 'CuttingASMR - ASMR Creator Tools | Best ASMR Generator & Maker Software 2025',
+  description: 'ASMR creator tools for YouTube channels! Best ASMR generator with AI technology. ASMR maker software for content creators. Create relaxing videos, sleep ASMR, stress relief content.',
+  keywords: 'asmr creator tools, best asmr generator, asmr maker software, asmr youtube channel, relaxing video maker, sleep asmr generator, ai content creator tools, content creator, stress relief videos, meditation video creator',
   authors: [{ name: 'CuttingASMR Team' }],
   viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   openGraph: {
-    title: 'CuttingASMR - AI ASMR视频生成器',
-    description: '使用AI技术生成专业ASMR视频，完美适用于内容创作者',
+    title: 'CuttingASMR - Veo3 AI Video Generator | Best AI ASMR Maker',
+    description: 'Create glass cutting, fruit ASMR videos with Google Veo3 AI. Perfect for YouTube shorts, TikTok content creation.',
     url: 'https://cuttingasmr.org',
     siteName: 'CuttingASMR',
     type: 'website',
-    locale: 'zh_CN',
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CuttingASMR - AI ASMR视频生成器',
-    description: '使用AI技术生成专业ASMR视频',
+    title: 'CuttingASMR - Veo3 AI Video Generator',
+    description: 'Create AI ASMR videos with Google Veo3 technology',
   }
 }
 

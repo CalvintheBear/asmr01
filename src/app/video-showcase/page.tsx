@@ -5,6 +5,7 @@ import { showcaseVideos } from '@/data/showcase-videos';
 import { ShowcaseVideo } from '@/data/video-types';
 import VideoCard from '@/components/VideoCard';
 import VideoModal from '@/components/VideoModal';
+import SEOHead from '@/components/SEOHead';
 import Link from 'next/link';
 import { ArrowLeft, Play } from 'lucide-react';
 
@@ -24,6 +25,12 @@ export default function VideoShowcasePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
+      <SEOHead
+        title="Best ASMR Videos Gallery - Relaxing Content & Sleep ASMR Examples"
+        description="Best ASMR videos for relaxation! Sleep ASMR generator examples with glass cutting, fruit content. Stress relief videos perfect for meditation and relaxing content creation."
+        canonical="https://cuttingasmr.org/video-showcase"
+        keywords="best asmr videos, relaxing asmr content, sleep asmr generator, stress relief videos, meditation video creator, relaxing content, YouTube shorts, tiktok shorts, glass cutting, fruit, asmr video, relaxing video maker"
+      />
       {/* Top Navigation */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-stone-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

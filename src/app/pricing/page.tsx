@@ -118,10 +118,10 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
       <SEOHead
-        title="AI ASMR Generator Pricing - Powered by Gemini Veo3 | CuttingASMR.org"
-        description="Choose from affordable AI ASMR video generation packages. Starter ($9.9), Standard ($30), Premium ($99). Credits never expire. 1080p quality downloads."
+        title="Best ASMR Generator Pricing - AI Content Creator Tools & ASMR Maker Software"
+        description="Best ASMR generator pricing for creators! AI content creator tools starting $9.9. ASMR maker software for YouTube channels. Create relaxing videos with AI technology."
         canonical="https://cuttingasmr.org/pricing"
-        keywords="AI ASMR pricing, Gemini Veo3 cost, ASMR video generation price, AI video pricing, ASMR credits"
+        keywords="best asmr generator, asmr maker software, ai content creator tools, asmr creator tools, relaxing video maker, YouTube, tiktok, content creator, asmr youtube channel, veo3 ai, ai video generator, meditation video creator"
       />
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

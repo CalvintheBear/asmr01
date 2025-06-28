@@ -1,13 +1,12 @@
 User-agent: *
 Allow: /
 
-# 重要页面指引
-Allow: /pricing
-Allow: /help
-Allow: /about
-Allow: /privacy
-Allow: /terms
-Allow: /refund
+# 核心业务页面 - 专注AI ASMR
+Allow: /              # 首页 - AI ASMR生成器
+Allow: /pricing       # 定价 - 商业转化  
+Allow: /about         # 关于 - 品牌信任
+Allow: /video-showcase # 作品展示 - 产品质量
+Allow: /asmr-types    # ASMR分类 - 内容丰富
 
 # 站点地图
 Sitemap: https://cuttingasmr.org/sitemap.xml
