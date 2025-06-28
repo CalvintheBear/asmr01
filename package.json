@@ -30,7 +30,9 @@
     "test:railway-db": "node scripts/test-railway-db-connection.js",
     "check:cloudflare": "node scripts/check-cloudflare-deployment.js",
     "postinstall": "prisma generate",
-    "test:sync": "tsx scripts/test-manual-purchase-sync.js"
+    "test:sync": "tsx scripts/test-manual-purchase-sync.js",
+    "check:user": "node scripts/check-specific-user.js",
+    "check:all-users": "node scripts/check-all-users.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.22.0",
