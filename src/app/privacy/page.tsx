@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
               <div className="w-8 h-8 rounded-lg overflow-hidden">
                 <img 
                   src="/logo.svg" 
-                  alt="CuttingASMR Logo" 
+                  alt="CuttingASMR - AI ASMR Video Generator Privacy Policy Logo" 
                   className="w-full h-full object-cover"
                 />
               </div>

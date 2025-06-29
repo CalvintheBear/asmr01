@@ -23,13 +23,9 @@ export default function PricingPage() {
       features: [
         '115 credits, never expire',
         'Generate 11+ stunning ASMR videos',
-        'Full HD 1080p quality & download',
         'Access to all 50+ ASMR templates'
       ],
-      popular: false,
-      className: 'border-stone-200 hover:border-stone-300',
-      iconColor: 'text-gray-600',
-      bgGradient: 'from-stone-50 to-white'
+      popular: false
     },
     {
       id: 'standard',
@@ -43,15 +39,11 @@ export default function PricingPage() {
       features: [
         '355 credits, never expire',
         'Generate 35+ premium ASMR videos',
-        'Full HD 1080p quality & download',
         'Access to all 50+ ASMR templates',
         'Faster generation processing',
         'Commercial usage included'
       ],
-      popular: true,
-      className: 'border-emerald-500 ring-4 ring-emerald-200 shadow-2xl',
-      iconColor: 'text-emerald-600',
-      bgGradient: 'from-emerald-50 to-white'
+      popular: true
     },
     {
       id: 'premium',
@@ -65,18 +57,12 @@ export default function PricingPage() {
       features: [
         '1450 credits, never expire',
         'Generate 145+ professional ASMR videos',
-        'Full HD 1080p quality & download',
         'Access to ALL 50+ ASMR templates',
         'Priority generation processing',
         'Commercial usage included',
-        'Early access to new ASMR types',
-        'Bulk video generation support',
         'Premium customer support'
       ],
-      popular: false,
-      className: 'border-amber-400 ring-2 ring-amber-200',
-      iconColor: 'text-amber-600',
-      bgGradient: 'from-amber-50 to-white'
+      popular: false
     }
   ]
 
@@ -154,82 +140,73 @@ export default function PricingPage() {
             Generate stunning ASMR videos with our advanced AI. Choose the plan that best fits your creative needs.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-800 px-4 sm:px-6 py-3 rounded-full text-sm sm:text-lg font-bold border border-emerald-200 gap-2">
-            <Video className="w-5 h-5" />
-            <span className="text-center">10 Credits = 1 AI ASMR Video</span>
-            <span className="hidden sm:inline">•</span>
-            <span className="text-center">Credits Never Expire</span>
-            <span className="hidden sm:inline">•</span>
-            <span className="text-center">High Quality Download</span>
-          </div>
+
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
           {plans.map((plan) => (
             <div 
               key={plan.id}
-              className={`relative bg-gradient-to-br ${plan.bgGradient} rounded-2xl shadow-lg p-6 transition-all duration-300 hover:transform hover:scale-105 ${plan.className} ${
-                plan.popular ? 'lg:scale-105' : ''
+              className={`relative bg-white rounded-xl border-2 p-6 transition-all duration-300 hover:shadow-lg flex flex-col h-full ${
+                plan.popular 
+                  ? 'border-emerald-500 shadow-md' 
+                  : plan.id === 'premium'
+                  ? 'border-amber-400 shadow-md'
+                  : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               {plan.badge && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className={`px-6 py-2 rounded-full text-sm font-bold flex items-center text-white ${
-                    plan.popular ? 'bg-emerald-600' : 'bg-amber-500'
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className={`px-4 py-1 rounded-full text-sm font-medium text-white ${
+                    plan.popular 
+                      ? 'bg-gradient-to-r from-emerald-500 to-emerald-600' 
+                      : plan.id === 'premium'
+                      ? 'bg-gradient-to-r from-amber-500 to-amber-600'
+                      : 'bg-gray-600'
                   }`}>
-                    <Star className="w-4 h-4 mr-1" />
                     {plan.badge}
-                  </div>
+                  </span>
                 </div>
               )}
 
-              {/* Plan Header */}
-              <div className="text-center mb-6">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 ${
-                  plan.popular ? 'bg-emerald-100' : plan.id === 'premium' ? 'bg-amber-100' : 'bg-stone-100'
-                }`}>
-                  {plan.id === 'starter' && <Play className={`w-6 h-6 ${plan.iconColor}`} />}
-                  {plan.id === 'standard' && <Zap className={`w-6 h-6 ${plan.iconColor}`} />}
-                  {plan.id === 'premium' && <Crown className={`w-6 h-6 ${plan.iconColor}`} />}
-                </div>
-                
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.name}</h3>
-                
-                {/* Pricing */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-center mb-1">
-                    <span className="text-gray-400 line-through text-lg mr-2">{plan.originalPrice}</span>
-                    <span className="text-4xl font-bold text-gray-800">{plan.price}</span>
-                    <span className="text-gray-600 ml-1 text-base">USD</span>
-                  </div>
-                  <div className="text-emerald-600 font-medium text-sm">
-                    Save ${(parseFloat(plan.originalPrice.replace('$', '')) - parseFloat(plan.price.replace('$', ''))).toFixed(1)}
-                  </div>
-                </div>
+              {/* Plan Name */}
+              <div className="text-center mb-4">
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{plan.name}</h3>
+                <p className="text-gray-600 text-xs">{plan.description}</p>
+              </div>
 
-                {/* Credits & Videos */}
-                <div className={`rounded-xl p-4 mb-4 ${
-                  plan.popular ? 'bg-emerald-100 border border-emerald-200' : 
-                  plan.id === 'premium' ? 'bg-amber-100 border border-amber-200' : 
-                  'bg-stone-100 border border-stone-200'
-                }`}>
-                  <div className="flex items-center justify-center mb-2">
-                    <Sparkles className={`w-5 h-5 mr-2 ${plan.iconColor}`} />
-                    <span className="font-bold text-xl text-gray-800">{plan.credits} Credits</span>
-                  </div>
-                  <div className="text-base font-medium text-gray-700">
-                    Create {Math.floor(plan.videos)}+ videos
-                  </div>
+              {/* Pricing */}
+              <div className="text-center mb-4">
+                <div className="flex items-center justify-center mb-1">
+                  <span className="text-gray-400 line-through text-base mr-2">{plan.originalPrice}</span>
+                  <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
                 </div>
+                <p className={`font-medium text-xs ${
+                  plan.id === 'premium' 
+                    ? 'text-amber-600' 
+                    : 'text-emerald-600'
+                }`}>
+                  Save ${(parseFloat(plan.originalPrice.replace('$', '')) - parseFloat(plan.price.replace('$', ''))).toFixed(1)}
+                </p>
+              </div>
+
+              {/* Credits Info */}
+              <div className="text-center mb-4 p-3 bg-gray-50 rounded-lg">
+                <div className="text-base font-bold text-gray-900">{plan.credits} Credits</div>
+                <div className="text-xs text-gray-600">Generate {Math.floor(plan.videos)}+ videos</div>
               </div>
 
               {/* Features */}
-              <div className="mb-6">
+              <div className="mb-6 flex-grow">
                 <ul className="space-y-2">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <Check className={`w-4 h-4 mr-2 mt-0.5 flex-shrink-0 ${
+                        plan.id === 'premium' 
+                          ? 'text-amber-500' 
+                          : 'text-emerald-500'
+                      }`} />
                       <span className="text-gray-700 text-sm">{feature}</span>
                     </li>
                   ))}
@@ -237,24 +214,26 @@ export default function PricingPage() {
               </div>
 
               {/* CTA Button */}
-              <CreemPaymentButton
-                planType={plan.id as 'starter' | 'standard' | 'premium'}
-                amount={parseFloat(plan.price.replace('$', ''))}
-                description={`${plan.name} Plan - ${plan.credits} Credits`}
-                className={`w-full py-3 rounded-xl font-bold text-base transition-all duration-300 transform hover:scale-105 ${
-                  plan.popular
-                    ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg hover:shadow-xl'
-                    : plan.id === 'premium'
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg hover:shadow-xl'
-                    : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800'
-                }`}
-              >
-                Get Started Now
-              </CreemPaymentButton>
+              <div className="mt-auto">
+                <CreemPaymentButton
+                  planType={plan.id as 'starter' | 'standard' | 'premium'}
+                  amount={parseFloat(plan.price.replace('$', ''))}
+                  description={`${plan.name} Plan - ${plan.credits} Credits`}
+                  className={`w-full py-2.5 rounded-lg font-semibold transition-all duration-300 ${
+                    plan.popular
+                      ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white'
+                      : plan.id === 'premium'
+                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white'
+                      : 'bg-gray-900 hover:bg-gray-800 text-white'
+                  }`}
+                >
+                  Get Started
+                </CreemPaymentButton>
 
-              <p className="text-center text-xs text-gray-500 mt-2">
-                🔒 Secure payment by Creem
-              </p>
+                <p className="text-center text-xs text-gray-500 mt-2">
+                  Secure payment by Creem
+                </p>
+              </div>
             </div>
           ))}
         </div>

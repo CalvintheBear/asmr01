@@ -264,7 +264,7 @@ export default function ProfilePage() {
               <button 
                 onClick={refetch}
                 disabled={loading}
-                className="ml-auto text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-colors"
+                className="ml-auto text-sm bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
               >
                 {loading ? 'Refreshing...' : 'Refresh'}
               </button>
@@ -343,7 +343,7 @@ export default function ProfilePage() {
             <button 
               onClick={fetchVideos}
               disabled={videosLoading}
-              className="ml-auto text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-colors"
+              className="ml-auto text-sm bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
             >
               {videosLoading ? 'Loading...' : 'Refresh'}
             </button>
@@ -459,7 +459,7 @@ export default function ProfilePage() {
             <button 
               onClick={fetchPurchases}
               disabled={purchasesLoading}
-              className="ml-auto text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-colors"
+              className="ml-auto text-sm bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:bg-emerald-400 text-white px-3 py-1 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
             >
               {purchasesLoading ? 'Loading...' : 'Refresh'}
             </button>

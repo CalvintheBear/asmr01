@@ -77,7 +77,7 @@ export default function VideoShowcase({
           <div className="text-center">
             <Link
               href="/video-showcase"
-              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-medium text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-4 rounded-xl font-medium text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300"
             >
               View All Videos
               <ArrowRight className="w-5 h-5" />

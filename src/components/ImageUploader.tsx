@@ -76,7 +76,7 @@ export default function ImageUploader({
           <div className="relative overflow-hidden rounded-2xl border-2 border-gray-200">
             <img
               src={previewUrl}
-              alt="Uploaded Image"
+              alt="User uploaded image for AI ASMR video generation with Google Veo3"
               className="w-full h-48 object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-200">
