@@ -42,9 +42,12 @@ export default function RootLayout({
     <html lang="zh-CN">
       <head>
         {/* 网站图标设置 */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/logo.svg" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+        <link rel="mask-icon" href="/favicon.svg" color="#10B981" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-X6FN29E8XC"></script>
         <script
           dangerouslySetInnerHTML={{

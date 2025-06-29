@@ -1,2 +1,5 @@
-# 注意：这是favicon占位符
-# 用户需要将logo.png转换为favicon.ico格式并替换此文件 
+# 这是favicon.ico占位符文件
+# 请使用在线工具（如 https://favicon.io/ 或 https://realfavicongenerator.net/）
+# 将 favicon.svg 转换为 favicon.ico 格式并替换此文件
+# 
+# 临时解决方案：网站目前使用 favicon.svg 作为图标 
