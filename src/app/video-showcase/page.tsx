@@ -26,10 +26,10 @@ export default function VideoShowcasePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
       <SEOHead
-        title="Best ASMR Videos Gallery - Relaxing Content & Sleep ASMR Examples"
-        description="Best ASMR videos for relaxation! Sleep ASMR generator examples with glass cutting, fruit content. Stress relief videos perfect for meditation and relaxing content creation."
+        title="Best Google Veo3 ASMR Videos Gallery - AI Generated Relaxing Content Examples"
+        description="Best Google Veo3 ASMR videos for relaxation! AI generated sleep ASMR examples with glass cutting, fruit content. Veo3 stress relief videos perfect for meditation and relaxing content creation."
         canonical="https://cuttingasmr.org/video-showcase"
-        keywords="best asmr videos, relaxing asmr content, sleep asmr generator, stress relief videos, meditation video creator, relaxing content, YouTube shorts, tiktok shorts, glass cutting, fruit, asmr video, relaxing video maker"
+        keywords="google veo3, veo3, google veo3 asmr, veo3 asmr videos, best asmr videos, relaxing asmr content, sleep asmr generator, stress relief videos, meditation video creator, relaxing content, YouTube shorts, tiktok shorts, glass cutting, fruit, asmr video, relaxing video maker, ai generated asmr"
       />
       {/* Top Navigation */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-stone-200 sticky top-0 z-40">

@@ -61,10 +61,10 @@ export default function ASMRTypesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <SEOHead
-        title="ASMR Content Ideas & Video Templates | 50+ ASMR Triggers List for Creators"
-        description="ASMR content ideas for creators! 50+ ASMR video ideas: glass cutting, fruit, lava effects. ASMR triggers list with AI templates. Perfect content for ASMR YouTube channels."
+        title="Google Veo3 ASMR Content Ideas & Video Templates | 50+ ASMR Triggers List"
+        description="Google Veo3 ASMR content ideas for creators! 50+ Veo3 ASMR video ideas: glass cutting, fruit, lava effects. AI ASMR triggers list with Google Veo3 templates. Perfect content for ASMR YouTube channels."
         canonical="https://cuttingasmr.org/asmr-types"
-        keywords="asmr content ideas, asmr video ideas, asmr triggers list, asmr creator tools, glass cutting, fruit, lava, magma, knife, cutting, asmr sound effects, ASMR types, YouTube, tiktok, content creator, asmr youtube channel"
+        keywords="google veo3, veo3, google veo3 asmr, veo3 asmr generator, asmr content ideas, asmr video ideas, asmr triggers list, asmr creator tools, glass cutting, fruit, lava, magma, knife, cutting, asmr sound effects, ASMR types, YouTube, tiktok, content creator, asmr youtube channel, ai asmr templates"
       />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">

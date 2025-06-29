@@ -10,9 +10,9 @@ export const runtime = 'nodejs'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CuttingASMR - ASMR Creator Tools | Best ASMR Generator & Maker Software 2025',
-  description: 'ASMR creator tools for YouTube channels! Best ASMR generator with AI technology. ASMR maker software for content creators. Create relaxing videos, sleep ASMR, stress relief content.',
-  keywords: 'asmr creator tools, best asmr generator, asmr maker software, asmr youtube channel, relaxing video maker, sleep asmr generator, ai content creator tools, content creator, stress relief videos, meditation video creator',
+  title: 'CuttingASMR - Google Veo3 AI ASMR Generator | Best ASMR Creator Tools 2025',
+  description: 'Google Veo3 powered ASMR creator tools for YouTube channels! Best Veo3 ASMR generator with AI technology. Professional ASMR maker software for content creators. Create relaxing videos, sleep ASMR, stress relief content.',
+  keywords: 'google veo3, veo3, google veo3 asmr, veo3 asmr generator, asmr creator tools, best asmr generator, asmr maker software, asmr youtube channel, relaxing video maker, sleep asmr generator, ai content creator tools, content creator, stress relief videos, meditation video creator',
   authors: [{ name: 'CuttingASMR Team' }],
   viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
@@ -39,15 +39,15 @@ export default function RootLayout({
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <head>
-        {/* 网站图标设置 */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {/* Website favicon configuration - Using real ICO file only */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
-        <link rel="mask-icon" href="/favicon.svg" color="#10B981" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+        <meta name="msapplication-TileImage" content="/favicon.ico" />
+        <meta name="theme-color" content="#ffffff" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-X6FN29E8XC"></script>
         <script
           dangerouslySetInnerHTML={{

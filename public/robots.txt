@@ -1,17 +1,17 @@
 User-agent: *
 Allow: /
 
-# 核心业务页面 - 专注AI ASMR
-Allow: /              # 首页 - AI ASMR生成器
-Allow: /pricing       # 定价 - 商业转化  
-Allow: /about         # 关于 - 品牌信任
-Allow: /video-showcase # 作品展示 - 产品质量
-Allow: /asmr-types    # ASMR分类 - 内容丰富
+# Core business pages - AI ASMR focused
+Allow: /              # Homepage - AI ASMR generator
+Allow: /pricing       # Pricing - business conversion  
+Allow: /about         # About - brand trust
+Allow: /video-showcase # Video showcase - product quality
+Allow: /asmr-types    # ASMR types - content variety
 
-# 站点地图
+# Sitemap
 Sitemap: https://cuttingasmr.org/sitemap.xml
 
-# 阻止不必要的文件和目录
+# Block unnecessary files and directories
 Disallow: /_next/
 Disallow: /api/
 Disallow: /dashboard/
@@ -22,10 +22,10 @@ Disallow: /test-*
 Disallow: /debug-*
 Disallow: /credits-recovery/
 
-# 允许静态资源
+# Allow static resources
 Allow: /_next/static/
 Allow: /favicon.svg
 Allow: /logo.svg
 
-# 爬取延迟（避免过于频繁的请求）
+# Crawl delay (avoid too frequent requests)
 Crawl-delay: 1 

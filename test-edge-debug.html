@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Edge Tools 调试测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0066cc;
+            text-align: center;
+        }
+        button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        .output {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        .debug-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #0066cc;
+            background: #e8f4f8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Microsoft Edge Tools 调试测试</h1>
+        
+        <div class="debug-section">
+            <h3>调试步骤：</h3>
+            <ol>
+                <li>在VS Code中按 <code>Ctrl+Shift+D</code> 打开调试面板</li>
+                <li>选择 "Edge 调试当前文件" 配置</li>
+                <li>按 <code>F5</code> 启动调试</li>
+                <li>在下面的JavaScript代码中设置断点</li>
+                <li>点击按钮测试断点功能</li>
+            </ol>
+        </div>
+
+        <div>
+            <button onclick="simpleTest()">简单测试</button>
+            <button onclick="loopTest()">循环测试</button>
+            <button onclick="asyncTest()">异步测试</button>
+            <button onclick="errorTest()">错误测试</button>
+            <button onclick="clearOutput()">清空输出</button>
+        </div>
+
+        <div class="output" id="output">
+            <strong>输出区域:</strong><br>
+            点击上面的按钮开始测试...
+        </div>
+
+        <div class="debug-section">
+            <h3>💡 调试技巧：</h3>
+            <ul>
+                <li><strong>设置断点</strong>: 点击行号左侧设置断点</li>
+                <li><strong>条件断点</strong>: 右键行号选择"添加条件断点"</li>
+                <li><strong>查看变量</strong>: 鼠标悬停在变量上查看值</li>
+                <li><strong>控制台调试</strong>: 在调试时使用控制台执行代码</li>
+                <li><strong>步进调试</strong>: 使用F10(步进)、F11(步入)、Shift+F11(步出)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 🎯 在这些函数中设置断点来测试调试功能
+        
+        function addOutput(message) {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerHTML += `<br>[${timestamp}] ${message}`;
+            console.log(`[${timestamp}] ${message}`); // 👈 设置断点测试
+        }
+
+        function simpleTest() {
+            console.log('开始简单测试'); // 👈 在这里设置断点
+            const message = '简单测试完成！';
+            const randomNumber = Math.floor(Math.random() * 100);
+            addOutput(`${message} 随机数: ${randomNumber}`);
+        }
+
+        function loopTest() {
+            console.log('开始循环测试'); // 👈 在这里设置断点
+            addOutput('开始循环测试...');
+            
+            for (let i = 1; i <= 5; i++) {
+                const result = i * 2; // 👈 在这里设置断点观察变量变化
+                console.log(`循环 ${i}: ${result}`);
+                addOutput(`循环 ${i}: ${i} × 2 = ${result}`);
+            }
+            
+            addOutput('循环测试完成！');
+        }
+
+        async function asyncTest() {
+            console.log('开始异步测试'); // 👈 在这里设置断点
+            addOutput('开始异步测试...');
+            
+            try {
+                // 模拟异步操作
+                const data = await new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve('异步数据加载成功'); // 👈 在这里设置断点
+                    }, 1000);
+                });
+                
+                addOutput(data);
+                console.log('异步测试完成'); // 👈 在这里设置断点
+            } catch (error) {
+                addOutput(`异步测试错误: ${error.message}`);
+            }
+        }
+
+        function errorTest() {
+            console.log('开始错误测试'); // 👈 在这里设置断点
+            addOutput('开始错误测试...');
+            
+            try {
+                // 故意创建一个错误
+                const undefinedVar = null;
+                const result = undefinedVar.someMethod(); // 👈 这里会产生错误
+                addOutput(`不应该执行到这里: ${result}`);
+            } catch (error) {
+                console.error('捕获到错误:', error); // 👈 在这里设置断点查看错误对象
+                addOutput(`✅ 成功捕获错误: ${error.message}`);
+            }
+        }
+
+        function clearOutput() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<strong>输出区域:</strong><br>输出已清空...';
+            console.clear();
+        }
+
+        // 页面加载完成事件
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成'); // 👈 在这里设置断点
+            addOutput('🚀 页面加载完成，可以开始调试测试！');
+        });
+
+        // 添加一些全局变量用于调试时检查
+        window.debugInfo = {
+            version: '1.0.0',
+            features: ['断点调试', '变量查看', '控制台输出', '错误处理'],
+            testData: [1, 2, 3, 4, 5]
+        };
+    </script>
+</body>
+</html> 
