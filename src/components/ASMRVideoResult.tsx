@@ -49,15 +49,15 @@ export default function ASMRVideoResult({
       {!hasContent ? (
         /* 默认状态 - 等待生成 */
         <div className="space-y-4 sm:space-y-6">
-          <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center relative overflow-hidden">
+          <div className="aspect-video bg-stone-50 rounded-xl flex items-center justify-center relative overflow-hidden">
             {/* 背景装饰效果 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.05),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-stone-100/30">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,245,244,0.3),transparent_50%)]"></div>
             </div>
             
             <div className="relative z-10 text-center px-4">
               {/* 播放按钮 */}
-              <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
+              <div className="w-12 sm:w-16 h-12 sm:h-16 bg-stone-200/60 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
                 <Play className="w-4 sm:w-6 h-4 sm:h-6 text-gray-400 ml-1" />
               </div>
               
@@ -76,15 +76,15 @@ export default function ASMRVideoResult({
           </div>
 
           {/* 添加占位内容来匹配左侧面板高度 */}
-          <div className="bg-gray-50 rounded-xl p-3 sm:p-4 space-y-2 sm:space-y-3">
+          <div className="bg-stone-50/50 rounded-xl p-3 sm:p-4 space-y-2 sm:space-y-3">
             <h4 className="text-base sm:text-lg font-medium text-gray-700">How it works:</h4>
             <div className="space-y-2 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
-                <span className="w-5 h-5 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">1</span>
+                <span className="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">1</span>
                 <span>Choose an ASMR type or use custom prompt</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="w-5 h-5 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">2</span>
+                <span className="w-5 h-5 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">2</span>
                 <span>AI generates 8-second video with audio</span>
               </div>
             </div>
@@ -94,7 +94,7 @@ export default function ASMRVideoResult({
           <div className="space-y-2 sm:space-y-3">
             <button
               disabled
-              className="w-full py-2.5 sm:py-3 bg-gray-100 text-gray-400 rounded-xl font-medium cursor-not-allowed text-sm sm:text-base"
+              className="w-full py-2.5 sm:py-3 bg-stone-100/60 text-gray-400 rounded-xl font-medium cursor-not-allowed text-sm sm:text-base"
             >
               Generate Video First
             </button>
@@ -110,21 +110,21 @@ export default function ASMRVideoResult({
         <div className="space-y-4">
           {/* 生成状态提示 */}
           <div className="text-sm text-gray-600 mb-4">
-            <span className="text-red-500 font-medium">
+            <span className="text-emerald-600 font-medium">
               Video generation takes 2-5 min. Please don't close this tab.
             </span>
           </div>
           
           {/* 视频预览区域 - 生成中 */}
-          <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center relative overflow-hidden">
+          <div className="aspect-video bg-stone-50 rounded-xl flex items-center justify-center relative overflow-hidden">
             {/* 背景动画效果 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.1),transparent_50%)] animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-amber-50/60">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_50%)] animate-pulse"></div>
             </div>
             
             <div className="relative z-10 text-center">
               {/* 大型播放按钮 */}
-              <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg">
+              <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg">
                 <Play className="w-8 h-8 text-white ml-1" />
               </div>
               
@@ -146,11 +146,11 @@ export default function ASMRVideoResult({
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">正在生成视频...</span>
-              <span className="text-purple-600 font-medium">{progress}%</span>
+              <span className="text-emerald-600 font-medium">{progress}%</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
-                className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-300 ease-out"
+                className="bg-gradient-to-r from-emerald-500 to-green-500 h-2 rounded-full transition-all duration-300 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
@@ -190,7 +190,7 @@ export default function ASMRVideoResult({
           
           {/* 视频信息 */}
           {details && (
-            <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+            <div className="bg-stone-50/50 rounded-xl p-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Model:</span>
                 <span className="font-medium">{details.model}</span>
@@ -216,7 +216,7 @@ export default function ASMRVideoResult({
             <div className="flex items-center space-x-2">
               <button
                 onClick={videoUrl1080p ? onDownload1080p : onDownload}
-                className="flex-1 flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors"
+                className="flex-1 flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
               >
                 <Download className="w-4 h-4 mr-2" />
                 <span className="text-sm font-medium">

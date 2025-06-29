@@ -475,10 +475,8 @@ export default function ASMRVideoStudio() {
             </div>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
-              AI ASMR Generator
-              <span className="block text-emerald-700">
-                Powered by Veo3
-              </span>
+              Create Stunning <span className="font-extrabold bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 bg-clip-text text-transparent">ASMR Video</span> with
+              <span className="block">our AI-powered Veo3 generator</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               FREE credits for new users! Perfect for YouTube, TikTok creators and ASMR makers. 
@@ -488,16 +486,7 @@ export default function ASMRVideoStudio() {
             
 
             
-            {/* Credits Display */}
-            {user && (
-              <div className="inline-flex items-center bg-white rounded-2xl px-6 py-4 shadow-lg border border-stone-200 mb-8">
-                <Zap className="w-5 h-5 text-amber-600 mr-2" />
-                                 <span className="font-medium text-gray-800">
-                   {creditsLoading ? 'Loading...' : `${credits?.remainingCredits || 0} Credits Available`}
-                 </span>
-                 <span className="text-gray-500 ml-2">• 10 credits per video</span>
-              </div>
-            )}
+
           </div>
 
           {/* Main Content - Two Column Layout */}
@@ -1065,162 +1054,159 @@ export default function ASMRVideoStudio() {
           {/* Advanced AI Video Generation Technology Section - Collapsible */}
           <CollapsibleTechSection />
 
-
-
-
-
-          {/* Footer */}
-          <footer className="bg-gradient-to-r from-stone-800 via-gray-800 to-stone-800 text-white relative">
-            {/* Subtle footer pattern */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-0 left-1/4 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl"></div>
-            </div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 rounded-lg overflow-hidden">
-                      <img 
-                        src="/logo.svg" 
-                        alt="CuttingASMR - Best AI ASMR Video Generator Powered by Google Veo3 for Content Creators" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="text-xl font-bold">CuttingASMR.org</span>
-                  </div>
-                  <p className="text-gray-400">
-                    Create Stunning ASMR Video with our AI-powered Veo3 generator. Perfect for YouTube creators and ASMR makers.
-                  </p>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mb-4">Product</h4>
-                  <ul className="space-y-2 text-gray-400">
-                    <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                  </ul>
-                </div>
-                
-                  <div>
-                  <h4 className="font-semibold mb-4">Resources</h4>
-                  <ul className="space-y-2 text-gray-400">
-                    <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mb-4">Company</h4>
-                  <ul className="space-y-2 text-gray-400">
-                    <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
-                    <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
-                    <li><Link href="/terms" className="hover:text-white transition-colors">Terms</Link></li>
-                    <li><Link href="/refund" className="hover:text-white transition-colors">Refund</Link></li>
-                    <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-white transition-colors">Contact Support</a></li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 CuttingASMR.org. All rights reserved.</p>
-              </div>
-            </div>
-          </footer>
-
-          {/* ASMR Types Modal */}
-          {showAllTypesModal && (
-            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
-                <div className="p-6 border-b border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-bold text-gray-900">Choose ASMR Type</h3>
-                    <button
-                      onClick={() => setShowAllTypesModal(false)}
-                      className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                      <span className="text-gray-500 text-xl">×</span>
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
-                  <div className="space-y-8">
-                    {/* 默认选项 */}
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
-                        <span className="text-lg">✏️</span>
-                        <h4 className="font-semibold text-gray-900">Custom</h4>
-                      </div>
-                      <button
-                        onClick={() => {
-                          handleASMRTypeChange('default')
-                          setShowAllTypesModal(false)
-                        }}
-                        className={`w-full p-4 rounded-xl border transition-all text-left ${
-                          selectedASMRType === 'default'
-                            ? 'border-emerald-500 bg-emerald-50 shadow-md'
-                            : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
-                        }`}
-                      >
-                        <div className="space-y-1">
-                          <h5 className={`font-medium ${
-                            selectedASMRType === 'default' ? 'text-purple-900' : 'text-gray-900'
-                          }`}>
-                            {defaultOption.name}
-                          </h5>
-                          <p className={`text-sm leading-relaxed ${
-                            selectedASMRType === 'default' ? 'text-emerald-700' : 'text-gray-600'
-                          }`}>
-                            {defaultOption.description}
-                          </p>
-                        </div>
-                      </button>
-                    </div>
-
-                    {/* 所有分类 */}
-                    {asmrCategories.map((category) => (
-                      <div key={category.id} className="space-y-3">
-                        <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
-                          <span className="text-lg">{category.icon}</span>
-                          <h4 className="font-semibold text-gray-900">{category.name}</h4>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {category.types.map((type) => (
-                            <button
-                              key={type.id}
-                              onClick={() => {
-                                handleASMRTypeChange(type.id)
-                                setShowAllTypesModal(false)
-                              }}
-                              className={`p-4 rounded-xl border transition-all text-left ${
-                                selectedASMRType === type.id
-                                  ? 'border-emerald-500 bg-emerald-50 shadow-md'
-                                  : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
-                              }`}
-                            >
-                              <div className="space-y-1">
-                                <h5 className={`font-medium ${
-                                  selectedASMRType === type.id ? 'text-emerald-800' : 'text-gray-800'
-                                }`}>
-                                  {type.name}
-                                </h5>
-                                <p className={`text-sm leading-relaxed ${
-                                  selectedASMRType === type.id ? 'text-emerald-700' : 'text-gray-600'
-                                }`}>
-                                  {type.description}
-                                </p>
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Footer - 全宽布局 */}
+      <footer className="bg-gradient-to-r from-stone-800 via-gray-800 to-stone-800 text-white relative">
+        {/* Subtle footer pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-lg overflow-hidden">
+                  <img 
+                    src="/logo.svg" 
+                    alt="CuttingASMR - Best AI ASMR Video Generator Powered by Google Veo3 for Content Creators" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-xl font-bold">CuttingASMR.org</span>
+              </div>
+              <p className="text-gray-400">
+                Create Stunning ASMR Video with our AI-powered Veo3 generator. Perfect for YouTube creators and ASMR makers.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Resources</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Terms</Link></li>
+                <li><Link href="/refund" className="hover:text-white transition-colors">Refund</Link></li>
+                <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-white transition-colors">Contact Support</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 CuttingASMR.org. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* ASMR Types Modal */}
+      {showAllTypesModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold text-gray-900">Choose ASMR Type</h3>
+                <button
+                  onClick={() => setShowAllTypesModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <span className="text-gray-500 text-xl">×</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
+              <div className="space-y-8">
+                {/* 默认选项 */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
+                    <span className="text-lg">✏️</span>
+                    <h4 className="font-semibold text-gray-900">Custom</h4>
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleASMRTypeChange('default')
+                      setShowAllTypesModal(false)
+                    }}
+                    className={`w-full p-4 rounded-xl border transition-all text-left ${
+                      selectedASMRType === 'default'
+                        ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                        : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
+                    }`}
+                  >
+                    <div className="space-y-1">
+                      <h5 className={`font-medium ${
+                        selectedASMRType === 'default' ? 'text-purple-900' : 'text-gray-900'
+                      }`}>
+                        {defaultOption.name}
+                      </h5>
+                      <p className={`text-sm leading-relaxed ${
+                        selectedASMRType === 'default' ? 'text-emerald-700' : 'text-gray-600'
+                      }`}>
+                        {defaultOption.description}
+                      </p>
+                    </div>
+                  </button>
+                </div>
+
+                {/* 所有分类 */}
+                {asmrCategories.map((category) => (
+                  <div key={category.id} className="space-y-3">
+                    <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
+                      <span className="text-lg">{category.icon}</span>
+                      <h4 className="font-semibold text-gray-900">{category.name}</h4>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {category.types.map((type) => (
+                        <button
+                          key={type.id}
+                          onClick={() => {
+                            handleASMRTypeChange(type.id)
+                            setShowAllTypesModal(false)
+                          }}
+                          className={`p-4 rounded-xl border transition-all text-left ${
+                            selectedASMRType === type.id
+                              ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                              : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
+                          }`}
+                        >
+                          <div className="space-y-1">
+                            <h5 className={`font-medium ${
+                              selectedASMRType === type.id ? 'text-emerald-800' : 'text-gray-800'
+                            }`}>
+                              {type.name}
+                            </h5>
+                            <p className={`text-sm leading-relaxed ${
+                              selectedASMRType === type.id ? 'text-emerald-700' : 'text-gray-600'
+                            }`}>
+                              {type.description}
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 } 
