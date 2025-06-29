@@ -446,7 +446,7 @@ export default function ASMRVideoStudio() {
                   {/* Default Custom Option */}
                   <button
                     onClick={() => handleASMRTypeChange('default')}
-                    className={`p-3 sm:p-4 rounded-xl border transition-all text-center font-medium text-sm sm:text-base ${
+                    className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center ${
                       selectedASMRType === 'default'
                         ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
                         : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
@@ -463,13 +463,13 @@ export default function ASMRVideoStudio() {
                       <button
                         key={type.id}
                         onClick={() => handleASMRTypeChange(type.id)}
-                        className={`p-3 sm:p-4 rounded-xl border transition-all text-center font-medium text-sm sm:text-base ${
+                        className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center ${
                           selectedASMRType === type.id
                             ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
                             : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
                         }`}
                       >
-                        <span className="block truncate">{type.name}</span>
+                        <span className="block leading-tight">{type.name}</span>
                       </button>
                     )
                   })}
@@ -477,7 +477,7 @@ export default function ASMRVideoStudio() {
                   {/* View All Button */}
                   <button
                     onClick={() => setShowAllTypesModal(true)}
-                    className="p-3 sm:p-4 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium text-sm sm:text-base"
+                    className="p-2 sm:p-3 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem]"
                   >
                     <span className="mr-1">⋯</span> All
                   </button>
