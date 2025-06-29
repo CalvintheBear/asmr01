@@ -14,7 +14,7 @@ import ASMRVideoResult from '@/components/ASMRVideoResult'
 import VideoShowcase from '@/components/VideoShowcase'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 import SEOHead from '@/components/SEOHead'
-import CollapsibleOverlapSection from '@/components/CollapsibleOverlapSection'
+import SimpleGuideCards from '@/components/SimpleGuideCards'
 import FAQAccordion from '@/components/FAQAccordion'
 import CollapsibleTechSection from '@/components/CollapsibleTechSection'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
@@ -763,264 +763,131 @@ export default function ASMRVideoStudio() {
 
 
 
-          {/* Collapsible Overlap Sections */}
-          <CollapsibleOverlapSection sections={[
+          {/* Simple Guide Cards */}
+          <SimpleGuideCards cards={[
             {
-              id: 'asmr-guide',
-              title: 'What is ASMR and How Our AI Generator Works',
-              subtitle: 'Learn about ASMR technology and discover how Google Veo3 AI creates therapeutic content automatically.',
-              bgGradient: 'bg-white',
-              titleColor: 'text-gray-800',
-              borderColor: 'border-gray-200',
-              collapsedContent: (
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="text-center">
-                    <h3 className="font-semibold text-gray-800 mb-2">ASMR Science</h3>
-                    <p className="text-sm text-gray-600">Autonomous Sensory Meridian Response triggers relaxation</p>
+              id: 'veo3-asmr-guide',
+              title: 'Best AI Video Generator for ASMR Content Creation',
+              subtitle: 'Learn how Google Veo3 AI creates therapeutic ASMR videos automatically with text to video technology.',
+              content: (
+                <div className="space-y-3">
+                  <div className="text-gray-700 text-sm leading-relaxed">
+                    Veo3 ASMR generator creates professional glass cutting, fruit slicing, and knife sound videos for YouTube Shorts and TikTok Shorts. Our AI video maker transforms simple prompts into viral content with lava and magma effects.
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <span className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
+                      Glass cutting and fruit slicing ASMR
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <span className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
+                      AI video generator with Veo3 technology
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <span className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
+                      Perfect for YouTube Shorts creation
+                    </div>
+                  </div>
                 </div>
-                  <div className="text-center">
-                    <h3 className="font-semibold text-gray-800 mb-2">AI Generation</h3>
-                    <p className="text-sm text-gray-600">Google Veo3 creates professional ASMR videos automatically</p>
-              </div>
-                  <div className="text-center">
-                    <h3 className="font-semibold text-gray-800 mb-2">Social Media</h3>
-                    <p className="text-sm text-gray-600">Perfect for YouTube Shorts and TikTok content</p>
-              </div>
-      </div>
               ),
               expandedContent: (
                 <div className="space-y-3">
-                  <div className="prose max-w-none text-gray-700 space-y-2">
-                    <p className="leading-relaxed">
-                      ASMR (Autonomous Sensory Meridian Response) is a relaxing sensation that helps millions of people fall asleep, reduce stress, and find peace. Our Google Veo3 AI technology creates professional ASMR videos automatically - from glass cutting and fruit slicing to ice cube carving and metal sheet cutting sounds.
+                  <div className="text-gray-600 text-sm leading-relaxed">
+                    Google Veo3 AI understands ASMR content creation, generating therapeutic videos with knife sounds, lava effects, and satisfying textures. Best AI video generator for content creators building YouTube channels.
+                  </div>
+                  
+                  <div className="bg-emerald-50 rounded-lg p-3">
+                    <h4 className="font-medium text-gray-800 text-sm mb-2">How to Make AI Videos</h4>
+                    <p className="text-gray-600 text-xs">
+                      Use our text to video AI to create ASMR content with custom prompts for glass, fruit, and knife cutting sounds perfect for TikTok Shorts.
                     </p>
-                    <p className="leading-relaxed">
-                      Perfect for content creators building YouTube channels and TikTok shorts. Our AI video generator understands prompts like "glass fruit cutting," "knife sounds," "lava effects," and "magma flow" to create viral-ready content.
-                    </p>
-              </div>
-              
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-sm font-bold text-blue-600">1</span>
-              </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">Choose ASMR Style</h3>
-                      <p className="text-gray-600 text-xs">Select from glass cutting, fruit slicing, or custom prompts.</p>
-              </div>
-              
-                    <div className="text-center">
-                      <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-sm font-bold text-emerald-600">2</span>
-              </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">AI Generation</h3>
-                      <p className="text-gray-600 text-xs">Google Veo3 creates professional ASMR videos automatically.</p>
-              </div>
-              
-                    <div className="text-center">
-                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <span className="text-sm font-bold text-purple-600">3</span>
-              </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">Download & Share</h3>
-                      <p className="text-gray-600 text-xs">Download high quality videos for YouTube and TikTok.</p>
-            </div>
-              </div>
-              
-                  <div className="bg-blue-50 rounded-xl p-4">
-                    <h4 className="font-semibold text-gray-800 mb-1 text-sm">Perfect for Content Creators</h4>
-                    <p className="text-gray-600 text-xs leading-relaxed">
-                      Our AI ASMR generator helps YouTube creators and TikTok influencers build successful channels with Google Veo3 technology that performs well on social media platforms.
-                    </p>
-              </div>
-              </div>
+                  </div>
+                </div>
               )
             },
             {
-              id: 'veo3-technology',
-              title: 'Google Veo3 AI: The Future of ASMR Content Creation',
-              subtitle: 'Discover the cutting-edge AI technology that powers professional ASMR video generation.',
-              bgGradient: 'bg-white',
-              titleColor: 'text-gray-800',
-              borderColor: 'border-gray-200',
-              collapsedContent: (
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Advanced AI</h3>
-              </div>
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Growth Results</h3>
-              </div>
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Perfect Audio</h3>
-              </div>
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Global Impact</h3>
+              id: 'ai-asmr-video-technology',
+              title: 'Google Veo3 AI Technology for ASMR Video Creation',
+              subtitle: 'Discover how our AI video maker creates the best ASMR content with advanced sound effects and visual quality.',
+              content: (
+                <div className="space-y-3">
+                  <div className="text-gray-700 text-sm leading-relaxed">
+                    Google Veo AI creates therapeutic ASMR videos with realistic knife sounds, glass cutting effects, and lava simulations. Our text to video AI generator produces content optimized for YouTube and TikTok.
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-blue-50 rounded p-2 text-center">
+                      <span className="font-medium">Glass & Fruit</span>
+                    </div>
+                    <div className="bg-purple-50 rounded p-2 text-center">
+                      <span className="font-medium">Lava & Magma</span>
+                    </div>
+                    <div className="bg-green-50 rounded p-2 text-center">
+                      <span className="font-medium">Knife Sounds</span>
+                    </div>
+                    <div className="bg-orange-50 rounded p-2 text-center">
+                      <span className="font-medium">AI Voices</span>
+                    </div>
                   </div>
                 </div>
               ),
               expandedContent: (
-                <div className="space-y-4">
-                  <div className="prose max-w-none text-gray-700 space-y-3">
-                    <p className="leading-relaxed">
-                      Google Veo3 represents cutting-edge AI video generation technology, specifically optimized for therapeutic ASMR content. 
-                      Our AI ASMR generator understands effective ASMR content nuances - from precise glass cutting sounds to visual lava effects.
-                    </p>
-                    
-                    <p className="leading-relaxed">
-                      Content creators report significant growth in YouTube and TikTok followers. 
-                      The AI generates videos that perform well on social media algorithms, creating genuinely relaxing content for all platforms.
-                    </p>
-              </div>
-              
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Popular ASMR Video Types:</h3>
-                    <div className="grid md:grid-cols-2 gap-3 text-sm">
-                      <ul className="space-y-1">
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
-                          Glass cutting and fruit slicing
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
-                          Ice cube carving and metal cutting
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
-                          Knife sounds and blade effects
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
-                          Lava flow and magma simulations
-                        </li>
-                      </ul>
-                      <ul className="space-y-1">
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                          Sleep meditation videos
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                          Stress relief content
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                          AI voices with sound effects
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                          Custom text-to-video
-                        </li>
-                      </ul>
-            </div>
-          </div>
-          
-                  <div className="prose max-w-none text-gray-700">
-                    <p className="leading-relaxed">
-                      Google Veo3 integration ensures our ASMR generator stays at the forefront of AI technology. 
-                      Content creators input simple prompts and receive professional results, democratizing ASMR creation for anyone wanting to help others relax and reduce stress.
-                </p>
-              </div>
-            </div>
+                <div className="space-y-3">
+                  <div className="text-gray-600 text-sm leading-relaxed">
+                    Veo3 ASMR generator combines AI voices with sound effects for immersive therapeutic experiences. Create AI videos with voice dubbing AI and custom text-to-video prompts.
+                  </div>
+                  
+                  <div className="bg-blue-50 rounded-lg p-3">
+                    <h4 className="font-medium text-gray-800 text-sm mb-2">AI ASMR Video Features</h4>
+                    <ul className="text-xs space-y-1">
+                      <li>• Professional sound effects and flow audio</li>
+                      <li>• Google AI integration for best quality</li>
+                      <li>• Optimized for TikTok and YouTube video creation</li>
+                    </ul>
+                  </div>
+                </div>
               )
             },
             {
-              id: 'why-choose-cutting-asmr',
-              title: 'Why Choose CuttingASMR.org AI ASMR Video Generation?',
-              subtitle: 'Discover the advantages of using our platform for creating therapeutic ASMR content that helps people sleep, relax, and reduce stress.',
-              bgGradient: 'bg-white',
-              titleColor: 'text-gray-800',
-              borderColor: 'border-gray-200',
-              collapsedContent: (
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Quick Creation</h3>
-          </div>
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Audience Growth</h3>
-        </div>
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Perfect Audio</h3>
+              id: 'asmr-generator-benefits',
+              title: 'Why Our ASMR Generator is the Best AI Video Maker',
+              subtitle: 'Discover why content creators choose our Google Veo3 powered platform for creating viral ASMR content.',
+              content: (
+                <div className="space-y-3">
+                  <div className="text-gray-700 text-sm leading-relaxed">
+                    Best AI video generator for ASMR content creation. Our Veo3 AI creates videos with therapeutic value, helping people relax with glass cutting, fruit slicing, and knife sound effects.
                   </div>
-                  <div className="text-center">
-                    <h3 className="font-medium text-gray-800 text-sm">Therapeutic Value</h3>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                      Create AI videos for TikTok Shorts
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                      Google Veo 3 AI powered generation
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                      Professional AI asmr video quality
+                    </div>
                   </div>
                 </div>
               ),
               expandedContent: (
-                <div className="space-y-4">
-                  <div className="prose max-w-none text-gray-700">
-                    <p className="leading-relaxed">
-                      CuttingASMR.org stands out as the premier platform for AI-generated ASMR content creation. Our Google Veo3 integration provides unmatched quality, making us the top choice for content creators worldwide.
-            </p>
-            </div>
-          
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-                      <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <Clock className="w-5 h-5 text-emerald-600" />
-            </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">Quick Creation</h3>
-                      <p className="text-xs text-gray-600">Generate professional ASMR videos in minutes.</p>
-            </div>
-            
-                    <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <Users className="w-5 h-5 text-blue-600" />
-          </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">Audience Growth</h3>
-                      <p className="text-xs text-gray-600">Content performs well on YouTube and TikTok.</p>
-            </div>
-            
-                    <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <Volume2 className="w-5 h-5 text-purple-600" />
-              </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">Perfect Sound</h3>
-                      <p className="text-xs text-gray-600">Google Veo3 creates realistic ASMR sounds.</p>
-            </div>
-            
-                    <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-                      <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                        <Headphones className="w-5 h-5 text-amber-600" />
-              </div>
-                      <h3 className="font-semibold text-gray-800 mb-1 text-sm">Therapeutic Value</h3>
-                      <p className="text-xs text-gray-600">Helps with sleep and stress relief.</p>
-            </div>
-          </div>
-          
-                  <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-                    <h4 className="font-semibold text-gray-800 mb-2 text-sm">Why CuttingASMR.org Leads</h4>
-                    <div className="grid md:grid-cols-2 gap-3 text-xs">
-                      <ul className="space-y-1">
-                        <li className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span>
-                          Free credits for new users
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span>
-                          Advanced Google Veo3 integration
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span>
-                          Social media optimized
-                        </li>
-                      </ul>
-                      <ul className="space-y-1">
-                        <li className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-red-500 rounded-full mr-2"></span>
-                          User-friendly interface
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-red-500 rounded-full mr-2"></span>
-                          Fast generation times
-                        </li>
-                        <li className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-red-500 rounded-full mr-2"></span>
-                          Extensive template library
-                        </li>
-                      </ul>
-              </div>
-              </div>
-            </div>
+                <div className="space-y-3">
+                  <div className="text-gray-600 text-sm leading-relaxed">
+                    What is AI ASMR? It's therapeutic content created with artificial intelligence, featuring realistic sound effects, visual flow, and calming textures for stress relief and relaxation.
+                  </div>
+                  
+                  <div className="bg-purple-50 rounded-lg p-3">
+                    <h4 className="font-medium text-gray-800 text-sm mb-2">Content Creator Benefits</h4>
+                    <p className="text-gray-600 text-xs">
+                      Generate viral AI ASMR videos for Facebook video, Instagram video, and TikTok video platforms with our advanced text to video AI technology.
+                    </p>
+                  </div>
+                </div>
               )
             }
           ]} />
