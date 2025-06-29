@@ -14,9 +14,7 @@ export interface ShowcaseVideo {
 }
 
 export type VideoCategory = 
-  | 'ice-cutting'     // 冰块切割
-  | 'metal-forging'   // 金属锻造
-  | 'crystal'         // 水晶相关
+  | 'crystal'         // 水晶玻璃相关
   | 'nature'          // 自然声音
   | 'texture'         // 纹理材质
   | 'satisfying';     // 解压视频
