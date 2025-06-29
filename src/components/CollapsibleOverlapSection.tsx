@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface CollapsibleSection {
   id: string;
@@ -19,102 +19,220 @@ interface CollapsibleOverlapSectionProps {
 }
 
 export default function CollapsibleOverlapSection({ sections }: CollapsibleOverlapSectionProps) {
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [progress, setProgress] = useState(0);
 
-  const toggleSection = (sectionId: string) => {
-    setExpandedSection(expandedSection === sectionId ? null : sectionId);
+  // 最小滑动距离（像素）
+  const minSwipeDistance = 50;
+
+  // 自动轮播和进度条
+  useEffect(() => {
+    if (!isAutoPlay) {
+      setProgress(0);
+      return;
+    }
+    
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          setCurrentIndex((current) => (current + 1) % sections.length);
+          return 0;
+        }
+        return prev + (100 / 40); // 4秒 = 4000ms，每100ms增加2.5%
+      });
+    }, 100);
+
+    return () => clearInterval(progressInterval);
+  }, [isAutoPlay, sections.length, currentIndex]);
+
+  // 触摸事件处理
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+    setProgress(0);
+    setIsAutoPlay(false); // 手动点击后停止自动播放
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % sections.length);
+    setProgress(0);
+    setIsAutoPlay(false);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + sections.length) % sections.length);
+    setProgress(0);
+    setIsAutoPlay(false);
   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+      {/* 轮播容器 */}
       <div className="relative">
-        {sections.map((section, index) => {
-          const isExpanded = expandedSection === section.id;
-          const isStacked = expandedSection && expandedSection !== section.id;
-          
-          return (
-            <div
-              key={section.id}
-              className={`
-                relative transition-all duration-500 ease-out cursor-pointer
-                ${index > 0 ? '-mt-8' : ''} 
-                ${isStacked ? 'transform scale-95 opacity-60 pointer-events-none' : ''}
-              `}
-              style={{
-                zIndex: isExpanded ? 50 : 30 - index,
-                transformOrigin: 'top center',
-                ...(isStacked && { 
-                  transform: `translateY(${index * 4}px) scale(0.95)`,
-                  filter: 'blur(1px)'
-                }),
-                ...(isExpanded && {
-                  transform: 'translateY(-10px) scale(1.02)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                })
-              }}
-              onClick={() => toggleSection(section.id)}
-            >
-              <div className={`
-                ${section.bgGradient} 
-                rounded-3xl shadow-xl border-2 overflow-hidden backdrop-blur-sm
-                transition-all duration-500 ease-out
-                hover:shadow-2xl hover:scale-[1.01]
-                ${isExpanded ? 'border-emerald-500 shadow-2xl' : section.borderColor}
-              `}>
-                {/* Header - Always Visible */}
-                <div className="p-8 pb-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h2 className={`text-2xl md:text-3xl font-semibold ${section.titleColor} mb-3`}>
+        {/* 卡片轮播区域 */}
+        <div 
+          className="overflow-hidden rounded-3xl"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <div 
+            className="flex transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {sections.map((section, index) => (
+              <div
+                key={section.id}
+                className="w-full flex-shrink-0"
+              >
+                <div className={`
+                  ${section.bgGradient} 
+                  rounded-3xl shadow-xl border-2 overflow-hidden backdrop-blur-sm
+                  transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]
+                  border-gray-200
+                `}>
+                  {/* 卡片内容 - 同时显示折叠和展开内容 */}
+                  <div className="p-4 md:p-8">
+                    <div className="mb-6 md:mb-8">
+                      <h2 className={`text-xl md:text-3xl font-semibold ${section.titleColor} mb-3 md:mb-4`}>
                         {section.title}
                       </h2>
-                      <p className="text-gray-600 leading-relaxed max-w-3xl">
+                      <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-4 md:mb-6">
                         {section.subtitle}
                       </p>
+                      
+                      {/* 显示折叠内容 */}
+                      <div className="mb-6 md:mb-8">
+                        {section.collapsedContent}
+                      </div>
                     </div>
-                    <div className={`ml-4 p-3 rounded-full bg-white/20 transition-all duration-300 ${
-                      isExpanded ? 'transform rotate-180' : ''
-                    }`}>
-                      {isExpanded ? (
-                        <ChevronUp className="w-6 h-6 text-gray-700" />
-                      ) : (
-                        <ChevronDown className="w-6 h-6 text-gray-700" />
-                      )}
-                    </div>
-                  </div>
-                  
-                  {/* Collapsed Content */}
-                  <div className={`
-                    transition-all duration-500 ease-out
-                    ${isExpanded ? 'opacity-0 max-h-0 overflow-hidden' : 'opacity-100 max-h-96'}
-                  `}>
-                    <div className="mt-6">
-                      {section.collapsedContent}
-                    </div>
-                  </div>
-                </div>
 
-                {/* Expanded Content */}
-                <div className={`
-                  transition-all duration-500 ease-out overflow-hidden
-                  ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}
-                `}>
-                  <div className="px-8 pb-8">
-                    <div className="border-t border-white/20 pt-6">
+                    {/* 显示展开内容 */}
+                    <div className="border-t border-white/20 pt-6 md:pt-8">
                       {section.expandedContent}
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
+        </div>
+
+        {/* 导航箭头 - 桌面端 */}
+        <button
+          onClick={prevSlide}
+          className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 z-10 
+                     bg-white/90 hover:bg-white rounded-full p-3 shadow-lg
+                     transition-all duration-300 hover:scale-110"
+          aria-label="上一张卡片"
+        >
+          <ChevronLeft className="w-6 h-6 text-gray-700" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 z-10 
+                     bg-white/90 hover:bg-white rounded-full p-3 shadow-lg
+                     transition-all duration-300 hover:scale-110"
+          aria-label="下一张卡片"
+        >
+          <ChevronRight className="w-6 h-6 text-gray-700" />
+        </button>
       </div>
-      
-      {/* Instruction Text */}
-      <div className="text-center mt-12">
-        <p className="text-gray-500 text-sm">
-          Click on any section to expand and explore detailed information
+
+      {/* 移动端导航按钮 */}
+      <div className="md:hidden flex justify-center items-center mt-6 space-x-4">
+        <button
+          onClick={prevSlide}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-2 shadow-lg
+                     transition-all duration-300 hover:scale-110"
+          aria-label="上一张卡片"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        
+        <div className="flex space-x-2">
+          {sections.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-emerald-600 scale-125' 
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+              aria-label={`切换到第${index + 1}张卡片`}
+            />
+          ))}
+        </div>
+        
+        <button
+          onClick={nextSlide}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-2 shadow-lg
+                     transition-all duration-300 hover:scale-110"
+          aria-label="下一张卡片"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* 自动播放进度条 */}
+      {isAutoPlay && (
+        <div className="mt-6 max-w-md mx-auto">
+          <div className="w-full bg-gray-200 rounded-full h-1">
+            <div 
+              className="bg-emerald-600 h-1 rounded-full transition-all duration-100 ease-linear"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* 桌面端指示器点点 */}
+      <div className="hidden md:flex justify-center mt-6 space-x-2">
+        {sections.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex 
+                ? 'bg-emerald-600 scale-125' 
+                : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+            aria-label={`切换到第${index + 1}张卡片`}
+          />
+        ))}
+      </div>
+
+      {/* 用户提示 */}
+      <div className="text-center mt-6">
+        <p className="text-xs text-gray-400 md:hidden">
+          👆 滑动切换卡片
         </p>
       </div>
     </div>

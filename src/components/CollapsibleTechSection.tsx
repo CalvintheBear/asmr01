@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap, Settings, Video, Sparkles, Check } from 'lucide-react';
 
 export default function CollapsibleTechSection() {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const toggleSection = () => {
     setIsExpanded(!isExpanded);

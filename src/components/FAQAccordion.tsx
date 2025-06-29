@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Minimize2, Maximize2 } from 'lucide-react';
 
 interface FAQItem {
   id: string;
@@ -15,21 +15,60 @@ interface FAQAccordionProps {
 }
 
 export default function FAQAccordion({ faqs, title = "FAQ" }: FAQAccordionProps) {
-  const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
+  // 设置默认状态为所有FAQ都展开
+  const [expandedFaqs, setExpandedFaqs] = useState<Set<string>>(
+    new Set(faqs.map(faq => faq.id))
+  );
 
   const toggleFaq = (faqId: string) => {
-    setExpandedFaq(expandedFaq === faqId ? null : faqId);
+    const newExpandedFaqs = new Set(expandedFaqs);
+    if (newExpandedFaqs.has(faqId)) {
+      newExpandedFaqs.delete(faqId);
+    } else {
+      newExpandedFaqs.add(faqId);
+    }
+    setExpandedFaqs(newExpandedFaqs);
   };
+
+  const toggleAll = () => {
+    if (expandedFaqs.size === faqs.length) {
+      // 如果全部展开，则全部折叠
+      setExpandedFaqs(new Set());
+    } else {
+      // 否则全部展开
+      setExpandedFaqs(new Set(faqs.map(faq => faq.id)));
+    }
+  };
+
+  const allExpanded = expandedFaqs.size === faqs.length;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <h2 className="text-4xl font-bold text-gray-900 mb-2">{title}</h2>
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="text-4xl font-bold text-gray-900">{title}</h2>
+        
+        {/* 一键折叠/展开按钮 */}
+        <button
+          onClick={toggleAll}
+          className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-gray-700 hover:text-gray-900"
+        >
+          {allExpanded ? (
+            <>
+              <Minimize2 className="w-4 h-4" />
+              <span className="text-sm font-medium">Collapse All</span>
+            </>
+          ) : (
+            <>
+              <Maximize2 className="w-4 h-4" />
+              <span className="text-sm font-medium">Expand All</span>
+            </>
+          )}
+        </button>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {faqs.map((faq) => {
-          const isExpanded = expandedFaq === faq.id;
+          const isExpanded = expandedFaqs.has(faq.id);
           
           return (
             <div
