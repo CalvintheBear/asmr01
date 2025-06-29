@@ -6,6 +6,7 @@ import { ShowcaseVideo } from '@/data/video-types';
 import VideoCard from '@/components/VideoCard';
 import VideoModal from '@/components/VideoModal';
 import SEOHead from '@/components/SEOHead';
+import StructuredData from '@/components/StructuredData';
 import Link from 'next/link';
 import { ArrowLeft, Play } from 'lucide-react';
 
@@ -23,6 +24,17 @@ export default function VideoShowcasePage() {
     setSelectedVideo(null);
   };
 
+  // 转换展示视频数据为结构化数据格式
+  const videosForStructuredData = showcaseVideos.map(video => ({
+    id: video.id,
+    title: video.title,
+    description: video.description,
+    videoUrl: video.videoUrl,
+    thumbnailUrl: video.thumbnailUrl,
+    duration: video.duration,
+    category: video.category
+  }));
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
       <SEOHead
@@ -30,6 +42,13 @@ export default function VideoShowcasePage() {
         description="Best Google Veo3 ASMR videos for relaxation! AI generated sleep ASMR examples with glass cutting, fruit content. Veo3 stress relief videos perfect for meditation and relaxing content creation."
         canonical="https://cuttingasmr.org/video-showcase"
         keywords="google veo3, veo3, google veo3 asmr, veo3 asmr videos, best asmr videos, relaxing asmr content, sleep asmr generator, stress relief videos, meditation video creator, relaxing content, YouTube shorts, tiktok shorts, glass cutting, fruit, asmr video, relaxing video maker, ai generated asmr"
+      />
+      
+      {/* 添加结构化数据 */}
+      <StructuredData 
+        type="video"
+        videos={videosForStructuredData}
+        pageUrl="https://cuttingasmr.org/video-showcase"
       />
       {/* Top Navigation */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-stone-200 sticky top-0 z-40">

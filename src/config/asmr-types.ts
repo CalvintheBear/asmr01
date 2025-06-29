@@ -80,7 +80,7 @@ export const asmrCategories: ASMRCategory[] = [
         id: 'minecraft-block-cutting',
         name: 'Minecraft Block Cutting ASMR',
         description: 'Sharp blade slicing through pixelated Minecraft blocks with satisfying cuts',
-        prompt: 'Realistic 4K footage close-up of a sharp diamond sword smoothly slicing through a colorful pixelated Minecraft grass block on a cubic stone platform. It cuts cleanly revealing layered pixel textures inside. The inside of the block shows dirt pixels beneath grass pixels. The sound is ASMR style with satisfying slicing and block separation sounds.'
+        prompt: 'Realistic 4K footage close-up in a realistic kitchen environment with a viewing angle on a table, one hand smoothly slicing through colorful pixelated pieces of Minecraft grass with a fruit knife. It cuts cleanly, revealing the layered pixel texture inside. The inside of the block shows the dirt pixels below the grass pixels. The sound is ASMR style, with satisfying slice and block separation sounds.'
       }
     ]
   },

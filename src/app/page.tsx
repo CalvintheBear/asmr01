@@ -20,6 +20,7 @@ import CollapsibleTechSection from '@/components/CollapsibleTechSection'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
 import { useCredits } from '@/hooks/useCredits'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
+import StructuredData from '@/components/StructuredData'
 
 export default function ASMRVideoStudio() {
   const { user, isLoaded } = useUser()
@@ -278,6 +279,13 @@ export default function ASMRVideoStudio() {
         description="ASMR creator tools for YouTube channels! AI ASMR creator software with glass cutting, fruit videos. How to become ASMR creator with Google Veo3 AI. Relaxing video maker for content creators."
         canonical="https://cuttingasmr.org"
         keywords="asmr creator tools, asmr maker software, best asmr generator, ai asmr creator, relaxing video maker, how to become asmr creator, asmr youtube channel, ai content creator tools, veo3 asmr, Google veo 3 ai, best ai video generator, ai video generator, YouTube shorts, tiktok shorts, content creator"
+      />
+      
+      {/* 添加结构化数据 */}
+      <StructuredData 
+        type="homepage"
+        faqs={faqData}
+        pageUrl="https://cuttingasmr.org"
       />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
@@ -710,8 +718,8 @@ export default function ASMRVideoStudio() {
               {/* Step 1 */}
               <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-100 hover:shadow-md hover:border-emerald-200 transition-all duration-300">
                 <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-lg font-semibold mx-auto mb-4">
-                  1
-                </div>
+                    1
+                  </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Choose ASMR Scene</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Select from pre-built templates or create your own custom ASMR concept
@@ -721,8 +729,8 @@ export default function ASMRVideoStudio() {
               {/* Step 2 */}
               <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-100 hover:shadow-md hover:border-emerald-200 transition-all duration-300">
                 <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-lg font-semibold mx-auto mb-4">
-                  2
-                </div>
+                    2
+                  </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Customize Your Prompt</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Describe your ideal ASMR scene with specific details about sounds, visuals, and mood
@@ -732,8 +740,8 @@ export default function ASMRVideoStudio() {
               {/* Step 3 */}
               <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-gray-100 hover:shadow-md hover:border-emerald-200 transition-all duration-300">
                 <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-lg font-semibold mx-auto mb-4">
-                  3
-                </div>
+                    3
+                  </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">Generate & Share</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   AI creates your video in 3-5 minutes. Download and share on YouTube, TikTok, or any platform
@@ -769,16 +777,16 @@ export default function ASMRVideoStudio() {
                   <div className="text-center">
                     <h3 className="font-semibold text-gray-800 mb-2">ASMR Science</h3>
                     <p className="text-sm text-gray-600">Autonomous Sensory Meridian Response triggers relaxation</p>
-                  </div>
+                </div>
                   <div className="text-center">
                     <h3 className="font-semibold text-gray-800 mb-2">AI Generation</h3>
                     <p className="text-sm text-gray-600">Google Veo3 creates professional ASMR videos automatically</p>
-                  </div>
+              </div>
                   <div className="text-center">
                     <h3 className="font-semibold text-gray-800 mb-2">Social Media</h3>
                     <p className="text-sm text-gray-600">Perfect for YouTube Shorts and TikTok content</p>
-                  </div>
-                </div>
+              </div>
+      </div>
               ),
               expandedContent: (
                 <div className="space-y-3">
@@ -789,41 +797,41 @@ export default function ASMRVideoStudio() {
                     <p className="leading-relaxed">
                       Perfect for content creators building YouTube channels and TikTok shorts. Our AI video generator understands prompts like "glass fruit cutting," "knife sounds," "lava effects," and "magma flow" to create viral-ready content.
                     </p>
-                  </div>
-                  
+              </div>
+              
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="text-center">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
                         <span className="text-sm font-bold text-blue-600">1</span>
-                      </div>
+              </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">Choose ASMR Style</h3>
                       <p className="text-gray-600 text-xs">Select from glass cutting, fruit slicing, or custom prompts.</p>
-                    </div>
-                    
+              </div>
+              
                     <div className="text-center">
                       <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
                         <span className="text-sm font-bold text-emerald-600">2</span>
-                      </div>
+              </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">AI Generation</h3>
                       <p className="text-gray-600 text-xs">Google Veo3 creates professional ASMR videos automatically.</p>
-                    </div>
-                    
+              </div>
+              
                     <div className="text-center">
                       <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                         <span className="text-sm font-bold text-purple-600">3</span>
-                      </div>
+              </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">Download & Share</h3>
                       <p className="text-gray-600 text-xs">Download high quality videos for YouTube and TikTok.</p>
-                    </div>
-                  </div>
-                  
+            </div>
+              </div>
+              
                   <div className="bg-blue-50 rounded-xl p-4">
                     <h4 className="font-semibold text-gray-800 mb-1 text-sm">Perfect for Content Creators</h4>
                     <p className="text-gray-600 text-xs leading-relaxed">
                       Our AI ASMR generator helps YouTube creators and TikTok influencers build successful channels with Google Veo3 technology that performs well on social media platforms.
                     </p>
-                  </div>
-                </div>
+              </div>
+              </div>
               )
             },
             {
@@ -837,13 +845,13 @@ export default function ASMRVideoStudio() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Advanced AI</h3>
-                  </div>
+              </div>
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Growth Results</h3>
-                  </div>
+              </div>
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Perfect Audio</h3>
-                  </div>
+              </div>
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Global Impact</h3>
                   </div>
@@ -861,8 +869,8 @@ export default function ASMRVideoStudio() {
                       Content creators report significant growth in YouTube and TikTok followers. 
                       The AI generates videos that perform well on social media algorithms, creating genuinely relaxing content for all platforms.
                     </p>
-                  </div>
-                  
+              </div>
+              
                   <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                     <h3 className="text-lg font-semibold text-gray-800 mb-3">Popular ASMR Video Types:</h3>
                     <div className="grid md:grid-cols-2 gap-3 text-sm">
@@ -902,16 +910,16 @@ export default function ASMRVideoStudio() {
                           Custom text-to-video
                         </li>
                       </ul>
-                    </div>
-                  </div>
-                  
+            </div>
+          </div>
+          
                   <div className="prose max-w-none text-gray-700">
                     <p className="leading-relaxed">
                       Google Veo3 integration ensures our ASMR generator stays at the forefront of AI technology. 
                       Content creators input simple prompts and receive professional results, democratizing ASMR creation for anyone wanting to help others relax and reduce stress.
-                    </p>
-                  </div>
-                </div>
+                </p>
+              </div>
+            </div>
               )
             },
             {
@@ -925,10 +933,10 @@ export default function ASMRVideoStudio() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Quick Creation</h3>
-                  </div>
+          </div>
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Audience Growth</h3>
-                  </div>
+        </div>
                   <div className="text-center">
                     <h3 className="font-medium text-gray-800 text-sm">Perfect Audio</h3>
                   </div>
@@ -942,43 +950,43 @@ export default function ASMRVideoStudio() {
                   <div className="prose max-w-none text-gray-700">
                     <p className="leading-relaxed">
                       CuttingASMR.org stands out as the premier platform for AI-generated ASMR content creation. Our Google Veo3 integration provides unmatched quality, making us the top choice for content creators worldwide.
-                    </p>
-                  </div>
-                  
+            </p>
+            </div>
+          
                   <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="bg-white rounded-xl p-4 shadow-sm text-center">
                       <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <Clock className="w-5 h-5 text-emerald-600" />
-                      </div>
+            </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">Quick Creation</h3>
                       <p className="text-xs text-gray-600">Generate professional ASMR videos in minutes.</p>
-                    </div>
-                    
+            </div>
+            
                     <div className="bg-white rounded-xl p-4 shadow-sm text-center">
                       <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <Users className="w-5 h-5 text-blue-600" />
-                      </div>
+          </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">Audience Growth</h3>
                       <p className="text-xs text-gray-600">Content performs well on YouTube and TikTok.</p>
-                    </div>
-                    
+            </div>
+            
                     <div className="bg-white rounded-xl p-4 shadow-sm text-center">
                       <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <Volume2 className="w-5 h-5 text-purple-600" />
-                      </div>
+              </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">Perfect Sound</h3>
                       <p className="text-xs text-gray-600">Google Veo3 creates realistic ASMR sounds.</p>
-                    </div>
-                    
+            </div>
+            
                     <div className="bg-white rounded-xl p-4 shadow-sm text-center">
                       <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <Headphones className="w-5 h-5 text-amber-600" />
-                      </div>
+              </div>
                       <h3 className="font-semibold text-gray-800 mb-1 text-sm">Therapeutic Value</h3>
                       <p className="text-xs text-gray-600">Helps with sleep and stress relief.</p>
-                    </div>
-                  </div>
-                  
+            </div>
+          </div>
+          
                   <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
                     <h4 className="font-semibold text-gray-800 mb-2 text-sm">Why CuttingASMR.org Leads</h4>
                     <div className="grid md:grid-cols-2 gap-3 text-xs">
@@ -1010,9 +1018,9 @@ export default function ASMRVideoStudio() {
                           Extensive template library
                         </li>
                       </ul>
-                    </div>
-                  </div>
-                </div>
+              </div>
+              </div>
+            </div>
               )
             }
           ]} />
@@ -1061,7 +1069,7 @@ export default function ASMRVideoStudio() {
               </ul>
             </div>
             
-            <div>
+              <div>
               <h4 className="font-semibold mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>

@@ -1,8 +1,38 @@
 import Link from 'next/link'
 import { ArrowLeft, Mail, MessageCircle, Clock, Shield } from 'lucide-react'
 import SEOHead from '@/components/SEOHead'
+import StructuredData from '@/components/StructuredData'
 
 export default function HelpPage() {
+  // 帮助页面FAQ数据
+  const helpFaqData = [
+    {
+      id: 'how-to-get-started',
+      question: 'How do I get started with CuttingASMR.org?',
+      answer: 'Simply sign up for a free account, choose an ASMR type from our templates, write your prompt, and click generate. New users get free credits to try our AI ASMR generator powered by Google Veo3.'
+    },
+    {
+      id: 'payment-billing',
+      question: 'How does billing and payment work?',
+      answer: 'We use a credit-based system. Purchase credits once and use them anytime - they never expire. Each video generation costs 10 credits. We accept major credit cards through our secure payment processor.'
+    },
+    {
+      id: 'video-quality',
+      question: 'What video quality do you provide?',
+      answer: 'All videos are generated in high definition (720p) by default, with 1080p available for download. Videos are optimized for YouTube Shorts, TikTok, and other social media platforms.'
+    },
+    {
+      id: 'technical-support',
+      question: 'How can I get technical support?',
+      answer: 'Contact our support team at supportadmin@cuttingasmr.org for technical issues, billing questions, or general help. We typically respond within 24 hours.'
+    },
+    {
+      id: 'commercial-use',
+      question: 'Can I use generated videos commercially?',
+      answer: 'Yes! All videos generated with paid credits include commercial usage rights. You can monetize your ASMR videos on YouTube, TikTok, and other platforms without restrictions.'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <SEOHead
@@ -10,6 +40,13 @@ export default function HelpPage() {
         description="Get help with CuttingASMR.org AI ASMR video generator. FAQ, support contact, billing help, and technical assistance for Gemini Veo3 powered platform."
         canonical="https://cuttingasmr.org/help"
         keywords="ASMR help, AI video support, CuttingASMR support, ASMR FAQ, technical help"
+      />
+      
+      {/* 添加结构化数据 */}
+      <StructuredData 
+        type="faq"
+        faqs={helpFaqData}
+        pageUrl="https://cuttingasmr.org/help"
       />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 

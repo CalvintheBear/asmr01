@@ -49,7 +49,7 @@ export default function RootLayout({
         <meta name="msapplication-TileImage" content="/favicon.ico" />
         <meta name="theme-color" content="#ffffff" />
         
-        {/* Schema.org structured data for better SEO */}
+        {/* 基础结构化数据 - 网站级别 */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -66,65 +66,6 @@ export default function RootLayout({
                 "@type": "SearchAction",
                 "target": "https://cuttingasmr.org/?q={search_term_string}",
                 "query-input": "required name=search_term_string"
-              }
-            })
-          }}
-        />
-        
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              "name": "CuttingASMR AI ASMR Generator",
-              "url": "https://cuttingasmr.org",
-              "description": "Professional AI ASMR generator powered by Google Veo3. Create relaxing videos, sleep ASMR, and stress relief content for YouTube and TikTok.",
-              "applicationCategory": "MultimediaApplication",
-              "operatingSystem": "Web Browser",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "description": "Free credits for new users"
-              },
-              "author": {
-                "@type": "Organization",
-                "name": "CuttingASMR Team"
-              },
-              "keywords": "google veo3, veo3 asmr generator, ai video generator, asmr creator tools, best asmr generator, ai asmr video, relaxing video maker, sleep asmr generator, content creator tools, youtube shorts, tiktok shorts"
-            })
-          }}
-        />
-        
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": "CuttingASMR - Veo3 AI ASMR Generator",
-              "applicationCategory": "VideoEditing",
-              "operatingSystem": "Web",
-              "description": "AI-powered ASMR video generator using Google Veo3 technology. Create professional ASMR content for YouTube channels and TikTok with glass cutting, fruit slicing, and relaxation videos.",
-              "url": "https://cuttingasmr.org",
-              "author": {
-                "@type": "Organization",
-                "name": "CuttingASMR",
-                "url": "https://cuttingasmr.org"
-              },
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "priceValidUntil": "2025-12-31",
-                "description": "Free credits for new users to try AI ASMR generation"
-              },
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.8",
-                "ratingCount": "127",
-                "bestRating": "5"
               }
             })
           }}
