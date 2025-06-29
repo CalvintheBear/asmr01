@@ -92,6 +92,18 @@ export default function CollapsibleOverlapSection({ sections }: CollapsibleOverl
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+      {/* SEO友好的隐藏文本内容 - 所有轮播内容以静态文本形式存在 */}
+      <div className="sr-only" aria-hidden="true">
+        {sections.map((section) => (
+          <div key={`seo-${section.id}`}>
+            <h3>{section.title}</h3>
+            <p>{section.subtitle}</p>
+            <div>{section.collapsedContent}</div>
+            <div>{section.expandedContent}</div>
+          </div>
+        ))}
+      </div>
+      
       {/* 轮播容器 */}
       <div className="relative">
         {/* 卡片轮播区域 */}
@@ -109,6 +121,12 @@ export default function CollapsibleOverlapSection({ sections }: CollapsibleOverl
               <div
                 key={section.id}
                 className="w-full flex-shrink-0"
+                // 确保内容对搜索引擎可见，即使视觉上不在视口中
+                style={{ 
+                  visibility: 'visible', 
+                  opacity: index === currentIndex ? 1 : 0.8,
+                  pointerEvents: index === currentIndex ? 'auto' : 'none'
+                }}
               >
                 <div className={`
                   ${section.bgGradient} 
@@ -117,8 +135,8 @@ export default function CollapsibleOverlapSection({ sections }: CollapsibleOverl
                   border-gray-200
                 `}>
                   {/* 卡片内容 - 同时显示折叠和展开内容 */}
-                  <div className="p-4 md:p-8">
-                    <div className="mb-6 md:mb-8">
+                  <article className="p-4 md:p-8">
+                    <header className="mb-6 md:mb-8">
                       <h2 className={`text-xl md:text-3xl font-semibold ${section.titleColor} mb-3 md:mb-4`}>
                         {section.title}
                       </h2>
@@ -127,16 +145,16 @@ export default function CollapsibleOverlapSection({ sections }: CollapsibleOverl
                       </p>
                       
                       {/* 显示折叠内容 */}
-                      <div className="mb-6 md:mb-8">
+                      <section className="mb-6 md:mb-8">
                         {section.collapsedContent}
-                      </div>
-                    </div>
+                      </section>
+                    </header>
 
                     {/* 显示展开内容 */}
-                    <div className="border-t border-white/20 pt-6 md:pt-8">
+                    <section className="border-t border-white/20 pt-6 md:pt-8">
                       {section.expandedContent}
-                    </div>
-                  </div>
+                    </section>
+                  </article>
                 </div>
               </div>
             ))}
