@@ -36,7 +36,7 @@ export default function VideoShowcasePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
             <Link 
-              href="/#main-generator"
+              href="/"
               className="flex items-center gap-2 text-gray-600 hover:text-emerald-600 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -89,7 +89,7 @@ export default function VideoShowcasePage() {
             No recording equipment needed, no editing skills required.
           </p>
           <Link
-            href="/#main-generator"
+            href="/"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300"
           >
             <Play className="w-5 h-5" />

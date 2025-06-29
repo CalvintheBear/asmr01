@@ -77,8 +77,8 @@ export default function ASMRVideoStudio() {
         setPrompt(typePrompt)
       }
       
-      // 清理URL参数（可选）
-      window.history.replaceState({}, '', window.location.pathname + '#main-generator')
+      // 清理URL参数，保持首页URL简洁以优化SEO
+      window.history.replaceState({}, '', window.location.pathname)
     }
   }, [searchParams])
 
