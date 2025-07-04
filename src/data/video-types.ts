@@ -2,6 +2,7 @@ export interface ShowcaseVideo {
   id: string;
   title: string;
   description: string;
+  prompt: string;                  // 新增：用于生成视频的提示词
   thumbnailUrl: string;            // 视频缩略图
   videoUrl: string;                // 腾讯云视频链接
   duration: string;                // 例: "0:30"

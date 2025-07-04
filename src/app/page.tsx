@@ -274,7 +274,7 @@ export default function ASMRVideoStudio() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <SEOHead
-        title="CuttingASMR - Veo3 Video Prompt Generator | Best AI Video Prompt Tool for Creators"
+        title="CuttingASMR - Veo3 Video & Prompt Generator |Al Video Prompt Tool for Creators"
         description="Create stunning AI videos with veo3 video prompt templates! Professional ai video prompt generator using Google Veo3 AI. Perfect for ASMR creators, YouTube Shorts, and TikTok content makers."
         canonical="https://cuttingasmr.org"
         keywords="veo3 video prompt, ai video prompt, google veo3 prompts, ai video generator, asmr video prompts, veo3 ai generator, ai video prompt maker, video prompt templates, ai content creator tools, best ai video generator, YouTube shorts, tiktok shorts, veo3 examples"
