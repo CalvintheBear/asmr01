@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { VideoModalProps } from '@/data/video-types';
-import { X, Share2 } from 'lucide-react';
+import { X, Share2, Copy, Check } from 'lucide-react';
 
 export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [copied, setCopied] = useState(false);
+
   // ESC key to close modal and cleanup
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -70,6 +72,17 @@ export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) 
     }
   };
 
+  const handleCopyPrompt = async () => {
+    try {
+      const promptText = video.prompt || "not yet";
+      await navigator.clipboard.writeText(promptText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
   return (
     <div 
       className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
@@ -120,9 +133,38 @@ export default function VideoModal({ video, isOpen, onClose }: VideoModalProps) 
               {video.asmrType}
             </div>
 
-            <p className="text-gray-700 text-base leading-relaxed">
-              {video.description}
-            </p>
+            {/* Prompt Template Section */}
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-lg font-semibold text-gray-900">AI Video Prompt Template</h4>
+                <button
+                  onClick={handleCopyPrompt}
+                  className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
+                    copied 
+                      ? 'bg-green-100 text-green-700 border border-green-200' 
+                      : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-200'
+                  }`}
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
+              
+              <div className="bg-white rounded-md p-3 border border-gray-300">
+                <pre className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap font-mono">
+                  {video.prompt || "not yet"}
+                </pre>
+              </div>
+            </div>
           </div>
 
           {/* Bottom Actions */}

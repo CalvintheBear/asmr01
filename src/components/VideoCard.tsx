@@ -2,20 +2,20 @@
 
 import { useState } from 'react';
 import { VideoCardProps } from '@/data/video-types';
-import { Play } from 'lucide-react';
+import { Play, Eye } from 'lucide-react';
 
 export default function VideoCard({ video, onClick }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div 
-      className="group relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+      className="group relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onClick(video)}
     >
       {/* Video Thumbnail */}
-      <div className="relative aspect-video overflow-hidden">
+      <div className="relative aspect-video overflow-hidden flex-shrink-0">
         <video
           src={video.videoUrl}
           muted
@@ -39,14 +39,18 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
       </div>
 
       {/* Video Info */}
-      <div className="p-4">
-        <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors duration-300">
+      <div className="p-4 flex flex-col flex-grow">
+        <h3 className="font-semibold text-lg text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300 flex-grow">
           {video.title}
         </h3>
         
-        <p className="text-gray-600 text-sm line-clamp-2">
-          {video.description}
-        </p>
+        {/* View Prompt Template Button - 固定在底部 */}
+        <div className="mt-auto">
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-sm font-medium rounded-lg hover:from-emerald-700 hover:to-emerald-800 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+            <Eye className="w-4 h-4" />
+            View Prompt Template
+          </button>
+        </div>
       </div>
     </div>
   );
