@@ -38,10 +38,10 @@ export default function VideoShowcasePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
       <SEOHead
-        title="Best Google Veo3 ASMR Videos Gallery - AI Generated Relaxing Content Examples"
-        description="Best Google Veo3 ASMR videos for relaxation! AI generated sleep ASMR examples with glass cutting, fruit content. Veo3 stress relief videos perfect for meditation and relaxing content creation."
+        title="AI Veo3 Video & Prompt Gallery - Professional Video Templates with Copy-Ready Prompts"
+        description="Explore professional videos created with Google Veo3 AI. Copy proven veo3 video prompt and ai video prompt templates to create stunning content. Perfect for content creators and video makers."
         canonical="https://cuttingasmr.org/video-showcase"
-        keywords="google veo3, veo3, google veo3 asmr, veo3 asmr videos, best asmr videos, relaxing asmr content, sleep asmr generator, stress relief videos, meditation video creator, relaxing content, YouTube shorts, tiktok shorts, glass cutting, fruit, asmr video, relaxing video maker, ai generated asmr"
+        keywords="google veo3, veo3 prompts, ai video templates, video prompts, google veo3 gallery, ai video generator prompts, veo3 examples, video creation prompts, ai content templates, professional ai videos, veo3 video prompt, ai video prompt"
       />
       
       {/* 添加结构化数据 */}
@@ -64,7 +64,7 @@ export default function VideoShowcasePage() {
             
             <div className="h-6 w-px bg-stone-300 mx-4" />
             
-            <h1 className="text-xl font-bold text-gray-800">AI Generated ASMR Videos</h1>
+            <h1 className="text-xl font-bold text-gray-800">Veo3 Video Prompt Templates</h1>
           </div>
         </div>
       </div>
@@ -72,23 +72,27 @@ export default function VideoShowcasePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Play className="w-4 h-4" />
-            AI Generated Collection
-          </div>
-          
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-            Amazing ASMR Videos
-            <span className="bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent"> Gallery</span>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
+            <span className="bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">AI Veo3 Video & Prompt Gallery</span>
           </h1>
           
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Explore our complete collection of AI-generated ASMR videos. Each video showcases the incredible creativity and precision of artificial intelligence technology.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+            Explore professional videos created with Google Veo3 AI and copy their exact veo3 video prompt templates. 
+            Each ai video prompt in our gallery has been tested and optimized for maximum quality - simply copy, customize, and generate your own stunning content.
           </p>
+
+          {/* Start Create Button - 放大并置于标题介绍下方 */}
+          <Link 
+            href="/"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-10 py-4 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            <Play className="w-6 h-6" />
+            Start Create Now
+          </Link>
         </div>
 
         {/* Video Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 items-stretch">
           {showcaseVideos.map((video) => (
             <VideoCard
               key={video.id}
@@ -101,11 +105,11 @@ export default function VideoShowcasePage() {
         {/* Bottom CTA */}
         <div className="text-center mt-16 p-8 bg-gradient-to-br from-emerald-50 to-amber-50 rounded-2xl border border-stone-200">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">
-            Ready to Create Your Own ASMR Video?
+            Ready to Use These Veo3 Video Prompt Templates?
           </h3>
           <p className="text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Use our AI generator to create professional ASMR videos in minutes.
-            No recording equipment needed, no editing skills required.
+            Copy any veo3 video prompt or ai video prompt from our gallery and create stunning videos instantly. 
+            Our Google Veo3 AI generator uses these exact prompt templates to deliver professional results every time.
           </p>
           <Link
             href="/"

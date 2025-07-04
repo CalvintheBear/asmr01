@@ -37,9 +37,9 @@ export default function ASMRVideoStudio() {
   // FAQ数据 - 12条完整FAQ
   const faqData = [
     {
-      id: 'what-is-asmr-generator',
-      question: 'What is ASMR generator with Veo3 AI technology?',
-      answer: 'Our AI video generator uses advanced Google Veo3 AI technology to transform prompts into high-quality, relaxing ASMR videos. Best AI video maker for creators - generate professional therapeutic content without traditional recording equipment or editing skills.'
+      id: 'what-is-veo3-video-prompt-generator',
+      question: 'What is a veo3 video prompt generator?',
+      answer: 'Our ai video prompt generator uses Google Veo3 AI technology to transform detailed veo3 video prompt templates into professional videos. Create stunning content using proven ai video prompt formulas without equipment or editing skills.'
     },
     {
       id: 'best-video-length',
@@ -47,9 +47,9 @@ export default function ASMRVideoStudio() {
       answer: 'For TikTok Shorts, 10-15 second video loops work best for maximum engagement. For YouTube Shorts, our AI video generator creates seamless loops perfect for longer immersive content and meditation videos. Our best AI video maker optimizes duration automatically.'
     },
     {
-      id: 'how-to-make-without-equipment',
-      question: 'How to make AI ASMR videos without equipment?',
-      answer: 'Yes! Our AI video maker creates professional ASMR content instantly without microphones or editing skills. Transform simple prompts into 4K quality ASMR videos with spatial audio and realistic physics effects - perfect for content creators!'
+      id: 'how-to-make-ai-videos-with-prompts',
+      question: 'How to make professional AI videos with veo3 video prompt templates?',
+      answer: 'Simply select any ai video prompt template from our gallery, customize it for your needs, and generate instantly! Our veo3 video prompt templates create 4K quality videos with professional effects - no equipment or editing skills required.'
     },
     {
       id: 'is-generator-free',
@@ -57,9 +57,9 @@ export default function ASMRVideoStudio() {
       answer: 'We offer free credits for new users to get started, plus flexible paid plans for extensive use. Our transparent credit system means you only pay for rendered videos - no subscriptions required. Perfect for testing before committing.'
     },
     {
-      id: 'perfect-for-youtube-tiktok',
-      question: 'Perfect AI video generator for YouTube Shorts & TikTok Shorts?',
-      answer: 'Absolutely! Our Google Veo AI generates ASMR videos optimized for YouTube Shorts, TikTok Shorts, and social media platforms. Create engaging video content that drives views and subscriber growth for content creators.'
+      id: 'perfect-ai-video-prompts-for-social',
+      question: 'Best ai video prompt templates for YouTube Shorts & TikTok?',
+      answer: 'Yes! Our veo3 video prompt collection creates content optimized for YouTube Shorts, TikTok, and social media. Use proven ai video prompt templates to generate engaging videos that drive views and growth.'
     },
     {
       id: 'cost-for-creators',
@@ -274,10 +274,10 @@ export default function ASMRVideoStudio() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       <SEOHead
-        title="ASMR Creator Tools - Veo3 AI ASMR Maker | Best AI Video Generator for Creators"
-        description="ASMR creator tools for YouTube channels! AI ASMR creator software with glass cutting, fruit videos. How to become ASMR creator with Google Veo3 AI. Relaxing video maker for content creators."
+        title="CuttingASMR - Veo3 Video Prompt Generator | Best AI Video Prompt Tool for Creators"
+        description="Create stunning AI videos with veo3 video prompt templates! Professional ai video prompt generator using Google Veo3 AI. Perfect for ASMR creators, YouTube Shorts, and TikTok content makers."
         canonical="https://cuttingasmr.org"
-        keywords="asmr creator tools, asmr maker software, best asmr generator, ai asmr creator, relaxing video maker, how to become asmr creator, asmr youtube channel, ai content creator tools, veo3 asmr, Google veo 3 ai, best ai video generator, ai video generator, YouTube shorts, tiktok shorts, content creator"
+        keywords="veo3 video prompt, ai video prompt, google veo3 prompts, ai video generator, asmr video prompts, veo3 ai generator, ai video prompt maker, video prompt templates, ai content creator tools, best ai video generator, YouTube shorts, tiktok shorts, veo3 examples"
       />
       
       {/* 添加结构化数据 */}
@@ -483,12 +483,12 @@ export default function ASMRVideoStudio() {
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
               Create Stunning <span className="font-extrabold bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 bg-clip-text text-transparent">ASMR Video</span> with
-              <span className="block">our AI-powered Veo3 generator</span>
+              <span className="block">our AI-powered <span className="font-extrabold bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 bg-clip-text text-transparent">Veo3 generator</span></span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              FREE credits for new users! Perfect for YouTube, TikTok creators and ASMR makers. 
-              Generate professional AI videos in minutes with advanced Google Veo3 AI technology. 
-              Best AI video generator - no editing skills required.
+              FREE credits for new users! Master ai video prompt creation with proven veo3 video prompt templates. 
+              Generate professional AI videos in minutes using Google Veo3 AI technology. 
+              Perfect for YouTube, TikTok creators and content makers - no editing skills required.
             </p>
             
 
@@ -503,8 +503,17 @@ export default function ASMRVideoStudio() {
               
               {/* ASMR Type Selection */}
               <div className="p-8 border-b border-stone-200">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">Choose ASMR Type</h2>
-                <p className="text-gray-600 mb-6 leading-relaxed">Select a template or create your own custom ASMR scene</p>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-semibold text-gray-800">Choose Video Prompt</h2>
+                  <Link 
+                    href="/video-showcase"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                  >
+                    <Video className="w-4 h-4" />
+                    Video & Prompt Examples
+                  </Link>
+                </div>
+                <p className="text-gray-600 mb-6 leading-relaxed">Select a proven ai video prompt template or create your own custom veo3 video prompt</p>
                 
                 {/* Quick Selection - Grid Layout */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
@@ -551,11 +560,11 @@ export default function ASMRVideoStudio() {
 
               {/* Prompt Input Section */}
               <div className="p-8 border-b border-stone-200">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Customize Your ASMR Video</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">Customize Your Video Prompt</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   {selectedASMRType === 'default' 
-                    ? 'Describe your ideal ASMR scene in detail'
-                    : 'Edit the template or use it as-is'
+                    ? 'Create your own veo3 video prompt or ai video prompt for custom scenes'
+                    : 'Edit this proven ai video prompt template or use it as-is'
                   }
                 </p>
                 
@@ -563,8 +572,8 @@ export default function ASMRVideoStudio() {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder={selectedASMRType === 'default' 
-                    ? "Describe your ASMR scene: lighting, camera angles, sounds, textures, and visual elements. Be specific about what you want to see and hear..."
-                    : "Edit the template prompt below or use it as-is..."
+                    ? "Create your ai video prompt: describe lighting, camera angles, sounds, textures, and visual elements. Write a detailed veo3 video prompt for best results..."
+                    : "Edit this ai video prompt template or use it as-is..."
                   }
                   className="w-full h-32 p-4 border border-stone-300 rounded-xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-stone-50/50 focus:bg-white transition-colors"
                 />
@@ -625,7 +634,7 @@ export default function ASMRVideoStudio() {
                               ? 'Credits Unavailable'
                               : !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits) 
                               ? `Insufficient Credits (Need ${CREDITS_CONFIG.VIDEO_COST})`
-                              : `Generate ASMR Video (10 Credits)`
+                              : `Generate AI Video (10 Credits)`
                             }
                           </span>
                         </div>
@@ -760,7 +769,7 @@ export default function ASMRVideoStudio() {
             <div className="text-center">
               <Link href="#main-generator">
                 <button className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
-                  Create ASMR Video Now
+                  Create AI Video Now
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -806,7 +815,7 @@ export default function ASMRVideoStudio() {
                 <span className="text-xl font-bold">CuttingASMR.org</span>
               </div>
               <p className="text-gray-400">
-                Create Stunning ASMR Video with our AI-powered Veo3 generator. Perfect for YouTube creators and ASMR makers.
+                Professional veo3 video prompt templates for creators. Master ai video prompt creation with Google Veo3 AI technology.
               </p>
             </div>
             
@@ -848,7 +857,7 @@ export default function ASMRVideoStudio() {
           <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Choose ASMR Type</h3>
+                <h3 className="text-xl font-bold text-gray-900">Choose Video Prompt Template</h3>
                 <button
                   onClick={() => setShowAllTypesModal(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"

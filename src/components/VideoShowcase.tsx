@@ -46,23 +46,22 @@ export default function VideoShowcase({
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-emerald-100">
               <Play className="w-4 h-4" />
-              AI Generated
+              AI Veo3 Powered
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6">
-              Amazing ASMR Videos
-              <span className="text-emerald-700"> Gallery</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+              <span className="bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">AI Veo3 Video & Prompt Gallery</span>
             </h2>
             
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Explore AI-generated ASMR videos with stunning visuals and relaxing sounds.
-              From ice cutting to metal forging, each video delivers a perfect sensory experience.
+              Explore professional AI-generated videos created with Google Veo3 technology. 
+              Each veo3 video prompt and ai video prompt has been carefully crafted to generate stunning results - copy and customize them for your own creations.
             </p>
           </div>
         )}
 
         {/* 视频网格 */}
-        <div className={`grid ${getGridCols()} gap-8 mb-12`}>
+        <div className={`grid ${getGridCols()} gap-8 mb-12 items-stretch`}>
           {videos.map((video) => (
             <VideoCard
               key={video.id}
@@ -84,7 +83,7 @@ export default function VideoShowcase({
             </Link>
             
             <p className="text-gray-600 mt-4 text-sm">
-              Discover more amazing AI-generated ASMR content
+              Discover more veo3 video prompt and ai video prompt templates
             </p>
           </div>
         )}
