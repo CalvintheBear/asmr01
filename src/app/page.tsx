@@ -34,32 +34,32 @@ export default function ASMRVideoStudio() {
   // 使用积分钩子
   const { credits, loading: creditsLoading, refetch: refetchCredits, forceRefresh: forceRefreshCredits } = useCredits(!!user && userSynced)
 
-  // FAQ数据 - 12条完整FAQ
+  // SEO-optimized FAQ data based on the provided keyword list
   const faqData = [
     {
-      id: 'what-is-veo3-video-prompt-generator',
-      question: 'What is a veo3 video prompt generator?',
-      answer: 'Our ai video prompt generator uses Google Veo3 AI technology to transform detailed veo3 video prompt templates into professional videos. Create stunning content using proven ai video prompt formulas without equipment or editing skills.'
+      id: 'what-is-ai-asmr-generator',
+      question: 'What is an AI ASMR Video Generator? How is it related to VEO3?',
+      answer: 'Our AI ASMR Video Generator is an online tool powered by Google\'s latest VEO3 AI technology. It allows you to easily create captivating ASMR videos using simple "text to video" commands. Whether you want to make relaxing YouTube videos or viral TikTok shorts, our tool can help.'
     },
     {
-      id: 'best-video-length',
-      question: 'Best video length for TikTok Shorts and YouTube Shorts?',
-      answer: 'For TikTok Shorts, 10-15 second video loops work best for maximum engagement. For YouTube Shorts, our AI video generator creates seamless loops perfect for longer immersive content and meditation videos. Our best AI video maker optimizes duration automatically.'
+      id: 'how-to-make-ai-asmr-video',
+      question: 'How do I make an AI ASMR video? Do I need to write complex prompts?',
+      answer: 'Making AI videos is very simple! Just choose a scene, like "glass cutting" or "lava flow," and enter a simple description. Our AI video maker will handle the rest. We have optimized the prompt generation logic for VEO3 (prompt veo3), so you don\'t need to be an expert to create professional-grade AI videos.'
     },
     {
-      id: 'how-to-make-ai-videos-with-prompts',
-      question: 'How to make professional AI videos with veo3 video prompt templates?',
-      answer: 'Simply select any ai video prompt template from our gallery, customize it for your needs, and generate instantly! Our veo3 video prompt templates create 4K quality videos with professional effects - no equipment or editing skills required.'
+      id: 'best-ai-video-generator',
+      question: 'Why is this considered one of the best AI video generators on the market?',
+      answer: 'Our platform is considered one of the best AI video generators because it\'s specifically optimized for ASMR content and is driven by the powerful Google VEO 3 AI and Gemini models. We focus on audio-visual synchronization to ensure that scenes like "knife cutting fruit" have extremely realistic physics and sound.'
     },
     {
-      id: 'is-generator-free',
-      question: 'Is your ASMR video generator free to use?',
-      answer: 'We offer free credits for new users to get started, plus flexible paid plans for extensive use. Our transparent credit system means you only pay for rendered videos - no subscriptions required. Perfect for testing before committing.'
+      id: 'asmr-content-types',
+      question: 'What types of ASMR content can I create? For example, glass or lava?',
+      answer: 'Absolutely! Our AI supports a wide range of creative ideas, including but not limited to "AI glass cutting," "glass fruit" art, flowing "lava" and "magma" visuals, and scenes of various knives cutting objects. You can also generate unique AI sounds and ASMR sound effects.'
     },
     {
-      id: 'perfect-ai-video-prompts-for-social',
-      question: 'Best ai video prompt templates for YouTube Shorts & TikTok?',
-      answer: 'Yes! Our veo3 video prompt collection creates content optimized for YouTube Shorts, TikTok, and social media. Use proven ai video prompt templates to generate engaging videos that drive views and growth.'
+      id: 'create-videos-for-social-media',
+      question: 'Is this tool suitable for creating videos for TikTok and YouTube Shorts?',
+      answer: 'Definitely! Our AI video generator is made for social media. You can easily create vertical short videos that fit the style of TikTok and YouTube Shorts. Whether you want to post on TikTok, YouTube, Facebook, or Instagram, you can quickly generate eye-catching AI video content.'
     },
     {
       id: 'cost-for-creators',
@@ -67,19 +67,19 @@ export default function ASMRVideoStudio() {
       answer: 'Each AI-generated ASMR video costs just 10 credits (less than $1). For content creators, our packages start at $9.90 for 115 credits - creating 11+ videos. Much more cost-effective than traditional video production.'
     },
     {
-      id: 'scale-youtube-channel',
-      question: 'How can content creators scale their ASMR YouTube channel with Veo3 AI?',
-      answer: 'Content creators can generate multiple ASMR videos daily using our best AI video generator. Create consistent ASMR content ideas for your YouTube channel without time-consuming setup - perfect for building a profitable ASMR creator business with meditation and sleep content.'
+      id: 'what-is-veo3-ai',
+      question: 'What is VEO3? How is it related to Google AI?',
+      answer: 'VEO3 (also known as Google VEO) is a cutting-edge video generation model developed by Google AI Labs (Google AI Studio) as part of its Gemini program. It represents a breakthrough in understanding natural language and generating high-quality, realistic videos, and it\'s especially good at handling complex physical interactions and visual effects.'
     },
     {
-      id: 'create-ai-content-quickly',
-      question: 'How quickly can I create AI content for my ASMR channel?',
-      answer: 'Generate professional ASMR videos in just 3-5 minutes! Perfect for content creators who need consistent ASMR video ideas. Transform prompts into daily content for TikTok Shorts or weekly uploads for YouTube channels effortlessly.'
+      id: 'text-to-video-difference',
+      question: 'How is your "text to video" AI different from other tools?',
+      answer: 'Unlike other generic "text to video" tools, we specialize in the ASMR niche. This means our AI not only generates visuals but also creates matching AI voices and sound effects designed to trigger ASMR tingles. From subtle cutting sounds to flowing noises, everything is designed for the optimal ASMR experience.'
     },
     {
-      id: 'asmr-content-ideas',
-      question: 'What ASMR content ideas can Google Veo3 AI create?',
-      answer: 'Our AI video generator creates amazing content: glass cutting, fruit slicing, knife cutting, lava effects, magma visuals, crystal breaking, and water sounds. Transform any ASMR video idea into reality with our best AI video generator - perfect for stress relief videos and sleep ASMR content.'
+      id: 'how-to-get-started',
+      question: 'As a video creator, how can I start using this to grow my channel?',
+      answer: 'This is a powerful tool for YouTube or TikTok video creators. You can quickly generate multiple high-quality ASMR videos daily to keep your channel active. In just a few minutes, you can turn a simple idea into a publishable video, significantly boosting your content creation efficiency.'
     },
     {
       id: 'text-to-video-different',
@@ -87,14 +87,14 @@ export default function ASMRVideoStudio() {
       answer: 'Our text to video AI specializes in ASMR content creation with superior audio-visual synchronization. Unlike generic text to video tools, our platform understands ASMR triggers and creates videos that deliver authentic relaxation experiences with perfect timing and realistic physics.'
     },
     {
-      id: 'veo3-binaural-audio',
-      question: 'Does Veo3 AI create best ASMR videos with binaural audio?',
-      answer: 'Yes! Our Veo3 AI generates the best ASMR videos with built-in 3D spatial audio and binaural sound generation. Create immersive therapeutic audio that provides authentic ASMR tingles - perfect for sleep ASMR generator needs.'
+      id: 'video-generation-speed',
+      question: 'How long does it take to generate an AI video?',
+      answer: 'Speed is one of our strengths. Typically, a standard AI ASMR video is generated in just 3-5 minutes. This means you can quickly respond to trending topics or batch-create content for your YouTube Shorts or TikTok channel in a short amount of time.'
     },
     {
-      id: 'customize-brand-content',
-      question: 'Can I customize AI-generated ASMR content for my brand?',
-      answer: 'Absolutely! Content creators can customize every aspect through detailed prompts. Our Google AI creates unique ASMR content ideas with glass cutting, lava effects, and magma visuals that match your YouTube channel\'s style and audience preferences. Perfect for building a distinctive ASMR creator identity.'
+      id: 'voice-dubbing-feature',
+      question: 'Can I use AI for voice dubbing (voice dubbing AI)?',
+      answer: 'Currently, our core feature revolves around generating visuals and ASMR trigger sounds. While our videos include highly synchronized AI sound effects, a dedicated AI voice dubbing feature is under development. Our goal is to eventually achieve a perfect combination of visuals, sound effects, and narration.'
     }
   ]
 
