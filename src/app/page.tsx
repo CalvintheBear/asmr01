@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check } from 'lucide-react'
+import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check, X } from 'lucide-react'
 import { asmrCategories, defaultOption } from '@/config/asmr-types'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
@@ -299,7 +299,7 @@ export default function ASMRVideoStudio() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h1 className="text-xl font-bold text-gray-900">CuttingASMR.org</h1>
+              <div className="text-xl font-bold text-gray-900">CuttingASMR.org</div>
             </div>
 
             {/* Desktop Navigation */}
@@ -517,44 +517,28 @@ export default function ASMRVideoStudio() {
                 
                 {/* Quick Selection - Grid Layout */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                  {/* Default Custom Option */}
-                  <button
-                    onClick={() => handleASMRTypeChange('default')}
-                    className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center ${
-                      selectedASMRType === 'default'
-                        ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
-                        : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
-                    }`}
-                  >
-                    Default
-                  </button>
-
-                  {/* Featured ASMR Types */}
-                  {['glass-fruit-cutting', 'ice-cube-carving', 'metal-sheet-cutting', 'fireplace', 'squeeze-toy', 'minecraft-block-cutting'].map((typeId) => {
-                    const type = allAsmrTypes.find(t => t.id === typeId)
-                    if (!type) return null
-                    return (
-                      <button
-                        key={type.id}
-                        onClick={() => handleASMRTypeChange(type.id)}
-                        className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center ${
-                          selectedASMRType === type.id
-                            ? 'border-emerald-500 bg-emerald-500 text-white shadow-md'
-                            : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
-                        }`}
-                      >
-                        <span className="block leading-tight">{type.name}</span>
-                      </button>
-                    )
-                  })}
-                  
-                  {/* View All Button */}
-                  <button
-                    onClick={() => setShowAllTypesModal(true)}
-                    className="p-2 sm:p-3 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem]"
-                  >
-                    <span className="mr-1">⋯</span> All
-                  </button>
+                  {/* 选项卡按钮 */}
+                  <div className="flex items-center space-x-2 rounded-full bg-stone-100 p-1.5">
+                    <button
+                      onClick={() => handleASMRTypeChange('default')}
+                      className={`flex-1 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-300 ease-in-out
+                        focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
+                        ${selectedASMRType === 'default'
+                          ? 'bg-emerald-600 text-white shadow-md'
+                          : 'bg-stone-100 text-gray-600 hover:bg-stone-200'
+                        }
+                      `}
+                    >
+                      Default
+                    </button>
+                    <button
+                      onClick={() => setShowAllTypesModal(true)}
+                      className="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium text-gray-600 hover:bg-stone-200 transition-all duration-300 ease-in-out
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                    >
+                      <span className="mr-1">⋯</span> All
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -851,95 +835,97 @@ export default function ASMRVideoStudio() {
         </div>
       </footer>
 
-      {/* ASMR Types Modal */}
+      {/* 弹出式模态框 - 显示所有ASMR类型 */}
       {showAllTypesModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Choose Video Prompt Template</h3>
-                <button
-                  onClick={() => setShowAllTypesModal(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <span className="text-gray-500 text-xl">×</span>
-                </button>
-              </div>
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div className="flex justify-between items-center p-5 border-b border-gray-200 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
+              <h3 id="modal-title" className="text-xl font-bold text-gray-900">Choose Video Prompt Template</h3>
+              <button
+                onClick={() => setShowAllTypesModal(false)}
+                className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
             
-            <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
-              <div className="space-y-8">
-                {/* 默认选项 */}
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
-                    <span className="text-lg">✏️</span>
-                    <h4 className="font-semibold text-gray-900">Custom</h4>
-                  </div>
-                  <button
-                    onClick={() => {
-                      handleASMRTypeChange('default')
-                      setShowAllTypesModal(false)
-                    }}
-                    className={`w-full p-4 rounded-xl border transition-all text-left ${
-                      selectedASMRType === 'default'
-                        ? 'border-emerald-500 bg-emerald-50 shadow-md'
-                        : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
-                    }`}
-                  >
-                    <div className="space-y-1">
-                      <h5 className={`font-medium ${
-                        selectedASMRType === 'default' ? 'text-purple-900' : 'text-gray-900'
-                      }`}>
-                        {defaultOption.name}
-                      </h5>
-                      <p className={`text-sm leading-relaxed ${
-                        selectedASMRType === 'default' ? 'text-emerald-700' : 'text-gray-600'
-                      }`}>
-                        {defaultOption.description}
-                      </p>
-                    </div>
-                  </button>
+            <div className="p-5 overflow-y-auto">
+              {/* Custom Prompt Option */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
+                  <span className="text-lg">✏️</span>
+                  <h4 className="font-semibold text-gray-900">Custom</h4>
                 </div>
-
-                {/* 所有分类 */}
-                {asmrCategories.map((category) => (
-                  <div key={category.id} className="space-y-3">
-                    <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
-                      <span className="text-lg">{category.icon}</span>
-                      <h4 className="font-semibold text-gray-900">{category.name}</h4>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {category.types.map((type) => (
-                        <button
-                          key={type.id}
-                          onClick={() => {
-                            handleASMRTypeChange(type.id)
-                            setShowAllTypesModal(false)
-                          }}
-                          className={`p-4 rounded-xl border transition-all text-left ${
-                            selectedASMRType === type.id
-                              ? 'border-emerald-500 bg-emerald-50 shadow-md'
-                              : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
-                          }`}
-                        >
-                          <div className="space-y-1">
-                            <h5 className={`font-medium ${
-                              selectedASMRType === type.id ? 'text-emerald-800' : 'text-gray-800'
-                            }`}>
-                              {type.name}
-                            </h5>
-                            <p className={`text-sm leading-relaxed ${
-                              selectedASMRType === type.id ? 'text-emerald-700' : 'text-gray-600'
-                            }`}>
-                              {type.description}
-                            </p>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
+                <button
+                  onClick={() => {
+                    handleASMRTypeChange('default')
+                    setShowAllTypesModal(false)
+                  }}
+                  className={`w-full p-4 rounded-xl border transition-all text-left ${
+                    selectedASMRType === 'default'
+                      ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                      : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <h5 className={`font-medium ${
+                      selectedASMRType === 'default' ? 'text-purple-900' : 'text-gray-900'
+                    }`}>
+                      {defaultOption.name}
+                    </h5>
+                    <p className={`text-sm leading-relaxed ${
+                      selectedASMRType === 'default' ? 'text-emerald-700' : 'text-gray-600'
+                    }`}>
+                      {defaultOption.description}
+                    </p>
                   </div>
-                ))}
+                </button>
               </div>
+
+              {/* 所有分类 */}
+              {asmrCategories.map((category) => (
+                <div key={category.id} className="space-y-3">
+                  <div className="flex items-center space-x-2 pb-2 border-b border-gray-100">
+                    <span className="text-lg">{category.icon}</span>
+                    <h4 className="font-semibold text-gray-900">{category.name}</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {category.types.map((type) => (
+                      <button
+                        key={type.id}
+                        onClick={() => {
+                          handleASMRTypeChange(type.id)
+                          setShowAllTypesModal(false)
+                        }}
+                        className={`p-4 rounded-xl border transition-all text-left ${
+                          selectedASMRType === type.id
+                            ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                            : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50'
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <h5 className={`font-medium ${
+                            selectedASMRType === type.id ? 'text-emerald-800' : 'text-gray-800'
+                          }`}>
+                            {type.name}
+                          </h5>
+                          <p className={`text-sm leading-relaxed ${
+                            selectedASMRType === type.id ? 'text-emerald-700' : 'text-gray-600'
+                          }`}>
+                            {type.description}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

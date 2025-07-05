@@ -58,10 +58,10 @@ export default function ASMRVideoResult({
             <div className="relative z-10 text-center px-4">
               {/* 播放按钮 */}
               <div className="w-12 sm:w-16 h-12 sm:h-16 bg-stone-200/60 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
-                <Play className="w-4 sm:w-6 h-4 sm:h-6 text-gray-400 ml-1" />
+                <Play className="w-4 sm:w-6 h-4 sm:h-6 text-gray-400 ml-1" aria-hidden="true" />
               </div>
               
-              <h4 className="text-base sm:text-lg font-medium text-gray-600 mb-2">Ready to Generate</h4>
+              <h3 className="text-base sm:text-lg font-medium text-gray-600 mb-2">Ready to Generate</h3>
               <p className="text-sm text-gray-500 mb-3 sm:mb-4">
                 Choose an ASMR type and enter a prompt to<br className="hidden sm:block" />
                 <span className="sm:hidden"> </span>generate your relaxing video content
@@ -109,7 +109,7 @@ export default function ASMRVideoResult({
       ) : isGenerating ? (
         <div className="space-y-4">
           {/* 生成状态提示 */}
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-sm text-gray-600 mb-4" aria-live="polite">
             <span className="text-emerald-600 font-medium">
               Video generation takes 2-5 min. Please don't close this tab.
             </span>
@@ -125,7 +125,7 @@ export default function ASMRVideoResult({
             <div className="relative z-10 text-center">
               {/* 大型播放按钮 */}
               <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg">
-                <Play className="w-8 h-8 text-white ml-1" />
+                <Play className="w-8 h-8 text-white ml-1" aria-hidden="true" />
               </div>
               
               <h4 className="text-lg font-semibold text-gray-800 mb-2">{title}</h4>
@@ -143,7 +143,7 @@ export default function ASMRVideoResult({
           </div>
           
           {/* 进度指示器 */}
-          <div className="space-y-2">
+          <div className="space-y-2" aria-live="polite">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">正在生成视频...</span>
               <span className="text-emerald-600 font-medium">{progress}%</span>
@@ -174,11 +174,11 @@ export default function ASMRVideoResult({
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center text-white">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto" aria-label={isPlaying ? "Pause video" : "Play video"}>
                     {isPlaying ? (
-                      <Pause className="w-6 h-6" />
+                      <Pause className="w-6 h-6" aria-hidden="true" />
                     ) : (
-                      <Play className="w-6 h-6 ml-1" />
+                      <Play className="w-6 h-6 ml-1" aria-hidden="true" />
                     )}
                   </div>
                   <p className="text-lg font-medium">AI Generated ASMR Video</p>
@@ -218,7 +218,7 @@ export default function ASMRVideoResult({
                 onClick={videoUrl1080p ? onDownload1080p : onDownload}
                 className="flex-1 flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
               >
-                <Download className="w-4 h-4 mr-2" />
+                <Download className="w-4 h-4 mr-2" aria-hidden="true" />
                 <span className="text-sm font-medium">
                   Download Video
                 </span>

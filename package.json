@@ -35,6 +35,7 @@
     "check:all-users": "node scripts/check-all-users.js"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.17.3",
     "@clerk/nextjs": "^6.22.0",
     "@prisma/client": "^6.10.1",
     "@types/node": "^20",
