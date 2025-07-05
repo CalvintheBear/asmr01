@@ -517,28 +517,47 @@ export default function ASMRVideoStudio() {
                 
                 {/* Quick Selection - Grid Layout */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                  {/* 选项卡按钮 */}
-                  <div className="flex items-center space-x-2 rounded-full bg-stone-100 p-1.5">
-                    <button
-                      onClick={() => handleASMRTypeChange('default')}
-                      className={`flex-1 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-300 ease-in-out
-                        focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
-                        ${selectedASMRType === 'default'
-                          ? 'bg-emerald-600 text-white shadow-md'
-                          : 'bg-stone-100 text-gray-600 hover:bg-stone-200'
-                        }
-                      `}
-                    >
-                      Default
-                    </button>
-                    <button
-                      onClick={() => setShowAllTypesModal(true)}
-                      className="flex-shrink-0 px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium text-gray-600 hover:bg-stone-200 transition-all duration-300 ease-in-out
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                    >
-                      <span className="mr-1">⋯</span> All
-                    </button>
-                  </div>
+                  {/* Default Custom Option */}
+                  <button
+                    onClick={() => handleASMRTypeChange('default')}
+                    className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center
+                      focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
+                      ${selectedASMRType === 'default'
+                        ? 'border-emerald-600 bg-emerald-600 text-white shadow-md'
+                        : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
+                      }`}
+                  >
+                    Default
+                  </button>
+
+                  {/* Featured ASMR Types */}
+                  {['glass-fruit-cutting', 'ice-cube-carving', 'metal-sheet-cutting', 'fireplace', 'squeeze-toy', 'minecraft-block-cutting'].map((typeId) => {
+                    const type = allAsmrTypes.find(t => t.id === typeId)
+                    if (!type) return null
+                    return (
+                      <button
+                        key={type.id}
+                        onClick={() => handleASMRTypeChange(type.id)}
+                        className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center
+                          focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
+                          ${selectedASMRType === type.id
+                            ? 'border-emerald-600 bg-emerald-600 text-white shadow-md'
+                            : 'border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700'
+                          }`}
+                      >
+                        <span className="block leading-tight">{type.name}</span>
+                      </button>
+                    )
+                  })}
+                  
+                  {/* View All Button */}
+                  <button
+                    onClick={() => setShowAllTypesModal(true)}
+                    className="p-2 sm:p-3 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-gray-700 transition-all text-center flex items-center justify-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem]
+                               focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                  >
+                    <span className="mr-1">⋯</span> All
+                  </button>
                 </div>
               </div>
 

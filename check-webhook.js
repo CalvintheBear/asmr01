@@ -1,6 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 
-process.env.DATABASE_URL = 'postgresql://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway';
+process.env.DATABASE_URL = 'prisma://postgres:wGgVnAtvDEZxDmyZfMuJJLqSmteroInW@gondola.proxy.rlwy.net:10910/railway';
 const db = new PrismaClient();
 
 (async () => {
