@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { enUS } from "@clerk/localizations";
@@ -10,12 +10,17 @@ export const runtime = 'nodejs'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// 分离viewport配置 - Next.js 14+要求
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export const metadata: Metadata = {
   title: 'CuttingASMR - Google Veo3 AI ASMR Generator | Best ASMR Creator Tools 2025',
   description: 'Google Veo3 powered ASMR creator tools for YouTube channels! Best Veo3 ASMR generator with AI technology. Professional ASMR maker software for content creators. Create relaxing videos, sleep ASMR, stress relief content.',
   keywords: 'google veo3, veo3, google veo3 asmr, veo3 asmr generator, asmr creator tools, best asmr generator, asmr maker software, asmr youtube channel, relaxing video maker, sleep asmr generator, ai content creator tools, content creator, stress relief videos, meditation video creator',
   authors: [{ name: 'CuttingASMR Team' }],
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   openGraph: {
     title: 'CuttingASMR - Veo3 AI Video Generator | Best AI ASMR Maker',

@@ -6,6 +6,16 @@ import { Play, Eye } from 'lucide-react';
 
 export default function VideoCard({ video, onClick }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
+  const handleVideoLoad = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const videoElement = e.target as HTMLVideoElement;
+    videoElement.currentTime = 0.5; // 设置到0.5秒获取第一帧
+  };
+
+  const handleVideoError = () => {
+    setVideoError(true);
+  };
 
   return (
     <div 
@@ -15,13 +25,27 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
       onClick={() => onClick(video)}
     >
       {/* Video Thumbnail */}
-      <div className="relative aspect-video overflow-hidden flex-shrink-0">
-        <img
-          src={video.thumbnailUrl}
-          alt={`AI generated ASMR video: ${video.title} - Created with Google Veo3 AI for relaxation and sleep`}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-          loading="lazy"
-        />
+      <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-gray-100">
+        {!videoError ? (
+          <video
+            src={video.videoUrl}
+            muted
+            preload="metadata"
+            playsInline
+            disablePictureInPicture
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            onLoadedMetadata={handleVideoLoad}
+            onError={handleVideoError}
+            crossOrigin="anonymous"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+            <div className="text-center">
+              <Play className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-500 text-sm">视频预览</p>
+            </div>
+          </div>
+        )}
         
         {/* Play Button Overlay */}
         <div className={`absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300 ${
