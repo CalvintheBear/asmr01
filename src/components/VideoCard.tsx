@@ -16,16 +16,11 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0">
-        <video
-          src={video.videoUrl}
-          muted
-          preload="metadata"
+        <img
+          src={video.thumbnailUrl}
+          alt={`AI generated ASMR video: ${video.title} - Created with Google Veo3 AI for relaxation and sleep`}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-          aria-label={`AI generated ASMR video: ${video.title} - Created with Google Veo3 AI for relaxation and sleep`}
-          onLoadedMetadata={(e) => {
-            const video = e.target as HTMLVideoElement;
-            video.currentTime = 0.1; // 设置到0.1秒获取第一帧
-          }}
+          loading="lazy"
         />
         
         {/* Play Button Overlay */}
