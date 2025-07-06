@@ -9,24 +9,30 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
   const [thumbnailError, setThumbnailError] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // 检测设备类型
+  // 客户端挂载检测
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // 检测设备类型（仅在客户端）
   const isMobile = () => {
+    if (typeof window === 'undefined') return false;
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   };
 
-  // 生成腾讯云视频截图URL（真正的缩略图）
-  const getThumbnailUrl = (videoUrl: string): string => {
-    if (videoUrl.includes('myqcloud.com')) {
-      // 腾讯云视频截图服务：在2秒处截取，尺寸640x360，格式jpg
-      return `${videoUrl}?vframe/jpg/offset/2/w/640/h/360/quality/80`;
-    }
-    return video.thumbnailUrl || videoUrl;
-  };
-
-  // 懒加载检测
+  // 懒加载检测（仅在客户端）
   useEffect(() => {
+    if (!isMounted) return;
+    
+    if (typeof window === 'undefined' || !window.IntersectionObserver) {
+      // 如果不支持IntersectionObserver，直接设置为可见
+      setIsInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -42,13 +48,17 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMounted]);
 
   const handleVideoLoadedMetadata = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const videoElement = e.target as HTMLVideoElement;
-    // 设置到0.1秒获取第一帧作为缩略图
-    videoElement.currentTime = 0.1;
-    setThumbnailLoaded(true);
+    try {
+      // 设置到0.1秒获取第一帧作为缩略图
+      videoElement.currentTime = 0.1;
+    } catch (error) {
+      console.warn('Failed to set video currentTime:', error);
+      setThumbnailLoaded(true); // 即使失败也显示video元素
+    }
   };
 
   const handleImageLoad = () => {
@@ -70,8 +80,8 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
     setThumbnailLoaded(true);
   };
 
-  const thumbnailUrl = getThumbnailUrl(video.videoUrl);
-  const shouldUseThumbnailImage = isMobile() || video.thumbnailUrl;
+  // 简化缩略图逻辑：优先使用video，出错时fallback到原来的方式
+  const shouldShowVideo = isMounted && isInView && !thumbnailError;
 
   return (
     <div 
@@ -83,48 +93,30 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-gray-100">
-        {isInView && !thumbnailError && (
-          <>
-            {shouldUseThumbnailImage ? (
-              // 移动端或有缩略图时使用图片
-              <img
-                src={thumbnailUrl}
-                alt={video.title}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                onLoad={handleImageLoad}
-                onError={handleImageError}
-                style={{ 
-                  display: thumbnailLoaded ? 'block' : 'none'
-                }}
-                loading="lazy"
-              />
-            ) : (
-              // 桌面端使用video第一帧
-              <video
-                src={video.videoUrl}
-                muted
-                preload="metadata"
-                playsInline
-                disablePictureInPicture
-                disableRemotePlayback
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                onLoadedMetadata={handleVideoLoadedMetadata}
-                onSeeked={handleVideoSeeked}
-                onError={handleVideoError}
-                style={{ 
-                  display: thumbnailLoaded ? 'block' : 'none'
-                }}
-              />
-            )}
-          </>
+        {shouldShowVideo && (
+          <video
+            src={video.videoUrl}
+            muted
+            preload="metadata"
+            playsInline
+            disablePictureInPicture
+            disableRemotePlayback
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            onLoadedMetadata={handleVideoLoadedMetadata}
+            onSeeked={handleVideoSeeked}
+            onError={handleVideoError}
+            style={{ 
+              display: thumbnailLoaded ? 'block' : 'none'
+            }}
+          />
         )}
         
         {/* 加载状态占位符 */}
-        {(!isInView || !thumbnailLoaded || thumbnailError) && (
+        {(!isMounted || !isInView || !thumbnailLoaded || thumbnailError) && (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
             <div className="text-center">
-              {!isInView ? (
-                // 未进入视口时显示简单占位符
+              {!isMounted || !isInView ? (
+                // 未挂载或未进入视口时显示简单占位符
                 <div className="w-12 h-12 bg-gray-300 rounded-full mx-auto mb-2 animate-pulse"></div>
               ) : (
                 // 加载中显示播放图标
@@ -132,7 +124,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
               )}
               <p className="text-gray-500 text-sm">{video.duration}</p>
               <p className="text-gray-400 text-xs mt-1">{video.asmrType}</p>
-              {!isInView && (
+              {(!isMounted || !isInView) && (
                 <p className="text-gray-400 text-xs mt-1">Loading...</p>
               )}
             </div>
