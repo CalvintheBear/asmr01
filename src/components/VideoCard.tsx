@@ -6,15 +6,24 @@ import { Play, Eye } from 'lucide-react';
 
 export default function VideoCard({ video, onClick }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [videoError, setVideoError] = useState(false);
+  const [thumbnailError, setThumbnailError] = useState(false);
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
 
-  const handleVideoLoad = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+  const handleVideoLoadedMetadata = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const videoElement = e.target as HTMLVideoElement;
-    videoElement.currentTime = 0.5; // 设置到0.5秒获取第一帧
+    // 设置到0.1秒获取第一帧作为缩略图
+    videoElement.currentTime = 0.1;
+    setThumbnailLoaded(true);
   };
 
   const handleVideoError = () => {
-    setVideoError(true);
+    console.log('Video loading error for:', video.title);
+    setThumbnailError(true);
+  };
+
+  const handleVideoSeeked = () => {
+    // 当video seek到指定时间后，第一帧就会显示
+    setThumbnailLoaded(true);
   };
 
   return (
@@ -26,23 +35,31 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-gray-100">
-        {!videoError ? (
+        {!thumbnailError ? (
           <video
             src={video.videoUrl}
             muted
             preload="metadata"
             playsInline
             disablePictureInPicture
+            disableRemotePlayback
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-            onLoadedMetadata={handleVideoLoad}
+            onLoadedMetadata={handleVideoLoadedMetadata}
+            onSeeked={handleVideoSeeked}
             onError={handleVideoError}
-            crossOrigin="anonymous"
+            style={{ 
+              display: thumbnailLoaded ? 'block' : 'none'
+            }}
           />
-        ) : (
+        ) : null}
+        
+        {/* 加载状态占位符 */}
+        {(!thumbnailLoaded || thumbnailError) && (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
             <div className="text-center">
               <Play className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-500 text-sm">视频预览</p>
+              <p className="text-gray-500 text-sm">{video.duration}</p>
+              <p className="text-gray-400 text-xs mt-1">{video.asmrType}</p>
             </div>
           </div>
         )}
