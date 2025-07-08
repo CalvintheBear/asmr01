@@ -45,7 +45,7 @@ For production use, verify your domain:
 
 Once verified, update the API to use your domain:
 ```typescript
-from: 'CuttingASMR Feedback <feedback@cuttingasmr.org>'
+from: 'CuttingASMR Feedback <feedback@send.cuttingasmr.org>'
 ```
 
 ## Alternative Email Services

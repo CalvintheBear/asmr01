@@ -148,7 +148,7 @@ async function sendFeedbackEmail(emailData: {
   try {
     const emailPayload = {
       to: 'supportadmin@cuttingasmr.org',
-      from: 'noreply@cuttingasmr.org',
+      from: 'noreply@send.cuttingasmr.org',
       subject: emailData.subject,
       text: emailData.content,
       replyTo: emailData.replyTo
@@ -168,7 +168,7 @@ async function sendFeedbackEmail(emailData: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'CuttingASMR Feedback <noreply@cuttingasmr.org>',
+          from: 'CuttingASMR Feedback <noreply@send.cuttingasmr.org>',
           to: ['supportadmin@cuttingasmr.org'],
           subject: emailData.subject,
           text: emailData.content,
