@@ -15,14 +15,14 @@ export async function POST(request: NextRequest) {
     // 基本验证
     if (!message || message.trim().length === 0) {
       return NextResponse.json(
-        { error: '反馈内容不能为空' },
+        { error: 'Feedback content cannot be empty' },
         { status: 400 }
       )
     }
 
     if (message.length > 2000) {
       return NextResponse.json(
-        { error: '反馈内容过长，请控制在2000字符以内' },
+        { error: 'Feedback content is too long, please keep it under 2000 characters' },
         { status: 400 }
       )
     }
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     if (!emailSent) {
       console.error('邮件发送失败')
       return NextResponse.json(
-        { error: '发送失败，请稍后重试' },
+        { error: 'Failed to send feedback, please try again later' },
         { status: 500 }
       )
     }
@@ -68,13 +68,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: '反馈已成功提交'
+      message: 'Feedback submitted successfully'
     })
 
   } catch (error) {
     console.error('处理反馈时发生错误:', error)
     return NextResponse.json(
-      { error: '系统错误，请稍后重试' },
+      { error: 'System error, please try again later' },
       { status: 500 }
     )
   }
@@ -92,44 +92,44 @@ function buildEmailContent(data: {
   const { type, message, rating, email, userInfo, userId } = data
   
   const typeNames = {
-    general: '一般反馈',
-    bug: '错误报告',
-    feature: '功能建议',
-    rating: '产品评价'
+    general: 'General Feedback',
+    bug: 'Bug Report',
+    feature: 'Feature Request',
+    rating: 'Product Rating'
   }
 
   const typeName = typeNames[type as keyof typeof typeNames] || '未知类型'
   
-  let subject = `CuttingASMR用户反馈 - ${typeName}`
+  let subject = `CuttingASMR User Feedback - ${typeName}`
   if (rating) {
-    subject += ` (${rating}星评价)`
+    subject += ` (${rating} Star Rating)`
   }
 
   let content = `
-CuttingASMR用户反馈报告
-========================
+CuttingASMR User Feedback Report
+===============================
 
-反馈类型: ${typeName}
-时间: ${new Date().toLocaleString('zh-CN')}
+Feedback Type: ${typeName}
+Date: ${new Date().toLocaleString('en-US')}
 
-${rating ? `评分: ${rating}/5 星\n` : ''}
+${rating ? `Rating: ${rating}/5 Stars\n` : ''}
 
-反馈内容:
+Feedback Content:
 ${message}
 
-用户信息:
-- 用户ID: ${userId || '匿名用户'}
-- 用户名称: ${userInfo?.userName || '未提供'}
-- 联系邮箱: ${email || '未提供'}
-- 提交时间: ${userInfo?.timestamp || new Date().toISOString()}
+User Information:
+- User ID: ${userId || 'Anonymous User'}
+- User Name: ${userInfo?.userName || 'Not provided'}
+- Contact Email: ${email || 'Not provided'}
+- Submission Time: ${userInfo?.timestamp || new Date().toISOString()}
 
-技术信息:
-- User Agent: ${userInfo?.userAgent || '未知'}
-- IP地址: 已隐藏（隐私保护）
+Technical Information:
+- User Agent: ${userInfo?.userAgent || 'Unknown'}
+- IP Address: Hidden (Privacy Protection)
 
 ---
-此邮件由CuttingASMR反馈系统自动发送
-请勿直接回复此邮件
+This email was automatically sent by CuttingASMR feedback system
+Please do not reply to this email directly
   `.trim()
 
   return {
@@ -146,9 +146,6 @@ async function sendFeedbackEmail(emailData: {
   replyTo?: string
 }) {
   try {
-    // 使用Cloudflare Email Workers API或第三方邮件服务
-    // 这里使用简化的API调用示例
-    
     const emailPayload = {
       to: 'supportadmin@cuttingasmr.org',
       from: 'noreply@cuttingasmr.org',
@@ -157,11 +154,40 @@ async function sendFeedbackEmail(emailData: {
       replyTo: emailData.replyTo
     }
 
-    // 如果配置了邮件服务API密钥，使用真实邮件服务
+    // 检查邮件服务配置
     const mailAPIKey = process.env.MAIL_API_KEY
-    if (mailAPIKey) {
-      // 这里可以集成SendGrid、Mailgun、Resend等邮件服务
-      // 示例：使用Resend
+    const resendAPIKey = process.env.RESEND_API_KEY
+    
+    if (resendAPIKey) {
+      console.log('🚀 使用Resend发送邮件...')
+      // 使用Resend API
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendAPIKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'CuttingASMR Feedback <noreply@cuttingasmr.org>',
+          to: ['supportadmin@cuttingasmr.org'],
+          subject: emailData.subject,
+          text: emailData.content,
+          reply_to: emailData.replyTo
+        })
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        console.log('✅ Resend邮件发送成功:', result.id)
+        return true
+      } else {
+        const error = await response.text()
+        console.error('❌ Resend邮件发送失败:', response.status, error)
+        return false
+      }
+    } else if (mailAPIKey) {
+      console.log('🚀 使用通用邮件API发送...')
+      // 通用邮件API（如SendGrid等）
       const response = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -173,19 +199,27 @@ async function sendFeedbackEmail(emailData: {
 
       return response.ok
     } else {
-      // 开发环境或未配置邮件服务时，仅记录日志
-      console.log('📧 邮件内容（开发模式）:')
+      // 开发环境或未配置邮件服务时，详细记录日志
+      console.log('\n📧 邮件内容（开发模式 - 未配置邮件服务）:')
+      console.log('=' .repeat(50))
       console.log('收件人:', emailPayload.to)
+      console.log('发件人:', emailPayload.from)
       console.log('主题:', emailPayload.subject)
+      console.log('回复地址:', emailPayload.replyTo || '无')
       console.log('内容:')
+      console.log('-'.repeat(30))
       console.log(emailPayload.text)
-      console.log('回复地址:', emailPayload.replyTo)
+      console.log('=' .repeat(50))
+      console.log('\n⚠️  要启用真实邮件发送，请配置以下环境变量之一:')
+      console.log('   RESEND_API_KEY=re_xxxxxxxxxxxxxxxx  (推荐)')
+      console.log('   MAIL_API_KEY=your_api_key')
+      console.log('\n📖 配置指南: https://resend.com/docs/introduction')
       
-      return true // 开发环境总是返回成功
+      return true // 开发环境总是返回成功，避免阻塞用户体验
     }
 
   } catch (error) {
-    console.error('发送邮件失败:', error)
+    console.error('💥 发送邮件时发生错误:', error)
     return false
   }
 }

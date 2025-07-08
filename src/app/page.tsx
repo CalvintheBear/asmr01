@@ -314,7 +314,7 @@ export default function ASMRVideoStudio() {
                 className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>反馈</span>
+                <span>Feedback</span>
               </button>
               
               {/* 积分显示 */}
@@ -413,7 +413,7 @@ export default function ASMRVideoStudio() {
                   className="block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors flex items-center space-x-2"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>反馈</span>
+                  <span>Feedback</span>
                 </button>
                 
                 {user ? (

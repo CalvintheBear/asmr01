@@ -50,12 +50,12 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           setRating(0)
           setFeedbackType('general')
         }, 2000)
-      } else {
-        alert('发送反馈失败，请稍后重试')
-      }
-    } catch (error) {
-      console.error('反馈提交错误:', error)
-      alert('发送反馈失败，请稍后重试')
+              } else {
+          alert('Failed to send feedback, please try again later')
+        }
+      } catch (error) {
+        console.error('反馈提交错误:', error)
+        alert('Failed to send feedback, please try again later')
     } finally {
       setIsSubmitting(false)
     }
@@ -64,27 +64,27 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const feedbackTypes = [
     {
       id: 'general' as const,
-      name: '一般反馈',
+      name: 'General Feedback',
       icon: MessageCircle,
-      description: '分享您的想法和建议'
+      description: 'Share your thoughts and suggestions'
     },
     {
       id: 'bug' as const,
-      name: '错误报告',
+      name: 'Bug Report',
       icon: Bug,
-      description: '报告遇到的问题'
+      description: 'Report issues you encountered'
     },
     {
       id: 'feature' as const,
-      name: '功能建议',
+      name: 'Feature Request',
       icon: Lightbulb,
-      description: '建议新功能或改进'
+      description: 'Suggest new features or improvements'
     },
     {
       id: 'rating' as const,
-      name: '产品评价',
+      name: 'Product Rating',
       icon: Star,
-      description: '为我们的产品评分'
+      description: 'Rate our product and service'
     }
   ]
 
@@ -97,7 +97,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-2">
             <MessageCircle className="w-6 h-6 text-emerald-600" />
-            <h2 className="text-xl font-semibold text-gray-900">用户反馈</h2>
+            <h2 className="text-xl font-semibold text-gray-900">User Feedback</h2>
           </div>
           <button
             onClick={onClose}
@@ -113,9 +113,9 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Heart className="w-8 h-8 text-emerald-600" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">感谢您的反馈！</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank you for your feedback!</h3>
             <p className="text-gray-600">
-              我们已收到您的反馈，将会认真考虑您的建议。
+              We have received your feedback and will carefully consider your suggestions.
             </p>
           </div>
         ) : (
@@ -124,7 +124,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             {/* Feedback Type Selection */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-3">
-                反馈类型
+                Feedback Type
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {feedbackTypes.map((type) => {
@@ -155,7 +155,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             {feedbackType === 'rating' && (
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  产品评分
+                  Product Rating
                 </label>
                 <div className="flex space-x-1">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -175,7 +175,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 </div>
                 {rating > 0 && (
                   <p className="text-sm text-gray-600 mt-2">
-                    您给了 {rating} 星评价
+                    You gave {rating} star{rating > 1 ? 's' : ''} rating
                   </p>
                 )}
               </div>
@@ -184,10 +184,10 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             {/* Message Input */}
             <div className="mb-6">
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                {feedbackType === 'bug' && '请详细描述遇到的问题'}
-                {feedbackType === 'feature' && '请描述您希望的新功能'}
-                {feedbackType === 'rating' && '分享您的使用体验'}
-                {feedbackType === 'general' && '您的反馈内容'}
+                {feedbackType === 'bug' && 'Please describe the issue you encountered'}
+                {feedbackType === 'feature' && 'Please describe the feature you would like'}
+                {feedbackType === 'rating' && 'Share your experience with us'}
+                {feedbackType === 'general' && 'Your feedback message'}
               </label>
               <textarea
                 id="message"
@@ -197,12 +197,12 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
                 placeholder={
                   feedbackType === 'bug'
-                    ? '例如：在生成视频时遇到了错误...'
+                    ? 'e.g., I encountered an error when generating a video...'
                     : feedbackType === 'feature'
-                    ? '例如：希望能够添加音乐背景...'
+                    ? 'e.g., I would like to add background music...'
                     : feedbackType === 'rating'
-                    ? '分享您对产品的看法...'
-                    : '请告诉我们您的想法...'
+                    ? 'Share your thoughts about our product...'
+                    : 'Tell us what you think...'
                 }
                 required
               />
@@ -211,7 +211,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             {/* Email Input */}
             <div className="mb-6">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                联系邮箱 <span className="text-gray-500">(可选)</span>
+                Contact Email <span className="text-gray-500">(optional)</span>
               </label>
               <input
                 type="email"
@@ -219,10 +219,10 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="您的邮箱地址"
+                placeholder="Your email address"
               />
               <p className="text-xs text-gray-500 mt-1">
-                如果需要回复，请留下您的邮箱地址
+                Please provide your email if you'd like us to respond
               </p>
             </div>
 
@@ -233,7 +233,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 onClick={onClose}
                 className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
               >
-                取消
+                Cancel
               </button>
               <button
                 type="submit"
@@ -243,12 +243,12 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>发送中...</span>
+                    <span>Sending...</span>
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>发送反馈</span>
+                    <span>Send Feedback</span>
                   </>
                 )}
               </button>
