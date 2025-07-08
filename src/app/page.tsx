@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check, X } from 'lucide-react'
+import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check, X, MessageCircle } from 'lucide-react'
 import { asmrCategories, defaultOption } from '@/config/asmr-types'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
@@ -16,6 +16,7 @@ import CreemPaymentButton from '@/components/CreemPaymentButton'
 import SEOHead from '@/components/SEOHead'
 import FAQAccordion from '@/components/FAQAccordion'
 import CollapsibleTechSection from '@/components/CollapsibleTechSection'
+import FeedbackModal from '@/components/FeedbackModal'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
 import { useCredits } from '@/hooks/useCredits'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
@@ -30,6 +31,7 @@ export default function ASMRVideoStudio() {
   const [showAllTypesModal, setShowAllTypesModal] = useState(false)
   const [userSynced, setUserSynced] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
   
   // 使用积分钩子
   const { credits, loading: creditsLoading, refetch: refetchCredits, forceRefresh: forceRefreshCredits } = useCredits(!!user && userSynced)
@@ -307,8 +309,12 @@ export default function ASMRVideoStudio() {
               <Link href="/pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                 Pricing
               </Link>
-              <button className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
-                Blog
+              <button 
+                onClick={() => setShowFeedbackModal(true)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>反馈</span>
               </button>
               
               {/* 积分显示 */}
@@ -399,8 +405,15 @@ export default function ASMRVideoStudio() {
                 >
                   Pricing
                 </Link>
-                <button className="block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
-                  Blog
+                <button 
+                  onClick={() => {
+                    setShowFeedbackModal(true)
+                    setShowMobileMenu(false)
+                  }}
+                  className="block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors flex items-center space-x-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>反馈</span>
                 </button>
                 
                 {user ? (
@@ -949,6 +962,12 @@ export default function ASMRVideoStudio() {
           </div>
         </div>
       )}
+
+      {/* 反馈模态框 */}
+      <FeedbackModal 
+        isOpen={showFeedbackModal} 
+        onClose={() => setShowFeedbackModal(false)} 
+      />
     </div>
   )
 } 
