@@ -57,7 +57,7 @@ export async function POST() {
         clerkUserId: clerkUserId,
         email: userData.email,
         googleFullName: userData.fullName,
-        totalCredits: 8, // 新用户默认8积分
+        totalCredits: 18, // 新用户默认18积分
         usedCredits: 0,
         isActive: true,
         googleVerifiedAt: new Date(),
