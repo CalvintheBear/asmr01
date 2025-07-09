@@ -43,12 +43,12 @@ export default function ASMRVideoResult({
   const hasContent = isGenerating || videoUrl;
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 p-4 sm:p-6 lg:p-8 h-fit">
+    <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 p-4 sm:p-6 lg:p-8 h-full flex flex-col">
       <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">ASMR Video Result</h2>
       
       {!hasContent ? (
         /* 默认状态 - 等待生成 */
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-4 sm:space-y-6 flex-1 flex flex-col">
           <div className="aspect-video bg-stone-50 rounded-xl flex items-center justify-center relative overflow-hidden">
             {/* 背景装饰效果 */}
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-stone-100/30">
@@ -91,7 +91,7 @@ export default function ASMRVideoResult({
           </div>
 
           {/* 快速操作按钮 */}
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-2 sm:space-y-3 mt-auto">
             <button
               disabled
               className="w-full py-2.5 sm:py-3 bg-stone-100/60 text-gray-400 rounded-xl font-medium cursor-not-allowed text-sm sm:text-base"
@@ -107,7 +107,7 @@ export default function ASMRVideoResult({
           </div>
         </div>
       ) : isGenerating ? (
-        <div className="space-y-4">
+        <div className="space-y-4 flex-1 flex flex-col">
           {/* 生成状态提示 */}
           <div className="text-sm text-gray-600 mb-4" aria-live="polite">
             <span className="text-emerald-600 font-medium">
@@ -143,7 +143,7 @@ export default function ASMRVideoResult({
           </div>
           
           {/* 进度指示器 */}
-          <div className="space-y-2" aria-live="polite">
+          <div className="space-y-2 mt-auto" aria-live="polite">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">正在生成视频...</span>
               <span className="text-emerald-600 font-medium">{progress}%</span>
@@ -157,7 +157,7 @@ export default function ASMRVideoResult({
           </div>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 flex-1 flex flex-col">
           {/* 完成的视频展示 */}
           <div className="aspect-video bg-gray-900 rounded-xl overflow-hidden relative group cursor-pointer">
             {(videoUrl1080p || videoUrl) ? (
@@ -211,7 +211,7 @@ export default function ASMRVideoResult({
           )}
 
           {/* 操作按钮 */}
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-2 sm:space-y-3 mt-auto">
             {/* 主要下载按钮 */}
             <div className="flex items-center space-x-2">
               <button

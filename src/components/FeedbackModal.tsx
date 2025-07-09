@@ -107,6 +107,21 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           </button>
         </div>
 
+        {/* Reward Notice */}
+        <div className="p-4 bg-emerald-50 border-b border-emerald-100">
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
+              <span className="text-white text-xs font-bold">✓</span>
+            </div>
+            <p className="text-sm text-emerald-700">
+              <span className="font-semibold">积分奖励：</span>被采纳意见的用户奖励30积分
+            </p>
+          </div>
+          <p className="text-xs text-emerald-600 mt-1 ml-6">
+            Users with adopted feedback receive 30 credits reward
+          </p>
+        </div>
+
         {isSubmitted ? (
           // Success State
           <div className="p-6 text-center">

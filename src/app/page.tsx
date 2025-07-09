@@ -17,6 +17,7 @@ import SEOHead from '@/components/SEOHead'
 import FAQAccordion from '@/components/FAQAccordion'
 import CollapsibleTechSection from '@/components/CollapsibleTechSection'
 import FeedbackModal from '@/components/FeedbackModal'
+import EnhancedFeedbackButton from '@/components/EnhancedFeedbackButton'
 import { useVideoGeneration } from '@/hooks/useVideoGeneration'
 import { useCredits } from '@/hooks/useCredits'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
@@ -309,13 +310,7 @@ export default function ASMRVideoStudio() {
               <Link href="/pricing" className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                 Pricing
               </Link>
-              <button 
-                onClick={() => setShowFeedbackModal(true)}
-                className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Feedback</span>
-              </button>
+              <EnhancedFeedbackButton onClick={() => setShowFeedbackModal(true)} />
               
               {/* 积分显示 */}
               {user && (
@@ -405,16 +400,13 @@ export default function ASMRVideoStudio() {
                 >
                   Pricing
                 </Link>
-                <button 
+                <EnhancedFeedbackButton 
                   onClick={() => {
                     setShowFeedbackModal(true)
                     setShowMobileMenu(false)
                   }}
-                  className="block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors flex items-center space-x-2"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Feedback</span>
-                </button>
+                  isMobile={true}
+                />
                 
                 {user ? (
                   <>
@@ -510,9 +502,9 @@ export default function ASMRVideoStudio() {
           </div>
 
           {/* Main Content - Two Column Layout */}
-          <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-start mb-20">
+          <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-stretch mb-20">
             {/* Left Panel - ASMR Controls */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 overflow-hidden h-fit">
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-200/50 overflow-hidden">
               
               {/* ASMR Type Selection */}
               <div className="p-8 border-b border-stone-200">
