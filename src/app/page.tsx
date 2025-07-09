@@ -41,33 +41,33 @@ export default function ASMRVideoStudio() {
   const faqData = [
     {
       id: 'what-is-ai-asmr-generator',
-      question: 'What is an ASMR Video Generator? How is it related to VEO3?',
-      answer: 'Our ASMR Video Generator is an online tool powered by Google\'s latest VEO3 technology. It allows you to easily create captivating ASMR videos using simple "text to video" commands. Whether you want to make relaxing YouTube videos or viral TikTok shorts, our tool can help.'
+      question: 'What is an AI ASMR Video Generator? How is it related to VEO3?',
+      answer: 'Our AI ASMR Video Generator is an online tool powered by Google\'s latest VEO3 AI technology. It allows you to easily create captivating ASMR videos using simple "text to video" commands. Whether you want to make relaxing YouTube videos or viral TikTok shorts, our tool can help.'
     },
     {
       id: 'how-to-make-ai-asmr-video',
-      question: 'How do I make an ASMR video? Do I need to write complex prompts?',
-      answer: 'Making videos is very simple! Just choose a scene, like "glass cutting" or "lava flow," and enter a simple description. Our video maker will handle the rest. We have optimized the prompt generation logic for VEO3 (prompt veo3), so you don\'t need to be an expert to create professional-grade videos.'
+      question: 'How do I make an AI ASMR video? Do I need to write complex prompts?',
+      answer: 'Making AI videos is very simple! Just choose a scene, like "glass cutting" or "lava flow," and enter a simple description. Our AI video maker will handle the rest. We have optimized the prompt generation logic for VEO3 (prompt veo3), so you don\'t need to be an expert to create professional-grade AI videos.'
     },
     {
       id: 'best-ai-video-generator',
-      question: 'Why is this considered one of the best video generators on the market?',
-      answer: 'Our platform is considered one of the best video generators because it\'s specifically optimized for ASMR content and is driven by the powerful Google VEO 3 and Gemini models. We focus on audio-visual synchronization to ensure that scenes like "knife cutting fruit" have extremely realistic physics and sound.'
+      question: 'Why is this considered one of the best AI video generators on the market?',
+      answer: 'Our platform is considered one of the best AI video generators because it\'s specifically optimized for ASMR content and is driven by the powerful Google VEO 3 AI and Gemini models. We focus on audio-visual synchronization to ensure that scenes like "knife cutting fruit" have extremely realistic physics and sound.'
     },
     {
       id: 'asmr-content-types',
       question: 'What types of ASMR content can I create? For example, glass or lava?',
-      answer: 'Absolutely! Our platform supports a wide range of creative ideas, including but not limited to "glass cutting," "glass fruit" art, flowing "lava" and "magma" visuals, and scenes of various knives cutting objects. You can also generate unique sounds and ASMR sound effects.'
+      answer: 'Absolutely! Our AI supports a wide range of creative ideas, including but not limited to "AI glass cutting," "glass fruit" art, flowing "lava" and "magma" visuals, and scenes of various knives cutting objects. You can also generate unique AI sounds and ASMR sound effects.'
     },
     {
       id: 'create-videos-for-social-media',
       question: 'Is this tool suitable for creating videos for TikTok and YouTube Shorts?',
-      answer: 'Definitely! Our video generator is made for social media. You can easily create vertical short videos that fit the style of TikTok and YouTube Shorts. Whether you want to post on TikTok, YouTube, Facebook, or Instagram, you can quickly generate eye-catching video content.'
+      answer: 'Definitely! Our AI video generator is made for social media. You can easily create vertical short videos that fit the style of TikTok and YouTube Shorts. Whether you want to post on TikTok, YouTube, Facebook, or Instagram, you can quickly generate eye-catching AI video content.'
     },
     {
       id: 'cost-for-creators',
       question: 'How much does it cost for content creators?',
-      answer: 'Each generated ASMR video costs just 10 credits (less than $1). For content creators, our packages start at $9.90 for 115 credits - creating 11+ videos. Much more cost-effective than traditional video production.'
+      answer: 'Each AI-generated ASMR video costs just 10 credits (less than $1). For content creators, our packages start at $9.90 for 115 credits - creating 11+ videos. Much more cost-effective than traditional video production.'
     },
     {
       id: 'what-is-veo3-ai',
@@ -76,8 +76,8 @@ export default function ASMRVideoStudio() {
     },
     {
       id: 'text-to-video-difference',
-      question: 'How is your "text to video" tool different from others?',
-      answer: 'Unlike other generic "text to video" tools, we specialize in the ASMR niche. This means our system not only generates visuals but also creates matching voices and sound effects designed to trigger ASMR tingles. From subtle cutting sounds to flowing noises, everything is designed for the optimal ASMR experience.'
+      question: 'How is your "text to video" AI different from other tools?',
+      answer: 'Unlike other generic "text to video" tools, we specialize in the ASMR niche. This means our AI not only generates visuals but also creates matching AI voices and sound effects designed to trigger ASMR tingles. From subtle cutting sounds to flowing noises, everything is designed for the optimal ASMR experience.'
     },
     {
       id: 'how-to-get-started',
@@ -87,17 +87,17 @@ export default function ASMRVideoStudio() {
     {
       id: 'text-to-video-different',
       question: 'What makes our text to video generator different from others?',
-      answer: 'Our text to video generator specializes in ASMR content creation with superior audio-visual synchronization. Unlike generic text to video tools, our platform understands ASMR triggers and creates videos that deliver authentic relaxation experiences with perfect timing and realistic physics.'
+      answer: 'Our text to video AI specializes in ASMR content creation with superior audio-visual synchronization. Unlike generic text to video tools, our platform understands ASMR triggers and creates videos that deliver authentic relaxation experiences with perfect timing and realistic physics.'
     },
     {
       id: 'video-generation-speed',
-      question: 'How long does it take to generate a video?',
-      answer: 'Speed is one of our strengths. Typically, a standard ASMR video is generated in just 3-5 minutes. This means you can quickly respond to trending topics or batch-create content for your YouTube Shorts or TikTok channel in a short amount of time.'
+      question: 'How long does it take to generate an AI video?',
+      answer: 'Speed is one of our strengths. Typically, a standard AI ASMR video is generated in just 3-5 minutes. This means you can quickly respond to trending topics or batch-create content for your YouTube Shorts or TikTok channel in a short amount of time.'
     },
     {
       id: 'voice-dubbing-feature',
       question: 'Can I use AI for voice dubbing (voice dubbing AI)?',
-      answer: 'Currently, our core feature revolves around generating visuals and ASMR trigger sounds. While our videos include highly synchronized sound effects, a dedicated voice dubbing feature is under development. Our goal is to eventually achieve a perfect combination of visuals, sound effects, and narration.'
+      answer: 'Currently, our core feature revolves around generating visuals and ASMR trigger sounds. While our videos include highly synchronized AI sound effects, a dedicated AI voice dubbing feature is under development. Our goal is to eventually achieve a perfect combination of visuals, sound effects, and narration.'
     }
   ]
 
@@ -642,4 +642,497 @@ export default function ASMRVideoStudio() {
                               : !credits 
                               ? 'Credits Unavailable'
                               : !CREDITS_CONFIG.canCreateVideo(credits.remainingCredits) 
-                              ? `
+                              ? `Insufficient Credits (Need ${CREDITS_CONFIG.VIDEO_COST})`
+                              : `Generate AI Video (10 Credits)`
+                            }
+                          </span>
+                        </div>
+                      )}
+                    </button>
+                    
+                    {/* Loading state notice */}
+                    {user && (!userSynced || creditsLoading || !credits) && (
+                      <div className="bg-slate-700/50 border border-slate-600 rounded-xl p-5">
+                        <div className="flex items-start space-x-3">
+                          <div className="flex-shrink-0">
+                            <div className="animate-spin rounded-full h-5 w-5 border-2 border-cyan-400 border-t-transparent"></div>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-cyan-300 mb-1">
+                              {!userSynced 
+                                ? 'Syncing Account'
+                                : creditsLoading 
+                                ? 'Loading Credits'
+                                : 'Loading Account Data'
+                              }
+                            </h4>
+                            <p className="text-sm text-slate-300 leading-relaxed">
+                              Please wait while we load your account information...
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                  </div>
+                ) : (
+                  <div className="bg-slate-700/50 border border-slate-600 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-white mb-3">Sign in to Generate Videos</h3>
+                    <p className="text-slate-300 mb-4 leading-relaxed">
+                      Create your account to start generating AI ASMR videos with our advanced tools.
+                    </p>
+                    <SignInButton mode="modal" fallbackRedirectUrl="/">
+                      <button className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-medium transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
+                        Sign In to Continue
+                      </button>
+                    </SignInButton>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Panel - Video Result */}
+            <div className="lg:sticky lg:top-8">
+              <ASMRVideoResult 
+                isGenerating={isGenerating}
+                progress={generationStatus.progress}
+                videoUrl={generationStatus.videoUrl}
+                videoUrl1080p={generationStatus.videoUrl1080p}
+                thumbnailUrl={generationStatus.thumbnailUrl}
+                videoId={generationStatus.videoId}
+                details={generationStatus.details}
+                onDownload={handleDownload}
+                onDownload1080p={handleDownload1080p}
+                onOpenAssets={handleOpenAssets}
+              />
+            </div>
+          </div>
+
+          {/* Video Showcase Section - 新增 */}
+          <div id="video-showcase" className="scroll-mt-20">
+            <VideoShowcase 
+              maxVideos={6}
+              showHeader={true}
+              showViewMore={true}
+              columns={2}
+            />
+          </div>
+
+          {/* Success Stories Section */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 mt-32">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-100 to-cyan-50 text-cyan-700 rounded-full text-sm font-medium mb-4">
+                <Star className="w-4 h-4" />
+                Success Stories
+              </div>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Story 1 */}
+              <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl p-8 text-white shadow-xl border border-stone-700">
+                <div className="flex items-center mb-6">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-lg italic mb-6 leading-relaxed">
+                  "From zero to 500K subscribers in 2 months! The Veo3 AI creates content that's impossible to distinguish from real ASMR artists."
+                </blockquote>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-grow">
+                    <h4 className="font-semibold text-xl">Luna Chen</h4>
+                    <p className="text-stone-300">ASMR YouTuber</p>
+                  </div>
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
+                    $45K/month
+                  </div>
+                </div>
+              </div>
+
+              {/* Story 2 */}
+              <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl p-8 text-white shadow-xl border border-stone-700">
+                <div className="flex items-center mb-6">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-lg italic mb-6 leading-relaxed">
+                  "My AI-generated soap cutting videos get 10M+ views each. The quality is so realistic, nobody believes it's AI!"
+                </blockquote>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-grow">
+                    <h4 className="font-semibold text-xl">Marcus Williams</h4>
+                    <p className="text-stone-300">TikTok ASMR Creator</p>
+                  </div>
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
+                    $62K/month
+                  </div>
+                </div>
+              </div>
+
+              {/* Story 3 */}
+              <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl p-8 text-white shadow-xl border border-stone-700">
+                <div className="flex items-center mb-6">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-lg italic mb-6 leading-relaxed">
+                  "I produce 50 ASMR videos daily across all platforms. The 3D audio quality is better than my $5K microphone setup!"
+                </blockquote>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-grow">
+                    <h4 className="font-semibold text-xl">Sophie Anderson</h4>
+                    <p className="text-stone-300">Multi-Platform Creator</p>
+                  </div>
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
+                    $78K/month
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* AI vs Traditional Comparison Section */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-full text-sm font-medium mb-4">
+                <Zap className="w-4 h-4" />
+                AI vs Traditional
+              </div>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">ASMR Content Creation</span>
+              </h2>
+              <p className="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed">
+                See how Google Veo3 AI revolutionizes ASMR content creation compared to traditional methods
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl border border-stone-700">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-stone-600">
+                      <th className="text-left p-6 text-white font-semibold text-lg">Feature</th>
+                      <th className="text-center p-6 text-stone-300 font-medium">Traditional ASMR Creation</th>
+                      <th className="text-center p-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-emerald-400 font-semibold">AI-Powered with Veo3</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white">
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Equipment Cost</td>
+                      <td className="p-6 text-center text-stone-400">$2,000 - $10,000</td>
+                      <td className="p-6 text-center font-bold text-purple-400">$0</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Time to Create Video</td>
+                      <td className="p-6 text-center text-stone-400">4-8 hours</td>
+                      <td className="p-6 text-center font-bold text-purple-400">30-60 seconds</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Audio Quality</td>
+                      <td className="p-6 text-center text-stone-400">Depends on equipment</td>
+                      <td className="p-6 text-center font-bold text-purple-400">Studio-grade 3D spatial</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Video Quality</td>
+                      <td className="p-6 text-center text-stone-400">Up to 4K (with camera)</td>
+                      <td className="p-6 text-center font-bold text-purple-400">4K HDR guaranteed</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">ASMR Styles Available</td>
+                      <td className="p-6 text-center text-stone-400">Limited by skills</td>
+                      <td className="p-6 text-center font-bold text-purple-400">200+ instant styles</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Background Noise</td>
+                      <td className="p-6 text-center">
+                        <Check className="w-5 h-5 text-emerald-400 mx-auto" />
+                      </td>
+                      <td className="p-6 text-center">
+                        <X className="w-5 h-5 text-red-400 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Consistency</td>
+                      <td className="p-6 text-center text-stone-400">Varies by mood/energy</td>
+                      <td className="p-6 text-center font-bold text-purple-400">Perfect every time</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Scalability</td>
+                      <td className="p-6 text-center text-stone-400">1-2 videos/day max</td>
+                      <td className="p-6 text-center font-bold text-purple-400">50+ videos/day</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Viral Optimization</td>
+                      <td className="p-6 text-center">
+                        <X className="w-5 h-5 text-red-400 mx-auto" />
+                      </td>
+                      <td className="p-6 text-center">
+                        <Check className="w-5 h-5 text-emerald-400 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-6 font-medium text-stone-200">Multiple Languages</td>
+                      <td className="p-6 text-center">
+                        <X className="w-5 h-5 text-red-400 mx-auto" />
+                      </td>
+                      <td className="p-6 text-center">
+                        <Check className="w-5 h-5 text-emerald-400 mx-auto" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* How to Create ASMR Video Section - Natural Style */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-white mb-4">
+                How to Create an ASMR Video<br />
+                <span className="text-slate-300">with Veo3 AI</span>
+              </h2>
+              <p className="text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                Generate a relaxing ASMR video in just three simple steps with our<br />
+                AI-powered Veo3 platform:
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-10">
+              {/* Step 1 */}
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-lg p-6 text-center shadow-sm border border-slate-700/50 hover:shadow-md hover:border-cyan-400/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500/20 to-cyan-400/10 text-cyan-400 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    <circle cx="8" cy="8" r="2" fill="currentColor" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-3">Choose ASMR Scene</h3>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Select from pre-built templates or create your own custom ASMR concept
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-lg p-6 text-center shadow-sm border border-slate-700/50 hover:shadow-md hover:border-cyan-400/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-blue-400/10 text-blue-400 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-3">Customize Your Prompt</h3>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Describe your ideal ASMR scene with specific details about sounds, visuals, and mood
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-lg p-6 text-center shadow-sm border border-slate-700/50 hover:shadow-md hover:border-cyan-400/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500/20 to-purple-400/10 text-purple-400 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3l-6 18M9 9l10.5-3M20 6l-18 6" />
+                    <circle cx="12" cy="12" r="2" fill="currentColor" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 6l1-1M18 18l1 1M6 18l-1 1M18 6l1-1" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-3">Generate & Share</h3>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  AI creates your video in 3-5 minutes. Download and share on YouTube, TikTok, or any platform
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <Link href="#main-generator">
+                <button className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
+                  Create AI Video Now
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </button>
+              </Link>
+            </div>
+          </div>
+
+
+
+
+
+          {/* FAQ Section */}
+          <FAQAccordion 
+            title="Frequently Asked Questions"
+            faqs={faqData}
+          />
+
+          {/* Advanced AI Video Generation Technology Section - Collapsible */}
+          <CollapsibleTechSection />
+
+        </div>
+      </div>
+
+      {/* Footer - 全宽布局 */}
+      <footer className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white relative">
+        {/* Subtle footer pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-lg overflow-hidden">
+                  <img 
+                    src="/logo.svg" 
+                    alt="CuttingASMR - Best AI ASMR Video Generator Powered by Google Veo3 for Content Creators" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-xl font-bold">CuttingASMR.org</span>
+              </div>
+              <p className="text-gray-400">
+                Professional veo3 video prompt templates for creators. Master ai video prompt creation with Google Veo3 AI technology.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+              </ul>
+            </div>
+            
+              <div>
+              <h4 className="font-semibold mb-4">Resources</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Terms</Link></li>
+                <li><Link href="/refund" className="hover:text-white transition-colors">Refund</Link></li>
+                <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-white transition-colors">Contact Support</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 CuttingASMR.org. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* 弹出式模态框 - 显示所有ASMR类型 */}
+      {showAllTypesModal && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
+          <div className="bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col border border-slate-700">
+            <div className="flex justify-between items-center p-5 border-b border-slate-700 sticky top-0 bg-slate-800/90 backdrop-blur-sm z-10">
+              <h3 id="modal-title" className="text-xl font-bold text-white">Choose Video Prompt Template</h3>
+              <button
+                onClick={() => setShowAllTypesModal(false)}
+                className="p-2 rounded-full hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="p-5 overflow-y-auto">
+              {/* Custom Prompt Option */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2 pb-2 border-b border-slate-700">
+                  <span className="text-lg">✏️</span>
+                  <h4 className="font-semibold text-white">Custom</h4>
+                </div>
+                <button
+                  onClick={() => {
+                    handleASMRTypeChange('default')
+                    setShowAllTypesModal(false)
+                  }}
+                  className={`w-full p-4 rounded-xl border transition-all text-left ${
+                    selectedASMRType === 'default'
+                      ? 'border-cyan-500 bg-cyan-500/20 shadow-md'
+                      : 'border-slate-600 hover:border-slate-500 bg-slate-700/50 hover:bg-slate-600/50'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <h5 className={`font-medium ${
+                      selectedASMRType === 'default' ? 'text-cyan-300' : 'text-white'
+                    }`}>
+                      {defaultOption.name}
+                    </h5>
+                    <p className={`text-sm leading-relaxed ${
+                      selectedASMRType === 'default' ? 'text-cyan-400' : 'text-slate-300'
+                    }`}>
+                      {defaultOption.description}
+                    </p>
+                  </div>
+                </button>
+              </div>
+
+              {/* 所有分类 */}
+              {asmrCategories.map((category) => (
+                <div key={category.id} className="space-y-3">
+                  <div className="flex items-center space-x-2 pb-2 border-b border-slate-700">
+                    <span className="text-lg">{category.icon}</span>
+                    <h4 className="font-semibold text-white">{category.name}</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {category.types.map((type) => (
+                      <button
+                        key={type.id}
+                        onClick={() => {
+                          handleASMRTypeChange(type.id)
+                          setShowAllTypesModal(false)
+                        }}
+                        className={`p-4 rounded-xl border transition-all text-left ${
+                          selectedASMRType === type.id
+                            ? 'border-cyan-500 bg-cyan-500/20 shadow-md'
+                            : 'border-slate-600 hover:border-slate-500 bg-slate-700/50 hover:bg-slate-600/50'
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <h5 className={`font-medium ${
+                            selectedASMRType === type.id ? 'text-cyan-300' : 'text-white'
+                          }`}>
+                            {type.name}
+                          </h5>
+                          <p className={`text-sm leading-relaxed ${
+                            selectedASMRType === type.id ? 'text-cyan-400' : 'text-slate-300'
+                          }`}>
+                            {type.description}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 反馈模态框 */}
+      <FeedbackModal 
+        isOpen={showFeedbackModal} 
+        onClose={() => setShowFeedbackModal(false)} 
+      />
+    </div>
+  )
+} 
