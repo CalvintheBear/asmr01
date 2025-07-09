@@ -16,6 +16,7 @@ interface VideoItem {
   thumbnailUrl: string;
   duration: string;
   category: string;
+  createdAt?: string; // 添加创建时间字段
 }
 
 interface StructuredDataProps {
@@ -81,16 +82,40 @@ export default function StructuredData({ type, faqs, videos, pageUrl }: Structur
       structuredDataArray.push(faqData);
     }
 
-    // 简化的视频数据（只添加前3个视频以减少数据量）
+    // 修复的视频结构化数据（只添加前3个视频以减少数据量）
     if (videos && videos.length > 0) {
       videos.slice(0, 3).forEach(video => {
+        // 将 "1:05" 格式转换为 ISO 8601 格式 "PT1M5S"
+        const convertDurationToISO8601 = (duration: string): string => {
+          const parts = duration.split(':');
+          if (parts.length === 2) {
+            const minutes = parseInt(parts[0], 10);
+            const seconds = parseInt(parts[1], 10);
+            return `PT${minutes}M${seconds}S`;
+          }
+          return 'PT1M'; // 默认1分钟
+        };
+
         const videoData = {
           "@context": "https://schema.org",
           "@type": "VideoObject",
           "name": video.title,
           "description": video.description,
           "contentUrl": video.videoUrl,
-          "genre": "ASMR"
+          "thumbnailUrl": video.thumbnailUrl,
+          "embedUrl": video.videoUrl,
+          "uploadDate": video.createdAt || new Date().toISOString(),
+          "duration": convertDurationToISO8601(video.duration),
+          "genre": "ASMR",
+          "creator": {
+            "@type": "Organization",
+            "name": "CuttingASMR"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "CuttingASMR",
+            "url": "https://cuttingasmr.org"
+          }
         };
 
         structuredDataArray.push(videoData);

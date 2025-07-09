@@ -32,7 +32,8 @@ export default function VideoShowcasePage() {
     videoUrl: video.videoUrl,
     thumbnailUrl: video.thumbnailUrl,
     duration: video.duration,
-    category: video.category
+    category: video.category,
+    createdAt: video.createdAt
   }));
 
   return (
