@@ -16,14 +16,14 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-slate-800/90 backdrop-blur-sm shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <Link 
               href="/" 
-              className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors"
+              className="flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
               <span>Back to Home</span>
@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="text-xl font-bold text-gray-900">CuttingASMR.org</span>
+              <span className="text-xl font-bold text-white">CuttingASMR.org</span>
             </div>
           </div>
         </div>
@@ -44,11 +44,11 @@ export default function PrivacyPolicy() {
 
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
+        <div className="bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-lg p-8 md:p-12 border border-slate-700/50">
+          <h1 className="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
           
-          <div className="prose prose-lg max-w-none text-gray-700">
-            <p className="text-sm text-gray-500 mb-8">Effective Date: January 8, 2025</p>
+          <div className="prose prose-lg max-w-none text-slate-300 prose-headings:text-white prose-strong:text-white prose-ul:text-slate-300 prose-li:text-slate-300 prose-ol:text-slate-300">
+            <p className="text-sm text-slate-400 mb-8">Effective Date: January 8, 2025</p>
             
             <p className="mb-6">
               This Privacy Policy of CuttingASMR.org ("We," "Us," or "Our") describes Our policies and procedures on how we might collect, store, use, and/or share Your information when You use our Service. This includes use of our website at https://cuttingasmr.org/ (the "Website"). The Privacy Policy also tells You about Your privacy rights and how the law protects You.

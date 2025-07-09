@@ -16,20 +16,20 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           href="/pricing"
-          className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium mb-8"
+          className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-medium mb-8"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Pricing
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Terms of Service</h1>
+        <div className="bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-lg p-8 border border-slate-700/50">
+          <h1 className="text-4xl font-bold text-white mb-8">Terms of Service</h1>
           
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none text-slate-300 prose-headings:text-white prose-strong:text-white prose-ul:text-slate-300 prose-li:text-slate-300">
             <h2>1. Acceptance of Terms</h2>
             <p>
               By registering an account or accessing CuttingASMR.org ("Service"), you automatically accept and agree to be bound by these Terms of Service, our Privacy Policy, and Refund Policy. This agreement is required to use our services.

@@ -59,7 +59,7 @@ export default function ASMRTypesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <SEOHead
         title="Google Veo3 ASMR Content Ideas & Video Templates | 50+ ASMR Triggers List"
         description="Google Veo3 ASMR content ideas for creators! 50+ Veo3 ASMR video ideas: glass cutting, fruit, lava effects. AI ASMR triggers list with Google Veo3 templates. Perfect content for ASMR YouTube channels."
@@ -67,22 +67,22 @@ export default function ASMRTypesPage() {
         keywords="google veo3, veo3, google veo3 asmr, veo3 asmr generator, asmr content ideas, asmr video ideas, asmr triggers list, asmr creator tools, glass cutting, fruit, lava, magma, knife, cutting, asmr sound effects, ASMR types, YouTube, tiktok, content creator, asmr youtube channel, ai asmr templates"
       />
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
+      <header className="bg-slate-800/90 backdrop-blur-sm border-b border-slate-700/50 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
               <Link 
                 href="/"
-                className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
                 <span>Back to Generator</span>
               </Link>
-              <div className="h-6 w-px bg-gray-300"></div>
-              <h1 className="text-xl font-bold text-gray-900">Choose ASMR Type</h1>
+              <div className="h-6 w-px bg-slate-600"></div>
+              <h1 className="text-xl font-bold text-white">Choose ASMR Type</h1>
             </div>
             
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-slate-400">
               {searchQuery || selectedCategory !== 'all' 
                 ? `${filteredTypesCount} of ${totalTypes} types` 
                 : `${totalTypes} types available`
@@ -98,23 +98,23 @@ export default function ASMRTypesPage() {
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search ASMR types by name or description..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-slate-400"
               />
             </div>
             
             {/* Category Filter */}
             <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="pl-10 pr-8 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white min-w-[200px]"
+                className="pl-10 pr-8 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white min-w-[200px]"
               >
                 <option value="all">All Categories</option>
                 {asmrCategories.map(category => (
@@ -130,9 +130,9 @@ export default function ASMRTypesPage() {
         {/* Content */}
         {filteredTypesCount === 0 ? (
           <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">🔍</div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No results found</h3>
-            <p className="text-gray-600">Try adjusting your search terms or filters</p>
+            <div className="text-slate-500 text-6xl mb-4">🔍</div>
+            <h3 className="text-lg font-medium text-white mb-2">No results found</h3>
+            <p className="text-slate-400">Try adjusting your search terms or filters</p>
           </div>
         ) : (
           <div className="space-y-12">
@@ -141,7 +141,7 @@ export default function ASMRTypesPage() {
               <div>
                 <div className="flex items-center space-x-3 mb-6">
                   <span className="text-2xl">✏️</span>
-                  <h2 className="text-2xl font-bold text-gray-900">Custom</h2>
+                  <h2 className="text-2xl font-bold text-white">Custom</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <TypeCard
@@ -158,8 +158,8 @@ export default function ASMRTypesPage() {
               <div key={category.id}>
                 <div className="flex items-center space-x-3 mb-6">
                   <span className="text-2xl">{category.icon}</span>
-                  <h2 className="text-2xl font-bold text-gray-900">{category.name}</h2>
-                  <span className="text-sm text-gray-500">({category.types.length} types)</span>
+                  <h2 className="text-2xl font-bold text-white">{category.name}</h2>
+                  <span className="text-sm text-slate-400">({category.types.length} types)</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {category.types.map(type => (
@@ -205,14 +205,14 @@ function TypeCard({ type, isSelected, onSelect, showCategory, categoryName, cate
       className={`
         relative p-6 rounded-xl border-2 transition-all duration-300 cursor-pointer group
         ${isSelected 
-          ? 'border-purple-500 bg-purple-50 shadow-lg scale-105' 
-          : 'border-gray-200 bg-white hover:border-purple-300 hover:shadow-md hover:scale-102'
+          ? 'border-cyan-500 bg-cyan-500/20 shadow-lg scale-105' 
+          : 'border-slate-600/50 bg-slate-800/50 hover:border-cyan-400 hover:shadow-md hover:scale-102'
         }
       `}
     >
       {/* Selected indicator */}
       {isSelected && (
-        <div className="absolute top-4 right-4 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+        <div className="absolute top-4 right-4 w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center">
           <Check className="w-4 h-4 text-white" />
         </div>
       )}
@@ -220,7 +220,7 @@ function TypeCard({ type, isSelected, onSelect, showCategory, categoryName, cate
       {/* Category badge */}
       {showCategory && categoryName && (
         <div className="mb-3">
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-700/50 text-slate-300">
             {categoryIcon} {categoryName}
           </span>
         </div>
@@ -228,18 +228,18 @@ function TypeCard({ type, isSelected, onSelect, showCategory, categoryName, cate
 
       {/* Content */}
       <div className="space-y-3">
-        <h3 className={`font-semibold text-lg ${isSelected ? 'text-purple-900' : 'text-gray-900'}`}>
+        <h3 className={`font-semibold text-lg ${isSelected ? 'text-cyan-300' : 'text-white'}`}>
           {type.name}
         </h3>
-        <p className={`text-sm leading-relaxed ${isSelected ? 'text-purple-700' : 'text-gray-600'}`}>
+        <p className={`text-sm leading-relaxed ${isSelected ? 'text-cyan-200' : 'text-slate-300'}`}>
           {type.description}
         </p>
         
         {/* Preview prompt */}
         {type.prompt && (
-          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">Preview:</p>
-            <p className="text-sm text-gray-700 line-clamp-3">
+          <div className="mt-4 p-3 bg-slate-700/50 rounded-lg">
+            <p className="text-xs text-slate-400 mb-1">Preview:</p>
+            <p className="text-sm text-slate-300 line-clamp-3">
               {type.prompt.length > 120 ? `${type.prompt.substring(0, 120)}...` : type.prompt}
             </p>
           </div>
@@ -251,8 +251,8 @@ function TypeCard({ type, isSelected, onSelect, showCategory, categoryName, cate
         <button className={`
           w-full py-2 px-4 rounded-lg font-medium transition-colors
           ${isSelected 
-            ? 'bg-purple-500 text-white' 
-            : 'bg-gray-100 text-gray-700 group-hover:bg-purple-100 group-hover:text-purple-700'
+            ? 'bg-cyan-500 text-white' 
+            : 'bg-slate-700/50 text-slate-300 group-hover:bg-cyan-500/20 group-hover:text-cyan-300'
           }
         `}>
           {isSelected ? 'Selected' : 'Select This Type'}

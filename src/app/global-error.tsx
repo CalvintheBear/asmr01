@@ -17,28 +17,36 @@ export default function GlobalError({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontFamily: 'system-ui, sans-serif'
+      fontFamily: 'system-ui, sans-serif',
+      background: 'linear-gradient(to bottom right, #0f172a, #1e3a8a, #0f172a)',
+      color: '#e2e8f0'
     }}>
       <div style={{ textAlign: 'center' }}>
-        <h1>500</h1>
-        <p>服务器内部错误</p>
+        <h1 style={{ fontSize: '4rem', fontWeight: 'bold', color: '#ef4444', marginBottom: '1rem' }}>500</h1>
+        <p style={{ fontSize: '1.2rem', marginBottom: '2rem', color: '#cbd5e1' }}>服务器内部错误</p>
         <button
           onClick={() => reset()}
           style={{
-            background: '#7c3aed',
+            background: 'linear-gradient(to right, #0891b2, #2563eb)',
             color: 'white',
             border: 'none',
-            padding: '8px 16px',
-            borderRadius: '4px',
+            padding: '12px 24px',
+            borderRadius: '8px',
             cursor: 'pointer',
-            marginRight: '8px'
+            marginRight: '12px',
+            fontWeight: '500'
           }}
         >
           重试
         </button>
         <a href="/" style={{
-          color: '#7c3aed',
-          textDecoration: 'none'
+          color: '#06b6d4',
+          textDecoration: 'none',
+          padding: '12px 24px',
+          background: 'linear-gradient(to right, #0891b2, #2563eb)',
+          borderRadius: '8px',
+          display: 'inline-block',
+          fontWeight: '500'
         }}>
           返回首页
         </a>
