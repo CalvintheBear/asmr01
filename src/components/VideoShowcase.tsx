@@ -39,21 +39,21 @@ export default function VideoShowcase({
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-stone-50 via-white to-amber-50/30">
+    <section className="py-20 bg-gradient-to-br from-stone-800 to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 标题区域 */}
         {showHeader && (
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-emerald-100">
+            <div className="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-cyan-500/30">
               <Play className="w-4 h-4" />
               AI Veo3 Powered
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
-              <span className="bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">AI Veo3 Video & Prompt Gallery</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-6 text-white">
+              AI Veo3 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Video & Prompt Gallery</span>
             </h2>
             
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Explore professional AI-generated videos created with Google Veo3 technology. 
               Each veo3 video prompt and ai video prompt has been carefully crafted to generate stunning results - copy and customize them for your own creations.
             </p>
@@ -76,13 +76,13 @@ export default function VideoShowcase({
           <div className="text-center">
             <Link
               href="/video-showcase"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-4 rounded-xl font-medium text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-medium text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300"
             >
               View All Videos
               <ArrowRight className="w-5 h-5" />
             </Link>
             
-            <p className="text-gray-600 mt-4 text-sm">
+            <p className="text-slate-400 mt-4 text-sm">
               Discover more veo3 video prompt and ai video prompt templates
             </p>
           </div>

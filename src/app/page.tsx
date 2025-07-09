@@ -505,10 +505,10 @@ export default function ASMRVideoStudio() {
           {/* Main Content - Two Column Layout */}
           <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-stretch mb-20">
             {/* Left Panel - ASMR Controls */}
-            <div className="bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-xl border border-slate-700/50 overflow-hidden">
+            <div className="bg-gradient-to-br from-stone-800 to-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-700 overflow-hidden">
               
               {/* ASMR Type Selection */}
-              <div className="p-8 border-b border-slate-700/50">
+              <div className="p-8 border-b border-stone-700/50">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-2xl font-semibold text-white">Choose Video Prompt</h2>
                   <Link 
@@ -530,7 +530,7 @@ export default function ASMRVideoStudio() {
                       focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2
                       ${selectedASMRType === 'default'
                         ? 'border-cyan-500 bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                        : 'border-slate-600 hover:border-slate-500 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300'
+                        : 'border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300'
                       }`}
                   >
                     Default
@@ -548,7 +548,7 @@ export default function ASMRVideoStudio() {
                           focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2
                           ${selectedASMRType === type.id
                             ? 'border-cyan-500 bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                            : 'border-slate-600 hover:border-slate-500 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300'
+                            : 'border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300'
                           }`}
                       >
                         <span className="block leading-tight">{type.name}</span>
@@ -559,7 +559,7 @@ export default function ASMRVideoStudio() {
                   {/* View All Button */}
                   <button
                     onClick={() => setShowAllTypesModal(true)}
-                    className="p-2 sm:p-3 rounded-xl border border-slate-600 hover:border-slate-500 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 transition-all text-center flex items-center justify-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem]
+                    className="p-2 sm:p-3 rounded-xl border border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300 transition-all text-center flex items-center justify-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem]
                                focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2"
                   >
                     <span className="mr-1">⋯</span> All
@@ -568,7 +568,7 @@ export default function ASMRVideoStudio() {
               </div>
 
               {/* Prompt Input Section */}
-              <div className="p-8 border-b border-slate-700/50">
+              <div className="p-8 border-b border-stone-700/50">
                 <h3 className="text-xl font-semibold text-white mb-3">Customize Your Video Prompt</h3>
                 <p className="text-slate-300 mb-6 leading-relaxed">
                   {selectedASMRType === 'default' 
@@ -584,7 +584,7 @@ export default function ASMRVideoStudio() {
                     ? "Create your ai video prompt: describe lighting, camera angles, sounds, textures, and visual elements. Write a detailed veo3 video prompt for best results..."
                     : "Edit this ai video prompt template or use it as-is..."
                   }
-                  className="w-full h-32 p-4 border border-slate-600 rounded-xl resize-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent bg-slate-700/50 focus:bg-slate-600/70 text-white placeholder-slate-400 transition-colors"
+                  className="w-full h-32 p-4 border border-stone-600 rounded-xl resize-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent bg-stone-700/50 focus:bg-stone-600/70 text-white placeholder-slate-400 transition-colors"
                 />
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-sm text-slate-400">
@@ -719,14 +719,14 @@ export default function ASMRVideoStudio() {
           </div>
 
           {/* Success Stories Section */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 mt-32">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-700 rounded-full text-sm font-medium mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-100 to-cyan-50 text-cyan-700 rounded-full text-sm font-medium mb-4">
                 <Star className="w-4 h-4" />
                 Success Stories
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-purple-600">$50K+/Month</span>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
               </h2>
             </div>
             
@@ -744,7 +744,7 @@ export default function ASMRVideoStudio() {
                 <div className="space-y-2">
                   <h4 className="font-semibold text-xl">Luna Chen</h4>
                   <p className="text-stone-300">ASMR YouTuber</p>
-                  <div className="inline-block px-4 py-2 bg-emerald-600 rounded-lg font-bold text-lg">
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
                     $45K/month
                   </div>
                 </div>
@@ -763,7 +763,7 @@ export default function ASMRVideoStudio() {
                 <div className="space-y-2">
                   <h4 className="font-semibold text-xl">Marcus Williams</h4>
                   <p className="text-stone-300">TikTok ASMR Creator</p>
-                  <div className="inline-block px-4 py-2 bg-emerald-600 rounded-lg font-bold text-lg">
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
                     $62K/month
                   </div>
                 </div>
@@ -782,7 +782,7 @@ export default function ASMRVideoStudio() {
                 <div className="space-y-2">
                   <h4 className="font-semibold text-xl">Sophie Anderson</h4>
                   <p className="text-stone-300">Multi-Platform Creator</p>
-                  <div className="inline-block px-4 py-2 bg-emerald-600 rounded-lg font-bold text-lg">
+                  <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
                     $78K/month
                   </div>
                 </div>
@@ -797,10 +797,10 @@ export default function ASMRVideoStudio() {
                 <Zap className="w-4 h-4" />
                 AI vs Traditional
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-emerald-600">ASMR Content Creation</span>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">ASMR Content Creation</span>
               </h2>
-              <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+              <p className="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed">
                 See how Google Veo3 AI revolutionizes ASMR content creation compared to traditional methods
               </p>
             </div>

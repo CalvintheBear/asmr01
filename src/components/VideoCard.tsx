@@ -149,7 +149,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
         
         {/* View Prompt Template Button - 固定在底部 */}
         <div className="mt-auto">
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-sm font-medium rounded-lg hover:from-emerald-700 hover:to-emerald-800 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
             <Eye className="w-4 h-4" />
             View Prompt Template
           </button>
