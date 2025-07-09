@@ -54,7 +54,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           alert('Failed to send feedback, please try again later')
         }
       } catch (error) {
-        console.error('反馈提交错误:', error)
+        console.error('Feedback submission error:', error)
         alert('Failed to send feedback, please try again later')
     } finally {
       setIsSubmitting(false)
@@ -114,11 +114,11 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               <span className="text-white text-xs font-bold">✓</span>
             </div>
             <p className="text-sm text-emerald-700">
-              <span className="font-semibold">积分奖励：</span>被采纳意见的用户奖励30积分
+              <span className="font-semibold">Credits Reward:</span> Users with adopted feedback receive 30 credits
             </p>
           </div>
           <p className="text-xs text-emerald-600 mt-1 ml-6">
-            Users with adopted feedback receive 30 credits reward
+            Quality feedback helps us improve and is rewarded with bonus credits
           </p>
         </div>
 
