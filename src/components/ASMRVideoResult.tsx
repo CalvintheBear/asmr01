@@ -64,7 +64,7 @@ export default function ASMRVideoResult({
               <h3 className="text-base sm:text-lg font-medium text-white mb-2">Ready to Generate</h3>
               <p className="text-sm text-slate-300 mb-3 sm:mb-4">
                 Choose an ASMR type and enter a prompt to<br className="hidden sm:block" />
-                <span className="sm:hidden"> </span>generate your relaxing video content
+                <span className="sm:hidden"> </span>generate your relaxing ASMR video content
               </p>
               
               {/* 特性说明 */}
@@ -85,7 +85,7 @@ export default function ASMRVideoResult({
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-5 h-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">2</span>
-                <span>AI generates 8-second video with audio</span>
+                <span>AI generates 8-second ASMR video with audio</span>
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function ASMRVideoResult({
               <h4 className="text-lg font-semibold text-white mb-2">{title}</h4>
               <p className="text-sm text-slate-300 mb-4">
                 Choose an ASMR type and enter a prompt to<br />
-                generate relaxing video content
+                generate relaxing ASMR video content
               </p>
               
               {/* 特性标签 */}

@@ -50,12 +50,12 @@ export default function VideoShowcase({
             </div>
             
             <h2 className="text-3xl md:text-4xl font-extrabold mb-6 text-white">
-              AI Veo3 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Video & Prompt Gallery</span>
+              AI Veo3 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">ASMR Video & Prompt Gallery</span>
             </h2>
             
             <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              Explore professional AI-generated videos created with Google Veo3 technology. 
-              Each veo3 video prompt and ai video prompt has been carefully crafted to generate stunning results - copy and customize them for your own creations.
+              Explore professional AI-generated ASMR videos created with Google Veo3 technology. 
+              Each veo3 ASMR video prompt and AI video prompt has been carefully crafted to generate stunning results - copy and customize them for your own ASMR creations.
             </p>
           </div>
         )}
@@ -78,12 +78,12 @@ export default function VideoShowcase({
               href="/video-showcase"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-medium text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300"
             >
-              View All Videos
+              View All ASMR Videos
               <ArrowRight className="w-5 h-5" />
             </Link>
             
             <p className="text-slate-400 mt-4 text-sm">
-              Discover more veo3 video prompt and ai video prompt templates
+              Discover more veo3 ASMR video prompt and AI video prompt templates
             </p>
           </div>
         )}

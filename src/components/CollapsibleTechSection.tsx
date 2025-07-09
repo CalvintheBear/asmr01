@@ -8,12 +8,12 @@ export default function CollapsibleTechSection() {
         <div className="p-12 text-center">
           <div className="flex flex-col items-center justify-center mb-4">
             <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-4 text-center">
-              Advanced AI Video Generation Technology with Veo3
+              Advanced AI ASMR Video Generation Technology with Veo3
             </h2>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Powered by Google Veo3 AI, our ASMR generator creates professional therapeutic videos 
-            automatically. The best AI video generator technology analyzes your prompts and transforms them into high-quality ASMR content with precision - perfect for content creators and stress relief videos.
+            Powered by Google Veo3 AI, our ASMR video generator creates professional therapeutic ASMR videos 
+            automatically. The best AI video generator technology analyzes your prompts and transforms them into high-quality ASMR content with precision - perfect for content creators and stress relief ASMR videos.
           </p>
         </div>
 
