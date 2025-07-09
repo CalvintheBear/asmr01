@@ -42,7 +42,7 @@ async function get1080PVideo(taskId: string): Promise<string | null> {
 async function updateVideoInDatabase(taskId: string, updateData: {
   status: string;
   videoUrl: string;
-  videoUrl1080p: string;
+  videoUrl1080p: string | null;
   completedAt: Date;
 }): Promise<void> {
   try {
@@ -61,6 +61,7 @@ async function updateVideoInDatabase(taskId: string, updateData: {
       data: {
         status: updateData.status,
         videoUrl: updateData.videoUrl,
+        videoUrl1080p: updateData.videoUrl1080p,
         completedAt: updateData.completedAt
       }
     });
@@ -69,7 +70,7 @@ async function updateVideoInDatabase(taskId: string, updateData: {
     await updateTaskRecord(taskId, {
       status: updateData.status,
       videoUrl: updateData.videoUrl,
-      videoUrl1080p: updateData.videoUrl1080p
+      videoUrl1080p: updateData.videoUrl1080p ?? undefined
     });
 
     console.log('✅ 视频记录已更新 - VideoID:', taskRecord.videoId, 'TaskID:', taskId);
@@ -168,7 +169,7 @@ export async function GET(
       await updateVideoInDatabase(videoId, {
         status: 'failed',
         videoUrl: '',
-        videoUrl1080p: '',
+        videoUrl1080p: null,
         completedAt: new Date()
       });
     } else if (statusCode === 1 && resultUrls.length > 0) {
@@ -177,16 +178,30 @@ export async function GET(
       progress = 100;
       videoUrl = resultUrls[0]; // 720p视频URL
       
-      // 尝试获取1080p版本
-      try {
-        const video1080pUrlResult = await get1080PVideo(videoId);
-        if (video1080pUrlResult) {
-          videoUrl1080p = video1080pUrlResult;
-          console.log('✅ 成功获取1080p视频:', video1080pUrlResult);
+      let model = '';
+      if (data.paramJson) {
+        try {
+          const params = JSON.parse(data.paramJson);
+          model = params.model;
+        } catch (e) {
+          console.error('Failed to parse paramJson for model check', e);
         }
-      } catch (error) {
-        console.log('⚠️ 获取1080p视频失败，使用720p版本:', error);
-        videoUrl1080p = videoUrl; // fallback到720p
+      }
+      
+      // 仅在模型支持1080p时(例如，不是veo3_fast)才尝试获取
+      if (model && model !== 'veo3_fast') {
+        try {
+          const video1080pUrlResult = await get1080PVideo(videoId);
+          if (video1080pUrlResult) {
+            videoUrl1080p = video1080pUrlResult;
+            console.log('✅ 成功获取1080p视频:', video1080pUrlResult);
+          }
+        } catch (error) {
+          console.log('⚠️ 获取1080p视频失败，将跳过1080p版本:', error);
+          // videoUrl1080p 保持 null
+        }
+      } else {
+        console.log(`🎥 模型为 ${model || '未知'}，跳过获取1080p视频。`);
       }
 
       // 更新数据库记录
@@ -194,7 +209,7 @@ export async function GET(
         await updateVideoInDatabase(videoId, {
           status: 'completed',
           videoUrl: videoUrl || '',
-          videoUrl1080p: videoUrl1080p || videoUrl || '',
+          videoUrl1080p: videoUrl1080p, // 如果没有1080p，则为null
           completedAt: new Date()
         });
       } catch (dbError) {
