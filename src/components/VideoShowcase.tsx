@@ -39,7 +39,7 @@ export default function VideoShowcase({
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-stone-800 to-gray-900">
+    <section className="py-20 bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl mx-4 md:mx-6 lg:mx-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 标题区域 */}
         {showHeader && (
