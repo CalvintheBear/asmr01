@@ -10,8 +10,8 @@ interface EnhancedFeedbackButtonProps {
 
 export default function EnhancedFeedbackButton({ onClick, isMobile = false, className = '' }: EnhancedFeedbackButtonProps) {
   const baseClasses = isMobile 
-    ? "block w-full text-left px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors flex items-center space-x-2"
-    : "px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors flex items-center space-x-1"
+    ? "block w-full text-left px-3 py-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-700/50 rounded-md transition-colors flex items-center space-x-2"
+    : "px-4 py-2 text-slate-300 hover:text-cyan-400 transition-colors flex items-center space-x-1"
 
   return (
     <div className="relative feedback-button">
@@ -21,7 +21,7 @@ export default function EnhancedFeedbackButton({ onClick, isMobile = false, clas
       >
         <MessageCircle className="w-4 h-4 animate-bounce-subtle" />
         <span>Feedback</span>
-        <span className="text-xs text-emerald-600 ml-1 opacity-75">
+        <span className="text-xs text-cyan-400 ml-1 opacity-75">
           (30 Credits Reward)
         </span>
       </button>

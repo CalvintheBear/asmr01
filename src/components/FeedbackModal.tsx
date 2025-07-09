@@ -91,33 +91,33 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+      <div className="bg-gradient-to-br from-stone-800 to-gray-900 border border-stone-700 rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-6 border-b border-stone-700">
           <div className="flex items-center space-x-2">
-            <MessageCircle className="w-6 h-6 text-emerald-600" />
-            <h2 className="text-xl font-semibold text-gray-900">User Feedback</h2>
+            <MessageCircle className="w-6 h-6 text-cyan-400" />
+            <h2 className="text-xl font-semibold text-white">User Feedback</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-stone-700 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5 text-slate-400" />
           </button>
         </div>
 
         {/* Reward Notice */}
-        <div className="p-4 bg-emerald-50 border-b border-emerald-100">
+        <div className="p-4 bg-cyan-500/10 border-b border-cyan-500/20">
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
+            <div className="w-4 h-4 bg-cyan-500 rounded-full flex items-center justify-center">
               <span className="text-white text-xs font-bold">✓</span>
             </div>
-            <p className="text-sm text-emerald-700">
+            <p className="text-sm text-cyan-300">
               <span className="font-semibold">Credits Reward:</span> Users with adopted feedback receive 30 credits
             </p>
           </div>
-          <p className="text-xs text-emerald-600 mt-1 ml-6">
+          <p className="text-xs text-cyan-400 mt-1 ml-6">
             Quality feedback helps us improve and is rewarded with bonus credits
           </p>
         </div>
@@ -125,11 +125,11 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         {isSubmitted ? (
           // Success State
           <div className="p-6 text-center">
-            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Heart className="w-8 h-8 text-emerald-600" />
+            <div className="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-8 h-8 text-cyan-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank you for your feedback!</h3>
-            <p className="text-gray-600">
+            <h3 className="text-lg font-semibold text-white mb-2">Thank you for your feedback!</h3>
+            <p className="text-slate-300">
               We have received your feedback and will carefully consider your suggestions.
             </p>
           </div>
@@ -138,7 +138,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           <form onSubmit={handleSubmit} className="p-6">
             {/* Feedback Type Selection */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-slate-300 mb-3">
                 Feedback Type
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -151,15 +151,15 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       onClick={() => setFeedbackType(type.id)}
                       className={`p-3 text-left border rounded-lg transition-all ${
                         feedbackType === type.id
-                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-cyan-500 bg-cyan-500/10 text-cyan-300'
+                          : 'border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300'
                       }`}
                     >
                       <div className="flex items-center space-x-2 mb-1">
                         <Icon className="w-4 h-4" />
                         <span className="font-medium text-sm">{type.name}</span>
                       </div>
-                      <p className="text-xs text-gray-500">{type.description}</p>
+                      <p className="text-xs text-slate-400">{type.description}</p>
                     </button>
                   )
                 })}
@@ -169,7 +169,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             {/* Rating Section for Product Rating */}
             {feedbackType === 'rating' && (
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-slate-300 mb-3">
                   Product Rating
                 </label>
                 <div className="flex space-x-1">
@@ -181,7 +181,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       className={`p-1 rounded transition-colors ${
                         star <= rating
                           ? 'text-yellow-400'
-                          : 'text-gray-300 hover:text-yellow-300'
+                          : 'text-stone-600 hover:text-yellow-300'
                       }`}
                     >
                       <Star className="w-8 h-8 fill-current" />
@@ -189,7 +189,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   ))}
                 </div>
                 {rating > 0 && (
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="text-sm text-slate-300 mt-2">
                     You gave {rating} star{rating > 1 ? 's' : ''} rating
                   </p>
                 )}
@@ -198,7 +198,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
 
             {/* Message Input */}
             <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
                 {feedbackType === 'bug' && 'Please describe the issue you encountered'}
                 {feedbackType === 'feature' && 'Please describe the feature you would like'}
                 {feedbackType === 'rating' && 'Share your experience with us'}
@@ -209,7 +209,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                className="w-full px-3 py-2 border border-stone-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-stone-700 text-white placeholder-slate-400 resize-none"
                 placeholder={
                   feedbackType === 'bug'
                     ? 'e.g., I encountered an error when generating a video...'
@@ -225,18 +225,18 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
 
             {/* Email Input */}
             <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Contact Email <span className="text-gray-500">(optional)</span>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                Contact Email <span className="text-slate-400">(optional)</span>
               </label>
               <input
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-stone-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-stone-700 text-white placeholder-slate-400"
                 placeholder="Your email address"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 Please provide your email if you'd like us to respond
               </p>
             </div>
@@ -246,26 +246,16 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                className="flex-1 px-4 py-2 text-slate-300 bg-stone-700 rounded-lg hover:bg-stone-600 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting || !message.trim()}
-                className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
+                disabled={isSubmitting}
+                className="flex-1 px-4 py-2 text-white bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    <span>Send Feedback</span>
-                  </>
-                )}
+                {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
               </button>
             </div>
           </form>

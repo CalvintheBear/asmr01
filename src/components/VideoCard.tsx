@@ -86,13 +86,13 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
   return (
     <div 
       ref={cardRef}
-      className="group relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full"
+      className="group relative bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full border border-stone-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onClick(video)}
     >
       {/* Video Thumbnail */}
-      <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-gray-100">
+      <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-stone-700">
         {shouldShowVideo && (
           <video
             src={video.videoUrl}
@@ -136,14 +136,14 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}>
           <div className="bg-white bg-opacity-90 rounded-full p-4 transform transition-transform duration-300 hover:scale-110">
-            <Play className="w-8 h-8 text-emerald-600 fill-emerald-600" />
+            <Play className="w-8 h-8 text-cyan-500 fill-cyan-500" />
           </div>
         </div>
       </div>
 
       {/* Video Info */}
       <div className="p-4 flex flex-col flex-grow">
-        <h3 className="font-semibold text-lg text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300 flex-grow">
+        <h3 className="font-semibold text-lg text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300 flex-grow">
           {video.title}
         </h3>
         

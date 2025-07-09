@@ -741,9 +741,11 @@ export default function ASMRVideoStudio() {
                 <blockquote className="text-lg italic mb-6 leading-relaxed">
                   "From zero to 500K subscribers in 2 months! The Veo3 AI creates content that's impossible to distinguish from real ASMR artists."
                 </blockquote>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-xl">Luna Chen</h4>
-                  <p className="text-stone-300">ASMR YouTuber</p>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-grow">
+                    <h4 className="font-semibold text-xl">Luna Chen</h4>
+                    <p className="text-stone-300">ASMR YouTuber</p>
+                  </div>
                   <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
                     $45K/month
                   </div>
@@ -760,9 +762,11 @@ export default function ASMRVideoStudio() {
                 <blockquote className="text-lg italic mb-6 leading-relaxed">
                   "My AI-generated soap cutting videos get 10M+ views each. The quality is so realistic, nobody believes it's AI!"
                 </blockquote>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-xl">Marcus Williams</h4>
-                  <p className="text-stone-300">TikTok ASMR Creator</p>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-grow">
+                    <h4 className="font-semibold text-xl">Marcus Williams</h4>
+                    <p className="text-stone-300">TikTok ASMR Creator</p>
+                  </div>
                   <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
                     $62K/month
                   </div>
@@ -779,9 +783,11 @@ export default function ASMRVideoStudio() {
                 <blockquote className="text-lg italic mb-6 leading-relaxed">
                   "I produce 50 ASMR videos daily across all platforms. The 3D audio quality is better than my $5K microphone setup!"
                 </blockquote>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-xl">Sophie Anderson</h4>
-                  <p className="text-stone-300">Multi-Platform Creator</p>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-grow">
+                    <h4 className="font-semibold text-xl">Sophie Anderson</h4>
+                    <p className="text-stone-300">Multi-Platform Creator</p>
+                  </div>
                   <div className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-bold text-lg">
                     $78K/month
                   </div>
