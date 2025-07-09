@@ -717,6 +717,172 @@ export default function ASMRVideoStudio() {
             />
           </div>
 
+          {/* Success Stories Section */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-700 rounded-full text-sm font-medium mb-4">
+                <Star className="w-4 h-4" />
+                Success Stories
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-purple-600">$50K+/Month</span>
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Story 1 */}
+              <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl p-8 text-white shadow-xl border border-stone-700">
+                <div className="flex items-center mb-6">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-lg italic mb-6 leading-relaxed">
+                  "From zero to 500K subscribers in 2 months! The Veo3 AI creates content that's impossible to distinguish from real ASMR artists."
+                </blockquote>
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-xl">Luna Chen</h4>
+                  <p className="text-stone-300">ASMR YouTuber</p>
+                  <div className="inline-block px-4 py-2 bg-emerald-600 rounded-lg font-bold text-lg">
+                    $45K/month
+                  </div>
+                </div>
+              </div>
+
+              {/* Story 2 */}
+              <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl p-8 text-white shadow-xl border border-stone-700">
+                <div className="flex items-center mb-6">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-lg italic mb-6 leading-relaxed">
+                  "My AI-generated soap cutting videos get 10M+ views each. The quality is so realistic, nobody believes it's AI!"
+                </blockquote>
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-xl">Marcus Williams</h4>
+                  <p className="text-stone-300">TikTok ASMR Creator</p>
+                  <div className="inline-block px-4 py-2 bg-emerald-600 rounded-lg font-bold text-lg">
+                    $62K/month
+                  </div>
+                </div>
+              </div>
+
+              {/* Story 3 */}
+              <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl p-8 text-white shadow-xl border border-stone-700">
+                <div className="flex items-center mb-6">
+                  {[1,2,3,4,5].map((star) => (
+                    <Star key={star} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-lg italic mb-6 leading-relaxed">
+                  "I produce 50 ASMR videos daily across all platforms. The 3D audio quality is better than my $5K microphone setup!"
+                </blockquote>
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-xl">Sophie Anderson</h4>
+                  <p className="text-stone-300">Multi-Platform Creator</p>
+                  <div className="inline-block px-4 py-2 bg-emerald-600 rounded-lg font-bold text-lg">
+                    $78K/month
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* AI vs Traditional Comparison Section */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-full text-sm font-medium mb-4">
+                <Zap className="w-4 h-4" />
+                AI vs Traditional
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-emerald-600">ASMR Content Creation</span>
+              </h2>
+              <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+                See how Google Veo3 AI revolutionizes ASMR content creation compared to traditional methods
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl border border-stone-700">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-stone-600">
+                      <th className="text-left p-6 text-white font-semibold text-lg">Feature</th>
+                      <th className="text-center p-6 text-stone-300 font-medium">Traditional ASMR Creation</th>
+                      <th className="text-center p-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-emerald-400 font-semibold">AI-Powered with Veo3</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white">
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Equipment Cost</td>
+                      <td className="p-6 text-center text-stone-400">$2,000 - $10,000</td>
+                      <td className="p-6 text-center font-bold text-purple-400">$0</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Time to Create Video</td>
+                      <td className="p-6 text-center text-stone-400">4-8 hours</td>
+                      <td className="p-6 text-center font-bold text-purple-400">30-60 seconds</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Audio Quality</td>
+                      <td className="p-6 text-center text-stone-400">Depends on equipment</td>
+                      <td className="p-6 text-center font-bold text-purple-400">Studio-grade 3D spatial</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Video Quality</td>
+                      <td className="p-6 text-center text-stone-400">Up to 4K (with camera)</td>
+                      <td className="p-6 text-center font-bold text-purple-400">4K HDR guaranteed</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">ASMR Styles Available</td>
+                      <td className="p-6 text-center text-stone-400">Limited by skills</td>
+                      <td className="p-6 text-center font-bold text-purple-400">200+ instant styles</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Background Noise</td>
+                      <td className="p-6 text-center">
+                        <Check className="w-5 h-5 text-emerald-400 mx-auto" />
+                      </td>
+                      <td className="p-6 text-center">
+                        <X className="w-5 h-5 text-red-400 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Consistency</td>
+                      <td className="p-6 text-center text-stone-400">Varies by mood/energy</td>
+                      <td className="p-6 text-center font-bold text-purple-400">Perfect every time</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Scalability</td>
+                      <td className="p-6 text-center text-stone-400">1-2 videos/day max</td>
+                      <td className="p-6 text-center font-bold text-purple-400">50+ videos/day</td>
+                    </tr>
+                    <tr className="border-b border-stone-700/50">
+                      <td className="p-6 font-medium text-stone-200">Viral Optimization</td>
+                      <td className="p-6 text-center">
+                        <X className="w-5 h-5 text-red-400 mx-auto" />
+                      </td>
+                      <td className="p-6 text-center">
+                        <Check className="w-5 h-5 text-emerald-400 mx-auto" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-6 font-medium text-stone-200">Multiple Languages</td>
+                      <td className="p-6 text-center">
+                        <X className="w-5 h-5 text-red-400 mx-auto" />
+                      </td>
+                      <td className="p-6 text-center">
+                        <Check className="w-5 h-5 text-emerald-400 mx-auto" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
           {/* How to Create ASMR Video Section - Natural Style */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <div className="text-center mb-12">
