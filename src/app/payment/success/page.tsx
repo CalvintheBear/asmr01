@@ -211,17 +211,17 @@ function PaymentSuccessContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-emerald-600 mx-auto mb-4" />
-          <p className="text-gray-600">正在加载支付信息...</p>
+          <Loader2 className="w-12 h-12 animate-spin text-cyan-400 mx-auto mb-4" />
+          <p className="text-slate-300">Loading payment information...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-amber-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <SEOHead
         title="Payment Successful - CuttingASMR.org | AI ASMR Credits Purchased"
         description="Payment completed successfully! Your AI ASMR credits have been added to your account. Start creating amazing ASMR videos with our AI generator."
@@ -231,23 +231,23 @@ function PaymentSuccessContent() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Success Icon */}
         <div className="text-center mb-8">
-          <div className="w-24 h-24 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+          <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
             <CheckCircle className="w-12 h-12 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Payment Successful!</h1>
-          <p className="text-xl text-gray-600">
-            感谢您的购买！您的ASMR创作之旅现在开始了。
+          <h1 className="text-4xl font-bold text-white mb-4">Payment Successful!</h1>
+          <p className="text-xl text-slate-300">
+            Thank you for your purchase! Your ASMR creation journey begins now.
           </p>
         </div>
 
         {/* 错误和警告信息 */}
         {debugInfo.errors.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
             <div className="flex items-center mb-2">
-              <AlertCircle className="w-5 h-5 text-red-600 mr-2" />
-              <h3 className="font-medium text-red-800">检测到问题</h3>
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mr-2" />
+              <h3 className="font-medium text-red-800 dark:text-red-300">Issues Detected</h3>
             </div>
-            <ul className="text-sm text-red-700 space-y-1">
+            <ul className="text-sm text-red-700 dark:text-red-300 space-y-1">
               {debugInfo.errors.map((error, index) => (
                 <li key={index}>• {error}</li>
               ))}
@@ -257,12 +257,12 @@ function PaymentSuccessContent() {
 
         {/* 环境配置警告 */}
         {debugInfo.environmentInfo && debugInfo.environmentInfo.environment?.isTestMode && (
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+          <div className="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
             <div className="flex items-center">
-              <AlertCircle className="w-5 h-5 text-amber-600 mr-2" />
+              <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 mr-2" />
               <div>
-                <p className="text-amber-800 font-medium">⚠️ 检测到测试环境配置</p>
-                <p className="text-amber-700 text-sm">当前使用测试环境，支付可能不会真实处理。请检查环境变量配置。</p>
+                <p className="text-amber-800 dark:text-amber-300 font-medium">⚠️ Test Environment Detected</p>
+                <p className="text-amber-700 dark:text-amber-300 text-sm">Currently using test environment. Payment may not be processed in real. Please check environment variables.</p>
               </div>
             </div>
           </div>
@@ -270,29 +270,29 @@ function PaymentSuccessContent() {
 
         {/* Payment Details */}
         {paymentInfo && (
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-stone-200">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-              <Sparkles className="w-6 h-6 text-emerald-600 mr-2" />
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 mb-8 border border-stone-200 dark:border-slate-600">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+              <Sparkles className="w-6 h-6 text-emerald-600 dark:text-emerald-400 mr-2" />
               Purchase Details
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
-                  <div className="text-sm text-gray-500">积分包类型</div>
-                  <div className="text-lg font-semibold text-gray-800 capitalize">
+                  <div className="text-sm text-gray-500 dark:text-slate-400">Credit Package</div>
+                  <div className="text-lg font-semibold text-gray-800 dark:text-white capitalize">
                     {paymentInfo.planType} Plan
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">支付金额</div>
-                  <div className="text-lg font-semibold text-gray-800">
+                  <div className="text-sm text-gray-500 dark:text-slate-400">Payment Amount</div>
+                  <div className="text-lg font-semibold text-gray-800 dark:text-white">
                     ${paymentInfo.amount} USD
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">产品ID</div>
-                  <div className="text-sm font-mono text-gray-600">
+                  <div className="text-sm text-gray-500 dark:text-slate-400">Product ID</div>
+                  <div className="text-sm font-mono text-gray-600 dark:text-slate-300">
                     {paymentInfo.product_id}
                   </div>
                 </div>
@@ -300,20 +300,20 @@ function PaymentSuccessContent() {
               
               <div className="space-y-4">
                 <div>
-                  <div className="text-sm text-gray-500">用户邮箱</div>
-                  <div className="text-lg font-semibold text-gray-800">
+                  <div className="text-sm text-gray-500 dark:text-slate-400">User Email</div>
+                  <div className="text-lg font-semibold text-gray-800 dark:text-white">
                     {user?.emailAddresses[0]?.emailAddress}
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">订单ID</div>
-                  <div className="text-sm font-mono text-gray-600">
+                  <div className="text-sm text-gray-500 dark:text-slate-400">Order ID</div>
+                  <div className="text-sm font-mono text-gray-600 dark:text-slate-300">
                     {paymentInfo.order_id}
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">客户ID</div>
-                  <div className="text-sm font-mono text-gray-600">
+                  <div className="text-sm text-gray-500 dark:text-slate-400">Customer ID</div>
+                  <div className="text-sm font-mono text-gray-600 dark:text-slate-300">
                     {paymentInfo.customer_id}
                   </div>
                 </div>
@@ -323,23 +323,23 @@ function PaymentSuccessContent() {
         )}
 
         {/* Credits Info */}
-        <div className="bg-gradient-to-r from-emerald-50 to-amber-50 rounded-2xl p-8 mb-8 border border-stone-200">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">🎉 Credits Added!</h2>
+        <div className="bg-gradient-to-r from-emerald-50 to-amber-50 dark:from-emerald-900/30 dark:to-amber-900/30 rounded-2xl p-8 mb-8 border border-stone-200 dark:border-slate-600">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">🎉 Credits Added!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-stone-200">
-              <div className="text-3xl font-bold text-emerald-600 mb-2">
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-stone-200 dark:border-slate-600">
+              <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
                 {paymentInfo?.creditsAdded || '115'}
               </div>
-              <div className="text-gray-600">Credits Added</div>
+              <div className="text-gray-600 dark:text-slate-300">Credits Added</div>
             </div>
             
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-stone-200">
-              <div className="text-3xl font-bold text-amber-600 mb-2">
+            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-stone-200 dark:border-slate-600">
+              <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">
                 {userCredits !== null ? userCredits : '--'}
               </div>
-              <div className="text-gray-600">Available Credits</div>
+              <div className="text-gray-600 dark:text-slate-300">Available Credits</div>
               {userCredits === null && (
-                <div className="text-xs text-red-500 mt-1">获取失败</div>
+                <div className="text-xs text-red-500 dark:text-red-400 mt-1">Failed to load</div>
               )}
             </div>
           </div>
@@ -353,17 +353,17 @@ function PaymentSuccessContent() {
 
         {/* 积分同步状态检查 */}
         {userCredits !== null && (
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-stone-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">💎 积分同步状态</h3>
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 mb-8 border border-stone-200 dark:border-slate-600">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">💎 Credit Sync Status</h3>
             
             {userCredits === 8 ? (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <div className="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <AlertCircle className="w-5 h-5 text-amber-600 mr-2" />
+                    <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 mr-2" />
                     <div>
-                      <p className="text-amber-800 font-medium">积分可能未同步</p>
-                      <p className="text-amber-700 text-sm">检测到您的积分仍为初始积分(8)，支付可能未正确处理</p>
+                      <p className="text-amber-800 dark:text-amber-300 font-medium">Credits may not be synced</p>
+                      <p className="text-amber-700 dark:text-amber-300 text-sm">Your credits are still at the initial amount (8). Payment may not have been processed correctly.</p>
                     </div>
                   </div>
                   <Link 
@@ -372,29 +372,29 @@ function PaymentSuccessContent() {
                       product_id: paymentInfo?.product_id || '',
                       customer_id: paymentInfo?.customer_id || ''
                     }).toString()}`}
-                    className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-sm font-medium"
+                    className="px-4 py-2 bg-amber-600 dark:bg-amber-700 text-white rounded-lg hover:bg-amber-700 dark:hover:bg-amber-600 text-sm font-medium"
                   >
-                    手动同步积分
+                    Manually Sync Credits
                   </Link>
                 </div>
               </div>
             ) : userCredits > 8 ? (
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+              <div className="bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
                 <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 mr-2" />
+                  <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-2" />
                   <div>
-                    <p className="text-emerald-800 font-medium">✅ 积分同步成功</p>
-                    <p className="text-emerald-700 text-sm">您的积分已成功更新，可以开始创作视频了！</p>
+                    <p className="text-emerald-800 dark:text-emerald-300 font-medium">✅ Credits synced successfully</p>
+                    <p className="text-emerald-700 dark:text-emerald-300 text-sm">Your credits have been updated successfully. You can start creating videos now!</p>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <div className="flex items-center">
-                  <AlertCircle className="w-5 h-5 text-red-600 mr-2" />
+                  <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mr-2" />
                   <div>
-                    <p className="text-red-800 font-medium">⚠️ 积分异常</p>
-                    <p className="text-red-700 text-sm">积分数量异常({userCredits})，请联系客服处理</p>
+                    <p className="text-red-800 dark:text-red-300 font-medium">⚠️ Credit Anomaly</p>
+                    <p className="text-red-700 dark:text-red-300 text-sm">Abnormal credit amount ({userCredits}). Please contact customer service.</p>
                   </div>
                 </div>
               </div>
@@ -404,22 +404,22 @@ function PaymentSuccessContent() {
 
         {/* 调试信息 (仅在开发环境或有错误时显示) */}
         {(process.env.NODE_ENV === 'development' || debugInfo.errors.length > 0) && (
-          <details className="bg-stone-50 rounded-lg p-4 mb-8 border border-stone-200">
-            <summary className="cursor-pointer font-medium text-gray-700 mb-2">
-              🔧 调试信息 (点击展开)
+          <details className="bg-stone-50 dark:bg-slate-800 rounded-lg p-4 mb-8 border border-stone-200 dark:border-slate-600">
+            <summary className="cursor-pointer font-medium text-gray-700 dark:text-slate-300 mb-2">
+              🔧 Debug Info (Click to expand)
             </summary>
             <div className="space-y-3 text-sm">
               <div>
-                <strong>URL参数:</strong>
-                <pre className="bg-white p-2 rounded mt-1 overflow-x-auto border border-stone-200">
+                <strong className="text-gray-900 dark:text-white">URL Parameters:</strong>
+                <pre className="bg-white dark:bg-slate-900 p-2 rounded mt-1 overflow-x-auto border border-stone-200 dark:border-slate-600 text-gray-800 dark:text-slate-200">
                   {JSON.stringify(debugInfo.urlParams, null, 2)}
                 </pre>
               </div>
               
               {debugInfo.productInfo && (
                 <div>
-                  <strong>产品信息:</strong>
-                  <pre className="bg-white p-2 rounded mt-1 overflow-x-auto border border-stone-200">
+                  <strong className="text-gray-900 dark:text-white">Product Info:</strong>
+                  <pre className="bg-white dark:bg-slate-900 p-2 rounded mt-1 overflow-x-auto border border-stone-200 dark:border-slate-600 text-gray-800 dark:text-slate-200">
                     {JSON.stringify(debugInfo.productInfo, null, 2)}
                   </pre>
                 </div>
@@ -427,8 +427,8 @@ function PaymentSuccessContent() {
               
               {debugInfo.environmentInfo && (
                 <div>
-                  <strong>环境配置:</strong>
-                  <pre className="bg-white p-2 rounded mt-1 overflow-x-auto border border-stone-200">
+                  <strong className="text-gray-900 dark:text-white">Environment Config:</strong>
+                  <pre className="bg-white dark:bg-slate-900 p-2 rounded mt-1 overflow-x-auto border border-stone-200 dark:border-slate-600 text-gray-800 dark:text-slate-200">
                     {JSON.stringify(debugInfo.environmentInfo, null, 2)}
                   </pre>
                 </div>
@@ -436,8 +436,8 @@ function PaymentSuccessContent() {
               
               {debugInfo.apiResponse && (
                 <div>
-                  <strong>API响应:</strong>
-                  <pre className="bg-white p-2 rounded mt-1 overflow-x-auto border border-stone-200">
+                  <strong className="text-gray-900 dark:text-white">API Response:</strong>
+                  <pre className="bg-white dark:bg-slate-900 p-2 rounded mt-1 overflow-x-auto border border-stone-200 dark:border-slate-600 text-gray-800 dark:text-slate-200">
                     {JSON.stringify(debugInfo.apiResponse, null, 2)}
                   </pre>
                 </div>
@@ -447,30 +447,30 @@ function PaymentSuccessContent() {
         )}
 
         {/* Next Steps */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-stone-200">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">What's Next?</h2>
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 mb-8 border border-stone-200 dark:border-slate-600">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">What's Next?</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-emerald-600 font-bold">1</span>
+              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">1</span>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800 mb-2">开始创作ASMR视频</h3>
-                <p className="text-gray-600 text-sm">
-                  选择您喜欢的ASMR类型，输入提示词，让AI为您生成专业的ASMR视频
+                <h3 className="font-semibold text-gray-800 dark:text-white mb-2">Start Creating ASMR Videos</h3>
+                <p className="text-gray-600 dark:text-slate-300 text-sm">
+                  Choose your favorite ASMR type, enter a prompt, and let AI generate professional ASMR videos for you
                 </p>
               </div>
             </div>
             
             <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-amber-600 font-bold">2</span>
+              <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-amber-600 dark:text-amber-400 font-bold">2</span>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800 mb-2">下载高质量视频</h3>
-                <p className="text-gray-600 text-sm">
-                  生成完成后，您可以下载高清视频用于任何用途
+                <h3 className="font-semibold text-gray-800 dark:text-white mb-2">Download High-Quality Videos</h3>
+                <p className="text-gray-600 dark:text-slate-300 text-sm">
+                  After generation is complete, you can download high-definition videos for any purpose
                 </p>
               </div>
             </div>
@@ -485,15 +485,15 @@ function PaymentSuccessContent() {
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl font-bold text-lg hover:from-emerald-700 hover:to-emerald-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               <Sparkles className="w-5 h-5 mr-2" />
-              开始创作ASMR视频
+              Start Creating ASMR Videos
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
             
             <Link 
               href="/profile"
-              className="inline-flex items-center px-8 py-4 bg-white border-2 border-emerald-600 text-emerald-600 rounded-xl font-bold text-lg hover:bg-emerald-50 transition-all duration-300"
+              className="inline-flex items-center px-8 py-4 bg-white dark:bg-slate-800 border-2 border-emerald-600 dark:border-emerald-400 text-emerald-600 dark:text-emerald-400 rounded-xl font-bold text-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-all duration-300"
             >
-              查看个人中心
+              View Profile
             </Link>
           </div>
         </div>
