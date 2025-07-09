@@ -21,7 +21,7 @@ export default function EnhancedFeedbackButton({ onClick, isMobile = false, clas
       >
         <MessageCircle className="w-4 h-4 animate-bounce-subtle" />
         <span>Feedback</span>
-        <span className="text-xs text-white ml-1 opacity-75">
+        <span className="text-xs text-white ml-1">
           (30 Credits Reward)
         </span>
       </button>
