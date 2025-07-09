@@ -320,15 +320,15 @@ export default function PricingPage() {
               <ul className="space-y-2 text-sm text-gray-600">
                 <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-emerald-600 transition-colors">Contact Us</a></li>
                 <li><Link href="/help" className="hover:text-emerald-600 transition-colors">Help Center</Link></li>
-                <li><Link href="/tutorials" className="hover:text-emerald-600 transition-colors">Tutorials</Link></li>
+                <li><Link href="/video-showcase" className="hover:text-emerald-600 transition-colors">Video Examples</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-gray-900 mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li><Link href="/about" className="hover:text-emerald-600 transition-colors">About Us</Link></li>
-                <li><Link href="/blog" className="hover:text-emerald-600 transition-colors">Blog</Link></li>
-                <li><Link href="/careers" className="hover:text-emerald-600 transition-colors">Careers</Link></li>
+                <li><Link href="/asmr-types" className="hover:text-emerald-600 transition-colors">ASMR Types</Link></li>
+                <li><Link href="/profile" className="hover:text-emerald-600 transition-colors">User Profile</Link></li>
               </ul>
             </div>
             <div>
