@@ -292,21 +292,12 @@ export default function ASMRVideoStudio() {
       {/* Header */}
       <header className="bg-slate-900/90 backdrop-blur-sm border-b border-slate-700/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-lg overflow-hidden">
-                <img 
-                  src="/favicon.ico" 
-                  alt="CuttingASMR - Google Veo3 AI ASMR Generator Logo for YouTube Content Creators" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="text-xl font-bold text-white">CuttingASMR.org</div>
-            </div>
-
+          <div className="flex items-center h-16 justify-center md:justify-between">
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 flex-1 justify-center">
+              <Link href="/video-showcase" className="px-4 py-2 text-slate-300 hover:text-cyan-400 transition-colors">
+                Template
+              </Link>
               <Link href="/pricing" className="px-4 py-2 text-slate-300 hover:text-cyan-400 transition-colors">
                 Pricing
               </Link>
@@ -393,6 +384,14 @@ export default function ASMRVideoStudio() {
           {showMobileMenu && (
             <div className="md:hidden border-t border-slate-700/50 bg-slate-800/95 backdrop-blur-sm">
               <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link 
+                  href="/video-showcase" 
+                  className="block px-3 py-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-700/50 rounded-md transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  Template
+                </Link>
+
                 <Link 
                   href="/pricing" 
                   className="block px-3 py-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-700/50 rounded-md transition-colors"
