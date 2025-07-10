@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { VideoCardProps } from '@/data/video-types';
 import { Play, Eye } from 'lucide-react';
+import Link from 'next/link';
 
 export default function VideoCard({ video, onClick }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -149,10 +150,14 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
         
         {/* View Prompt Template Button - 固定在底部 */}
         <div className="mt-auto">
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+          <Link
+            href={`/video-showcase/${video.id}`}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+            scroll={false}
+          >
             <Eye className="w-4 h-4" />
             View Prompt Template
-          </button>
+          </Link>
         </div>
       </div>
     </div>
