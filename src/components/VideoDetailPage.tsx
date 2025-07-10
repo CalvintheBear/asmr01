@@ -8,6 +8,8 @@ import FAQAccordion from '@/components/FAQAccordion'
 import CollapsibleTechSection from '@/components/CollapsibleTechSection'
 import { faqs } from '@/data/faqs'
 import StructuredData from '@/components/StructuredData'
+import GuidesSection from '@/components/GuidesSection'
+import SuccessStoriesSection from '@/components/SuccessStoriesSection'
 
 interface VideoDetailPageProps {
   video: ShowcaseVideo
@@ -85,6 +87,12 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
                 </button>
               </div>
             </main>
+
+            {/* Guides Section */}
+            <GuidesSection />
+
+            {/* Success Stories Section */}
+            <SuccessStoriesSection />
 
             {/* Footer navigation */}
             <footer className="mt-16 sm:mt-20 text-center border-t border-stone-700/50 pt-8">
