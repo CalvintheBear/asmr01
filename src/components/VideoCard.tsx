@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { VideoCardProps } from '@/data/video-types';
+import { VideoCardProps as _VideoCardProps } from '@/data/video-types';
 import { Play, Eye } from 'lucide-react';
 import Link from 'next/link';
 
-export default function VideoCard({ video, onClick }: VideoCardProps) {
+type VideoCardProps = Omit<_VideoCardProps, 'onClick'> & { onClick?: (video: any) => void }
+
+export default function VideoCard({ video }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [thumbnailError, setThumbnailError] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
@@ -84,13 +86,17 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
   // 简化缩略图逻辑：优先使用video，出错时fallback到原来的方式
   const shouldShowVideo = isMounted && isInView && !thumbnailError;
 
+  const handleCardClick = () => {
+    window.open(`/video-showcase/${video.id}`, '_blank')
+  }
+
   return (
     <div 
       ref={cardRef}
       className="group relative bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full border border-stone-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onClick(video)}
+      onClick={handleCardClick}
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-stone-700">
@@ -154,6 +160,9 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
             href={`/video-showcase/${video.id}`}
             className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
             scroll={false}
+            onClick={(e) => e.stopPropagation()}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <Eye className="w-4 h-4" />
             View Prompt Template
