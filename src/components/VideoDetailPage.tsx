@@ -4,6 +4,9 @@ import { ShowcaseVideo } from '@/data/video-types'
 import Link from 'next/link'
 import { Copy, ArrowLeft, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
+import FAQAccordion from '@/components/FAQAccordion'
+import CollapsibleTechSection from '@/components/CollapsibleTechSection'
+import { faqs } from '@/data/faqs'
 
 interface VideoDetailPageProps {
   video: ShowcaseVideo
@@ -103,6 +106,10 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
               </Link>
             </div>
           </footer>
+
+          {/* FAQ & Tech Section */}
+          <FAQAccordion faqs={faqs} title="FAQ" />
+          <CollapsibleTechSection />
         </div>
       </div>
     </div>
