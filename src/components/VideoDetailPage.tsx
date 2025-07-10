@@ -56,6 +56,9 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
 
             {/* Prompt & actions */}
             <div className="bg-stone-800/50 p-6 rounded-xl flex flex-col border border-stone-700">
+              <p className="text-lg text-cyan-300 mb-4 italic">
+                How to create {video.asmrType} AI video? Here's how!
+              </p>
               <h2 className="text-2xl font-semibold text-white mb-4">AI Prompt Template</h2>
               <div className="bg-stone-900/70 p-4 rounded-lg mb-4 flex-grow overflow-auto border border-stone-600">
                 <pre className="text-slate-200 text-sm whitespace-pre-wrap font-mono">
@@ -91,11 +94,11 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
               </Link>
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transform hover:scale-105 shadow-lg font-medium text-base"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 shadow-lg font-medium text-base animate-pulse-scale"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Generate Your Own Video
+                Generate Video for free
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>

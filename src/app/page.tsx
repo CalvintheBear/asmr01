@@ -513,6 +513,8 @@ export default function ASMRVideoStudio() {
                   <Link 
                     href="/video-showcase"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <Video className="w-4 h-4" />
                     Video & Prompt Examples
