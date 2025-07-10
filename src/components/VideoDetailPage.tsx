@@ -32,13 +32,13 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
   return (
     <>
       <StructuredData type="video" videos={[video]} pageUrl={`https://cuttingasmr.org/video-showcase/${video.id}`} />
-      <div className="min-h-screen bg-black py-12 sm:py-20 relative">
-        {/* Share Button */}
-        <div className="absolute top-6 right-6 z-20">
-          <ShareButton url={`https://cuttingasmr.org/video-showcase/${video.id}`} title={video.title} />
-        </div>
+      <div className="min-h-screen bg-black py-12 sm:py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-2xl border border-stone-700 p-6 sm:p-8 lg:p-12">
+          <div className="relative bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-2xl border border-stone-700 p-6 sm:p-8 lg:p-12">
+            {/* Share Button */}
+            <div className="absolute top-4 right-4 z-20">
+              <ShareButton url={`https://cuttingasmr.org/video-showcase/${video.id}`} title={video.title} />
+            </div>
             {/* Header */}
             <header className="text-center mb-12">
               <div className="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-cyan-500/30">
