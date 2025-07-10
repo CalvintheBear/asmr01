@@ -1,11 +1,6 @@
 import { showcaseVideos } from '@/data/showcase-videos'
 import { notFound } from 'next/navigation'
-import dynamic from 'next/dynamic'
-
-// 使用动态导入避免 "use client" 组件在服务器打包
-const VideoDetailPage = dynamic(() => import('@/components/VideoDetailPage'), {
-  ssr: false,
-})
+import VideoDetailPage from '@/components/VideoDetailPage'
 
 interface PageProps {
   params: {
