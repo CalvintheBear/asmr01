@@ -63,7 +63,7 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
               {/* Prompt & actions */}
               <div className="bg-stone-800/50 p-6 rounded-xl flex flex-col border border-stone-700">
                 <p className="text-lg text-cyan-300 mb-4 italic">
-                  How to create {video.asmrType} AI video? Here's how!
+                  How to create AI {video.title}? Here's how!
                 </p>
                 <h2 className="text-2xl font-semibold text-white mb-4">AI Prompt Template</h2>
                 <div className="bg-stone-900/70 p-4 rounded-lg mb-4 flex-grow overflow-auto border border-stone-600">
