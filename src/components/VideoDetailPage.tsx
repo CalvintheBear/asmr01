@@ -23,74 +23,85 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      {/* Header */}
-      <header className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white">
-          {video.title}
-        </h1>
-        <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-          {video.description}
-        </p>
-      </header>
+    <div className="min-h-screen bg-black py-12 sm:py-20">
+      <div className="container mx-auto px-4">
+        <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-2xl border border-stone-700 p-6 sm:p-8 lg:p-12">
+          {/* Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-cyan-500/30">
+              Prompt Details
+            </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 text-white">
+              {video.title}
+            </h1>
+            <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+              {video.description}
+            </p>
+          </header>
 
-      {/* Main content */}
-      <main className="grid md:grid-cols-2 gap-8 md:gap-12">
-        {/* Video */}
-        <div className="aspect-video bg-black rounded-lg overflow-hidden shadow-lg">
-          <video
-            src={video.videoUrl}
-            controls
-            autoPlay
-            loop
-            className="w-full h-full object-cover"
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
+          {/* Main content */}
+          <main className="grid md:grid-cols-2 gap-8 md:gap-12">
+            {/* Video */}
+            <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-stone-700">
+              <video
+                src={video.videoUrl}
+                controls
+                autoPlay
+                loop
+                className="w-full h-full object-cover"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
 
-        {/* Prompt & actions */}
-        <div className="bg-stone-800/60 p-6 rounded-lg flex flex-col border border-stone-700">
-          <h2 className="text-2xl font-semibold text-white mb-4">Prompt Template</h2>
-          <div className="bg-stone-900 p-4 rounded-md mb-4 flex-grow overflow-auto border border-stone-700">
-            <pre className="text-slate-200 text-sm whitespace-pre-wrap font-mono">
-{video.prompt}
-            </pre>
-          </div>
-          <button
-            onClick={handleCopy}
-            className={`inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-medium transition-colors duration-200 ${
-              copied
-                ? 'bg-emerald-600 text-white'
-                : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-600 hover:to-blue-700'
-            }`}
-            aria-label="Copy prompt"
-          >
-            <Copy className="w-4 h-4" />
-            {copied ? 'Copied!' : 'Copy Prompt'}
-          </button>
-        </div>
-      </main>
+            {/* Prompt & actions */}
+            <div className="bg-stone-800/50 p-6 rounded-xl flex flex-col border border-stone-700">
+              <h2 className="text-2xl font-semibold text-white mb-4">AI Prompt Template</h2>
+              <div className="bg-stone-900/70 p-4 rounded-lg mb-4 flex-grow overflow-auto border border-stone-600">
+                <pre className="text-slate-200 text-sm whitespace-pre-wrap font-mono">
+                  {video.prompt}
+                </pre>
+              </div>
+              <button
+                onClick={handleCopy}
+                className={`inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-medium transition-colors duration-200 text-base ${
+                  copied
+                    ? 'bg-emerald-600 text-white shadow-lg'
+                    : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-600 hover:to-blue-700 transform hover:scale-105 shadow-lg'
+                }`}
+                aria-label="Copy prompt"
+              >
+                <Copy className="w-5 h-5" />
+                {copied ? 'Copied!' : 'Copy Prompt'}
+              </button>
+            </div>
+          </main>
 
-      {/* Footer navigation */}
-      <footer className="mt-20 text-center border-t border-stone-700 pt-8">
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link
-            href="/video-showcase"
-            className="inline-flex items-center gap-2 px-5 py-3 bg-stone-700 text-white rounded-lg hover:bg-stone-600 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            View All AI Video Templates
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-colors"
-          >
-            Generate AI Videos for Free
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          {/* Footer navigation */}
+          <footer className="mt-16 sm:mt-20 text-center border-t border-stone-700/50 pt-8">
+            <div className="flex flex-wrap justify-center items-center gap-4">
+              <Link
+                href="/video-showcase"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-stone-700 text-white rounded-lg hover:bg-stone-600 transition-colors font-medium text-base"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                View All Templates
+              </Link>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transform hover:scale-105 shadow-lg font-medium text-base"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Generate Your Own Video
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </footer>
         </div>
-      </footer>
+      </div>
     </div>
   )
 } 

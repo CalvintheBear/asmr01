@@ -12,6 +12,8 @@ export interface ShowcaseVideo {
   createdAt: string;               // ISO日期格式
   viewCount?: number;              // 可选：观看次数
   tags: string[];                  // 标签数组
+  seoTitle?: string;               // 可选：手动指定的SEO标题
+  seoDescription?: string;         // 可选：手动指定的SEO描述
 }
 
 export type VideoCategory = 

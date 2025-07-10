@@ -77,6 +77,8 @@ export default function VideoShowcase({
             <Link
               href="/video-showcase"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-medium text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               View All ASMR Videos
               <ArrowRight className="w-5 h-5" />
