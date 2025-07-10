@@ -88,14 +88,8 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
               </div>
             </main>
 
-            {/* Guides Section */}
-            <GuidesSection />
-
-            {/* Success Stories Section */}
-            <SuccessStoriesSection />
-
-            {/* Footer navigation */}
-            <footer className="mt-16 sm:mt-20 text-center border-t border-stone-700/50 pt-8">
+            {/* Navigation Buttons - Centered below video/prompt */}
+            <div className="mt-12 sm:mt-16 text-center">
               <div className="flex flex-wrap justify-center items-center gap-4">
                 <Link
                   href="/video-showcase"
@@ -116,7 +110,13 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
-            </footer>
+            </div>
+
+            {/* Guides Section */}
+            <GuidesSection />
+
+            {/* Success Stories Section */}
+            <SuccessStoriesSection />
 
             {/* FAQ & Tech Section */}
             <FAQAccordion faqs={faqs} title="FAQ" />
