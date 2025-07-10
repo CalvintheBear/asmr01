@@ -177,45 +177,38 @@ export default function StructuredData({ type, faqs, videos, pageUrl }: Structur
 
     // 面包屑导航（如果有页面URL）
     if (pageUrl) {
-      const breadcrumbData = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
+      try {
+        const urlObj = new URL(pageUrl)
+        const segments = urlObj.pathname.split('/').filter(Boolean)
+        const breadcrumbItems: any[] = [
           {
             "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://cuttingasmr.org"
-          }
+            position: 1,
+            name: "Home",
+            item: "https://cuttingasmr.org",
+          },
         ]
-      };
 
-      // 根据URL添加面包屑
-      if (pageUrl.includes('/pricing')) {
-        breadcrumbData.itemListElement.push({
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Pricing",
-          "item": "https://cuttingasmr.org/pricing"
-        });
-      } else if (pageUrl.includes('/help')) {
-        breadcrumbData.itemListElement.push({
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Help",
-          "item": "https://cuttingasmr.org/help"
-        });
-      } else if (pageUrl.includes('/video-showcase')) {
-        breadcrumbData.itemListElement.push({
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Video Showcase",
-          "item": "https://cuttingasmr.org/video-showcase"
-        });
-      }
+        let cumulativePath = ''
+        segments.forEach((seg, index) => {
+          cumulativePath += `/${seg}`
+          breadcrumbItems.push({
+            "@type": "ListItem",
+            position: index + 2,
+            name: decodeURIComponent(seg.replace(/-/g, ' ')),
+            item: `https://cuttingasmr.org${cumulativePath}`,
+          })
+        })
 
-      if (breadcrumbData.itemListElement.length > 1) {
-        structuredDataArray.push(breadcrumbData);
+        if (breadcrumbItems.length > 1) {
+          structuredDataArray.push({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: breadcrumbItems,
+          })
+        }
+      } catch (e) {
+        console.warn('Failed to build breadcrumb for', pageUrl, e)
       }
     }
 
