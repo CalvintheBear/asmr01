@@ -10,6 +10,7 @@ import { faqs } from '@/data/faqs'
 import StructuredData from '@/components/StructuredData'
 import GuidesSection from '@/components/GuidesSection'
 import SuccessStoriesSection from '@/components/SuccessStoriesSection'
+import ShareButton from '@/components/ShareButton'
 
 interface VideoDetailPageProps {
   video: ShowcaseVideo
@@ -31,7 +32,11 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
   return (
     <>
       <StructuredData type="video" videos={[video]} pageUrl={`https://cuttingasmr.org/video-showcase/${video.id}`} />
-      <div className="min-h-screen bg-black py-12 sm:py-20">
+      <div className="min-h-screen bg-black py-12 sm:py-20 relative">
+        {/* Share Button */}
+        <div className="absolute top-6 right-6 z-20">
+          <ShareButton url={`https://cuttingasmr.org/video-showcase/${video.id}`} title={video.title} />
+        </div>
         <div className="container mx-auto px-4">
           <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-2xl border border-stone-700 p-6 sm:p-8 lg:p-12">
             {/* Header */}
@@ -89,7 +94,7 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
             </main>
 
             {/* Navigation Buttons - Centered below video/prompt */}
-            <div className="mt-12 sm:mt-16 text-center">
+            <div className="mt-12 sm:mt-16 text-center mb-16">
               <div className="flex flex-wrap justify-center items-center gap-4">
                 <Link
                   href="/video-showcase"
