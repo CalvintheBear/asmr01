@@ -4,7 +4,7 @@ import { ShowcaseVideo, VideoCategory } from './video-types';
 export const showcaseVideos: ShowcaseVideo[] = [
   {
     id: 'orangutan-skydiving-vlog-1',
-    title: 'Orangutan Skydiving Vlog',
+    title: 'AI gorilla vlog video',
     description: 'A humorous AI-generated vlog of an anthropomorphic orangutan preparing for a skydive while drinking a beer. Absurd, adventurous, and funny.',
     prompt: `Subject: An anthropomorphic orangutan. Visual Details: The orangutan has shaggy dark brown fur, a wide mouth, and is wearing silver goggles, a yellow and blue parachute pack, and a silver can of Coors Light beer. Action: The orangutan is sitting inside a plane, holding and drinking from a can of Coors Light. Its mouth is often open as if speaking or reacting. Setting: Inside an airplane cabin, likely mid-day given the bright light from the windows. Camera Style: Static shot, seemingly eye-level with the orangutan. Atmosphere: Humorous, slightly absurd, and adventurous. Dialogue (Optional): "Today we're getting blackout drunk and fucking skydiving. If I die, at least I die doing what I love. Woo! Not skydiving, fucking drinking." (Spoken in a deep, gravelly voice with a casual, almost slurred delivery.) Background: The interior of a metal aircraft cabin with multiple rectangular windows showing a bright, cloudy sky. Technical Style: Clear, well-lit digital video. Audio (Implied): The orangutan's speech, possibly the hum of the airplane engines, and the clinking of the can.`,
     thumbnailUrl: 'https://aiasmr-video-1363880159.cos.ap-guangzhou.myqcloud.com/AI%20gorilla%20vlog%20video.mp4',
@@ -20,7 +20,7 @@ export const showcaseVideos: ShowcaseVideo[] = [
   },
   {
     id: 'yeti-bigfoot-chase-vlog-1',
-    title: 'Yeti & Bigfoot Chase Vlog',
+    title: 'AI yeti vlog video',
     description: 'Intense, action-packed AI vlog from the selfie-perspective of a Yeti being chased by Bigfoot through a snowy forest at dusk.',
     prompt: `Subject: Large, white-furred Yeti creature\nVisual Details: Icy blue eyes, flat nose, sharp teeth, battered puffer jacket, clawed hands\nAction: Sprinting through snowy forest, panicked, looking back at Bigfoot\nSetting: Deep dusk, snow-covered pines, swirling snowflakes\nCamera Style: Handheld selfie, ultra-wide lens, shallow depth of field\nAtmosphere: Fearful, intense, action-packed\nDialogue (Optional): "Shit, Bigfoot's right behind me. He's fucking fast. Don't know if I'll make it." (deep, rough mountain accent)\nBackground: Dense snow-covered pines whipping past, distant Bigfoot\nTechnical Style: Crisp modern 8K cinematic documentary\nAudio (Implied): Howling wind, crunching snow, ragged breathing, distant Bigfoot roar`,
     thumbnailUrl: 'https://aiasmr-video-1363880159.cos.ap-guangzhou.myqcloud.com/AI%20yeti%20vlog%20video.mp4',
@@ -28,7 +28,7 @@ export const showcaseVideos: ShowcaseVideo[] = [
     duration: '0:25',
     category: 'nature',
     asmrType: 'Creature Vlog',
-    featured: false,
+    featured: true,
     createdAt: '2024-07-13T12:02:00Z',
     tags: ['yeti', 'bigfoot', 'vlog', 'ai-video', 'chase', 'forest', 'action'],
     seoTitle: 'Yeti vs Bigfoot Chase - Intense AI Vlog',
@@ -36,7 +36,7 @@ export const showcaseVideos: ShowcaseVideo[] = [
   },
   {
     id: 'cat-olympic-hurdles-1',
-    title: 'Cat Competes in Olympic Hurdles',
+    title: 'Animals in Olympic Video',
     description: 'A fluffy tabby cat flawlessly competes in the hurdles at the Olympics in this amazing and humorous AI-generated video.',
     prompt: `Televised footage of a [cat description, e.g。,fluffytabby cat] performing [specific action, e.g., hurdles] at theOlympics, in a [setting, e.g., vibrant stadium], with[atmosphere, e.g., cheering crowd], [style, e.g., cinematic][additional details, e.g., slow-motion, dynamic camera angles,commentary].`,
     thumbnailUrl: 'https://aiasmr-video-1363880159.cos.ap-guangzhou.myqcloud.com/Animals%20in%20Olympic%20Video.mp4',
@@ -44,7 +44,7 @@ export const showcaseVideos: ShowcaseVideo[] = [
     duration: '0:40',
     category: 'satisfying',
     asmrType: 'Animal Olympics',
-    featured: true,
+    featured: false,
     createdAt: '2024-07-13T12:03:00Z',
     tags: ['cat', 'olympics', 'hurdles', 'ai-video', 'funny', 'animal'],
     seoTitle: 'Cat at the Olympics AI Video',
@@ -52,7 +52,7 @@ export const showcaseVideos: ShowcaseVideo[] = [
   },
   {
     id: 'ice-cutting-asmr-1',
-    title: 'Ice Cutting ASMR',
+    title: 'Ice Cutting ASMR video',
     description: 'Crisp, satisfying sounds of a knife rapidly cutting through transparent ice cubes on a wooden cutting board. A perfect ASMR video for relaxation, created by AI.',
     prompt: `Realistic 4K footage close-up of a knife rapidly cutting an transparent ice cubes on a wooden cuttingboard. It slices it multiple times, each slice falls over as the knife moves to the next. The inside of the ice is also transparent,accompanied by the flow of water.The sound is ASMR style.`,
     thumbnailUrl: 'https://aiasmr-video-1363880159.cos.ap-guangzhou.myqcloud.com/Ice%20Cutting%20ASMR%20video.mp4',

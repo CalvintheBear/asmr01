@@ -1,31 +1,8 @@
 User-agent: *
-Allow: /
-
-# Core business pages - AI ASMR focused
-Allow: /              # Homepage - AI ASMR generator
-Allow: /pricing       # Pricing - business conversion  
-Allow: /about         # About - brand trust
-Allow: /video-showcase # Video showcase - product quality
-Allow: /asmr-types    # ASMR types - content variety
-
-# Sitemap
-Sitemap: https://cuttingasmr.org/sitemap.xml
-
-# Block unnecessary files and directories
-Disallow: /_next/
 Disallow: /api/
-Disallow: /dashboard/
-Disallow: /auth/
 Disallow: /payment/
 Disallow: /profile/
-Disallow: /test-*
-Disallow: /debug-*
+Disallow: /test-payment/
 Disallow: /credits-recovery/
 
-# Allow static resources
-Allow: /_next/static/
-Allow: /favicon.svg
-Allow: /logo.svg
-
-# Crawl delay (avoid too frequent requests)
-Crawl-delay: 1 
+Sitemap: https://cuttingasmr.org/sitemap.xml 
