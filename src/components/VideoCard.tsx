@@ -73,18 +73,10 @@ export default function VideoCard({ video }: VideoCardProps) {
     setThumbnailError(true);
   };
 
-  const handleVideoError = () => {
-    console.log('Video loading error for:', video.title);
-    setThumbnailError(true);
-  };
+  // 移除 video 回退逻辑相关函数
 
-  const handleVideoSeeked = () => {
-    // 当video seek到指定时间后，第一帧就会显示
-    setThumbnailLoaded(true);
-  };
-
-  // 简化缩略图逻辑：优先使用thumbnail图片，图片出错时再回退到video第一帧
-  const shouldShowVideo = isMounted && isInView && (thumbnailError || !video.thumbnailUrl);
+  // 仅加载thumbnail图片；失败时保留占位符
+  const shouldLoadImage = isMounted && isInView && !!video.thumbnailUrl && !thumbnailError;
 
   const handleCardClick = () => {
     window.open(`/video-showcase/${video.id}`, '_blank')
@@ -100,8 +92,8 @@ export default function VideoCard({ video }: VideoCardProps) {
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-stone-700">
-        {/* 尝试先加载静态封面图 */}
-        {!thumbnailError && video.thumbnailUrl && (
+        {/* 尝试加载静态封面图 */}
+        {shouldLoadImage && (
           <img
             src={video.thumbnailUrl}
             alt={video.title}
@@ -111,23 +103,7 @@ export default function VideoCard({ video }: VideoCardProps) {
             style={{ display: thumbnailLoaded ? 'block' : 'none' }}
           />
         )}
-
-        {/* 如果图片出错或缺失，再回退到视频第一帧 */}
-        {shouldShowVideo && (
-          <video
-            src={video.videoUrl}
-            muted
-            preload="metadata"
-            playsInline
-            disablePictureInPicture
-            disableRemotePlayback
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-            onLoadedMetadata={handleVideoLoadedMetadata}
-            onSeeked={handleVideoSeeked}
-            onError={handleVideoError}
-            style={{ display: thumbnailLoaded ? 'block' : 'none' }}
-          />
-        )}
+        {/* 若图片加载失败或尚未加载，则显示占位符（保持现有灰色块） */}
         
         {/* 加载状态占位符 */}
         {(!isMounted || !isInView || !thumbnailLoaded || thumbnailError) && (
