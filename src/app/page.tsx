@@ -152,6 +152,8 @@ export default function ASMRVideoStudio() {
   const [selectedModules, setSelectedModules] = useState(
     Object.keys(modularOptions).reduce((acc, key) => ({ ...acc, [key]: '' }), {})
   )
+  // 新增：标记用户是否手动编辑了提示词
+  const [hasUserEditedPrompt, setHasUserEditedPrompt] = useState(false)
 
   // 高度对齐相关状态和引用
   const leftPanelRef = useRef<HTMLDivElement>(null)
@@ -262,7 +264,7 @@ export default function ASMRVideoStudio() {
 
   // 当模块化选项变化时，更新总提示词
   useEffect(() => {
-    if (promptMode === 'modular') {
+    if (promptMode === 'modular' && !hasUserEditedPrompt) {
       const promptParts = Object.entries(selectedModules).map(([category, selectedLabel]) => {
         if (!selectedLabel) return null
         const option = (modularOptions[category] as Array<{ label: string; prompt: string }>).find(opt => opt.label === selectedLabel)
@@ -271,7 +273,7 @@ export default function ASMRVideoStudio() {
       const newPrompt = promptParts.filter(Boolean).join('. ')
       setPrompt(newPrompt)
     }
-  }, [selectedModules, promptMode, modularOptions])
+  }, [selectedModules, promptMode, modularOptions, hasUserEditedPrompt])
 
   // 处理从ASMR类型页面返回的参数
   useEffect(() => {
@@ -412,6 +414,8 @@ export default function ASMRVideoStudio() {
       ...prev,
       [category]: value,
     }))
+    // 当用户更改模块时，表示新的自动拼接即将生成，重置手动编辑标记
+    setHasUserEditedPrompt(false)
   }
 
   // 处理下载按钮
@@ -710,22 +714,22 @@ export default function ASMRVideoStudio() {
                       promptMode === 'quick'
                         ? 'border-cyan-400 text-white'
                         : 'border-transparent text-slate-400 hover:text-white'
-                    }`}
+                      }`}
                   >
                     Quick Mode
                   </button>
-                  <button
+                      <button
                     onClick={() => setPromptMode('modular')}
                     className={`px-6 py-3 text-sm font-medium transition-colors duration-200 ease-in-out -mb-px border-b-2 ${
                       promptMode === 'modular'
                         ? 'border-cyan-400 text-white'
                         : 'border-transparent text-slate-400 hover:text-white'
-                    }`}
-                  >
+                          }`}
+                      >
                     Modular Mode
-                  </button>
+                      </button>
                 </div>
-                
+                  
                 {/* Conditional Content */}
                 <div>
                   {promptMode === 'quick' ? (
@@ -751,7 +755,12 @@ export default function ASMRVideoStudio() {
                 <textarea
                   ref={textareaRef}
                   value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
+                  onChange={(e) => {
+                    setPrompt(e.target.value)
+                    if (promptMode === 'modular') {
+                      setHasUserEditedPrompt(true)
+                    }
+                  }}
                   placeholder={selectedASMRType === 'default' 
                     ? "Create your ai video prompt: describe lighting, camera angles, sounds, textures, and visual elements. Write a detailed veo3 video prompt for best results..."
                     : "Edit this ai video prompt template or use it as-is..."
@@ -868,18 +877,18 @@ export default function ASMRVideoStudio() {
             <div ref={rightPanelRef} className="flex flex-col space-y-6">
               {/* ASMR Video Result - 固定较小高度 */}
               <div className="flex-shrink-0">
-                <ASMRVideoResult 
-                  isGenerating={isGenerating}
-                  progress={generationStatus.progress}
-                  videoUrl={generationStatus.videoUrl}
-                  videoUrl1080p={generationStatus.videoUrl1080p}
-                  thumbnailUrl={generationStatus.thumbnailUrl}
-                  videoId={generationStatus.videoId}
-                  details={generationStatus.details}
-                  onDownload={handleDownload}
-                  onDownload1080p={handleDownload1080p}
-                  onOpenAssets={handleOpenAssets}
-                />
+              <ASMRVideoResult 
+                isGenerating={isGenerating}
+                progress={generationStatus.progress}
+                videoUrl={generationStatus.videoUrl}
+                videoUrl1080p={generationStatus.videoUrl1080p}
+                thumbnailUrl={generationStatus.thumbnailUrl}
+                videoId={generationStatus.videoId}
+                details={generationStatus.details}
+                onDownload={handleDownload}
+                onDownload1080p={handleDownload1080p}
+                onOpenAssets={handleOpenAssets}
+              />
               </div>
               
               {/* Featured Video Card - 占据剩余空间 */}
@@ -923,9 +932,9 @@ export default function ASMRVideoStudio() {
                 Success Stories
               </div>
               <div className="flex justify-center items-center gap-2">
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
-                </h2>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
+              </h2>
                 <Link href="/make-money-with-ai-asmr" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 -mt-3">
                   <HelpCircle className="w-6 h-6" />
                 </Link>
@@ -1006,9 +1015,9 @@ export default function ASMRVideoStudio() {
                 AI vs Traditional
               </div>
               <div className="flex justify-center items-center gap-2">
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">ASMR Content Creation</span>
-                </h2>
+              <h2 className="text-4xl font-bold text-white mb-4">
+                Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">ASMR Content Creation</span>
+              </h2>
                 <Link href="/ai-vs-traditional-asmr" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 -mt-3">
                   <HelpCircle className="w-6 h-6" />
                 </Link>
