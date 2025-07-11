@@ -36,6 +36,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'monthly',
         priority: 0.5,
     },
+    {
+        url: `${baseUrl}/perplexity-for-creators`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    },
+    {
+        url: `${baseUrl}/earn-money-with-perplexity-ai`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    },
+    {
+        url: `${baseUrl}/make-money-with-ai-asmr`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    },
+    {
+        url: `${baseUrl}/ai-vs-traditional-asmr`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    },
   ];
 
   // 2. 动态添加所有视频子页
