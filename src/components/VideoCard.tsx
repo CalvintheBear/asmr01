@@ -83,8 +83,8 @@ export default function VideoCard({ video }: VideoCardProps) {
     setThumbnailLoaded(true);
   };
 
-  // 简化缩略图逻辑：优先使用video，出错时fallback到原来的方式
-  const shouldShowVideo = isMounted && isInView && !thumbnailError;
+  // 简化缩略图逻辑：优先使用thumbnail图片，图片出错时再回退到video第一帧
+  const shouldShowVideo = isMounted && isInView && (thumbnailError || !video.thumbnailUrl);
 
   const handleCardClick = () => {
     window.open(`/video-showcase/${video.id}`, '_blank')
@@ -100,6 +100,19 @@ export default function VideoCard({ video }: VideoCardProps) {
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0 bg-stone-700">
+        {/* 尝试先加载静态封面图 */}
+        {!thumbnailError && video.thumbnailUrl && (
+          <img
+            src={video.thumbnailUrl}
+            alt={video.title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={{ display: thumbnailLoaded ? 'block' : 'none' }}
+          />
+        )}
+
+        {/* 如果图片出错或缺失，再回退到视频第一帧 */}
         {shouldShowVideo && (
           <video
             src={video.videoUrl}
@@ -112,9 +125,7 @@ export default function VideoCard({ video }: VideoCardProps) {
             onLoadedMetadata={handleVideoLoadedMetadata}
             onSeeked={handleVideoSeeked}
             onError={handleVideoError}
-            style={{ 
-              display: thumbnailLoaded ? 'block' : 'none'
-            }}
+            style={{ display: thumbnailLoaded ? 'block' : 'none' }}
           />
         )}
         
