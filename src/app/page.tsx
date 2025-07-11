@@ -4,14 +4,15 @@
 export const runtime = 'edge'
 export const dynamic = 'force-dynamic'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check, X, MessageCircle } from 'lucide-react'
+import { Play, Sparkles, Video, Download, Settings, Zap, Heart, Star, Clock, Users, Volume2, Headphones, Check, X, MessageCircle, HelpCircle } from 'lucide-react'
 import { asmrCategories, defaultOption } from '@/config/asmr-types'
 import Link from 'next/link'
 import ASMRVideoResult from '@/components/ASMRVideoResult'
 import VideoShowcase from '@/components/VideoShowcase'
+import VideoCard from '@/components/VideoCard'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
 import SEOHead from '@/components/SEOHead'
 import FAQAccordion from '@/components/FAQAccordion'
@@ -22,6 +23,8 @@ import { useVideoGeneration } from '@/hooks/useVideoGeneration'
 import { useCredits } from '@/hooks/useCredits'
 import { CREDITS_CONFIG } from '@/lib/credits-config'
 import StructuredData from '@/components/StructuredData'
+import { showcaseVideos } from '@/data/showcase-videos'
+import { QuickMode, ModularMode } from '@/components/PromptModes'
 
 export default function ASMRVideoStudio() {
   const { user, isLoaded } = useUser()
@@ -33,6 +36,127 @@ export default function ASMRVideoStudio() {
   const [userSynced, setUserSynced] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [promptMode, setPromptMode] = useState('quick') // 'quick' 或 'modular'
+  
+  // Modular Mode State - v2 with detailed prompts
+  const modularOptions: Record<string, Array<{ label: string; prompt: string }>> = {
+    'Scene': [
+      { label: 'Cozy Room', prompt: 'A cozy and inviting room, soft ambient lighting' },
+      { label: 'Minimalist Workspace', prompt: 'A clean, minimalist workspace with neutral tones' },
+      { label: 'Softbox Studio', prompt: 'A professional softbox studio setting, neutral background, perfect lighting' },
+      { label: 'Zen Garden Table', prompt: 'A serene Zen garden tabletop with raked sand' },
+      { label: 'Rustic Kitchen', prompt: 'A rustic kitchen with wooden countertops and warm tones' },
+      { label: 'Candlelit Nook', prompt: 'A cozy nook illuminated by the warm, flickering glow of candles' },
+      { label: 'Frosty Window Sill', prompt: 'A frosty window sill on a cold winter day, soft natural light' },
+      { label: 'Artisan Workshop', prompt: 'An artisan workshop, tools and materials neatly organized' },
+      { label: 'Forest Clearing Table', prompt: 'A wooden table in a sun-dappled forest clearing' },
+      { label: 'Seaside Workbench', prompt: 'A weathered workbench overlooking the sea, salty air atmosphere' },
+      { label: 'Vintage Attic', prompt: 'A dusty, vintage attic filled with forgotten treasures, shafts of light' },
+      { label: 'Marble Sculptor\'s Den', prompt: 'A marble sculptor\'s den, white dust covering surfaces' },
+    ],
+    'Subject': [
+      { label: 'Soap Bar', prompt: 'a glistening bar of soap' },
+      { label: 'Kinetic Sand', prompt: 'a mound of colorful kinetic sand' },
+      { label: 'Green Apple', prompt: 'a crisp, green apple with water droplets' },
+      { label: 'Hard Cheese', prompt: 'a block of aged hard cheese' },
+      { label: 'Soft Sponge', prompt: 'a soft, porous sponge' },
+      { label: 'Glass Orb', prompt: 'a clear glass orb reflecting light' },
+      { label: 'Wax Block', prompt: 'a solid block of wax' },
+      { label: 'Paper & Fabric', prompt: 'sheets of paper and soft fabric' },
+      { label: 'Wood Block', prompt: 'a smooth, polished block of wood' },
+      { label: 'Nut Shell', prompt: 'a cracked nut shell' },
+      { label: 'Honey Sponge', prompt: 'a sponge dripping with golden honey' },
+      { label: 'Layered Paper', prompt: 'a stack of layered, colored paper' },
+      { label: 'Frozen Strawberries', prompt: 'bright red frozen strawberries with ice crystals' },
+      { label: 'Rubber Eraser', prompt: 'a soft rubber eraser' },
+      { label: 'Jelly Cube', prompt: 'a wobbly, translucent jelly cube' },
+      { label: 'Metallic Slime', prompt: 'a pool of shimmering metallic slime' },
+      { label: 'Cucumber Soap', prompt: 'a bar of soap with cucumber slices embedded' },
+      { label: 'Artificial Snow', prompt: 'a pile of fluffy, artificial snow' },
+      { label: 'Wax Clay', prompt: 'a malleable piece of wax clay' },
+      { label: 'Ice Block', prompt: 'a clear, solid block of ice' },
+      { label: 'Marshmallow Foam', prompt: 'a cloud of soft marshmallow foam' },
+      { label: 'Memory Foam', prompt: 'a block of memory foam' },
+      { label: 'Sand Balloon', prompt: 'a balloon filled with fine sand' },
+      { label: 'Gel Wax', prompt: 'a clear, viscous gel wax' },
+      { label: 'Chalky Pastel', prompt: 'a stick of soft, chalky pastel' },
+      { label: 'Felt or Leather', prompt: 'a piece of soft felt or supple leather' },
+      { label: 'Wax Ring', prompt: 'a ring carved from wax' },
+      { label: 'LED Gel', prompt: 'a glowing LED-infused gel' },
+      { label: 'Gummy Stack', prompt: 'a colorful stack of gummy candies' },
+      { label: 'Silicone Sponge', prompt: 'a flexible silicone sponge' },
+      { label: 'Plastic Wrap', prompt: 'a sheet of crinkling plastic wrap' },
+      { label: 'Chalk', prompt: 'a piece of white chalk' },
+      { label: 'Colored Soap', prompt: 'a bar of brightly colored soap' },
+      { label: 'Cucumber', prompt: 'a fresh, green cucumber' },
+      { label: 'Walnut Shell', prompt: 'a hard walnut shell' },
+    ],
+    'Action & Trigger Audio': [
+      { label: 'Macro Slicing', prompt: 'being sliced with a sharp knife. Audio: crisp, satisfying slicing sounds' },
+      { label: 'Slow Cutting', prompt: 'being slowly and deliberately cut. Audio: a deep, methodical cutting sound' },
+      { label: 'Precision Slicing', prompt: 'being sliced with extreme precision. Audio: sharp, clean cutting noises' },
+      { label: 'Spiral Carving', prompt: 'being carved into a spiral. Audio: rhythmic scraping and carving sounds' },
+      { label: 'Shearing', prompt: 'being sheared with sharp scissors. Audio: a clean shearing sound' },
+      { label: 'Micro Sawing', prompt: 'being sawn with a micro-saw. Audio: a fine, buzzing sawing sound' },
+      { label: 'Cleaving', prompt: 'being cleaved in half with a heavy blade. Audio: a solid, resonant thud' },
+      { label: 'Hot Knife Cutting', prompt: 'being cut by a sizzling hot knife. Audio: a hissing and melting sound' },
+      { label: 'Chilled Knife Slicing', prompt: 'being sliced by an ice-cold knife. Audio: a frosty, brittle slicing sound' },
+      { label: 'Tearing', prompt: 'being slowly torn apart. Audio: a stressed tearing and ripping sound' },
+      { label: 'Peeling', prompt: 'being peeled in a continuous strip. Audio: a soft, satisfying peeling sound' },
+      { label: 'Dicing', prompt: 'being diced into small cubes. Audio: rapid, rhythmic dicing sounds' },
+      { label: 'Shaving', prompt: 'being shaved into thin curls. Audio: a delicate shaving sound' },
+      { label: 'Breaking', prompt: 'being cleanly broken or snapped. Audio: a sharp, crisp breaking sound' },
+    ],
+    'Background Audio': [
+        { label: 'Crisp Crunch', prompt: 'Audio: Crisp crunching' },
+        { label: 'Squish Pop', prompt: 'Audio: Squish and pop sounds' },
+        { label: 'Brittle Snap', prompt: 'Audio: Brittle snapping noises' },
+        { label: 'Granular Fall', prompt: 'Audio: The sound of falling grains' },
+        { label: 'Icy Crackle', prompt: 'Audio: Icy crackling' },
+        { label: 'Sticky Ooze', prompt: 'Audio: Sticky, oozing sounds' },
+        { label: 'Paper Flap', prompt: 'Audio: Flapping paper' },
+        { label: 'Squeaky Peel', prompt: 'Audio: A squeaky peeling sound' },
+        { label: 'Metallic Resonance', prompt: 'Audio: A metallic resonance' },
+        { label: 'Static Crunch', prompt: 'Audio: A static crunch' },
+        { label: 'Soft Scrape', prompt: 'Audio: Soft scraping' },
+        { label: 'Sizzling Hiss', prompt: 'Audio: Sizzling and hissing' },
+        { label: 'Air Release', prompt: 'Audio: A slow release of air' },
+        { label: 'Dusty Crumble', prompt: 'Audio: Dusty crumbling sounds' },
+        { label: 'Textured Grit', prompt: 'Audio: The sound of textured grit' },
+        { label: 'Crystal Chime', prompt: 'Audio: A soft crystal chime' },
+        { label: 'Crinkling Rustle', prompt: 'Audio: Crinkling and rustling' },
+        { label: 'Water Splatter', prompt: 'Audio: Gentle water splatters' },
+    ],
+    'Visual Style': [
+        { label: 'Warm & Soft', prompt: 'Warm and soft lighting, creating a gentle and inviting mood' },
+        { label: 'Cool & Crisp', prompt: 'Cool, crisp lighting, emphasizing details and textures' },
+        { label: 'Macro Detail', prompt: 'Extreme close-up, macro photography style, revealing intricate details' },
+        { label: 'Softbox Clarity', prompt: 'Shot in a professional softbox studio, clean and clear visuals' },
+        { label: 'Glowing Ambient', prompt: 'A glowing, ambient light that creates a magical atmosphere' },
+    ],
+    'Camera Movement': [
+        { label: 'Close-up', prompt: 'A tight close-up shot' },
+        { label: 'Macro Shot', prompt: 'An extreme macro shot, focusing on minute details' },
+        { label: 'Slow Motion', prompt: 'filmed in stunning slow motion' },
+        { label: 'Steady Pan', prompt: 'A smooth, steady pan across the subject' },
+    ],
+    'Additional Settings': [
+        { label: 'No Dialogue', prompt: 'no dialogue, ASMR audio focus' },
+        { label: 'High Fidelity Audio', prompt: 'ultra high-fidelity binaural audio' },
+        { label: 'Slow Motion Effect', prompt: 'with a subtle slow-motion effect' },
+        { label: 'Binaural Audio', prompt: 'enhanced with binaural audio for a 3D sound experience' },
+    ],
+  }
+
+  const [selectedModules, setSelectedModules] = useState(
+    Object.keys(modularOptions).reduce((acc, key) => ({ ...acc, [key]: '' }), {})
+  )
+
+  // 高度对齐相关状态和引用
+  const leftPanelRef = useRef<HTMLDivElement>(null)
+  const rightPanelRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [textareaHeight, setTextareaHeight] = useState(128) // 默认 h-32 = 128px
   
   // 使用积分钩子
   const { credits, loading: creditsLoading, refetch: refetchCredits, forceRefresh: forceRefreshCredits } = useCredits(!!user && userSynced)
@@ -135,6 +259,19 @@ export default function ASMRVideoStudio() {
     syncUser()
   }, [isLoaded, user, userSynced, refetchCredits])
 
+  // 当模块化选项变化时，更新总提示词
+  useEffect(() => {
+    if (promptMode === 'modular') {
+      const promptParts = Object.entries(selectedModules).map(([category, selectedLabel]) => {
+        if (!selectedLabel) return null
+        const option = (modularOptions[category] as Array<{ label: string; prompt: string }>).find(opt => opt.label === selectedLabel)
+        return option ? option.prompt : null
+      })
+      const newPrompt = promptParts.filter(Boolean).join('. ')
+      setPrompt(newPrompt)
+    }
+  }, [selectedModules, promptMode, modularOptions])
+
   // 处理从ASMR类型页面返回的参数
   useEffect(() => {
     const typeId = searchParams.get('type')
@@ -175,12 +312,50 @@ export default function ASMRVideoStudio() {
       }
     }
   }
-
-  // 移除错误的免费试用逻辑，完全基于积分系统
-  // const [freeTrialsLeft, setFreeTrialsLeft] = useState(2)
-  // const [isSubscribed, setIsSubscribed] = useState(false)
   
   const { generationStatus, generateVideo, getVideoDetails, get1080PVideo, resetGeneration, isGenerating } = useVideoGeneration()
+
+  // 动态高度调整逻辑 - 在视频生成钩子之后
+  useEffect(() => {
+    const adjustHeight = () => {
+      if (leftPanelRef.current && rightPanelRef.current && textareaRef.current) {
+        const leftPanelHeight = leftPanelRef.current.offsetHeight
+        const rightPanelHeight = rightPanelRef.current.offsetHeight
+        
+        // 如果右侧面板比左侧矮，则增加textarea高度来匹配
+        if (rightPanelHeight > leftPanelHeight) {
+          const heightDifference = rightPanelHeight - leftPanelHeight
+          const newTextareaHeight = Math.max(128, 128 + heightDifference - 40) // 减去40px的缓冲
+          setTextareaHeight(newTextareaHeight)
+        } else {
+          // 如果左侧已经够高或更高，保持默认高度
+          setTextareaHeight(128)
+        }
+      }
+    }
+
+    // 延迟执行以确保DOM完全渲染
+    const timer = setTimeout(adjustHeight, 100)
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', adjustHeight)
+    
+    // 监听DOM变化（如视频生成状态变化）
+    const observer = new MutationObserver(adjustHeight)
+    if (rightPanelRef.current) {
+      observer.observe(rightPanelRef.current, { 
+        childList: true, 
+        subtree: true, 
+        attributes: true 
+      })
+    }
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', adjustHeight)
+      observer.disconnect()
+    }
+  }, [generationStatus, isGenerating]) // 依赖状态变化时重新调整
 
   const handleGenerate = async () => {
     // 全面的安全检查
@@ -228,6 +403,14 @@ export default function ASMRVideoStudio() {
       console.error('生成视频失败:', error)
       alert('Video generation failed, please try again')
     }
+  }
+
+  // 模块化选择处理器
+  const handleModuleChange = (category: string, value: string) => {
+    setSelectedModules(prev => ({
+      ...prev,
+      [category]: value,
+    }))
   }
 
   // 处理下载按钮
@@ -280,7 +463,7 @@ export default function ASMRVideoStudio() {
         title="CuttingASMR - Veo3 Video & Prompt Generator |Al Video Prompt Tool for Creators"
         description="Create stunning AI videos with veo3 video prompt templates! Professional ai video prompt generator using Google Veo3 AI. Perfect for ASMR creators, YouTube Shorts, and TikTok content makers."
         canonical="https://cuttingasmr.org"
-        keywords="veo3 video prompt, ai video prompt, google veo3 prompts, ai video generator, asmr video prompts, veo3 ai generator, ai video prompt maker, video prompt templates, ai content creator tools, best ai video generator, YouTube shorts, tiktok shorts, veo3 examples"
+        keywords="ai prompt template, ai video prompt, google veo3 prompts, ai video generator, ai asmr prompts, ai prompt,text to video, create ai asmr videos,create ai yeti vlog videos,how to create ai asmr videos ,create asmr by voe3, ai sound, create bread spread videos"
       />
       
       {/* 添加结构化数据 */}
@@ -502,90 +685,68 @@ export default function ASMRVideoStudio() {
           </div>
 
           {/* Main Content - Two Column Layout */}
-          <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-stretch mb-20">
+          <div id="main-generator" className="grid lg:grid-cols-2 gap-8 items-start mb-20">
             {/* Left Panel - ASMR Controls */}
-            <div className="bg-gradient-to-br from-stone-800 to-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-700 overflow-hidden">
+            <div ref={leftPanelRef} className="bg-gradient-to-br from-stone-800 to-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-stone-700 overflow-hidden">
               
               {/* ASMR Type Selection */}
               <div className="p-8 border-b border-stone-700/50">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-2xl font-semibold text-white">Choose Video Prompt</h2>
-                  <Link 
-                    href="/video-showcase"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {/* Mode Tabs */}
+                <div className="flex border-b border-stone-600 mb-6">
+                  <button
+                    onClick={() => setPromptMode('quick')}
+                    className={`px-6 py-3 text-sm font-medium transition-colors duration-200 ease-in-out -mb-px border-b-2 ${
+                      promptMode === 'quick'
+                        ? 'border-cyan-400 text-white'
+                        : 'border-transparent text-slate-400 hover:text-white'
+                    }`}
                   >
-                    <Video className="w-4 h-4" />
-                    Video & Prompt Examples
-                  </Link>
+                    Quick Mode
+                  </button>
+                  <button
+                    onClick={() => setPromptMode('modular')}
+                    className={`px-6 py-3 text-sm font-medium transition-colors duration-200 ease-in-out -mb-px border-b-2 ${
+                      promptMode === 'modular'
+                        ? 'border-cyan-400 text-white'
+                        : 'border-transparent text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Modular Mode
+                  </button>
                 </div>
-                <p className="text-slate-300 mb-6 leading-relaxed">Select a proven ai video prompt template or create your own custom veo3 video prompt</p>
                 
-                {/* Quick Selection - Grid Layout */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                  {/* Default Custom Option */}
-                  <button
-                    onClick={() => handleASMRTypeChange('default')}
-                    className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center
-                      focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2
-                      ${selectedASMRType === 'default'
-                        ? 'border-cyan-500 bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                        : 'border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300'
-                      }`}
-                  >
-                    Default
-                  </button>
-
-                  {/* Featured ASMR Types */}
-                  {['glass-fruit-cutting', 'ice-cube-carving', 'metal-sheet-cutting', 'fireplace', 'squeeze-toy', 'minecraft-block-cutting'].map((typeId) => {
-                    const type = allAsmrTypes.find(t => t.id === typeId)
-                    if (!type) return null
-                    return (
-                      <button
-                        key={type.id}
-                        onClick={() => handleASMRTypeChange(type.id)}
-                        className={`p-2 sm:p-3 rounded-xl border transition-all text-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem] flex items-center justify-center
-                          focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2
-                          ${selectedASMRType === type.id
-                            ? 'border-cyan-500 bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                            : 'border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300'
-                          }`}
-                      >
-                        <span className="block leading-tight">{type.name}</span>
-                      </button>
-                    )
-                  })}
-                  
-                  {/* View All Button */}
-                  <button
-                    onClick={() => setShowAllTypesModal(true)}
-                    className="p-2 sm:p-3 rounded-xl border border-stone-600 hover:border-stone-500 bg-stone-700/50 hover:bg-stone-600/50 text-slate-300 transition-all text-center flex items-center justify-center font-medium text-xs sm:text-sm min-h-[3rem] sm:min-h-[3.5rem]
-                               focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2"
-                  >
-                    <span className="mr-1">⋯</span> All
-                  </button>
+                {/* Conditional Content */}
+                <div>
+                  {promptMode === 'quick' ? (
+                    <QuickMode 
+                      selectedASMRType={selectedASMRType}
+                      handleASMRTypeChange={handleASMRTypeChange}
+                      setShowAllTypesModal={setShowAllTypesModal}
+                    />
+                  ) : (
+                    <ModularMode 
+                      options={modularOptions}
+                      selectedValues={selectedModules}
+                      onChange={handleModuleChange}
+                    />
+                  )}
                 </div>
               </div>
 
               {/* Prompt Input Section */}
-              <div className="p-8 border-b border-stone-700/50">
+              <div className="p-8 border-b border-stone-700/50 flex flex-col flex-grow">
                 <h3 className="text-xl font-semibold text-white mb-3">Customize Your Video Prompt</h3>
-                <p className="text-slate-300 mb-6 leading-relaxed">
-                  {selectedASMRType === 'default' 
-                    ? 'Create your own veo3 video prompt or ai video prompt for custom scenes'
-                    : 'Edit this proven ai video prompt template or use it as-is'
-                  }
-                </p>
                 
                 <textarea
+                  ref={textareaRef}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder={selectedASMRType === 'default' 
                     ? "Create your ai video prompt: describe lighting, camera angles, sounds, textures, and visual elements. Write a detailed veo3 video prompt for best results..."
                     : "Edit this ai video prompt template or use it as-is..."
                   }
-                  className="w-full h-32 p-4 border border-stone-600 rounded-xl resize-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent bg-stone-700/50 focus:bg-stone-600/70 text-white placeholder-slate-400 transition-colors"
+                  style={{ height: `${textareaHeight}px` }}
+                  className="w-full p-4 border border-stone-600 rounded-xl resize-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent bg-stone-700/50 focus:bg-stone-600/70 text-white placeholder-slate-400 transition-all duration-300"
                 />
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-sm text-slate-400">
@@ -692,20 +853,44 @@ export default function ASMRVideoStudio() {
               </div>
             </div>
 
-            {/* Right Panel - Video Result */}
-            <div className="lg:sticky lg:top-8">
-              <ASMRVideoResult 
-                isGenerating={isGenerating}
-                progress={generationStatus.progress}
-                videoUrl={generationStatus.videoUrl}
-                videoUrl1080p={generationStatus.videoUrl1080p}
-                thumbnailUrl={generationStatus.thumbnailUrl}
-                videoId={generationStatus.videoId}
-                details={generationStatus.details}
-                onDownload={handleDownload}
-                onDownload1080p={handleDownload1080p}
-                onOpenAssets={handleOpenAssets}
-              />
+            {/* Right Panel - Video Result and Video Card */}
+            <div ref={rightPanelRef} className="flex flex-col space-y-6">
+              {/* ASMR Video Result - 固定较小高度 */}
+              <div className="flex-shrink-0">
+                <ASMRVideoResult 
+                  isGenerating={isGenerating}
+                  progress={generationStatus.progress}
+                  videoUrl={generationStatus.videoUrl}
+                  videoUrl1080p={generationStatus.videoUrl1080p}
+                  thumbnailUrl={generationStatus.thumbnailUrl}
+                  videoId={generationStatus.videoId}
+                  details={generationStatus.details}
+                  onDownload={handleDownload}
+                  onDownload1080p={handleDownload1080p}
+                  onOpenAssets={handleOpenAssets}
+                />
+              </div>
+              
+              {/* Featured Video Card - 占据剩余空间 */}
+              <div className="flex-grow">
+                <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-xl border border-stone-700 p-6 h-full">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-lg font-semibold text-white">Featured Example</h3>
+                    <Link 
+                      href="/video-showcase"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Video className="w-4 h-4" />
+                      Video & Prompt Examples
+                    </Link>
+                  </div>
+                  <VideoCard 
+                    video={showcaseVideos.find(v => v.id === 'glass-fruit-cutting-1')!}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -726,9 +911,14 @@ export default function ASMRVideoStudio() {
                 <Star className="w-4 h-4" />
                 Success Stories
               </div>
-              <h2 className="text-4xl font-bold text-white mb-4">
-                ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
-              </h2>
+              <div className="flex justify-center items-center gap-2">
+                <h2 className="text-4xl font-bold text-white mb-4">
+                  ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
+                </h2>
+                <Link href="/make-money-with-ai-asmr" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 -mt-3">
+                  <HelpCircle className="w-6 h-6" />
+                </Link>
+              </div>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
@@ -804,9 +994,15 @@ export default function ASMRVideoStudio() {
                 <Zap className="w-4 h-4" />
                 AI vs Traditional
               </div>
-              <h2 className="text-4xl font-bold text-white mb-4">
-                Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">ASMR Content Creation</span>
-              </h2>
+              <div className="flex justify-center items-center gap-2">
+                <h2 className="text-4xl font-bold text-white mb-4">
+                  Why AI is the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">ASMR Content Creation</span>
+                </h2>
+                <Link href="/ai-vs-traditional-asmr" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 -mt-3">
+                  <HelpCircle className="w-6 h-6" />
+                </Link>
+              </div>
+
               <p className="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed">
                 See how Google Veo3 AI revolutionizes ASMR content creation compared to traditional methods
               </p>

@@ -3,16 +3,10 @@ import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - CuttingASMR.org | AI ASMR Video Generator',
-  description: 'Read our terms of service to understand the rules and guidelines for using CuttingASMR.org AI ASMR video generation platform.',
-  keywords: 'terms of service, user agreement, service conditions, ASMR terms, AI video terms',
-  openGraph: {
-    title: 'Terms of Service - CuttingASMR.org',
-    description: 'Terms of service for our AI ASMR video generation platform.',
-    url: 'https://cuttingasmr.org/terms',
-    type: 'website',
-  },
-}
+  title: 'Terms of Service | CuttingASMR',
+  description: 'Please read our Terms of Service carefully before using our AI ASMR video generator. This agreement governs your use of our platform.',
+  keywords: ['terms of service', 'user agreement', 'terms and conditions', 'legal', 'rules', 'usage policy']
+};
 
 export default function TermsPage() {
   return (

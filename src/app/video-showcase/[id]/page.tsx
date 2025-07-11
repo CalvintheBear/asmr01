@@ -1,53 +1,55 @@
 import { showcaseVideos } from '@/data/showcase-videos'
 import { notFound } from 'next/navigation'
 import VideoDetailPage from '@/components/VideoDetailPage'
+import Link from 'next/link'
+import { ArrowLeft, Tag, FileText } from 'lucide-react'
 import type { Metadata } from 'next'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 // 动态生成元数据
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const video = showcaseVideos.find((v) => v.id === params.id)
+  const { id: videoId } = await params;
+  const video = showcaseVideos.find((v) => v.id === videoId)
+
   if (!video) {
     return {
       title: 'Video Not Found',
-      description: 'The requested video could not be found.',
     }
   }
 
-  const seoTitle = `${video.title} - AI Video Prompt`
-  const seoDescription = video.seoDescription || `Explore the prompt for "${video.title}". Use this powerful ai video prompt with our Veo3-powered AI ASMR video generator to create your own unique asmr content.`
-  const canonicalUrl = `https://cuttingasmr.org/video-showcase/${video.id}`
+  const defaultTitle = `${video.title} - AI ASMR Showcase`
+  const defaultDescription = `Watch the AI-generated ASMR video "${video.title}". View the prompt used, and discover more content like ${video.asmrType}.`
+  
+  const keywords = [
+    video.asmrType,
+    'ai asmr',
+    'veo3 asmr',
+    `${video.asmrType.toLowerCase()} prompt`,
+    'ai video prompt',
+    'veo3 prompt',
+    'text to video',
+    ...(video.tags || []),
+  ]
 
   return {
-    title: seoTitle,
-    description: seoDescription,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: seoTitle,
-      description: seoDescription,
-      url: canonicalUrl,
-      type: 'video.other',
-      images: [
-        {
-          url: video.thumbnailUrl,
-          width: 1280,
-          height: 720,
-          alt: video.title,
-        },
-      ],
-    },
+    title: video.seoTitle || defaultTitle,
+    description: video.seoDescription || defaultDescription,
+    keywords: keywords,
   }
 }
 
-export default function Page({ params }: PageProps) {
-  const video = showcaseVideos.find((v) => v.id === params.id)
-  if (!video) return notFound()
+export default async function VideoShowcaseDetailPage({ params }: PageProps) {
+  const { id: videoId } = await params;
+  const video = showcaseVideos.find((v) => v.id === videoId)
+
+  if (!video) {
+    return notFound()
+  }
+
   return <VideoDetailPage video={video} />
 } 

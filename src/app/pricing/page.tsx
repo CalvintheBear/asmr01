@@ -10,6 +10,8 @@ import CreemPaymentButton from '@/components/CreemPaymentButton'
 import SEOHead from '@/components/SEOHead'
 import StructuredData from '@/components/StructuredData'
 
+
+
 export default function PricingPage() {
   const plans = [
     {

@@ -3,20 +3,15 @@ import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Refund Policy - CuttingASMR.org | AI ASMR Video Generator',
-  description: 'Read our refund policy to understand the terms and conditions for requesting refunds on CuttingASMR.org AI ASMR video generation service.',
-  keywords: 'refund policy, money back guarantee, refund terms, ASMR refund, AI video refund',
-  openGraph: {
-    title: 'Refund Policy - CuttingASMR.org',
-    description: 'Comprehensive refund policy for our AI ASMR video generation platform.',
-    url: 'https://cuttingasmr.org/refund',
-    type: 'website',
-  },
-}
+  title: 'Refund Policy | CuttingASMR',
+  description: 'Understand our refund policy for credit packages. Learn about the conditions under which a refund may be issued for our AI video generation services.',
+  keywords: ['refund policy', 'money back', 'cancellation policy', 'credit refund', 'satisfaction guarantee']
+};
 
-export default function RefundPolicy() {
+
+export default function RefundPolicyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className="bg-slate-900 text-white min-h-screen">
       {/* Header */}
       <header className="bg-slate-800/90 backdrop-blur-sm shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">

@@ -1,7 +1,15 @@
 import Link from 'next/link'
-import { ArrowLeft, Mail, MessageCircle, Clock, Shield } from 'lucide-react'
+import { ArrowLeft, Mail, Clock, Shield } from 'lucide-react'
 import SEOHead from '@/components/SEOHead'
 import StructuredData from '@/components/StructuredData'
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Help Center & FAQ | CuttingASMR',
+  description: 'Find answers to frequently asked questions about our AI ASMR video generator, credits, Veo3 technology, and more.',
+  keywords: ['help center', 'faq', 'support', 'contact us', 'how to use', 'questions', 'asmr generator help']
+};
+
 
 export default function HelpPage() {
   // 帮助页面FAQ数据

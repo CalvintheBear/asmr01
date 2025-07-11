@@ -1,4 +1,5 @@
-import { Star } from 'lucide-react'
+import { Star, HelpCircle } from 'lucide-react';
+import Link from 'next/link';
 
 export default function SuccessStoriesSection() {
   return (
@@ -8,9 +9,14 @@ export default function SuccessStoriesSection() {
           <Star className="w-4 h-4" />
           Success Stories
         </div>
-        <h2 className="text-4xl font-bold text-white mb-4">
-          ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
-        </h2>
+        <div className="flex justify-center items-center gap-2">
+          <h2 className="text-4xl font-bold text-white mb-4">
+            ASMR Creators Earning <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">$50K+/Month</span>
+          </h2>
+          <Link href="/make-money-with-ai-asmr" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors duration-200 -mt-3">
+            <HelpCircle className="w-6 h-6" />
+          </Link>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8">

@@ -43,12 +43,12 @@ export default function ASMRVideoResult({
   const hasContent = isGenerating || videoUrl;
 
   return (
-    <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-2xl border border-stone-700 p-4 sm:p-6 lg:p-8 h-full flex flex-col">
+    <div className="bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-2xl border border-stone-700 p-4 sm:p-6 lg:p-8 flex flex-col">
       <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">ASMR Video Result</h2>
       
       {!hasContent ? (
         /* 默认状态 - 等待生成 */
-        <div className="space-y-4 sm:space-y-6 flex-1 flex flex-col">
+        <div className="space-y-4">
           <div className="aspect-video bg-stone-700/50 rounded-xl flex items-center justify-center relative overflow-hidden">
             {/* 背景装饰效果 */}
             <div className="absolute inset-0 bg-gradient-to-br from-stone-600/30 to-stone-700/20">
@@ -57,14 +57,13 @@ export default function ASMRVideoResult({
             
             <div className="relative z-10 text-center px-4">
               {/* 播放按钮 */}
-              <div className="w-12 sm:w-16 h-12 sm:h-16 bg-stone-600/40 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
-                <Play className="w-4 sm:w-6 h-4 sm:h-6 text-slate-300 ml-1" aria-hidden="true" />
+              <div className="w-12 h-12 bg-stone-600/40 rounded-full flex items-center justify-center mb-3 mx-auto">
+                <Play className="w-4 h-4 text-slate-300 ml-1" aria-hidden="true" />
               </div>
               
-              <h3 className="text-base sm:text-lg font-medium text-white mb-2">Ready to Generate</h3>
-              <p className="text-sm text-slate-300 mb-3 sm:mb-4">
-                Choose an ASMR type and enter a prompt to<br className="hidden sm:block" />
-                <span className="sm:hidden"> </span>generate your relaxing ASMR video content
+              <h3 className="text-base font-medium text-white mb-2">Ready to Generate</h3>
+              <p className="text-sm text-slate-300 mb-3">
+                Choose an ASMR type and enter a prompt to generate your relaxing ASMR video content
               </p>
               
               {/* 特性说明 */}
@@ -75,32 +74,17 @@ export default function ASMRVideoResult({
             </div>
           </div>
 
-          {/* 添加占位内容来匹配左侧面板高度 */}
-          <div className="bg-stone-700/30 rounded-xl p-3 sm:p-4 space-y-2 sm:space-y-3">
-            <h4 className="text-base sm:text-lg font-medium text-white">How it works:</h4>
-            <div className="space-y-2 text-sm text-slate-300">
-              <div className="flex items-center space-x-2">
-                <span className="w-5 h-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">1</span>
-                <span>Choose an ASMR type or use custom prompt</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-5 h-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">2</span>
-                <span>AI generates 8-second ASMR video with audio</span>
-              </div>
-            </div>
-          </div>
-
           {/* 快速操作按钮 */}
-          <div className="space-y-2 sm:space-y-3 mt-auto">
+          <div className="space-y-2">
             <button
               disabled
-              className="w-full py-2.5 sm:py-3 bg-stone-700/40 text-slate-400 rounded-xl font-medium cursor-not-allowed text-sm sm:text-base"
+              className="w-full py-2.5 bg-stone-700/40 text-slate-400 rounded-xl font-medium cursor-not-allowed text-sm"
             >
               Generate Video First
             </button>
             <button
               disabled
-              className="w-full py-2 text-slate-400 border border-stone-600 rounded-xl cursor-not-allowed text-sm sm:text-base"
+              className="w-full py-2 text-slate-400 border border-stone-600 rounded-xl cursor-not-allowed text-sm"
             >
               View History
             </button>

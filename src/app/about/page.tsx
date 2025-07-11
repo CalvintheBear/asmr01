@@ -1,6 +1,17 @@
 import Link from 'next/link'
 import { ArrowLeft, Sparkles, Users, Target, Star } from 'lucide-react'
 import SEOHead from '@/components/SEOHead'
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us | CuttingASMR - AI ASMR Video Generator with Veo3',
+  description: 'Learn about CuttingASMR.org, our mission to democratize ASMR content creation using Google\'s powerful Veo3 AI technology.',
+  keywords: [
+    'about us', 'our mission', 'veo3 asmr', 'veo3', 'google veo 3 ai', 
+    'ai video generator', 'asmr generator', 'what is ai asmr', 
+    'text to video', 'google ai studio', 'ai video maker'
+  ]
+};
 
 export default function AboutPage() {
   return (

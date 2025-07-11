@@ -3,20 +3,15 @@ import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - CuttingASMR.org | AI ASMR Video Generator',
-  description: 'Read our comprehensive privacy policy to understand how CuttingASMR.org collects, uses, and protects your personal data while using our AI ASMR video generation service.',
-  keywords: 'privacy policy, data protection, personal information, ASMR privacy, AI video privacy',
-  openGraph: {
-    title: 'Privacy Policy - CuttingASMR.org',
-    description: 'Comprehensive privacy policy for our AI ASMR video generation platform.',
-    url: 'https://cuttingasmr.org/privacy',
-    type: 'website',
-  },
-}
+  title: 'Privacy Policy | CuttingASMR',
+  description: 'Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your personal information when you use our services.',
+  keywords: ['privacy policy', 'data protection', 'user data', 'cookies policy', 'personal information', 'gdpr']
+};
 
-export default function PrivacyPolicy() {
+
+export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className="bg-slate-900 text-white min-h-screen">
       {/* Header */}
       <header className="bg-slate-800/90 backdrop-blur-sm shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
