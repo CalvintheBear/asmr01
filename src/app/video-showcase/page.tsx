@@ -58,7 +58,7 @@ export default function VideoShowcasePage() {
             
             <div className="h-6 w-px bg-slate-600 mx-4" />
             
-            <h1 className="text-xl font-bold text-white">Veo3 Video Prompt Templates</h1>
+            <span className="text-xl font-bold text-white">Veo3 Video Prompt Templates</span>
           </div>
         </div>
       </div>

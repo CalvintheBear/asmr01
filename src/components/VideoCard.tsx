@@ -137,9 +137,9 @@ export default function VideoCard({ video }: VideoCardProps) {
 
       {/* Video Info */}
       <div className="p-4 flex flex-col flex-grow">
-        <h3 className="font-semibold text-lg text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300 flex-grow">
+        <h2 className="font-semibold text-lg text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300 flex-grow">
           {video.title}
-        </h3>
+        </h2>
         
         {/* View Prompt Template Button - 固定在底部 */}
         <div className="mt-auto">
