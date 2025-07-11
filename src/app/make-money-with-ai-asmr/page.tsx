@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Star, ArrowLeft, Zap, DollarSign, Youtube, Twitch, UserPlus, Sparkles } from 'lucide-react';
 import type { Metadata } from 'next';
+import { showcaseVideos } from '@/data/showcase-videos';
+import VideoCard from '@/components/VideoCard';
 
 export const metadata: Metadata = {
   title: 'How to Make Money with AI ASMR Videos | CuttingASMR.org & Veo3',
@@ -41,6 +43,9 @@ const successStories = [
 ];
 
 export default function MakeMoneyPage() {
+  const glassFruitVideo = showcaseVideos.find(v => v.id === 'glass-fruit-cutting-1');
+  const breadSpreadVideo = showcaseVideos.find(v => v.id === 'bread-golden-sauce-1');
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -127,6 +132,31 @@ export default function MakeMoneyPage() {
                   </li>
                 ))}
               </ol>
+
+              {/* Video Showcase Section */}
+              <div className="my-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {glassFruitVideo && (
+                      <VideoCard 
+                          video={glassFruitVideo} 
+                          className="bg-slate-800/50 border border-slate-700" 
+                          buttonClassName="border-pink-400 text-pink-400 hover:bg-pink-400/10"
+                      />
+                  )}
+                  {breadSpreadVideo && (
+                      <VideoCard 
+                          video={breadSpreadVideo} 
+                          className="bg-slate-800/50 border border-slate-700" 
+                          buttonClassName="border-purple-400 text-purple-400 hover:bg-purple-400/10"
+                      />
+                  )}
+              </div>
+            </div>
+
+            <div className="my-8 text-center">
+                <Link href="/video-showcase" className="inline-flex items-center gap-2 justify-center px-6 py-3 border border-cyan-400 text-cyan-400 rounded-lg hover:bg-cyan-400/10 transition-colors font-semibold">
+                    <Youtube className="w-5 h-5" />
+                    More AI Prompts & Videos
+                </Link>
             </div>
 
             {/* Monetization Section */}

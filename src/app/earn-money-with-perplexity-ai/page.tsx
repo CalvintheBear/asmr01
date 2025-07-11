@@ -5,7 +5,7 @@ import VideoCard from '@/components/VideoCard';
 import { showcaseVideos } from '@/data/showcase-videos';
 
 export const metadata: Metadata = {
-    title: 'How to Earn Money Online with Perplexity AI & Video Generation',
+    title: 'AI Monetizing Guide: Earn Money Online with AI video & Perplexity',
     description: 'A step-by-step guide to using Perplexity AI for market research and creating profitable video content with our AI video generator. Start your online business today!',
     keywords: ['earn money online', 'perplexity ai', 'ai video generator', 'online business', 'passive income', 'content creation monetization', 'youtube automation', 'tiktok monetization'],
 };
@@ -97,6 +97,12 @@ const EarnMoneyWithPerplexityPage: NextPage = () => {
                             buttonClassName="border-green-400 text-green-400 hover:bg-green-400/10"
                         />
                          <p className="text-center mt-4 text-sm text-slate-400">You can generate dozens of variations of this video daily, each unique, in just minutes.</p>
+                        <div className="mt-8 text-center">
+                            <Link href="/video-showcase" className="inline-flex items-center gap-2 justify-center px-6 py-3 border border-green-400 text-green-400 rounded-lg hover:bg-green-400/10 transition-colors font-semibold">
+                                <Video className="w-5 h-5" />
+                                More AI Prompts & Videos
+                            </Link>
+                        </div>
                     </div>
                 </section>
                 

@@ -131,6 +131,12 @@ const PerplexityForCreatorsPage: NextPage = () => {
                             className="border-2 border-cyan-500/50 shadow-cyan-500/20"
                             buttonClassName="border-cyan-400 text-cyan-400 hover:bg-cyan-400/10"
                         />
+                        <div className="mt-8 text-center">
+                            <Link href="/video-showcase" className="inline-flex items-center gap-2 justify-center px-6 py-3 border border-cyan-400 text-cyan-400 rounded-lg hover:bg-cyan-400/10 transition-colors font-semibold">
+                                <Video className="w-5 h-5" />
+                                More AI Prompts & Videos
+                            </Link>
+                        </div>
                     </div>
                 </section>
 
