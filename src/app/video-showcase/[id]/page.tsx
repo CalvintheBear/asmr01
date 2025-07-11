@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  const seoTitle = video.seoTitle || `${video.asmrType} ASMR - AI Video Prompt`
+  const seoTitle = `${video.title} - AI Video Prompt`
   const seoDescription = video.seoDescription || `Explore the prompt for "${video.title}". Use this powerful ai video prompt with our Veo3-powered AI ASMR video generator to create your own unique asmr content.`
   const canonicalUrl = `https://cuttingasmr.org/video-showcase/${video.id}`
 
