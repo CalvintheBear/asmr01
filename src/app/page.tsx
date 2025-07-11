@@ -485,6 +485,9 @@ export default function ASMRVideoStudio() {
               <Link href="/pricing" className="px-4 py-2 text-slate-300 hover:text-cyan-400 transition-colors">
                 Pricing
               </Link>
+              <Link href="/make-money-with-ai" className="px-4 py-2 text-slate-300 hover:text-cyan-400 transition-colors">
+                Guide
+              </Link>
               <EnhancedFeedbackButton onClick={() => setShowFeedbackModal(true)} />
               
               {/* 积分显示 */}
@@ -582,6 +585,13 @@ export default function ASMRVideoStudio() {
                   onClick={() => setShowMobileMenu(false)}
                 >
                   Pricing
+                </Link>
+                <Link 
+                  href="/make-money-with-ai" 
+                  className="block px-3 py-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-700/50 rounded-md transition-colors"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  Guide
                 </Link>
                 <EnhancedFeedbackButton 
                   onClick={() => {

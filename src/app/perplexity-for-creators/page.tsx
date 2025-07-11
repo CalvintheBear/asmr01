@@ -6,11 +6,11 @@ import VideoCard from '@/components/VideoCard';
 import { showcaseVideos } from '@/data/showcase-videos';
 
 export const metadata: Metadata = {
-    title: 'Perplexity AI for Video Creators | Guide to AI Video Ideas',
-    description: 'Learn how to use Perplexity AI to generate unlimited viral video ideas for TikTok and YouTube. Turn AI search results into stunning ASMR videos with our specialized text-to-video generator.',
-    keywords: ['perplexity ai', 'ai video ideas', 'content creation', 'youtube ideas', 'tiktok trends', 'ai video generator', 'text-to-video', 'asmr prompts', 'creative guide'],
+    title: 'Creative Guide: Perplexity AI for Viral Video Ideas',
+    description: 'A content creator\'s guide to using Perplexity AI for generating unlimited viral video ideas for TikTok and YouTube. Turn AI search results into stunning videos with our text-to-video generator.',
+    keywords: ['perplexity for creators', 'ai video ideas', 'creative content guide', 'youtube video ideas', 'tiktok trends discovery', 'asmr video prompts', 'overcome creative block'],
     openGraph: {
-        title: 'Perplexity AI for Video Creators | Guide to AI Video Ideas',
+        title: 'Creative Guide: Perplexity AI for Viral Video Ideas',
         description: 'A complete guide on using Perplexity AI to find and create viral video content.',
         url: 'https://cuttingasmr.org/perplexity-for-creators',
         type: 'article',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Perplexity AI for Video Creators | Guide to AI Video Ideas',
+        title: 'Creative Guide: Perplexity AI for Viral Video Ideas',
         description: 'From AI search to AI video in minutes. Learn how to leverage Perplexity for endless content ideas.',
         images: ['https://cuttingasmr.org/twitter-image-perplexity-guide.png'], // 需要创建一个对应的预览图
     },
