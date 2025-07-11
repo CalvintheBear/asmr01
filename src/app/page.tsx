@@ -25,6 +25,7 @@ import { CREDITS_CONFIG } from '@/lib/credits-config'
 import StructuredData from '@/components/StructuredData'
 import { showcaseVideos } from '@/data/showcase-videos'
 import { QuickMode, ModularMode } from '@/components/PromptModes'
+import Footer from '@/components/Footer'
 
 export default function ASMRVideoStudio() {
   const { user, isLoaded } = useUser()
@@ -1172,62 +1173,8 @@ export default function ASMRVideoStudio() {
         </div>
       </div>
 
-      {/* Footer - 全宽布局 */}
-      <footer className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white relative">
-        {/* Subtle footer pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 rounded-lg overflow-hidden">
-                  <img 
-                    src="/logo.svg" 
-                    alt="CuttingASMR - Best AI ASMR Video Generator Powered by Google Veo3 for Content Creators" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <span className="text-xl font-bold">CuttingASMR.org</span>
-              </div>
-              <p className="text-gray-400">
-                Professional veo3 video prompt templates for creators. Master ai video prompt creation with Google Veo3 AI technology.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-              </ul>
-            </div>
-            
-              <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition-colors">Terms</Link></li>
-                <li><Link href="/refund" className="hover:text-white transition-colors">Refund</Link></li>
-                <li><a href="mailto:supportadmin@cuttingasmr.org" className="hover:text-white transition-colors">Contact Support</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 CuttingASMR.org. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      {/* Footer */}
+      <Footer />
 
       {/* 弹出式模态框 - 显示所有ASMR类型 */}
       {showAllTypesModal && (

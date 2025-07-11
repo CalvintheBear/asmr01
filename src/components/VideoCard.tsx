@@ -5,9 +5,13 @@ import { VideoCardProps as _VideoCardProps } from '@/data/video-types';
 import { Play, Eye } from 'lucide-react';
 import Link from 'next/link';
 
-type VideoCardProps = Omit<_VideoCardProps, 'onClick'> & { onClick?: (video: any) => void }
+type VideoCardProps = Omit<_VideoCardProps, 'onClick'> & { 
+  onClick?: (video: any) => void;
+  className?: string; // 添加可选的 className 属性
+  buttonClassName?: string; // 添加可选的按钮 className 属性
+}
 
-export default function VideoCard({ video }: VideoCardProps) {
+export default function VideoCard({ video, className, buttonClassName }: VideoCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [thumbnailError, setThumbnailError] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
@@ -85,7 +89,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   return (
     <div 
       ref={cardRef}
-      className="group relative bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full border border-stone-700"
+      className={`group relative bg-gradient-to-br from-stone-800 to-gray-900 rounded-3xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full border border-stone-700 ${className || ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
@@ -145,7 +149,7 @@ export default function VideoCard({ video }: VideoCardProps) {
         <div className="mt-auto">
           <Link
             href={`/video-showcase/${video.id}`}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+            className={`w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg ${buttonClassName ? buttonClassName : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-600 hover:to-blue-700'}`}
             scroll={false}
             onClick={(e) => e.stopPropagation()}
             target="_blank"
