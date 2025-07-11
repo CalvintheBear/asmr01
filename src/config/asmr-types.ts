@@ -24,6 +24,50 @@ export const defaultOption: ASMRType = {
 // ASMR类型分类定义（重新整理分类）
 export const asmrCategories: ASMRCategory[] = [
   {
+    id: 'animals',
+    name: 'Animal Vlog',
+    icon: '🐾',
+    types: [
+      {
+        id: 'animal-vlog',
+        name: 'Animal Vlog',
+        description: 'Anthropomorphic animal vlogging adventures',
+        prompt: 'Subject: An anthropomorphic orangutan. Visual Details: The orangutan has shaggy dark brown fur, a wide mouth, and is wearing silver goggles, a yellow and blue parachute pack, and a silver can of Coors Light beer. Action: The orangutan is sitting inside a plane, holding and drinking from a can of Coors Light. Its mouth is often open as if speaking or reacting. Setting: Inside an airplane cabin, likely mid-day given the bright light from the windows. Camera Style: Static shot, seemingly eye-level with the orangutan. Atmosphere: Humorous, slightly absurd, and adventurous. Dialogue (Optional): "Today we\'re getting blackout drunk and fucking skydiving. If I die, at least I die doing what I love. Woo! Not skydiving, fucking drinking." (Spoken in a deep, gravelly voice with a casual, almost slurred delivery.) Background: The interior of a metal aircraft cabin with multiple rectangular windows showing a bright, cloudy sky. Technical Style: Clear, well-lit digital video. Audio (Implied): The orangutan\'s speech, possibly the hum of the airplane engines, and the clinking of the can.'
+      },
+      {
+        id: 'creature-vlog',
+        name: 'Creature Vlog',
+        description: 'Mythical creature vlogging experiences',
+        prompt: 'Subject: Large, white-furred Yeti creature\nVisual Details: Icy blue eyes, flat nose, sharp teeth, battered puffer jacket, clawed hands\nAction: Sprinting through snowy forest, panicked, looking back at Bigfoot\nSetting: Deep dusk, snow-covered pines, swirling snowflakes\nCamera Style: Handheld selfie, ultra-wide lens, shallow depth of field\nAtmosphere: Fearful, intense, action-packed\nDialogue (Optional): "Shit, Bigfoot\'s right behind me. He\'s fucking fast. Don\'t know if I\'ll make it." (deep, rough mountain accent)\nBackground: Dense snow-covered pines whipping past, distant Bigfoot\nTechnical Style: Crisp modern 8K cinematic documentary\nAudio (Implied): Howling wind, crunching snow, ragged breathing, distant Bigfoot roar'
+      },
+      {
+        id: 'animal-olympics',
+        name: 'Animal Olympics',
+        description: 'Animals competing in Olympic events',
+        prompt: 'Televised footage of a [cat description, e.g., fluffytabby cat] performing [specific action, e.g., hurdles] at theOlympics, in a [setting, e.g., vibrant stadium], with[atmosphere, e.g., cheering crowd], [style, e.g., cinematic][additional details, e.g., slow-motion, dynamic camera angles,commentary].'
+      },
+      {
+        id: 'animal-diving',
+        name: 'Animal Diving',
+        description: 'Animals performing diving in Olympics',
+        prompt: 'Televised footage of a majestic [grey elephant] performing a high-dive from the 10-meter platform at the Olympics, in a grand, modern indoor aquatics stadium with multiple diving boards and a vibrant blue pool. The atmosphere is electrifying, with a massive, cheering and applauding crowd filling the stands. The style is cinematic and photorealistic broadcast footage, featuring slow-motion replays of the elephant\'s powerful leap and colossal splash, dynamic camera angles capturing the dive from multiple perspectives, and immediate crowd reactions of awe and excitement. The scene includes scoreboards displaying humorous scores, and the intense anticipation and celebration of a major sporting event.'
+      }
+    ]
+  },
+  {
+    id: 'food',
+    name: 'Food Textures',
+    icon: '🍴',
+    types: [
+      {
+        id: 'bread-spread',
+        name: 'Bread Spread',
+        description: 'Spreading sauce on bread',
+        prompt: 'A close-up shot of a [type of bread, e.g., slice of toasted sourdough bread] resting on a [surface, e.g., wooden cutting board]. A [type of container, e.g., clear glass bowl/cup] tilts into frame and begins to pour many [description of object, e.g., round, golden, shimmering particles/red frozen berries/dark blue blueberries] onto the center of the toast. The [objects] pile up, then a [type of utensil, e.g., silver butter knife/small spatula] enters the frame and smoothly spreads the [objects] across the entire surface of the toast, transforming them into a [description of spread, e.g., glossy golden paste/vibrant red jam/deep purple jam]. The entire scene is filmed in an ASMR style, with crisp, clear audio of the [pouring sound, e.g., gentle clinking of particles/soft tumble of berries] and the [spreading sound, e.g., smooth scraping of the knife/subtle squish of the spread].'
+      }
+    ]
+  },
+  {
     id: 'cutting',
     name: 'Cutting & Slicing',
     icon: '🔪',
@@ -81,6 +125,36 @@ export const asmrCategories: ASMRCategory[] = [
         name: 'Minecraft Block Cutting ASMR',
         description: 'Sharp blade slicing through pixelated Minecraft blocks with satisfying cuts',
         prompt: 'Realistic 4K footage close-up in a realistic kitchen environment with a viewing angle on a table, one hand smoothly slicing through colorful pixelated pieces of Minecraft grass with a fruit knife. It cuts cleanly, revealing the layered pixel texture inside. The inside of the block shows the dirt pixels below the grass pixels. The sound is ASMR style, with satisfying slice and block separation sounds.'
+      },
+      {
+        id: 'ice-cutting',
+        name: 'Ice Cutting',
+        description: 'Knife cutting through ice cubes',
+        prompt: 'Realistic 4K footage close-up of a knife rapidly cutting an transparent ice cubes on a wooden cuttingboard. It slices it multiple times, each slice falls over as the knife moves to the next. The inside of the ice is also transparent,accompanied by the flow of water.The sound is ASMR style.'
+      },
+      {
+        id: 'planet-cutting',
+        name: 'Planet Cutting',
+        description: 'Cutting through cosmic planets',
+        prompt: 'Realistic 4K footage close-up of a knife cutting a [COLOR] [MATERIAL] [Planet] on a [SURFACE]. It slices it single time, The gloved hands then gently pull apart the halves. Slice is [Material] [Effect]. The inside of the [OBJECT] is [Status]. The sound is ASMR style.'
+      },
+      {
+        id: 'cosmic-cutting',
+        name: 'Cosmic Cutting',
+        description: 'Cutting nebula clouds',
+        prompt: 'Realistic 4K footage close-up of a knife cutting a [COLOR] [MATERIAL] [NEBULA] on a [SURFACE]. It slices it multiple times. Slice is [Material] [Effect]. The inside of the [OBJECT] is also [MATERIAL], And each slice has [Special Effects]. The sound is ASMR style.'
+      },
+      {
+        id: 'digital-cutting',
+        name: 'Digital Cutting',
+        description: 'Cutting electronic devices',
+        prompt: 'Realistic 4K footage close-up of a knife cutting a [COLOR] [Digital products] on a wooden surface. It slices it multiple times. Inside each slice are electronic components exposed. The sound is ASMR style.'
+      },
+      {
+        id: 'stone-cutting',
+        name: 'Stone Cutting',
+        description: 'Gorilla cutting stone',
+        prompt: 'A photorealistic scene unfolds in a lush green forest with mossy ground. A massive, white-furred ape-like creature (resembling a Yeti or white gorilla) sits purposefully behind a flat, dark stone slab resting on a tree stump. A sharp knife and an irregular dark rock are placed on the slab. The creature\'s large, powerful hand carefully grasps the gleaming knife, then precisely positions and presses the blade down, cleanly slicing the rock in half. Its hands then gently pull apart the two halves of the rock, dramatically revealing a surprising sight: a small, live, brown-grey mouse sitting calmly on the stone slab between the separated rock pieces. The mouse appears unfazed as the creature\'s gaze shifts to the viewer with a curious or knowing expression, while faint mouse squeaks are heard. The lighting is natural, highlighting the detailed textures of the fur, rock, and mouse.'
       }
     ]
   },
@@ -222,6 +296,12 @@ export const asmrCategories: ASMRCategory[] = [
         name: 'Squeeze Toy ASMR',
         description: 'Gentle squeezing of soft stress toys and squishy objects',
         prompt: 'Close-up of hands gently squeezing various colorful stress balls, squishy toys, and foam objects on a soft white surface. Camera: Macro lens capturing finger pressure and object deformation. Lighting: Soft ambient lighting highlighting toy textures and colors. Audio: Gentle squishing sounds, soft compression noises, and satisfying stress ball manipulation sounds.'
+      },
+      {
+        id: 'slime-toy',
+        name: 'Slime Toy',
+        description: 'Squeezing slime toys',
+        prompt: 'A pair of hands repeatedly touches a lump of [color/fluorescent] slime toy on a wooden surface. The sound is ASMR style.'
       }
     ]
   },
