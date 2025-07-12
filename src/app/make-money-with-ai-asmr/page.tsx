@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     'how to create asmr videos',
     'cuttingasmr.org guide',
   ],
+  alternates: {
+    canonical: 'https://cuttingasmr.org/make-money-with-ai-asmr'
+  },
 };
 
 const successStories = [

@@ -3,6 +3,9 @@
 import { ShowcaseVideo } from '@/data/video-types'
 import Link from 'next/link'
 import { Copy, ArrowLeft, ArrowRight } from 'lucide-react'
+import { showcaseVideos } from '@/data/showcase-videos'
+import VideoCard from '@/components/VideoCard'
+import Footer from '@/components/Footer'
 import { useState } from 'react'
 import FAQAccordion from '@/components/FAQAccordion'
 import CollapsibleTechSection from '@/components/CollapsibleTechSection'
@@ -28,6 +31,11 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
       console.error('Copy failed', err)
     }
   }
+
+  // 取 3 条相关视频（排除当前视频，随机打乱后切片）
+  const relatedVideos = [...showcaseVideos.filter(v => v.id !== video.id)]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3)
 
   return (
     <>
@@ -126,9 +134,22 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
             {/* FAQ & Tech Section */}
             <FAQAccordion faqs={faqs} title="FAQ" />
             <CollapsibleTechSection />
+
+            {/* Related Videos */}
+            {relatedVideos.length > 0 && (
+              <div className="mt-16">
+                <h2 className="text-2xl font-bold text-white mb-6 text-center">Related Videos</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedVideos.map(rv => (
+                    <VideoCard key={rv.id} video={rv} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 } 

@@ -1,7 +1,6 @@
 import { NextPage, Metadata } from 'next';
 import Link from 'next/link';
 import { Sparkles, Video, Search, ChevronsRight, Home } from 'lucide-react';
-import SEOHead from '@/components/SEOHead';
 import VideoCard from '@/components/VideoCard';
 import { showcaseVideos } from '@/data/showcase-videos';
 
@@ -28,6 +27,9 @@ export const metadata: Metadata = {
         title: 'Creative Guide: Perplexity AI for Viral Video Ideas',
         description: 'From AI search to AI video in minutes. Learn how to leverage Perplexity for endless content ideas.',
         images: ['https://cuttingasmr.org/twitter-image-perplexity-guide.png'], // 需要创建一个对应的预览图
+    },
+    alternates: {
+        canonical: 'https://cuttingasmr.org/perplexity-for-creators'
     },
 };
 

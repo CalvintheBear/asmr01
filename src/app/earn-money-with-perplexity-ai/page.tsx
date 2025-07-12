@@ -8,6 +8,9 @@ export const metadata: Metadata = {
     title: 'AI Monetizing Guide: Earn Money Online with AI video & Perplexity',
     description: 'A step-by-step guide to using Perplexity AI for market research and creating profitable video content with our AI video generator. Start your online business today!',
     keywords: ['earn money online', 'perplexity ai', 'ai video generator', 'online business', 'passive income', 'content creation monetization', 'youtube automation', 'tiktok monetization'],
+    alternates: {
+      canonical: 'https://cuttingasmr.org/earn-money-with-perplexity-ai'
+    },
 };
 
 const EarnMoneyWithPerplexityPage: NextPage = () => {

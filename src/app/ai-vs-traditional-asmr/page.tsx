@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'AI vs. Traditional ASMR: The Future of Content Creation',
   description: 'A detailed comparison between AI-powered ASMR video generation using Google\'s Veo3 and traditional methods. Discover the advantages in cost, speed, quality, and scalability.',
   keywords: ['AI ASMR', 'Traditional ASMR', 'Veo3 AI', 'ASMR creation', 'AI video generator', 'content creation', 'ASMR comparison', 'ice cutting asmr', 'how to create ai asmr video'],
+  alternates: {
+    canonical: 'https://cuttingasmr.org/ai-vs-traditional-asmr'
+  },
 };
 
 

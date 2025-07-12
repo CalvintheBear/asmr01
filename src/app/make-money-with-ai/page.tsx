@@ -22,18 +22,8 @@ export const metadata: Metadata = {
         'earn money with ai',
         'ai side hustles 2025',
     ],
-    openGraph: {
-        title: 'How to Make Money with AI Video in 2025 | KIE AI',
-        description:
-            'A comprehensive guide to making money with AI video generation. Learn strategies for passive income, content creation, and building a business with AI tools.',
-        images: [
-            {
-                url: 'https://www.kie.ai/og-image.jpg',
-                width: 1200,
-                height: 630,
-                alt: 'How to Make Money with AI Video in 2025 | KIE AI',
-            },
-        ],
+    alternates: {
+        canonical: 'https://cuttingasmr.org/make-money-with-ai'
     },
 };
 
