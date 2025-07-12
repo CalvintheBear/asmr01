@@ -129,7 +129,7 @@ export default function HelpPage() {
                   You can manage your payments and subscriptions in several ways:
                 </p>
                 <ul className="text-slate-300 text-sm space-y-1 mb-3">
-                  <li>• Visit your <a href="/profile" className="text-cyan-400 hover:text-cyan-300 underline">Profile page</a> and click "管理支付方式"</li>
+                  <li>• Visit your <a href="/profile" rel="nofollow" className="text-cyan-400 hover:text-cyan-300 underline">Profile page</a> and click "管理支付方式"</li>
                   <li>• This will open the secure Creem Customer Portal</li>
                   <li>• Update payment methods, view billing history, and manage subscriptions</li>
                   <li>• Contact our support team at supportadmin@cuttingasmr.org for assistance</li>

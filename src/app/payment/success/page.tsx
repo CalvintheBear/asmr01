@@ -490,7 +490,7 @@ function PaymentSuccessContent() {
             </Link>
             
             <Link 
-              href="/profile"
+              href="/profile" rel="nofollow"
               className="inline-flex items-center px-8 py-4 bg-white dark:bg-slate-800 border-2 border-emerald-600 dark:border-emerald-400 text-emerald-600 dark:text-emerald-400 rounded-xl font-bold text-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-all duration-300"
             >
               View Profile

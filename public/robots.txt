@@ -4,6 +4,9 @@ Disallow: /payment/
 Disallow: /profile/
 Disallow: /test-payment/
 Disallow: /credits-recovery/
+Disallow: /video-status/
+Disallow: /video-1080p/
+Disallow: /video-details/
 
 Sitemap: https://cuttingasmr.org/sitemap.xml 
 Sitemap: https://cuttingasmr.org/video-sitemap.xml 

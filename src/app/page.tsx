@@ -14,7 +14,6 @@ import ASMRVideoResult from '@/components/ASMRVideoResult'
 import VideoShowcase from '@/components/VideoShowcase'
 import VideoCard from '@/components/VideoCard'
 import CreemPaymentButton from '@/components/CreemPaymentButton'
-import SEOHead from '@/components/SEOHead'
 import FAQAccordion from '@/components/FAQAccordion'
 import CollapsibleTechSection from '@/components/CollapsibleTechSection'
 import FeedbackModal from '@/components/FeedbackModal'
@@ -464,12 +463,7 @@ export default function ASMRVideoStudio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <SEOHead
-        title="CuttingASMR - Veo3 Video & Prompt Generator |Al Video Prompt Tool for Creators"
-        description="Create stunning AI videos with veo3 video prompt templates! Professional ai video prompt generator using Google Veo3 AI. Perfect for ASMR creators, YouTube Shorts, and TikTok content makers."
-        canonical="https://cuttingasmr.org"
-        keywords="ai prompt template, ai video prompt, google veo3 prompts, ai video generator, ai asmr prompts, ai prompt,text to video, create ai asmr videos,create ai yeti vlog videos,how to create ai asmr videos ,create asmr by voe3, ai sound, create bread spread videos"
-      />
+      {/* SEOHead removed; metadata now handled via app/layout.tsx */}
       
       {/* 添加结构化数据 */}
       <StructuredData 
@@ -523,7 +517,7 @@ export default function ASMRVideoStudio() {
               
               {user ? (
                 <div className="flex items-center space-x-4">
-                  <Link href="/profile" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors">
+                  <Link href="/profile" rel="nofollow" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors">
                     Profile
                   </Link>
                   <span className="text-sm text-slate-300 max-w-[150px] truncate">
@@ -609,6 +603,7 @@ export default function ASMRVideoStudio() {
                   <>
                     <Link 
                       href="/profile" 
+                      rel="nofollow"
                       className="block px-3 py-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-700/50 rounded-md transition-colors"
                       onClick={() => setShowMobileMenu(false)}
                     >

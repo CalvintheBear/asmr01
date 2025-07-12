@@ -1,28 +1,10 @@
-"use client";
-
-import { useState } from 'react';
 import { showcaseVideos } from '@/data/showcase-videos';
-import { ShowcaseVideo } from '@/data/video-types';
-import VideoCard from '@/components/VideoCard';
-import VideoModal from '@/components/VideoModal';
+import VideoShowcaseGrid from '@/components/VideoShowcaseGrid';
 import StructuredData from '@/components/StructuredData';
 import Link from 'next/link';
 import { ArrowLeft, Play } from 'lucide-react';
 
 export default function VideoShowcasePage() {
-  const [selectedVideo, setSelectedVideo] = useState<ShowcaseVideo | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleVideoClick = (video: ShowcaseVideo) => {
-    setSelectedVideo(video);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedVideo(null);
-  };
-
   // 转换展示视频数据为结构化数据格式
   const videosForStructuredData = showcaseVideos.map(video => ({
     id: video.id,
@@ -86,15 +68,7 @@ export default function VideoShowcasePage() {
         </div>
 
         {/* Video Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 items-stretch">
-          {showcaseVideos.map((video) => (
-            <VideoCard
-              key={video.id}
-              video={video}
-              onClick={handleVideoClick}
-            />
-          ))}
-        </div>
+        <VideoShowcaseGrid videos={showcaseVideos} />
 
         {/* Bottom CTA */}
         <div className="text-center mt-16 p-8 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl border border-cyan-500/30">
@@ -114,13 +88,6 @@ export default function VideoShowcasePage() {
           </Link>
         </div>
       </div>
-
-      {/* Video Modal */}
-      <VideoModal
-        video={selectedVideo}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
     </div>
   );
 } 

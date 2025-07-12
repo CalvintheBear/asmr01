@@ -330,7 +330,7 @@ export default function PricingPage() {
               <ul className="space-y-2 text-sm text-slate-300">
                 <li><Link href="/about" className="hover:text-cyan-400 transition-colors">About Us</Link></li>
                 <li><Link href="/asmr-types" className="hover:text-cyan-400 transition-colors">ASMR Types</Link></li>
-                <li><Link href="/profile" className="hover:text-cyan-400 transition-colors">User Profile</Link></li>
+                <li><Link href="/profile" rel="nofollow" className="hover:text-cyan-400 transition-colors">User Profile</Link></li>
               </ul>
             </div>
             <div>

@@ -9,8 +9,8 @@ export async function GET() {
 
   const itemsXml = showcaseVideos
     .map((video) => {
-      const thumbnailUrl = video.thumbnailUrl.replace(/\s/g, '%20')
-      const contentUrl = video.videoUrl.replace(/\s/g, '%20')
+      const thumbnailUrl = encodeURI(video.thumbnailUrl)
+      const contentUrl = encodeURI(video.videoUrl)
       const uploadDate = new Date(video.createdAt).toISOString()
       const durationSeconds = (() => {
         const parts = video.duration.split(':')
