@@ -18,15 +18,15 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'CuttingASMR - Google Veo3 AI Video Generator | Best ASMR Creator Tools 2025',
-  description: 'Google Veo3 powered ASMR creator tools for YouTube channels! Best Veo3 ASMR generator with AI technology. Professional ASMR maker software for content creators. Create relaxing videos, sleep ASMR, stress relief content.',
-  keywords: 'google veo3, earn money by AI,create AI yeti vlog, AI asmr generator,AI side jobs 2025, create AI asmr video, , ai video prompt, ai glass cutting, make money with ai, ice cutting asmr, ai asmr cutting, asmr video prompt, AI video monetization',
+  description: 'Free AI video generator.Google Veo3 powered video generator. Best Veo3 ASMR generator with AI technology. ',
+  keywords: 'free ai video generator, earn money by AI,create AI yeti vlog, AI asmr generator,AI side jobs 2025, create AI asmr video, , ai video prompt, ai glass cutting, make money with ai, ice cutting asmr, ai asmr cutting, asmr video prompt, AI video monetization',
   alternates: {
     canonical: 'https://cuttingasmr.org'
   },
   authors: [{ name: 'CuttingASMR Team' }],
   robots: 'index, follow',
   openGraph: {
-    title: 'CuttingASMR - Veo3 AI Video Generator | Best AI ASMR Maker',
+    title: 'CuttingASMR - Free Veo3 AI Video Generator | Best AI ASMR Maker',
     description: 'Create glass cutting, fruit ASMR videos with Google Veo3 AI. Perfect for YouTube shorts, TikTok content creation.',
     url: 'https://cuttingasmr.org',
     siteName: 'CuttingASMR',
@@ -48,7 +48,7 @@ export default function RootLayout({
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   
   return (
-    <ClerkProvider localization={enUS}>
+    <ClerkProvider publishableKey={publishableKey} localization={enUS}>
       <html lang="en">
         <head>
           {/* Website favicon configuration - Using real ICO file only */}
@@ -94,9 +94,7 @@ export default function RootLayout({
           />
         </head>
         <body className={inter.className}>
-          <ClerkProvider publishableKey={publishableKey}>
-            {children}
-          </ClerkProvider>
+          {children}
         </body>
       </html>
     </ClerkProvider>
