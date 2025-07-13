@@ -20,6 +20,7 @@ export default function Footer() {
               <li><Link href="/earn-money-with-perplexity-ai" className="text-base text-slate-300 hover:text-white">Earn with Perplexity</Link></li>
               <li><Link href="/make-money-with-ai" className="text-base text-slate-300 hover:text-white">AI Money Guide</Link></li>
               <li><Link href="/help" className="text-base text-slate-300 hover:text-white">FAQ</Link></li>
+              <li><Link href="/kimik2vsgrok4" className="text-base text-slate-300 hover:text-white">Kimi vs Grok Review</Link></li>
             </ul>
           </div>
           <div className="space-y-4">
