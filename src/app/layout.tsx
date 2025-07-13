@@ -17,9 +17,9 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'CuttingASMR - Google Veo3 AI ASMR Generator | Best ASMR Creator Tools 2025',
+  title: 'CuttingASMR - Google Veo3 AI Video Generator | Best ASMR Creator Tools 2025',
   description: 'Google Veo3 powered ASMR creator tools for YouTube channels! Best Veo3 ASMR generator with AI technology. Professional ASMR maker software for content creators. Create relaxing videos, sleep ASMR, stress relief content.',
-  keywords: 'google veo3, how to earn money by AI,create AI yeti vlog, AI asmr generator,create Ice cutting asmr, create AI asmr video, , ai video prompt, relaxing video maker, sleep asmr generator, ai content creator tools, content creator, stress relief videos, meditation video creator',
+  keywords: 'google veo3, earn money by AI,create AI yeti vlog, AI asmr generator,AI side jobs 2025, create AI asmr video, , ai video prompt, ai glass cutting, make money with ai, ice cutting asmr, ai asmr cutting, asmr video prompt, AI video monetization',
   alternates: {
     canonical: 'https://cuttingasmr.org'
   },
