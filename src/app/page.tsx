@@ -684,9 +684,9 @@ export default function ASMRVideoStudio() {
               <span className="block">our AI-powered <span className="font-extrabold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Veo3 generator</span></span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              FREE credits for new users! Master ai video prompt creation with proven veo3 video prompt templates. 
-              Generate professional AI videos in minutes using Google Veo3 AI technology. 
-              Perfect for YouTube, TikTok creators and content makers - no editing skills required.
+              FREE trial for new users! Master ai video prompt creation with proven veo3 video prompt templates. 
+              Generate professional AI videos using Google Veo3 AI. 
+              Perfect for YouTube and TikTok creators - no editing skills required.dfsdfsd
             </p>
             
 
