@@ -102,7 +102,7 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
             </main>
 
             {/* Navigation Buttons - Centered below video/prompt */}
-            <div className="mt-12 sm:mt-16 text-center mb-16">
+            <div className="mt-12 sm:mt-16 text-center">
               <div className="flex flex-wrap justify-center items-center gap-4">
                 <Link
                   href="/video-showcase"
@@ -125,6 +125,18 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
               </div>
             </div>
 
+            {/* Related Videos - moved here */}
+            {relatedVideos.length > 0 && (
+              <div className="mt-16 mb-16">
+                <h2 className="text-2xl font-bold text-white mb-6 text-center">Related Videos</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedVideos.map(rv => (
+                    <VideoCard key={rv.id} video={rv} />
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Guides Section */}
             <GuidesSection />
 
@@ -134,18 +146,6 @@ export default function VideoDetailPage({ video }: VideoDetailPageProps) {
             {/* FAQ & Tech Section */}
             <FAQAccordion faqs={faqs} title="FAQ" />
             <CollapsibleTechSection />
-
-            {/* Related Videos */}
-            {relatedVideos.length > 0 && (
-              <div className="mt-16">
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">Related Videos</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {relatedVideos.map(rv => (
-                    <VideoCard key={rv.id} video={rv} />
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
