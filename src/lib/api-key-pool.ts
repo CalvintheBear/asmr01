@@ -22,20 +22,12 @@ class ApiKeyPool {
   }
 
   private initializeKeys() {
-    // 🔒 从环境变量加载API密钥，优雅回退到原有密钥保证系统可用
+    // 🔑 使用固定的3个Veo3 Fast API密钥
     const apiKeys = [
-      process.env.VEO3_API_KEY, // 主密钥
-      process.env.VEO3_API_KEY_2, // 备用密钥1
-      process.env.VEO3_API_KEY_3, // 备用密钥2  
-      process.env.VEO3_API_KEY_4, // 备用密钥3
-      process.env.VEO3_API_KEY_5, // 备用密钥4
-    ].filter(Boolean) as string[]; // 过滤空值
-    
-    // 如果环境变量中没有API密钥，在构建时使用默认密钥，运行时仍会检查
-    if (apiKeys.length === 0) {
-      console.warn('⚠️ VEO3 API密钥未在环境变量中设置，使用默认密钥');
-      apiKeys.push('c982688b5c6938943dd721ed1d576edb'); // 默认密钥
-    }
+      '3f06398cf9d8dc02a243f2dd5f2f9489',
+      'db092e9551f4631136cab1b141fdfd21',
+      '6a77fe3ca6856170f6618d4f249cfc6a'
+    ];
 
     this.keys = apiKeys.map(key => ({
       key,
@@ -44,7 +36,7 @@ class ApiKeyPool {
       isBlocked: false,
     }));
 
-    console.log(`🔑 API密钥池初始化完成，共 ${this.keys.length} 个密钥`);
+    console.log(`🔑 Veo3 Fast API密钥池初始化完成，共 ${this.keys.length} 个密钥`);
   }
 
   /**

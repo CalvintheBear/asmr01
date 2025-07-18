@@ -104,7 +104,7 @@ export class Veo3ApiClient {
       method: 'POST',
       body: JSON.stringify({
         prompt: request.prompt,
-        model: request.model || 'veo3_fast',
+        model: 'veo3_fast', // 🔥 强制使用veo3fast模型
         aspectRatio: request.aspectRatio || '16:9',
         duration: request.duration || '8',
         callBackUrl: request.callBackUrl,
